@@ -1,0 +1,60 @@
+        .hmenu {
+            border-radius: 5px;
+            background-color: rgba(187, 48, 152, 0.952);
+            height: 40px;
+            list-style: none;
+        }
+        
+        ul.hmenu>li {
+            float: left;
+            margin: 0 10px;
+            position: relative;
+        }
+        ul.hmenu>li:hover{
+           background: rgba(128, 0, 128, 0.808);
+        }
+        
+        ul.hmenu>li>a {
+            color: white;
+            text-decoration: none;
+            line-height: 40px;
+            font-size: 20px;
+            clear: both;
+            font-variant: small-caps;
+        }
+        
+        ul.hmenu>li>a:hover {
+            clear: both;
+        }
+        
+        ul.hmenu>li:hover>.sub-menu {
+            display: block;
+        }
+        
+        .sub-menu {
+            padding: 0px;
+            margin: 0px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px purple;
+            list-style: none;
+            width: 150px;
+            position: absolute;
+            background-color: white;
+            display: none;
+        }
+        
+        .sub-menu>li>a {
+            text-decoration: none;
+            line-height: 30px;
+            padding-left: 10px;
+            font-size: x-large;
+            color: purple;
+            border-bottom: 1px dotted purple;
+            display: block;
+        }
+        
+        .sub-menu>li>a:hover {
+            color: white;
+            font-weight: bolder;
+            background-color: purple;
+        }
