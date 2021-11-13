@@ -7,6 +7,7 @@ import java.awt.Component;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
@@ -33,10 +34,21 @@ public class Menu extends javax.swing.JPanel {
     public void setEvent(EventMenuSelected event) {
         this.menuEvent = event;
     }
+
+    public boolean isShowing() {
+        return showing;
+    }
+
+    public void setShowing(boolean showing) {
+        this.showing = showing;
+    }
+
     private MigLayout layout;
     private JPanel pnlMenu;
     private EventMenuSelected menuEvent;
     private Profile profile;
+    private boolean showing = true;
+
     public Menu() {
         initComponents();
         init();
@@ -45,9 +57,9 @@ public class Menu extends javax.swing.JPanel {
     private void init() {
         setOpaque(false);
 //        setLayout(new MigLayout("wrap, fillx, insets 0", "[fill]", "5[]0[]push[60]0"));
-        setLayout(new MigLayout("wrap, debug, fillx, insets 0", "[fill]"));
+        setLayout(new MigLayout("wrap, fillx, insets 0", "[fill]"));
         profile = new Profile();
-        
+
         pnlMenu = new JPanel();
         pnlMenu.setOpaque(false);
         pnlMenu.setLayout(new MigLayout("fillx, wrap", "0[fill]0", "0[]3[]0"));
@@ -59,33 +71,18 @@ public class Menu extends javax.swing.JPanel {
 
     public void addMenu(ModelMenu model) {
         MenuItem item = new MenuItem(model.getIcon(), model.getMenuName(), pnlMenu.getComponentCount());
-//        item.addEvent(new EventMenuSelected() {
-//            @Override
-//            public void selected(int index) {
-//                clearMenu(index);
-//            }
-//        });
-//        item.addEvent(menuEvent);
         pnlMenu.add(item, "h 50!");
-    }
-
-    private void clearMenu(int currentSelectedIndex) {
-        for (Component com : pnlMenu.getComponents()) {
-            if (com instanceof MenuItem) {
-                MenuItem item = (MenuItem) com;
-                if (item.getIndex() != currentSelectedIndex) {
-                    item.setSelected(false);
-                }
-            }
-        }
     }
 
     @Override
     protected void paintComponent(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
-        GradientPaint gra = new GradientPaint(0, 0, Color.decode("#56CCF2"), 0, getHeight(), Color.decode("#2F80ED"));
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//        GradientPaint gra = new GradientPaint(0, 0, Color.decode("#56CCF2"), 0, getHeight(), Color.decode("#2F80ED"));
+        GradientPaint gra = new GradientPaint(0, 0, new Color(33, 105, 249), getWidth(), 0, new Color(93, 58, 196));
         g2.setPaint(gra);
         g2.fillRect(0, 0, getWidth(), getHeight());
         super.paintComponent(grphcs);
     }
+
 }

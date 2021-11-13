@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ultramotor.component;
 
 import com.ultramotor.swingx.MenuButton;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -16,17 +12,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
  *
  * @author nghipc
  */
-public class MenuItem extends MenuButton {
+public class MenuItem extends JPanel {
 
     private boolean selected;
     private boolean mouseOver;
-
+//    private MenuButton button;
     public MenuItem(Icon icon, String text, int index) {
         super(icon, text);
         super.setIndex(index);
@@ -35,6 +32,7 @@ public class MenuItem extends MenuButton {
     
     private void init(){
         setFocusPainted(false);
+        this.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent me) {
@@ -52,11 +50,8 @@ public class MenuItem extends MenuButton {
                     if (mouseOver) {
                         JComponent com = (JComponent) me.getSource();
                         for(Component c : com.getParent().getComponents()){
-                            if(c instanceof MenuItem){
-                                MenuItem item =(MenuItem)c;
-                                if(item.isSelected()){
-                                    item.setSelected(false);
-                                }
+                            if(c instanceof MenuItem && ((MenuItem)c).isSelected()){
+                                    ((MenuItem)c).setSelected(false);
                             }
                         }
                         setSelected(true);
