@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
  *
  * @author nghipc
  */
-public class MenuItem extends JPanel {
+public class MenuItem extends MenuButton {
 
     private boolean selected;
     private boolean mouseOver;
