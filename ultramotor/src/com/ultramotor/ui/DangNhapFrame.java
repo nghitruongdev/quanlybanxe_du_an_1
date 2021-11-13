@@ -10,5 +10,7 @@ package com.ultramotor.ui;
  * @author BRAVO
  */
 public class DangNhapFrame {
-    
+    public static void main(String[] args) {
+        
+    }
 }
