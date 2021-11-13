@@ -5,12 +5,16 @@
  */
 package com.ultramotor.ui;
 
+import javax.swing.JDialog;
+
 /**
  *
  * @author BRAVO
  */
-public class DangNhapFrame {
+public class DangNhapFrame extends JDialog{
     public static void main(String[] args) {
-        
+        DangNhapPanel jdialog = new DangNhapPanel();
+//        frame.pack();
+        jdialog.setVisible(true);
     }
 }
