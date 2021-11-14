@@ -1,10 +1,6 @@
 # Project exclude paths
 
-/Budget Manager/task/build/
-/Budget Manager/task/out/
-/Budget Manager/task/out/production/classes/
-/Topics/The Map interface/Creating a map/out/
-/Topics/The Map interface/Creating a map/out/production/classes/
+
 # Project exclude paths
 ##############################
 ## Java
@@ -16,6 +12,8 @@
 *.nar
 hs_err_pid*
 *.class
+*/build/
+*/dist/
 
 ##############################
 ## Maven
@@ -55,7 +53,4 @@ out/
 *.yaml
 Topics/
 
-/ultramotor/nbproject/private/
-/Edusys - DuAnMau/nbproject/private/
-/Edusys - DuAnMau/dist/
-/ultramotor/dist/
+

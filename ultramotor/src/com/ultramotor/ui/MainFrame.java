@@ -30,8 +30,9 @@ public class MainFrame extends JFrame {
     private Animator animator;
 
     public MainFrame() {
+        setLocationRelativeTo(null);
         this.setSize(1200, 800);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         init();
     }

@@ -1,4 +1,4 @@
-package com.edusys.util;
+package com.ultramotor.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -88,7 +88,7 @@ public class XMail {
 //                System.out.println("Sending");
                 Transport.send(msg);
             } catch (MessagingException | IOException ex) {
-                XLog.saveLog(ex.getMessage());
+                ex.printStackTrace();
             }
         });
         MsgBox.inform("Email đã được gửi thành công");
