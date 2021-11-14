@@ -1,4 +1,4 @@
-package com.edusys.util;
+package com.ultramotor.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +20,6 @@ import javax.mail.internet.MimeMultipart;
  * @author nghipc
  */
 public class XMail {
-
     //create a session to send mail
     private static Session getSession() {
         Properties p = new Properties();
@@ -88,9 +87,8 @@ public class XMail {
 //                System.out.println("Sending");
                 Transport.send(msg);
             } catch (MessagingException | IOException ex) {
-                XLog.saveLog(ex.getMessage());
+                ex.printStackTrace();
             }
         });
-        MsgBox.inform("Email đã được gửi thành công");
     }
 }

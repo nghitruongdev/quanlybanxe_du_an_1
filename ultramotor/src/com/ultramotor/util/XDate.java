@@ -1,4 +1,4 @@
-package com.edusys.util;
+package com.ultramotor.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,7 +11,7 @@ import java.util.Date;
 public class XDate {
 
     private static final SimpleDateFormat df = new SimpleDateFormat();
-
+    private static final String DEFAULT_PATTERN = "dd-MM-yyyy";
     /**
      * Chuyển ngày từ kiểu String sang kiểu Date
      *
@@ -21,7 +21,7 @@ public class XDate {
      */
     public static Date parse(String date) {
         try {
-            df.applyPattern(MyConstants.DATE_PATTERN);
+            df.applyPattern(DEFAULT_PATTERN);
             return df.parse(date);
         } catch (ParseException ex) {
             return null;
@@ -33,7 +33,7 @@ public class XDate {
         return df.parse(date);
     }
     public static String toString(Date date){
-            return toString(date, MyConstants.DATE_PATTERN);
+            return toString(date, DEFAULT_PATTERN);
     }
     
      /**

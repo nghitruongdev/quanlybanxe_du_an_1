@@ -1,4 +1,4 @@
-package com.edusys.util;
+package com.ultramotor.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class XJdbc {
 
     private static Connection con;
-    static final String URL = "jdbc:sqlserver://localhost;databaseName=ps19009_EduSys;username=sa;password=songlong";
+    private static final String URL = "jdbc:sqlserver://localhost;databaseName=ps19009_EduSys;username=sa;password=songlong";
 
     private static PreparedStatement getStmt(String sql, Object... args) throws SQLException {
         con = DriverManager.getConnection(URL);
@@ -41,7 +41,7 @@ public class XJdbc {
                 value = rs.getObject(1);
             }
         } catch (SQLException ex) {
-            XLog.saveLog(ex.getMessage());
+            ex.printStackTrace();
         } finally {
             closeCon();
         }
@@ -53,7 +53,7 @@ public class XJdbc {
         try (PreparedStatement pstmt = getStmt(sql, args)) {
             count = pstmt.executeUpdate();
         } catch (SQLException ex) {
-            XLog.saveLog(ex.getMessage());
+            ex.printStackTrace();
         } finally {
             closeCon();
         }
@@ -66,7 +66,7 @@ public class XJdbc {
                 con.close();
             }
         } catch (SQLException ex) {
-           XLog.saveLog(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 }

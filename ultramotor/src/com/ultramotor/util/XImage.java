@@ -1,4 +1,4 @@
-package com.edusys.util;
+package com.ultramotor.util;
 
 import java.awt.Image;
 import java.io.File;
