@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,12 +15,23 @@ import java.sql.SQLException;
 public class XJdbc {
 
     private static Connection con;
-    private static final String URL = "jdbc:sqlserver://localhost;databaseName=ps19009_EduSys;username=sa;password=songlong";
+    private static final String URL = "jdbc:sqlserver://localhost;databaseName=HONDA;username=sa;password=songlong";
+
+    public static Connection getCon() {
+        try {
+            if (con == null || con.isClosed()) {
+                con = DriverManager.getConnection(URL);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return con;
+    }
 
     private static PreparedStatement getStmt(String sql, Object... args) throws SQLException {
-        con = DriverManager.getConnection(URL);
+        con = getCon();
         PreparedStatement pstmt;
-        if (sql.trim().startsWith("{")) {
+        if (sql.trim().startsWith("{") || sql.trim().startsWith("exec")) {
             pstmt = con.prepareCall(sql);
         } else {
             pstmt = con.prepareStatement(sql);
