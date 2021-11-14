@@ -1,4 +1,4 @@
-package com.edusys.util;
+package com.ultramotor.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class XFile {
             File dst = new File(logos.toFile(), newName + ext);
             Files.move(tmp.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception ex) {
-            XLog.saveLog(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 }

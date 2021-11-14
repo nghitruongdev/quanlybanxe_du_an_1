@@ -1,4 +1,4 @@
-package com.edusys.util;
+package com.ultramotor.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,13 +14,14 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import uibooster.UiBooster;
 
 /**
  *
  * @author nghipc
  */
 public class XMail {
-
+    static UiBooster booster = new UiBooster();
     //create a session to send mail
     private static Session getSession() {
         Properties p = new Properties();
@@ -88,9 +89,10 @@ public class XMail {
 //                System.out.println("Sending");
                 Transport.send(msg);
             } catch (MessagingException | IOException ex) {
-                XLog.saveLog(ex.getMessage());
+               UiBooster booster = new UiBooster();
+               booster.showException(subject, subject, ex);
             }
         });
-        MsgBox.inform("Email đã được gửi thành công");
+        booster.showInfoDialog("Email đã được gửi thành công");
     }
 }
