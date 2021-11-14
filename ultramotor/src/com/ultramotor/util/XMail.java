@@ -20,7 +20,6 @@ import javax.mail.internet.MimeMultipart;
  * @author nghipc
  */
 public class XMail {
-
     //create a session to send mail
     private static Session getSession() {
         Properties p = new Properties();
@@ -91,6 +90,5 @@ public class XMail {
                 ex.printStackTrace();
             }
         });
-        MsgBox.inform("Email đã được gửi thành công");
     }
 }
