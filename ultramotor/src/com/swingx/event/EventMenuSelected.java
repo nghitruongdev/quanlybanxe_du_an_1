@@ -1,4 +1,4 @@
-package com.ultramotor.swingx.event;
+package com.swingx.event;
 
 public interface EventMenuSelected {
 

@@ -1,7 +1,7 @@
 package com.ultramotor.component;
 
-import com.ultramotor.swingx.Button;
-import com.ultramotor.swingx.ImageAvatar;
+import com.swingx.Button;
+import com.swingx.ImageAvatar;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;

@@ -1,6 +1,6 @@
 package com.ultramotor.component;
 
-import com.ultramotor.swingx.MenuButton;
+import com.swingx.MenuButton;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;

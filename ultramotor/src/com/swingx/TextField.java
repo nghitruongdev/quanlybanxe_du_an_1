@@ -1,4 +1,4 @@
-package textfield;
+package com.swingx;
 
 import java.awt.Color;
 import java.awt.FontMetrics;
@@ -11,13 +11,13 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
-import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
-public class PasswordField extends JPasswordField {
+public class TextField extends JTextField {
 
     public String getLabelText() {
         return labelText;
@@ -43,7 +43,7 @@ public class PasswordField extends JPasswordField {
     private String labelText = "Label";
     private Color lineColor = new Color(3, 155, 216);
 
-    public PasswordField() {
+    public TextField() {
         setBorder(new EmptyBorder(20, 3, 10, 3));
         setSelectionColor(new Color(76, 204, 255));
         addMouseListener(new MouseAdapter() {
@@ -73,7 +73,7 @@ public class PasswordField extends JPasswordField {
         TimingTarget target = new TimingTargetAdapter() {
             @Override
             public void begin() {
-                animateHinText = String.valueOf(getPassword()).equals("");
+                animateHinText = getText().equals("");
             }
 
             @Override
@@ -158,7 +158,7 @@ public class PasswordField extends JPasswordField {
 
     @Override
     public void setText(String string) {
-        if (!String.valueOf(getPassword()).equals(string)) {
+        if (!getText().equals(string)) {
             showing(string.equals(""));
         }
         super.setText(string);

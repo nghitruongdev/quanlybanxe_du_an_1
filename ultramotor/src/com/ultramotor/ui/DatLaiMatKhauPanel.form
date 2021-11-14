@@ -101,7 +101,7 @@
             <Property name="labelText" type="java.lang.String" value="Nh&#x1ead;p Email"/>
           </Properties>
         </Component>
-        <Component class="com.ultramotor.swingx.Button" name="button1">
+        <Component class="com.swingx.Button" name="button1">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="99" type="rgb"/>
@@ -211,7 +211,7 @@
             <Property name="text" type="java.lang.String" value="&#x110;&#x1eb7;t l&#x1ea1;i m&#x1ead;t kh&#x1ea9;u"/>
           </Properties>
         </Component>
-        <Component class="com.ultramotor.swingx.Button" name="button3">
+        <Component class="com.swingx.Button" name="button3">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="99" type="rgb"/>
@@ -341,7 +341,7 @@
             <Property name="labelText" type="java.lang.String" value="Nh&#x1ead;p l&#x1ea1;i m&#x1ead;t kh&#x1ea9;u m&#x1edb;i"/>
           </Properties>
         </Component>
-        <Component class="com.ultramotor.swingx.Button" name="button4">
+        <Component class="com.swingx.Button" name="button4">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="99" type="rgb"/>

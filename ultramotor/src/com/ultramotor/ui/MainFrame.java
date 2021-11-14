@@ -2,7 +2,7 @@ package com.ultramotor.ui;
 
 import com.ultramotor.component.Header;
 import com.ultramotor.component.Menu;
-import com.ultramotor.swingx.model.ModelMenu;
+import com.swingx.model.ModelMenu;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

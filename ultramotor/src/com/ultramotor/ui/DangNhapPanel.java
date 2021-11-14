@@ -34,10 +34,10 @@ public class DangNhapPanel extends javax.swing.JFrame {
         lblPassword = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lblTitle = new javax.swing.JLabel();
-        txtTaiKhoan = new textfield.TextField();
-        txtMatKhau = new textfield.PasswordField();
-        btnDangNhap = new com.ultramotor.swingx.Button();
-        btnThoat = new com.ultramotor.swingx.Button();
+        txtTaiKhoan = new com.swingx.TextField();
+        txtMatKhau = new com.swingx.PasswordField();
+        btnDangNhap = new com.swingx.Button();
+        btnThoat = new com.swingx.Button();
 
         btnDangNhap1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnDangNhap1.setText("Đăng nhập");
@@ -201,16 +201,16 @@ public class DangNhapPanel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.ultramotor.swingx.Button btnDangNhap;
+    private com.swingx.Button btnDangNhap;
     private javax.swing.JButton btnDangNhap1;
-    private com.ultramotor.swingx.Button btnThoat;
+    private com.swingx.Button btnThoat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblUser;
     private javax.swing.JPanel pnlLogin;
-    private textfield.PasswordField txtMatKhau;
-    private textfield.TextField txtTaiKhoan;
+    private com.swingx.PasswordField txtMatKhau;
+    private com.swingx.TextField txtTaiKhoan;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,5 +1,5 @@
 
-package com.ultramotor.swingx.model;
+package com.swingx.model;
 
 import javax.swing.Icon;
 

@@ -29,21 +29,21 @@ public class DatLaiMatKhauPanel extends javax.swing.JPanel {
 
         pnlQuenMatKhau = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        textField1 = new textfield.TextField();
-        button1 = new com.ultramotor.swingx.Button();
+        textField1 = new com.swingx.TextField();
+        button1 = new com.swingx.Button();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         pnlNhapOTP = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        button3 = new com.ultramotor.swingx.Button();
+        button3 = new com.swingx.Button();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        passwordField1 = new textfield.PasswordField();
+        passwordField1 = new com.swingx.PasswordField();
         pnlDatLaiMK = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        passwordField2 = new textfield.PasswordField();
-        passwordField3 = new textfield.PasswordField();
-        button4 = new com.ultramotor.swingx.Button();
+        passwordField2 = new com.swingx.PasswordField();
+        passwordField3 = new com.swingx.PasswordField();
+        button4 = new com.swingx.Button();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
 
@@ -254,9 +254,9 @@ public class DatLaiMatKhauPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.ultramotor.swingx.Button button1;
-    private com.ultramotor.swingx.Button button3;
-    private com.ultramotor.swingx.Button button4;
+    private com.swingx.Button button1;
+    private com.swingx.Button button3;
+    private com.swingx.Button button4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -266,12 +266,12 @@ public class DatLaiMatKhauPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private textfield.PasswordField passwordField1;
-    private textfield.PasswordField passwordField2;
-    private textfield.PasswordField passwordField3;
+    private com.swingx.PasswordField passwordField1;
+    private com.swingx.PasswordField passwordField2;
+    private com.swingx.PasswordField passwordField3;
     private javax.swing.JPanel pnlDatLaiMK;
     private javax.swing.JPanel pnlNhapOTP;
     private javax.swing.JPanel pnlQuenMatKhau;
-    private textfield.TextField textField1;
+    private com.swingx.TextField textField1;
     // End of variables declaration//GEN-END:variables
 }

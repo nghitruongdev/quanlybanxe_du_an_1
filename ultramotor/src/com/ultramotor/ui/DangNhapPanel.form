@@ -186,7 +186,7 @@
             <Property name="labelText" type="java.lang.String" value="Password"/>
           </Properties>
         </Component>
-        <Component class="com.ultramotor.swingx.Button" name="btnDangNhap">
+        <Component class="com.swingx.Button" name="btnDangNhap">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="99" type="rgb"/>
@@ -197,7 +197,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDangNhapActionPerformed"/>
           </Events>
         </Component>
-        <Component class="com.ultramotor.swingx.Button" name="btnThoat">
+        <Component class="com.swingx.Button" name="btnThoat">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="99" type="rgb"/>
