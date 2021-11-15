@@ -5,6 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetFactory;
+import javax.sql.rowset.RowSetProvider;
 
 /**
  *
@@ -13,23 +18,21 @@ import java.sql.SQLException;
 public class XJdbc {
 
     private static Connection con;
+    private static RowSetFactory factory;
     private static final String URL = "jdbc:sqlserver://localhost;databaseName=HONDA;username=sa;password=songlong";
 
-    public static Connection getCon() {
+    static {
         try {
-            if (con == null || con.isClosed()) {
-                con = DriverManager.getConnection(URL);
-            }
+            factory = RowSetProvider.newFactory();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(XJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return con;
     }
 
-    private static PreparedStatement getStmt(String sql, Object... args) throws SQLException {
+    protected static PreparedStatement getStmt(String sql, Object... args) throws SQLException {
         con = getCon();
         PreparedStatement pstmt;
-        if (sql.trim().startsWith("{") || sql.trim().startsWith("exec")) {
+        if (sql.trim().startsWith("{")) {
             pstmt = con.prepareCall(sql);
         } else {
             pstmt = con.prepareStatement(sql);
@@ -59,6 +62,17 @@ public class XJdbc {
         return value;
     }
 
+    public static CachedRowSet getRowSet(String sql, Object... args) {
+        CachedRowSet crs = null;
+        try (ResultSet rs = query(sql, args)) {
+            crs = factory.createCachedRowSet();
+            crs.populate(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(XJdbc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return crs;
+    }
+
     public static int update(String sql, Object... args) {
         int count = 0;
         try (PreparedStatement pstmt = getStmt(sql, args)) {
@@ -71,6 +85,17 @@ public class XJdbc {
         return count;
     }
 
+    public static Connection getCon() {
+        try {
+            if (con == null || con.isClosed()) {
+                con = DriverManager.getConnection(URL);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return con;
+    }
+
     public static void closeCon() {
         try {
             if (con != null) {
@@ -80,4 +105,9 @@ public class XJdbc {
             ex.printStackTrace();
         }
     }
+
+    public static RowSetFactory getFactory() {
+        return factory;
+    }
+
 }
