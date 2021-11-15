@@ -6,6 +6,7 @@
 package com.ultramotor.dao;
 
 import java.util.List;
+import javax.sql.rowset.CachedRowSet;
 
 /**
  *
@@ -15,6 +16,7 @@ public interface UltraDAO<Entity, ID> {
     Entity selectByID(ID id);
     List<Entity> selectAll();
     List<Entity> selectBySQL();
+    CachedRowSet getRowSet();
     
     void insert(Entity e);
     void update(Entity e);
