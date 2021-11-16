@@ -5,56 +5,18 @@
  */
 package com.ultramotor.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-/**
- *
- * @author nghipc
- */
-@Entity
-@Table(name = "HoaDon")
-@NamedQueries({
-    @NamedQuery(name = "HoaDon.findAll", query = "SELECT h FROM HoaDon h")})
-public class HoaDon implements Serializable {
+public class HoaDon  {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "idHD")
     private String idHD;
-    @Basic(optional = false)
-    @Column(name = "thoiGian")
-    @Temporal(TemporalType.DATE)
     private Date thoiGian;
-    @Basic(optional = false)
-    @Column(name = "loaiThanhToan")
     private String loaiThanhToan;
-    @Basic(optional = false)
-    @Column(name = "trangThai")
     private String trangThai;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idHD")
+    private String idKH;
+    private String idNV;
     private List<ChiTietHoaDon> chiTietHoaDonList;
-    @JoinColumn(name = "idKH", referencedColumnName = "idKH")
-    @ManyToOne
-    private KhachHang idKH;
-    @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
-    @ManyToOne(optional = false)
-    private NhanVien idNV;
 
     public HoaDon() {
     }
@@ -63,11 +25,13 @@ public class HoaDon implements Serializable {
         this.idHD = idHD;
     }
 
-    public HoaDon(String idHD, Date thoiGian, String loaiThanhToan, String trangThai) {
+    public HoaDon(String idHD, Date thoiGian, String loaiThanhToan, String trangThai, String idKH, String idNV) {
         this.idHD = idHD;
         this.thoiGian = thoiGian;
         this.loaiThanhToan = loaiThanhToan;
         this.trangThai = trangThai;
+        this.idKH = idKH;
+        this.idNV = idNV;
     }
 
     public String getIdHD() {
@@ -110,19 +74,19 @@ public class HoaDon implements Serializable {
         this.chiTietHoaDonList = chiTietHoaDonList;
     }
 
-    public KhachHang getIdKH() {
+    public String getIdKH() {
         return idKH;
     }
 
-    public void setIdKH(KhachHang idKH) {
+    public void setIdKH(String idKH) {
         this.idKH = idKH;
     }
 
-    public NhanVien getIdNV() {
+    public String getIdNV() {
         return idNV;
     }
 
-    public void setIdNV(NhanVien idNV) {
+    public void setIdNV(String idNV) {
         this.idNV = idNV;
     }
 
@@ -150,5 +114,5 @@ public class HoaDon implements Serializable {
     public String toString() {
         return "com.ultramotor.entity.HoaDon[ idHD=" + idHD + " ]";
     }
-    
+
 }

@@ -1,55 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ultramotor.entity;
 
-import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-/**
- *
- * @author nghipc
- */
-@Entity
-@Table(name = "ChiTietBaoDuong")
-@NamedQueries({
-    @NamedQuery(name = "ChiTietBaoDuong.findAll", query = "SELECT c FROM ChiTietBaoDuong c")})
-public class ChiTietBaoDuong implements Serializable {
+public class ChiTietBaoDuong {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @Column(name = "thoiGian")
-    @Temporal(TemporalType.DATE)
     private Date thoiGian;
-    @Basic(optional = false)
-    @Column(name = "noiDung")
     private String noiDung;
-    @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
-    @ManyToOne(optional = false)
-    private NhanVien idNV;
-    @JoinColumn(name = "id_SBH", referencedColumnName = "id_SBH")
-    @ManyToOne(optional = false)
-    private SoBaoHanh idSBH;
+    private String idNhanVien;
+    private String idSBH;
 
     public ChiTietBaoDuong() {
     }
@@ -58,10 +17,12 @@ public class ChiTietBaoDuong implements Serializable {
         this.id = id;
     }
 
-    public ChiTietBaoDuong(Integer id, Date thoiGian, String noiDung) {
+    public ChiTietBaoDuong(Integer id, Date thoiGian, String noiDung, String idNhanVien, String idSBH) {
         this.id = id;
         this.thoiGian = thoiGian;
         this.noiDung = noiDung;
+        this.idNhanVien = idNhanVien;
+        this.idSBH = idSBH;
     }
 
     public Integer getId() {
@@ -88,19 +49,19 @@ public class ChiTietBaoDuong implements Serializable {
         this.noiDung = noiDung;
     }
 
-    public NhanVien getIdNV() {
-        return idNV;
+    public String getIdNhanVien() {
+        return idNhanVien;
     }
 
-    public void setIdNV(NhanVien idNV) {
-        this.idNV = idNV;
+    public void setIdNhanVien(String idNhanVien) {
+        this.idNhanVien = idNhanVien;
     }
 
-    public SoBaoHanh getIdSBH() {
+    public String getIdSBH() {
         return idSBH;
     }
 
-    public void setIdSBH(SoBaoHanh idSBH) {
+    public void setIdSBH(String idSBH) {
         this.idSBH = idSBH;
     }
 
@@ -128,5 +89,5 @@ public class ChiTietBaoDuong implements Serializable {
     public String toString() {
         return "com.ultramotor.entity.ChiTietBaoDuong[ id=" + id + " ]";
     }
-    
+
 }

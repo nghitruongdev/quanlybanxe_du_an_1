@@ -1,74 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.ultramotor.entity;
 
-import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-/**
- *
- * @author nghipc
- */
-@Entity
-@Table(name = "NhanVien")
-@NamedQueries({
-    @NamedQuery(name = "NhanVien.findAll", query = "SELECT n FROM NhanVien n")})
-public class NhanVien implements Serializable {
+public class NhanVien {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id_NV")
+
     private String idNV;
-    @Basic(optional = false)
-    @Column(name = "HoNV")
     private String hoNV;
-    @Basic(optional = false)
-    @Column(name = "TenNV")
     private String tenNV;
-    @Basic(optional = false)
-    @Column(name = "NgaySinh")
-    @Temporal(TemporalType.DATE)
     private Date ngaySinh;
-    @Basic(optional = false)
-    @Column(name = "GioiTinh")
     private boolean gioiTinh;
-    @Basic(optional = false)
-    @Column(name = "DiaChi")
     private String diaChi;
-    @Basic(optional = false)
-    @Column(name = "SDT")
     private String sdt;
-    @Basic(optional = false)
-    @Column(name = "Email")
     private String email;
-    @Basic(optional = false)
-    @Column(name = "Luong")
     private double luong;
-    @Basic(optional = false)
-    @Column(name = "Hinh")
     private String hinh;
-    @Basic(optional = false)
-    @Column(name = "VaiTro")
     private String vaiTro;
-    @Column(name = "GhiChu")
+    private String matKhau;
     private String ghiChu;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "nhanVien")
-    private User user;
 
     public NhanVien() {
     }
@@ -77,7 +27,7 @@ public class NhanVien implements Serializable {
         this.idNV = idNV;
     }
 
-    public NhanVien(String idNV, String hoNV, String tenNV, Date ngaySinh, boolean gioiTinh, String diaChi, String sdt, String email, double luong, String hinh, String vaiTro) {
+    public NhanVien(String idNV, String hoNV, String tenNV, Date ngaySinh, boolean gioiTinh, String diaChi, String sdt, String email, double luong, String hinh, String vaiTro, String matKhau, String ghiChu) {
         this.idNV = idNV;
         this.hoNV = hoNV;
         this.tenNV = tenNV;
@@ -89,6 +39,8 @@ public class NhanVien implements Serializable {
         this.luong = luong;
         this.hinh = hinh;
         this.vaiTro = vaiTro;
+        this.matKhau = matKhau;
+        this.ghiChu = ghiChu;
     }
 
     public String getIdNV() {
@@ -179,20 +131,20 @@ public class NhanVien implements Serializable {
         this.vaiTro = vaiTro;
     }
 
+    public String getMatKhau() {
+        return matKhau;
+    }
+
+    public void setMatKhau(String matKhau) {
+        this.matKhau = matKhau;
+    }
+
     public String getGhiChu() {
         return ghiChu;
     }
 
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @Override
