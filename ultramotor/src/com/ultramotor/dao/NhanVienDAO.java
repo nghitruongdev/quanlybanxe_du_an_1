@@ -20,31 +20,45 @@ public class NhanVienDAO implements UltraDAO<NhanVien, String> {
     final String tableName = "NHANVIEN";
     Map<String, String> map = getColumnMap();
 
-    final String SELECT_BY_ID = String.format("select * from %s where %s = ?", tableName, map.get("maNV"));
-
+//    final String SELECT_BY_ID = String.format("select * from %s where %s = ?", tableName, map.get("maNV")); không hiểu cách này (Tú)
+    final String SELECT_BY_ID_SQL = "SELECT * FROM NhanVien WHERE id_NV=?";
+    final String SELECT_ALL_SQL = "SELECT * FROM NhanVien";
+    final String INSERT_SQL = "INSERT INTO NhanVien(id_NV,HONV,TENNV,NGAYSINH,GIOITINH,DIACHI,SDT,EMAIL,LUONG,HINH,VAITRO,MATKHAU,GHICHU)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    final String UPDATE_SQL = "UPDATE NhanVien SET HONV=?,TENNV=?,NGAYSINH=?,GIOITINH=?,DIACHI=?,SDT=?,EMAIL=?,LUONG=?,HINH=?,VAITRO=?,MATKHAU=?,GHICHU=? WHERE id_NV=?";
+    final String DELETE_SQL = "DELETE FROM NhanVien WHERE id_NV=?";
     @Override
     public void insert(NhanVien e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        XJdbcServer.update(INSERT_SQL,
+                e.getIdNV(),e.getHoNV(),e.getTenNV(),e.getNgaySinh(),e.getGioiTinh(),e.getDiaChi(),
+                e.getSdt(),e.getEmail(),e.getLuong(),e.getHinh(),e.getVaiTro(),e.getMatKhau(),e.getGhiChu());
     }
 
     @Override
     public void update(NhanVien e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        XJdbcServer.update(UPDATE_SQL,
+                e.getHoNV(),e.getTenNV(),e.getNgaySinh(),e.getGioiTinh(),e.getDiaChi(),
+                e.getSdt(),e.getEmail(),e.getLuong(),e.getHinh(),e.getVaiTro(),e.getMatKhau(),e.getGhiChu(),e.getIdNV());
     }
 
     @Override
     public void delete(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        XJdbcServer.update(DELETE_SQL, id);
+   
     }
 
     @Override
     public NhanVien selectByID(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println(id);
+        List<NhanVien> list = this.selectBySQL(SELECT_BY_ID_SQL, id);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
     }
 
     @Override
     public List<NhanVien> selectAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.selectBySQL(SELECT_ALL_SQL);
     }
 
     @Override

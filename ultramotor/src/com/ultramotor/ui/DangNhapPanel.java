@@ -5,6 +5,9 @@
  */
 package com.ultramotor.ui;
 
+import com.ultramotor.dao.NhanVienDAO;
+import com.ultramotor.entity.NhanVien;
+import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
 
 /**
@@ -162,7 +165,7 @@ public class DangNhapPanel extends javax.swing.JFrame {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         // TODO add your handling code here:
-        Login();
+        dangNhap();
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
@@ -218,6 +221,7 @@ public class DangNhapPanel extends javax.swing.JFrame {
     private com.swingx.PasswordField pwdMatKhau;
     private com.swingx.TextField txtTenDangNhap;
     // End of variables declaration//GEN-END:variables
+    NhanVienDAO dao = new NhanVienDAO();
     private void init(){
         this.setLocationRelativeTo(null);
     }
@@ -237,4 +241,29 @@ public class DangNhapPanel extends javax.swing.JFrame {
             MsgBox.error("Sai tên đăng nhập!");
         }
     }
+
+    void dangNhap() {
+        String manv = txtTenDangNhap.getText();
+        String matKhau = new String(pwdMatKhau.getPassword());
+        try {
+            NhanVien nhanVien = dao.selectByID(manv);
+            if (nhanVien != null) {
+                String matKhau2 = nhanVien.getMatKhau();
+                if (matKhau.equals(matKhau2)) {
+                    Auth.user = nhanVien;
+                    MsgBox.inform("Đăng nhập thành công!");
+                    this.dispose();
+                } else {
+                    MsgBox.inform("Sai mật khẩu!");
+                }
+            } else {
+                MsgBox.inform("Sai tên đăng nhập!");
+            }
+        } catch (Exception e) {
+            MsgBox.inform("Đăng nhập thất bại!");
+        }
+
+    }
+
+
 }
