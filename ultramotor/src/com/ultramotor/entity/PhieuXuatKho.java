@@ -43,8 +43,8 @@ public class PhieuXuatKho implements Serializable {
     private Date ngayXuat;
     @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
     @ManyToOne(optional = false)
-    private NhanVien idNV;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPX")
+    private NhanVien nhanVien;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phieuXuatKho")
     private List<ChiTietXuatKho> chiTietXuatKhoList;
 
     public PhieuXuatKho() {
@@ -75,12 +75,12 @@ public class PhieuXuatKho implements Serializable {
         this.ngayXuat = ngayXuat;
     }
 
-    public NhanVien getIdNV() {
-        return idNV;
+    public NhanVien getNhanVien() {
+        return nhanVien;
     }
 
-    public void setIdNV(NhanVien idNV) {
-        this.idNV = idNV;
+    public void setNhanVien(NhanVien nhanVien) {
+        this.nhanVien = nhanVien;
     }
 
     public List<ChiTietXuatKho> getChiTietXuatKhoList() {

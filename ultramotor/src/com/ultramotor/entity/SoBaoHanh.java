@@ -34,13 +34,13 @@ public class SoBaoHanh implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_SBH")
     private String idSBH;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSBH")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "soBaoHanh")
     private List<ChiTietBaoHanh> chiTietBaoHanhList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSBH")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "soBaoHanh")
     private List<ChiTietBaoDuong> chiTietBaoDuongList;
     @JoinColumn(name = "id_CTHD", referencedColumnName = "id_CTHD")
     @ManyToOne(optional = false)
-    private ChiTietHoaDon idCTHD;
+    private ChiTietHoaDon chiTietHoaDon;
 
     public SoBaoHanh() {
     }
@@ -73,12 +73,12 @@ public class SoBaoHanh implements Serializable {
         this.chiTietBaoDuongList = chiTietBaoDuongList;
     }
 
-    public ChiTietHoaDon getIdCTHD() {
-        return idCTHD;
+    public ChiTietHoaDon getChiTietHoaDon() {
+        return chiTietHoaDon;
     }
 
-    public void setIdCTHD(ChiTietHoaDon idCTHD) {
-        this.idCTHD = idCTHD;
+    public void setChiTietHoaDon(ChiTietHoaDon chiTietHoaDon) {
+        this.chiTietHoaDon = chiTietHoaDon;
     }
 
     @Override

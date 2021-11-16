@@ -13,12 +13,19 @@ import javax.sql.rowset.CachedRowSet;
  * @author nghipc
  */
 public interface UltraDAO<Entity, ID> {
-    Entity selectByID(ID id);
-    List<Entity> selectAll();
-    List<Entity> selectBySQL();
-    CachedRowSet getRowSet();
-    
+
     void insert(Entity e);
+
     void update(Entity e);
+
     void delete(ID id);
+
+    Entity selectByID(ID id);
+
+    List<Entity> selectAll();
+
+    List<Entity> selectBySQL(String sql, Object... args);
+
+    CachedRowSet getRowSet();
+
 }
