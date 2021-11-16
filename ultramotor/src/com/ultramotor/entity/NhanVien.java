@@ -24,69 +24,38 @@ import javax.persistence.TemporalType;
  *
  * @author nghipc
  */
-@Entity
-@Table(name = "NhanVien")
-@NamedQueries({
-    @NamedQuery(name = "NhanVien.findAll", query = "SELECT n FROM NhanVien n")})
 public class NhanVien implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id_NV")
+//    private static final long serialVersionUID = 1L;
     private String idNV;
-    @Basic(optional = false)
-    @Column(name = "HoNV")
     private String hoNV;
-    @Basic(optional = false)
-    @Column(name = "TenNV")
     private String tenNV;
-    @Basic(optional = false)
-    @Column(name = "NgaySinh")
-    @Temporal(TemporalType.DATE)
     private Date ngaySinh;
-    @Basic(optional = false)
-    @Column(name = "GioiTinh")
     private boolean gioiTinh;
-    @Basic(optional = false)
-    @Column(name = "DiaChi")
     private String diaChi;
-    @Basic(optional = false)
-    @Column(name = "SDT")
     private String sdt;
-    @Basic(optional = false)
-    @Column(name = "Email")
     private String email;
-    @Basic(optional = false)
-    @Column(name = "Luong")
     private double luong;
-    @Basic(optional = false)
-    @Column(name = "Hinh")
     private String hinh;
-    @Basic(optional = false)
-    @Column(name = "VaiTro")
     private String vaiTro;
-    @Basic(optional = false)
-    @Column(name = "matKhau")
     private String matKhau;
-    @Column(name = "GhiChu")
     private String ghiChu;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
-    private List<PhieuXuatKho> phieuXuatKhoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
-    private List<ChiTietBaoHanh> chiTietBaoHanhList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
-    private List<ChiTietBaoDuong> chiTietBaoDuongList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
-    private List<HoaDon> hoaDonList;
-    @OneToMany(mappedBy = "nhanVien")
-    private List<KhachHang> khachHangList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
-    private List<DichVu> dichVuList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
-    private List<PhieuNhapKho> phieuNhapKhoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
-    private List<SanPham> sanPhamList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
+//    private List<PhieuXuatKho> phieuXuatKhoList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
+//    private List<ChiTietBaoHanh> chiTietBaoHanhList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
+//    private List<ChiTietBaoDuong> chiTietBaoDuongList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
+//    private List<HoaDon> hoaDonList;
+//    @OneToMany(mappedBy = "nhanVien")
+//    private List<KhachHang> khachHangList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
+//    private List<DichVu> dichVuList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
+//    private List<PhieuNhapKho> phieuNhapKhoList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhanVien")
+//    private List<SanPham> sanPhamList;
 
     public NhanVien() {
     }
@@ -215,69 +184,69 @@ public class NhanVien implements Serializable {
         this.ghiChu = ghiChu;
     }
 
-    public List<PhieuXuatKho> getPhieuXuatKhoList() {
-        return phieuXuatKhoList;
-    }
-
-    public void setPhieuXuatKhoList(List<PhieuXuatKho> phieuXuatKhoList) {
-        this.phieuXuatKhoList = phieuXuatKhoList;
-    }
-
-    public List<ChiTietBaoHanh> getChiTietBaoHanhList() {
-        return chiTietBaoHanhList;
-    }
-
-    public void setChiTietBaoHanhList(List<ChiTietBaoHanh> chiTietBaoHanhList) {
-        this.chiTietBaoHanhList = chiTietBaoHanhList;
-    }
-
-    public List<ChiTietBaoDuong> getChiTietBaoDuongList() {
-        return chiTietBaoDuongList;
-    }
-
-    public void setChiTietBaoDuongList(List<ChiTietBaoDuong> chiTietBaoDuongList) {
-        this.chiTietBaoDuongList = chiTietBaoDuongList;
-    }
-
-    public List<HoaDon> getHoaDonList() {
-        return hoaDonList;
-    }
-
-    public void setHoaDonList(List<HoaDon> hoaDonList) {
-        this.hoaDonList = hoaDonList;
-    }
-
-    public List<KhachHang> getKhachHangList() {
-        return khachHangList;
-    }
-
-    public void setKhachHangList(List<KhachHang> khachHangList) {
-        this.khachHangList = khachHangList;
-    }
-
-    public List<DichVu> getDichVuList() {
-        return dichVuList;
-    }
-
-    public void setDichVuList(List<DichVu> dichVuList) {
-        this.dichVuList = dichVuList;
-    }
-
-    public List<PhieuNhapKho> getPhieuNhapKhoList() {
-        return phieuNhapKhoList;
-    }
-
-    public void setPhieuNhapKhoList(List<PhieuNhapKho> phieuNhapKhoList) {
-        this.phieuNhapKhoList = phieuNhapKhoList;
-    }
-
-    public List<SanPham> getSanPhamList() {
-        return sanPhamList;
-    }
-
-    public void setSanPhamList(List<SanPham> sanPhamList) {
-        this.sanPhamList = sanPhamList;
-    }
+//    public List<PhieuXuatKho> getPhieuXuatKhoList() {
+//        return phieuXuatKhoList;
+//    }
+//
+//    public void setPhieuXuatKhoList(List<PhieuXuatKho> phieuXuatKhoList) {
+//        this.phieuXuatKhoList = phieuXuatKhoList;
+//    }
+//
+//    public List<ChiTietBaoHanh> getChiTietBaoHanhList() {
+//        return chiTietBaoHanhList;
+//    }
+//
+//    public void setChiTietBaoHanhList(List<ChiTietBaoHanh> chiTietBaoHanhList) {
+//        this.chiTietBaoHanhList = chiTietBaoHanhList;
+//    }
+//
+//    public List<ChiTietBaoDuong> getChiTietBaoDuongList() {
+//        return chiTietBaoDuongList;
+//    }
+//
+//    public void setChiTietBaoDuongList(List<ChiTietBaoDuong> chiTietBaoDuongList) {
+//        this.chiTietBaoDuongList = chiTietBaoDuongList;
+//    }
+//
+//    public List<HoaDon> getHoaDonList() {
+//        return hoaDonList;
+//    }
+//
+//    public void setHoaDonList(List<HoaDon> hoaDonList) {
+//        this.hoaDonList = hoaDonList;
+//    }
+//
+//    public List<KhachHang> getKhachHangList() {
+//        return khachHangList;
+//    }
+//
+//    public void setKhachHangList(List<KhachHang> khachHangList) {
+//        this.khachHangList = khachHangList;
+//    }
+//
+//    public List<DichVu> getDichVuList() {
+//        return dichVuList;
+//    }
+//
+//    public void setDichVuList(List<DichVu> dichVuList) {
+//        this.dichVuList = dichVuList;
+//    }
+//
+//    public List<PhieuNhapKho> getPhieuNhapKhoList() {
+//        return phieuNhapKhoList;
+//    }
+//
+//    public void setPhieuNhapKhoList(List<PhieuNhapKho> phieuNhapKhoList) {
+//        this.phieuNhapKhoList = phieuNhapKhoList;
+//    }
+//
+//    public List<SanPham> getSanPhamList() {
+//        return sanPhamList;
+//    }
+//
+//    public void setSanPhamList(List<SanPham> sanPhamList) {
+//        this.sanPhamList = sanPhamList;
+//    }
 
     @Override
     public int hashCode() {

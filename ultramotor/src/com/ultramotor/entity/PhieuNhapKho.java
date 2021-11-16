@@ -26,25 +26,12 @@ import javax.persistence.TemporalType;
  *
  * @author nghipc
  */
-@Entity
-@Table(name = "PhieuNhapKho")
-@NamedQueries({
-    @NamedQuery(name = "PhieuNhapKho.findAll", query = "SELECT p FROM PhieuNhapKho p")})
+
 public class PhieuNhapKho implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id_PN")
     private String idPN;
-    @Basic(optional = false)
-    @Column(name = "ngayNhap")
-    @Temporal(TemporalType.DATE)
     private Date ngayNhap;
-    @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
-    @ManyToOne(optional = false)
-    private NhanVien nhanVien;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phieuNhapKho")
+    private String idNV;
     private List<ChiTietNhapKho> chiTietNhapKhoList;
 
     public PhieuNhapKho() {
@@ -54,9 +41,10 @@ public class PhieuNhapKho implements Serializable {
         this.idPN = idPN;
     }
 
-    public PhieuNhapKho(String idPN, Date ngayNhap) {
+    public PhieuNhapKho(String idPN, Date ngayNhap, String idNV) {
         this.idPN = idPN;
         this.ngayNhap = ngayNhap;
+        this.idNV = idNV;
     }
 
     public String getIdPN() {
@@ -75,12 +63,12 @@ public class PhieuNhapKho implements Serializable {
         this.ngayNhap = ngayNhap;
     }
 
-    public NhanVien getNhanVien() {
-        return nhanVien;
+    public String getIdNV() {
+        return idNV;
     }
 
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
+    public void setIdNV(String idNV) {
+        this.idNV = idNV;
     }
 
     public List<ChiTietNhapKho> getChiTietNhapKhoList() {

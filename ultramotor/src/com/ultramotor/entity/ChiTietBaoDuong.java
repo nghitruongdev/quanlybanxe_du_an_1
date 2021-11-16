@@ -7,49 +7,20 @@ package com.ultramotor.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
  * @author nghipc
  */
-@Entity
-@Table(name = "ChiTietBaoDuong")
-@NamedQueries({
-    @NamedQuery(name = "ChiTietBaoDuong.findAll", query = "SELECT c FROM ChiTietBaoDuong c")})
+
 public class ChiTietBaoDuong implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
+ 
     private Integer id;
-    @Basic(optional = false)
-    @Column(name = "thoiGian")
-    @Temporal(TemporalType.DATE)
     private Date thoiGian;
-    @Basic(optional = false)
-    @Column(name = "noiDung")
     private String noiDung;
-    @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
-    @ManyToOne(optional = false)
-    private NhanVien nhanVien;
-    @JoinColumn(name = "id_SBH", referencedColumnName = "id_SBH")
-    @ManyToOne(optional = false)
-    private SoBaoHanh soBaoHanh;
+    private String idNhanVien;
+    private String idSBH;
 
     public ChiTietBaoDuong() {
     }
@@ -58,11 +29,15 @@ public class ChiTietBaoDuong implements Serializable {
         this.id = id;
     }
 
-    public ChiTietBaoDuong(Integer id, Date thoiGian, String noiDung) {
+    public ChiTietBaoDuong(Integer id, Date thoiGian, String noiDung, String idNhanVien, String idSBH) {
         this.id = id;
         this.thoiGian = thoiGian;
         this.noiDung = noiDung;
+        this.idNhanVien = idNhanVien;
+        this.idSBH = idSBH;
     }
+
+    
 
     public Integer getId() {
         return id;
@@ -88,21 +63,23 @@ public class ChiTietBaoDuong implements Serializable {
         this.noiDung = noiDung;
     }
 
-    public NhanVien getNhanVien() {
-        return nhanVien;
+    public String getIdNhanVien() {
+        return idNhanVien;
     }
 
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
+    public void setIdNhanVien(String idNhanVien) {
+        this.idNhanVien = idNhanVien;
     }
 
-    public SoBaoHanh getSoBaoHanh() {
-        return soBaoHanh;
+    public String getIdSBH() {
+        return idSBH;
     }
 
-    public void setSoBaoHanh(SoBaoHanh soBaoHanh) {
-        this.soBaoHanh = soBaoHanh;
+    public void setIdSBH(String idSBH) {
+        this.idSBH = idSBH;
     }
+
+    
 
     @Override
     public int hashCode() {

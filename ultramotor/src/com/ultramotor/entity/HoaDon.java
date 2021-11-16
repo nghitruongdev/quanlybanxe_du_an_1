@@ -26,35 +26,15 @@ import javax.persistence.TemporalType;
  *
  * @author nghipc
  */
-@Entity
-@Table(name = "HoaDon")
-@NamedQueries({
-    @NamedQuery(name = "HoaDon.findAll", query = "SELECT h FROM HoaDon h")})
 public class HoaDon implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "idHD")
     private String idHD;
-    @Basic(optional = false)
-    @Column(name = "thoiGian")
-    @Temporal(TemporalType.DATE)
     private Date thoiGian;
-    @Basic(optional = false)
-    @Column(name = "loaiThanhToan")
     private String loaiThanhToan;
-    @Basic(optional = false)
-    @Column(name = "trangThai")
     private String trangThai;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hoaDon")
+    private String idKH;
+    private String idNV;
     private List<ChiTietHoaDon> chiTietHoaDonList;
-    @JoinColumn(name = "idKH", referencedColumnName = "idKH")
-    @ManyToOne
-    private KhachHang khachHang;
-    @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
-    @ManyToOne(optional = false)
-    private NhanVien nhanVien;
 
     public HoaDon() {
     }
@@ -63,11 +43,13 @@ public class HoaDon implements Serializable {
         this.idHD = idHD;
     }
 
-    public HoaDon(String idHD, Date thoiGian, String loaiThanhToan, String trangThai) {
+    public HoaDon(String idHD, Date thoiGian, String loaiThanhToan, String trangThai, String idKH, String idNV) {
         this.idHD = idHD;
         this.thoiGian = thoiGian;
         this.loaiThanhToan = loaiThanhToan;
         this.trangThai = trangThai;
+        this.idKH = idKH;
+        this.idNV = idNV;
     }
 
     public String getIdHD() {
@@ -110,20 +92,20 @@ public class HoaDon implements Serializable {
         this.chiTietHoaDonList = chiTietHoaDonList;
     }
 
-    public KhachHang getKhachHang() {
-        return khachHang;
+    public String getIdKH() {
+        return idKH;
     }
 
-    public void setKhachHang(KhachHang khachHang) {
-        this.khachHang = khachHang;
+    public void setIdKH(String idKH) {
+        this.idKH = idKH;
     }
 
-    public NhanVien getNhanVien() {
-        return nhanVien;
+    public String getIdNV() {
+        return idNV;
     }
 
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
+    public void setIdNV(String idNV) {
+        this.idNV = idNV;
     }
 
     @Override
@@ -150,5 +132,5 @@ public class HoaDon implements Serializable {
     public String toString() {
         return "com.ultramotor.entity.HoaDon[ idHD=" + idHD + " ]";
     }
-    
+
 }

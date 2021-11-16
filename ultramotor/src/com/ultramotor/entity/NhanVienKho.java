@@ -11,9 +11,5 @@ package com.ultramotor.entity;
  */
 public class NhanVienKho extends NhanVien {
 
-    public NhanVienKho() {
-        super();
-        this.setVaiTro("Nhân Viên Kho");
-    }
 
 }
