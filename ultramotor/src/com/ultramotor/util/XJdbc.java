@@ -43,9 +43,15 @@ public class XJdbc {
         return pstmt;
     }
 
-    public static ResultSet query(String sql, Object... args) throws SQLException {
-        PreparedStatement pstmt = getStmt(sql, args);
-        return pstmt.executeQuery();
+    public static ResultSet query(String sql, Object... args) {
+         ResultSet rs = null;
+        try {
+            PreparedStatement pstmt = getStmt(sql, args);
+            rs = pstmt.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(XJdbc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
     }
 
     public static Object value(String sql, Object... args) {

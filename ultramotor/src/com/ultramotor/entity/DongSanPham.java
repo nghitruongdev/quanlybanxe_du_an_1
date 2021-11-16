@@ -5,46 +5,13 @@
  */
 package com.ultramotor.entity;
 
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-/**
- *
- * @author nghipc
- */
-@Entity
-@Table(name = "DongSanPham")
-@NamedQueries({
-    @NamedQuery(name = "DongSanPham.findAll", query = "SELECT d FROM DongSanPham d")})
-public class DongSanPham implements Serializable {
+public class DongSanPham {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id_DongSP")
     private String idDongSP;
-    @Basic(optional = false)
-    @Column(name = "tenDongSP")
     private String tenDongSP;
-    @JoinColumn(name = "id_LH", referencedColumnName = "id_LH")
-    @ManyToOne(optional = false)
-    private LoaiHang idLH;
-    @JoinColumn(name = "id_NSX", referencedColumnName = "id_NSX")
-    @ManyToOne(optional = false)
-    private NhaSanXuat idNSX;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDongSP")
-    private List<ModelSanPham> modelSanPhamList;
+    private String idLH;
+    private String idNSX;
 
     public DongSanPham() {
     }
@@ -53,11 +20,13 @@ public class DongSanPham implements Serializable {
         this.idDongSP = idDongSP;
     }
 
-    public DongSanPham(String idDongSP, String tenDongSP) {
+    public DongSanPham(String idDongSP, String tenDongSP, String idLH, String idNSX) {
         this.idDongSP = idDongSP;
         this.tenDongSP = tenDongSP;
+        this.idLH = idLH;
+        this.idNSX = idNSX;
     }
-
+    
     public String getIdDongSP() {
         return idDongSP;
     }
@@ -74,28 +43,20 @@ public class DongSanPham implements Serializable {
         this.tenDongSP = tenDongSP;
     }
 
-    public LoaiHang getIdLH() {
+    public String getIdLH() {
         return idLH;
     }
 
-    public void setIdLH(LoaiHang idLH) {
+    public void setIdLH(String idLH) {
         this.idLH = idLH;
     }
 
-    public NhaSanXuat getIdNSX() {
+    public String getIdNSX() {
         return idNSX;
     }
 
-    public void setIdNSX(NhaSanXuat idNSX) {
+    public void setIdNSX(String idNSX) {
         this.idNSX = idNSX;
-    }
-
-    public List<ModelSanPham> getModelSanPhamList() {
-        return modelSanPhamList;
-    }
-
-    public void setModelSanPhamList(List<ModelSanPham> modelSanPhamList) {
-        this.modelSanPhamList = modelSanPhamList;
     }
 
     @Override
