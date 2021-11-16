@@ -47,14 +47,14 @@ public class HoaDon implements Serializable {
     @Basic(optional = false)
     @Column(name = "trangThai")
     private String trangThai;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idHD")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hoaDon")
     private List<ChiTietHoaDon> chiTietHoaDonList;
     @JoinColumn(name = "idKH", referencedColumnName = "idKH")
     @ManyToOne
-    private KhachHang idKH;
+    private KhachHang khachHang;
     @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
     @ManyToOne(optional = false)
-    private NhanVien idNV;
+    private NhanVien nhanVien;
 
     public HoaDon() {
     }
@@ -110,20 +110,20 @@ public class HoaDon implements Serializable {
         this.chiTietHoaDonList = chiTietHoaDonList;
     }
 
-    public KhachHang getIdKH() {
-        return idKH;
+    public KhachHang getKhachHang() {
+        return khachHang;
     }
 
-    public void setIdKH(KhachHang idKH) {
-        this.idKH = idKH;
+    public void setKhachHang(KhachHang khachHang) {
+        this.khachHang = khachHang;
     }
 
-    public NhanVien getIdNV() {
-        return idNV;
+    public NhanVien getNhanVien() {
+        return nhanVien;
     }
 
-    public void setIdNV(NhanVien idNV) {
-        this.idNV = idNV;
+    public void setNhanVien(NhanVien nhanVien) {
+        this.nhanVien = nhanVien;
     }
 
     @Override

@@ -33,9 +33,9 @@ public class NhaSanXuat implements Serializable {
     @Column(name = "id_NSX")
     private String idNSX;
     @Basic(optional = false)
-    @Column(name = "TENNSX")
-    private String tennsx;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idNSX")
+    @Column(name = "TenNSX")
+    private String tenNSX;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nhaSanXuat")
     private List<DongSanPham> dongSanPhamList;
 
     public NhaSanXuat() {
@@ -45,9 +45,9 @@ public class NhaSanXuat implements Serializable {
         this.idNSX = idNSX;
     }
 
-    public NhaSanXuat(String idNSX, String tennsx) {
+    public NhaSanXuat(String idNSX, String tenNSX) {
         this.idNSX = idNSX;
-        this.tennsx = tennsx;
+        this.tenNSX = tenNSX;
     }
 
     public String getIdNSX() {
@@ -58,12 +58,12 @@ public class NhaSanXuat implements Serializable {
         this.idNSX = idNSX;
     }
 
-    public String getTennsx() {
-        return tennsx;
+    public String getTenNSX() {
+        return tenNSX;
     }
 
-    public void setTennsx(String tennsx) {
-        this.tennsx = tennsx;
+    public void setTenNSX(String tenNSX) {
+        this.tenNSX = tenNSX;
     }
 
     public List<DongSanPham> getDongSanPhamList() {

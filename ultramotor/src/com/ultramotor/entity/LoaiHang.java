@@ -35,7 +35,7 @@ public class LoaiHang implements Serializable {
     @Basic(optional = false)
     @Column(name = "TenLoaiHang")
     private String tenLoaiHang;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLH")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "loaiHang")
     private List<DongSanPham> dongSanPhamList;
 
     public LoaiHang() {

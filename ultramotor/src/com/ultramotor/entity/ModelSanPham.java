@@ -40,11 +40,11 @@ public class ModelSanPham implements Serializable {
     @Basic(optional = false)
     @Column(name = "doiXe")
     private int doiXe;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idModel")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modelSanPham")
     private List<SanPham> sanPhamList;
     @JoinColumn(name = "id_DongSP", referencedColumnName = "id_DongSP")
     @ManyToOne(optional = false)
-    private DongSanPham idDongSP;
+    private DongSanPham dongSanPham;
 
     public ModelSanPham() {
     }
@@ -91,12 +91,12 @@ public class ModelSanPham implements Serializable {
         this.sanPhamList = sanPhamList;
     }
 
-    public DongSanPham getIdDongSP() {
-        return idDongSP;
+    public DongSanPham getDongSanPham() {
+        return dongSanPham;
     }
 
-    public void setIdDongSP(DongSanPham idDongSP) {
-        this.idDongSP = idDongSP;
+    public void setDongSanPham(DongSanPham dongSanPham) {
+        this.dongSanPham = dongSanPham;
     }
 
     @Override
