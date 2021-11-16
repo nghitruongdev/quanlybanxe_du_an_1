@@ -25,32 +25,13 @@ import javax.persistence.Table;
  *
  * @author nghipc
  */
-@Entity
-@Table(name = "ChiTietHoaDon")
-@NamedQueries({
-    @NamedQuery(name = "ChiTietHoaDon.findAll", query = "SELECT c FROM ChiTietHoaDon c")})
 public class ChiTietHoaDon implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id_CTHD")
     private Integer idCTHD;
-    @Basic(optional = false)
-    @Column(name = "donGia")
     private double donGia;
-    @JoinColumn(name = "idDV", referencedColumnName = "idDV")
-    @ManyToOne(optional = false)
-    private DichVu dichVu;
-    @JoinColumn(name = "idHD", referencedColumnName = "idHD")
-    @ManyToOne(optional = false)
-    private HoaDon hoaDon;
-    @JoinColumn(name = "SKU", referencedColumnName = "SKU")
-    @ManyToOne
-    private SanPham sanPham;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chiTietHoaDon")
-    private List<SoBaoHanh> soBaoHanhList;
+    private String idDV;
+    private String idHD;
+    private String SKU;
 
     public ChiTietHoaDon() {
     }
@@ -59,9 +40,16 @@ public class ChiTietHoaDon implements Serializable {
         this.idCTHD = idCTHD;
     }
 
-    public ChiTietHoaDon(Integer idCTHD, double donGia) {
+    public ChiTietHoaDon(double donGia, String idDV, String idHD, String SKU) {
+        this(null, donGia, idDV, idHD, SKU);
+    }
+
+    public ChiTietHoaDon(Integer idCTHD, double donGia, String idDV, String idHD, String SKU) {
         this.idCTHD = idCTHD;
         this.donGia = donGia;
+        this.idDV = idDV;
+        this.idHD = idHD;
+        this.SKU = SKU;
     }
 
     public Integer getIdCTHD() {
@@ -80,36 +68,28 @@ public class ChiTietHoaDon implements Serializable {
         this.donGia = donGia;
     }
 
-    public DichVu getDichVu() {
-        return dichVu;
+    public String getIdDV() {
+        return idDV;
     }
 
-    public void setDichVu(DichVu dichVu) {
-        this.dichVu = dichVu;
+    public void setIdDV(String idDV) {
+        this.idDV = idDV;
     }
 
-    public HoaDon getHoaDon() {
-        return hoaDon;
+    public String getIdHD() {
+        return idHD;
     }
 
-    public void setHoaDon(HoaDon hoaDon) {
-        this.hoaDon = hoaDon;
+    public void setIdHD(String idHD) {
+        this.idHD = idHD;
     }
 
-    public SanPham getSanPham() {
-        return sanPham;
+    public String getSKU() {
+        return SKU;
     }
 
-    public void setSanPham(SanPham sanPham) {
-        this.sanPham = sanPham;
-    }
-
-    public List<SoBaoHanh> getSoBaoHanhList() {
-        return soBaoHanhList;
-    }
-
-    public void setSoBaoHanhList(List<SoBaoHanh> soBaoHanhList) {
-        this.soBaoHanhList = soBaoHanhList;
+    public void setSKU(String SKU) {
+        this.SKU = SKU;
     }
 
     @Override
@@ -136,5 +116,5 @@ public class ChiTietHoaDon implements Serializable {
     public String toString() {
         return "com.ultramotor.entity.ChiTietHoaDon[ idCTHD=" + idCTHD + " ]";
     }
-    
+
 }

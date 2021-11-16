@@ -1,78 +1,74 @@
 package com.ultramotor.dao;
 
 import com.ultramotor.entity.NhanVien;
+import com.ultramotor.entity.NhanVienBanHang;
+import com.ultramotor.entity.NhanVienKho;
 import com.ultramotor.entity.TruongPhong;
-import com.ultramotor.util.XJdbcServer;
+import com.ultramotor.util.XJdbc;
 import java.util.List;
 import javax.sql.rowset.CachedRowSet;
-import static com.ultramotor.util.XJdbcServer.*;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class NhanVienDAO implements UltraDAO<NhanVien, String> {
+public class NhanVienDAO extends UltraDAO<NhanVien, String> {
 
-    final String tableName = "NHANVIEN";
-    Map<String, String> map = getColumnMap();
-
-    final String SELECT_BY_ID = String.format("select * from %s where %s = ?", tableName, map.get("maNV"));
+    {
+        TABLE_NAME = "NhanVien";
+        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_NV");
+        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+    }
 
     @Override
     public void insert(NhanVien e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void update(NhanVien e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void delete(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public NhanVien selectByID(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<NhanVien> selectAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public List<NhanVien> selectBySQL(String sql, Object... args) {
         List<NhanVien> list = new ArrayList<>();
-        try (ResultSet rs = query(sql, args)) {
+        try (ResultSet rs = XJdbc.query(sql, args)) {
             while (rs.next()) {
                 NhanVien nv = null;
-                String vaiTro = rs.getString(map.get("vaiTro"));
+                String vaiTro = rs.getString("VaiTro");
                 switch (vaiTro) {
                     case "Trưởng Phòng":
                         nv = new TruongPhong();
                         break;
-//                    case ""
-//                        list.add(new NhanVien(maNV, hoNV, tenNV, ngaySinh, gioiTinh, diaChi, sdt, email, luong, hinh, vaiTro, matKhau, ghiChu));
+                    case "Nhân Viên Bán Hàng":
+                        nv = new NhanVienBanHang();
+                        break;
+                    case "Nhân Viên Kho":
+                        nv = new NhanVienKho();
+                        break;
                 }
-                String maNV = rs.getString(map.get("maNV"));
-                String hoNV = rs.getString(map.get("hoNV"));
-                String tenNV = rs.getString(map.get("tenNV"));
-                Date ngaySinh = rs.getDate(map.get("ngaySinh"));
-                boolean gioiTinh = rs.getBoolean(map.get("gioiTinh"));
-                String diaChi = rs.getString(map.get("diaChi"));
-                String sdt = rs.getString(map.get("sdt"));
-                String email = rs.getString(map.get("email"));
-                Double luong = rs.getDouble(map.get("luong"));
-                String hinh = rs.getString(map.get("hinh"));
-                String matKhau = rs.getString(map.get("matKhau"));
-                String ghiChu = rs.getString(map.get("ghiChu"));
+                nv.setIdNV(rs.getString(1));
+                nv.setHoNV(rs.getString(2));
+                nv.setTenNV(rs.getString(3));
+                nv.setNgaySinh(rs.getDate(4));
+                nv.setGioiTinh(rs.getBoolean(5));
+                nv.setDiaChi(rs.getString(6));
+                nv.setSdt(rs.getString(7));
+                nv.setEmail(rs.getString(8));
+                nv.setLuong(rs.getDouble(9));
+                nv.setHinh(rs.getString(10));
+                nv.setVaiTro(rs.getString(11));
+                nv.setMatKhau(rs.getString(12));
+                nv.setGhiChu(rs.getString(13));
+                list.add(nv);
             }
         } catch (SQLException ex) {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,27 +76,10 @@ public class NhanVienDAO implements UltraDAO<NhanVien, String> {
         return list;
     }
 
-    @Override
+//    @Override
     public CachedRowSet getRowSet() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private Map<String, String> getColumnMap() {
-        Map<String, String> columns = new HashMap<>();
-        columns.put("maNV", "id_NV");
-        columns.put("hoNV", "HoNV");
-        columns.put("tenNV", "TenNV");
-        columns.put("ngaySinh", "NgaySinh");
-        columns.put("gioiTinh", "GioiTinh");
-        columns.put("diaChi", "DiaChi");
-        columns.put("sdt", "SDT");
-        columns.put("email", "Email");
-        columns.put("luong", "Luong");
-        columns.put("hinh", "Hinh");
-        columns.put("vaiTro", "VaiTro");
-        columns.put("matKhau", "MatKhau");
-        columns.put("ghiChu", "GhiChu");
-        return columns;
+//        return XJdbc.getRowSet("Select * from NhanVien");
+        return XJdbc.getRowSet(SELECT_ALL);
     }
 
 }

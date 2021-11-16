@@ -23,50 +23,20 @@ import javax.persistence.Table;
  *
  * @author nghipc
  */
-@Entity
-@Table(name = "SanPham")
-@NamedQueries({
-    @NamedQuery(name = "SanPham.findAll", query = "SELECT s FROM SanPham s")})
+
 public class SanPham implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "SKU")
     private String sku;
-    @Basic(optional = false)
-    @Column(name = "tenSP")
     private String tenSP;
-    @Column(name = "hinh")
     private String hinh;
-    @Basic(optional = false)
-    @Column(name = "mauSac")
     private String mauSac;
-    @Basic(optional = false)
-    @Column(name = "phanKhoi")
     private String phanKhoi;
-    @Column(name = "thoiGianBH")
     private Integer thoiGianBH;
-    @Basic(optional = false)
-    @Column(name = "DiaChiSX")
     private String diaChiSX;
-    @Basic(optional = false)
-    @Column(name = "giaTien")
     private double giaTien;
-    @Column(name = "moTa")
     private String moTa;
-    @OneToMany(mappedBy = "sanPham")
-    private List<ChiTietHoaDon> chiTietHoaDonList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sanPham")
-    private List<ChiTietXuatKho> chiTietXuatKhoList;
-    @JoinColumn(name = "id_Model", referencedColumnName = "id_Model")
-    @ManyToOne(optional = false)
-    private ModelSanPham modelSanPham;
-    @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
-    @ManyToOne(optional = false)
-    private NhanVien nhanVien;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sanPham")
-    private List<ChiTietNhapKho> chiTietNhapKhoList;
+    private String idModel;
+    private String idNV;
 
     public SanPham() {
     }
@@ -75,14 +45,20 @@ public class SanPham implements Serializable {
         this.sku = sku;
     }
 
-    public SanPham(String sku, String tenSP, String mauSac, String phanKhoi, String diaChiSX, double giaTien) {
+    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi, Integer thoiGianBH, String diaChiSX, double giaTien, String moTa, String idModel, String idNV) {
         this.sku = sku;
         this.tenSP = tenSP;
+        this.hinh = hinh;
         this.mauSac = mauSac;
         this.phanKhoi = phanKhoi;
+        this.thoiGianBH = thoiGianBH;
         this.diaChiSX = diaChiSX;
         this.giaTien = giaTien;
+        this.moTa = moTa;
+        this.idModel = idModel;
+        this.idNV = idNV;
     }
+
 
     public String getSku() {
         return sku;
@@ -154,46 +130,6 @@ public class SanPham implements Serializable {
 
     public void setMoTa(String moTa) {
         this.moTa = moTa;
-    }
-
-    public List<ChiTietHoaDon> getChiTietHoaDonList() {
-        return chiTietHoaDonList;
-    }
-
-    public void setChiTietHoaDonList(List<ChiTietHoaDon> chiTietHoaDonList) {
-        this.chiTietHoaDonList = chiTietHoaDonList;
-    }
-
-    public List<ChiTietXuatKho> getChiTietXuatKhoList() {
-        return chiTietXuatKhoList;
-    }
-
-    public void setChiTietXuatKhoList(List<ChiTietXuatKho> chiTietXuatKhoList) {
-        this.chiTietXuatKhoList = chiTietXuatKhoList;
-    }
-
-    public ModelSanPham getModelSanPham() {
-        return modelSanPham;
-    }
-
-    public void setModelSanPham(ModelSanPham modelSanPham) {
-        this.modelSanPham = modelSanPham;
-    }
-
-    public NhanVien getNhanVien() {
-        return nhanVien;
-    }
-
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
-    }
-
-    public List<ChiTietNhapKho> getChiTietNhapKhoList() {
-        return chiTietNhapKhoList;
-    }
-
-    public void setChiTietNhapKhoList(List<ChiTietNhapKho> chiTietNhapKhoList) {
-        this.chiTietNhapKhoList = chiTietNhapKhoList;
     }
 
     @Override

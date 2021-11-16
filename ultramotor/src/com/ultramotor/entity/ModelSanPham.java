@@ -23,28 +23,14 @@ import javax.persistence.Table;
  *
  * @author nghipc
  */
-@Entity
-@Table(name = "ModelSanPham")
-@NamedQueries({
-    @NamedQuery(name = "ModelSanPham.findAll", query = "SELECT m FROM ModelSanPham m")})
+
 public class ModelSanPham implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id_Model")
     private String idModel;
-    @Basic(optional = false)
-    @Column(name = "tenModel")
     private String tenModel;
-    @Basic(optional = false)
-    @Column(name = "doiXe")
     private int doiXe;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modelSanPham")
+    private String id_dongSP;
     private List<SanPham> sanPhamList;
-    @JoinColumn(name = "id_DongSP", referencedColumnName = "id_DongSP")
-    @ManyToOne(optional = false)
-    private DongSanPham dongSanPham;
 
     public ModelSanPham() {
     }
@@ -53,10 +39,11 @@ public class ModelSanPham implements Serializable {
         this.idModel = idModel;
     }
 
-    public ModelSanPham(String idModel, String tenModel, int doiXe) {
+    public ModelSanPham(String idModel, String tenModel, int doiXe, String id_dongSP) {
         this.idModel = idModel;
         this.tenModel = tenModel;
         this.doiXe = doiXe;
+        this.id_dongSP = id_dongSP;
     }
 
     public String getIdModel() {
@@ -91,13 +78,7 @@ public class ModelSanPham implements Serializable {
         this.sanPhamList = sanPhamList;
     }
 
-    public DongSanPham getDongSanPham() {
-        return dongSanPham;
-    }
-
-    public void setDongSanPham(DongSanPham dongSanPham) {
-        this.dongSanPham = dongSanPham;
-    }
+    
 
     @Override
     public int hashCode() {
@@ -123,5 +104,5 @@ public class ModelSanPham implements Serializable {
     public String toString() {
         return "com.ultramotor.entity.ModelSanPham[ idModel=" + idModel + " ]";
     }
-    
+
 }

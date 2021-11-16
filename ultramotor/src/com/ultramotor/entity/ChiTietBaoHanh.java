@@ -25,31 +25,15 @@ import javax.persistence.TemporalType;
  *
  * @author nghipc
  */
-@Entity
-@Table(name = "ChiTietBaoHanh")
-@NamedQueries({
-    @NamedQuery(name = "ChiTietBaoHanh.findAll", query = "SELECT c FROM ChiTietBaoHanh c")})
+
 public class ChiTietBaoHanh implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
+  
     private Integer id;
-    @Basic(optional = false)
-    @Column(name = "thoiGian")
-    @Temporal(TemporalType.DATE)
     private Date thoiGian;
-    @Basic(optional = false)
-    @Column(name = "noiDung")
     private String noiDung;
-    @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
-    @ManyToOne(optional = false)
-    private NhanVien nhanVien;
-    @JoinColumn(name = "id_SBH", referencedColumnName = "id_SBH")
-    @ManyToOne(optional = false)
-    private SoBaoHanh soBaoHanh;
+    private String maNV;
+    private String idSBH;
 
     public ChiTietBaoHanh() {
     }
@@ -58,10 +42,12 @@ public class ChiTietBaoHanh implements Serializable {
         this.id = id;
     }
 
-    public ChiTietBaoHanh(Integer id, Date thoiGian, String noiDung) {
+    public ChiTietBaoHanh(Integer id, Date thoiGian, String noiDung, String maNV, String idSBH) {
         this.id = id;
         this.thoiGian = thoiGian;
         this.noiDung = noiDung;
+        this.maNV = maNV;
+        this.idSBH = idSBH;
     }
 
     public Integer getId() {
@@ -88,21 +74,23 @@ public class ChiTietBaoHanh implements Serializable {
         this.noiDung = noiDung;
     }
 
-    public NhanVien getNhanVien() {
-        return nhanVien;
+    public String getMaNV() {
+        return maNV;
     }
 
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
     }
 
-    public SoBaoHanh getSoBaoHanh() {
-        return soBaoHanh;
+    public String getIdSBH() {
+        return idSBH;
     }
 
-    public void setSoBaoHanh(SoBaoHanh soBaoHanh) {
-        this.soBaoHanh = soBaoHanh;
+    public void setIdSBH(String idSBH) {
+        this.idSBH = idSBH;
     }
+
+   
 
     @Override
     public int hashCode() {

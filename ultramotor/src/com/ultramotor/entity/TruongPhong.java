@@ -11,9 +11,4 @@ package com.ultramotor.entity;
  */
 public class TruongPhong extends NhanVien{
 
-    public TruongPhong() {
-        super();
-        this.setVaiTro("Trưởng Phòng");
-    }
-    
 }

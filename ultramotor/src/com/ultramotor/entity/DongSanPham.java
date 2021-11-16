@@ -23,28 +23,13 @@ import javax.persistence.Table;
  *
  * @author nghipc
  */
-@Entity
-@Table(name = "DongSanPham")
-@NamedQueries({
-    @NamedQuery(name = "DongSanPham.findAll", query = "SELECT d FROM DongSanPham d")})
+
 public class DongSanPham implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id_DongSP")
     private String idDongSP;
-    @Basic(optional = false)
-    @Column(name = "tenDongSP")
     private String tenDongSP;
-    @JoinColumn(name = "id_LH", referencedColumnName = "id_LH")
-    @ManyToOne(optional = false)
-    private LoaiHang loaiHang;
-    @JoinColumn(name = "id_NSX", referencedColumnName = "id_NSX")
-    @ManyToOne(optional = false)
-    private NhaSanXuat nhaSanXuat;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dongSanPham")
-    private List<ModelSanPham> modelSanPhamList;
+    private String idLH;
+    private String idNSX;
 
     public DongSanPham() {
     }
@@ -53,11 +38,13 @@ public class DongSanPham implements Serializable {
         this.idDongSP = idDongSP;
     }
 
-    public DongSanPham(String idDongSP, String tenDongSP) {
+    public DongSanPham(String idDongSP, String tenDongSP, String idLH, String idNSX) {
         this.idDongSP = idDongSP;
         this.tenDongSP = tenDongSP;
+        this.idLH = idLH;
+        this.idNSX = idNSX;
     }
-
+    
     public String getIdDongSP() {
         return idDongSP;
     }
@@ -74,28 +61,20 @@ public class DongSanPham implements Serializable {
         this.tenDongSP = tenDongSP;
     }
 
-    public LoaiHang getLoaiHang() {
-        return loaiHang;
+    public String getIdLH() {
+        return idLH;
     }
 
-    public void setLoaiHang(LoaiHang loaiHang) {
-        this.loaiHang = loaiHang;
+    public void setIdLH(String idLH) {
+        this.idLH = idLH;
     }
 
-    public NhaSanXuat getNhaSanXuat() {
-        return nhaSanXuat;
+    public String getIdNSX() {
+        return idNSX;
     }
 
-    public void setNhaSanXuat(NhaSanXuat nhaSanXuat) {
-        this.nhaSanXuat = nhaSanXuat;
-    }
-
-    public List<ModelSanPham> getModelSanPhamList() {
-        return modelSanPhamList;
-    }
-
-    public void setModelSanPhamList(List<ModelSanPham> modelSanPhamList) {
-        this.modelSanPhamList = modelSanPhamList;
+    public void setIdNSX(String idNSX) {
+        this.idNSX = idNSX;
     }
 
     @Override
