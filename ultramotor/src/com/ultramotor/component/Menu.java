@@ -1,7 +1,7 @@
 package com.ultramotor.component;
 
-import com.ultramotor.swingx.event.EventMenuSelected;
-import com.ultramotor.swingx.model.ModelMenu;
+import com.swingx.event.EventMenuSelected;
+import com.swingx.model.ModelMenu;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GradientPaint;

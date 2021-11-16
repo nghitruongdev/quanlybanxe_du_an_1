@@ -29,23 +29,23 @@ public class DatLaiMatKhauPanel extends javax.swing.JPanel {
 
         pnlQuenMatKhau = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        textField1 = new textfield.TextField();
-        button1 = new com.ultramotor.swingx.Button();
+        button1 = new com.swingx.Button();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        textField2 = new com.swingx.TextField();
         pnlNhapOTP = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        button3 = new com.ultramotor.swingx.Button();
+        button3 = new com.swingx.Button();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        passwordField1 = new textfield.PasswordField();
+        textField1 = new com.swingx.TextField();
         pnlDatLaiMK = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        passwordField2 = new textfield.PasswordField();
-        passwordField3 = new textfield.PasswordField();
-        button4 = new com.ultramotor.swingx.Button();
+        button4 = new com.swingx.Button();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        passwordField1 = new com.swingx.PasswordField();
+        passwordField2 = new com.swingx.PasswordField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.CardLayout());
@@ -55,9 +55,6 @@ public class DatLaiMatKhauPanel extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(51, 255, 255));
         jLabel5.setText("Đặt lại mật khẩu");
-
-        textField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        textField1.setLabelText("Nhập Email");
 
         button1.setBackground(new java.awt.Color(153, 255, 255));
         button1.setActionCommand("Cài lại");
@@ -77,14 +74,18 @@ public class DatLaiMatKhauPanel extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(51, 255, 255));
         jLabel2.setText("Đăng nhập");
 
+        textField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        textField2.setLabelText("Nhập email");
+        textField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textField2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlQuenMatKhauLayout = new javax.swing.GroupLayout(pnlQuenMatKhau);
         pnlQuenMatKhau.setLayout(pnlQuenMatKhauLayout);
         pnlQuenMatKhauLayout.setHorizontalGroup(
             pnlQuenMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlQuenMatKhauLayout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
             .addGroup(pnlQuenMatKhauLayout.createSequentialGroup()
                 .addGroup(pnlQuenMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlQuenMatKhauLayout.createSequentialGroup()
@@ -93,32 +94,36 @@ public class DatLaiMatKhauPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2))
                     .addGroup(pnlQuenMatKhauLayout.createSequentialGroup()
-                        .addGap(85, 85, 85)
+                        .addGap(125, 125, 125)
+                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlQuenMatKhauLayout.createSequentialGroup()
+                        .addGap(86, 86, 86)
                         .addComponent(jLabel5))
                     .addGroup(pnlQuenMatKhauLayout.createSequentialGroup()
-                        .addGap(125, 125, 125)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(72, 72, 72)
+                        .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         pnlQuenMatKhauLayout.setVerticalGroup(
             pnlQuenMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlQuenMatKhauLayout.createSequentialGroup()
-                .addGap(66, 66, 66)
+                .addGap(50, 50, 50)
                 .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
                 .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlQuenMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
 
         add(pnlQuenMatKhau, "card8");
 
         pnlNhapOTP.setBackground(new java.awt.Color(255, 255, 255));
+        pnlNhapOTP.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 255, 255));
@@ -137,46 +142,50 @@ public class DatLaiMatKhauPanel extends javax.swing.JPanel {
         jLabel8.setForeground(new java.awt.Color(51, 255, 255));
         jLabel8.setText("Đăng nhập");
 
-        passwordField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        passwordField1.setLabelText("Kiểm tra mail và nhập mã");
+        textField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        textField1.setLabelText("Nhập mã OTP");
+        textField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textField1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlNhapOTPLayout = new javax.swing.GroupLayout(pnlNhapOTP);
         pnlNhapOTP.setLayout(pnlNhapOTPLayout);
         pnlNhapOTPLayout.setHorizontalGroup(
             pnlNhapOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNhapOTPLayout.createSequentialGroup()
-                .addGroup(pnlNhapOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlNhapOTPLayout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addComponent(jLabel6))
-                    .addGroup(pnlNhapOTPLayout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(127, 127, 127)
+                .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(126, Short.MAX_VALUE))
             .addGroup(pnlNhapOTPLayout.createSequentialGroup()
                 .addGap(76, 76, 76)
-                .addGroup(pnlNhapOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlNhapOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlNhapOTPLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8))
-                    .addComponent(passwordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 62, Short.MAX_VALUE))
+                        .addComponent(jLabel8)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNhapOTPLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(85, 85, 85))
         );
         pnlNhapOTPLayout.setVerticalGroup(
             pnlNhapOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNhapOTPLayout.createSequentialGroup()
-                .addGap(66, 66, 66)
+                .addGap(52, 52, 52)
                 .addComponent(jLabel6)
-                .addGap(18, 18, 18)
-                .addComponent(passwordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlNhapOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
 
         add(pnlNhapOTP, "card7");
@@ -186,12 +195,6 @@ public class DatLaiMatKhauPanel extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(51, 255, 255));
         jLabel9.setText("Đặt lại mật khẩu");
-
-        passwordField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        passwordField2.setLabelText("Mật khẩu mới");
-
-        passwordField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        passwordField3.setLabelText("Nhập lại mật khẩu mới");
 
         button4.setBackground(new java.awt.Color(153, 255, 255));
         button4.setActionCommand("Cài lại");
@@ -206,26 +209,43 @@ public class DatLaiMatKhauPanel extends javax.swing.JPanel {
         jLabel11.setForeground(new java.awt.Color(51, 255, 255));
         jLabel11.setText("Đăng nhập");
 
+        passwordField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        passwordField1.setLabelText("Nhập lại mật khẩu mới");
+        passwordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordField1ActionPerformed(evt);
+            }
+        });
+
+        passwordField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        passwordField2.setLabelText("Nhập mật khẩu mới");
+        passwordField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordField2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlDatLaiMKLayout = new javax.swing.GroupLayout(pnlDatLaiMK);
         pnlDatLaiMK.setLayout(pnlDatLaiMKLayout);
         pnlDatLaiMKLayout.setHorizontalGroup(
             pnlDatLaiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatLaiMKLayout.createSequentialGroup()
-                .addGap(82, 82, 82)
                 .addGroup(pnlDatLaiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDatLaiMKLayout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlDatLaiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(pnlDatLaiMKLayout.createSequentialGroup()
-                            .addComponent(jLabel10)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel11))
-                        .addGroup(pnlDatLaiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(passwordField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(passwordField3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(88, Short.MAX_VALUE))
+                        .addGap(85, 85, 85)
+                        .addGroup(pnlDatLaiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDatLaiMKLayout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel11))
+                            .addGroup(pnlDatLaiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(passwordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9)
+                                .addComponent(passwordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(pnlDatLaiMKLayout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
         pnlDatLaiMKLayout.setVerticalGroup(
             pnlDatLaiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,15 +254,15 @@ public class DatLaiMatKhauPanel extends javax.swing.JPanel {
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
                 .addComponent(passwordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(passwordField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(26, 26, 26)
+                .addComponent(passwordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDatLaiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(34, 34, 34))
         );
 
         add(pnlDatLaiMK, "card9");
@@ -252,11 +272,27 @@ public class DatLaiMatKhauPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_button1ActionPerformed
 
+    private void textField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textField2ActionPerformed
+
+    private void textField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textField1ActionPerformed
+
+    private void passwordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordField1ActionPerformed
+
+    private void passwordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordField2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.ultramotor.swingx.Button button1;
-    private com.ultramotor.swingx.Button button3;
-    private com.ultramotor.swingx.Button button4;
+    private com.swingx.Button button1;
+    private com.swingx.Button button3;
+    private com.swingx.Button button4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -266,12 +302,12 @@ public class DatLaiMatKhauPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private textfield.PasswordField passwordField1;
-    private textfield.PasswordField passwordField2;
-    private textfield.PasswordField passwordField3;
+    private com.swingx.PasswordField passwordField1;
+    private com.swingx.PasswordField passwordField2;
     private javax.swing.JPanel pnlDatLaiMK;
     private javax.swing.JPanel pnlNhapOTP;
     private javax.swing.JPanel pnlQuenMatKhau;
-    private textfield.TextField textField1;
+    private com.swingx.TextField textField1;
+    private com.swingx.TextField textField2;
     // End of variables declaration//GEN-END:variables
 }

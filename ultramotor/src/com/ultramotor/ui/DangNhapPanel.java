@@ -5,6 +5,8 @@
  */
 package com.ultramotor.ui;
 
+import com.ultramotor.util.MsgBox;
+
 /**
  *
  * @author BRAVO
@@ -16,6 +18,7 @@ public class DangNhapPanel extends javax.swing.JFrame {
      */
     public DangNhapPanel() {
         initComponents();
+        init();
     }
 
     /**
@@ -34,10 +37,10 @@ public class DangNhapPanel extends javax.swing.JFrame {
         lblPassword = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lblTitle = new javax.swing.JLabel();
-        txtTaiKhoan = new textfield.TextField();
-        txtMatKhau = new textfield.PasswordField();
-        btnDangNhap = new com.ultramotor.swingx.Button();
-        btnThoat = new com.ultramotor.swingx.Button();
+        btnDangNhap = new com.swingx.Button();
+        btnThoat = new com.swingx.Button();
+        txtTenDangNhap = new com.swingx.TextField();
+        pwdMatKhau = new com.swingx.PasswordField();
 
         btnDangNhap1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnDangNhap1.setText("Đăng nhập");
@@ -58,14 +61,10 @@ public class DangNhapPanel extends javax.swing.JFrame {
         jLabel1.setText("Quên mật khẩu?");
 
         lblTitle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblTitle.setForeground(new java.awt.Color(153, 0, 153));
+        lblTitle.setForeground(new java.awt.Color(102, 102, 102));
         lblTitle.setText("ĐĂNG NHẬP");
 
-        txtTaiKhoan.setLabelText("Username");
-
-        txtMatKhau.setLabelText("Password");
-
-        btnDangNhap.setBackground(new java.awt.Color(153, 255, 255));
+        btnDangNhap.setBackground(new java.awt.Color(0, 153, 255));
         btnDangNhap.setText("Đăng nhập");
         btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,7 +72,7 @@ public class DangNhapPanel extends javax.swing.JFrame {
             }
         });
 
-        btnThoat.setBackground(new java.awt.Color(153, 255, 255));
+        btnThoat.setBackground(new java.awt.Color(51, 153, 255));
         btnThoat.setText("Thoát");
         btnThoat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,52 +80,56 @@ public class DangNhapPanel extends javax.swing.JFrame {
             }
         });
 
+        txtTenDangNhap.setLabelText("Tên đăng nhập");
+
+        pwdMatKhau.setLabelText("Mật khẩu");
+
         javax.swing.GroupLayout pnlLoginLayout = new javax.swing.GroupLayout(pnlLogin);
         pnlLogin.setLayout(pnlLoginLayout);
         pnlLoginLayout.setHorizontalGroup(
             pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlLoginLayout.createSequentialGroup()
-                .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLoginLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblPassword)
+                    .addComponent(lblUser))
+                .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlLoginLayout.createSequentialGroup()
-                        .addGap(156, 156, 156)
-                        .addComponent(lblTitle))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLoginLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblPassword)
-                            .addComponent(lblUser))
+                        .addGap(111, 111, 111)
                         .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlLoginLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(pnlLoginLayout.createSequentialGroup()
-                                .addGap(111, 111, 111)
-                                .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLoginLayout.createSequentialGroup()
-                                        .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(pnlLoginLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(txtMatKhau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLoginLayout.createSequentialGroup()
+                                .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(pnlLoginLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTenDangNhap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLoginLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pwdMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 47, Short.MAX_VALUE))
+            .addGroup(pnlLoginLayout.createSequentialGroup()
+                .addGap(156, 156, 156)
+                .addComponent(lblTitle)
                 .addGap(47, 47, 47))
         );
         pnlLoginLayout.setVerticalGroup(
             pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLoginLayout.createSequentialGroup()
                 .addGap(105, 105, 105)
-                .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlLoginLayout.createSequentialGroup()
-                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
-                        .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblUser)
-                            .addComponent(txtTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPassword))
-                    .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblUser))
+                    .addGroup(pnlLoginLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTenDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPassword)
+                    .addComponent(pwdMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -159,10 +162,12 @@ public class DangNhapPanel extends javax.swing.JFrame {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         // TODO add your handling code here:
+        Login();
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_btnThoatActionPerformed
 
     /**
@@ -201,16 +206,35 @@ public class DangNhapPanel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.ultramotor.swingx.Button btnDangNhap;
+    private com.swingx.Button btnDangNhap;
     private javax.swing.JButton btnDangNhap1;
-    private com.ultramotor.swingx.Button btnThoat;
+    private com.swingx.Button btnThoat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblUser;
     private javax.swing.JPanel pnlLogin;
-    private textfield.PasswordField txtMatKhau;
-    private textfield.TextField txtTaiKhoan;
+    private com.swingx.PasswordField pwdMatKhau;
+    private com.swingx.TextField txtTenDangNhap;
     // End of variables declaration//GEN-END:variables
+    private void init(){
+        this.setLocationRelativeTo(null);
+    }
+    
+    private void Login(){
+        String user = "admin";
+        String pass = "123";
+        if(txtTenDangNhap.getText().equals(user))
+        {
+            if(String.valueOf(pwdMatKhau.getPassword()).equals(pass)){
+                MsgBox.inform("Đăng nhập thành công!");
+            }
+            else{
+                MsgBox.error("Sai mật khẩu!");
+            }
+        }else{
+            MsgBox.error("Sai tên đăng nhập!");
+        }
+    }
 }
