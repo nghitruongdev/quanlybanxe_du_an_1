@@ -46,10 +46,10 @@ public class ChiTietBaoDuong implements Serializable {
     private String noiDung;
     @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
     @ManyToOne(optional = false)
-    private NhanVien idNV;
+    private NhanVien nhanVien;
     @JoinColumn(name = "id_SBH", referencedColumnName = "id_SBH")
     @ManyToOne(optional = false)
-    private SoBaoHanh idSBH;
+    private SoBaoHanh soBaoHanh;
 
     public ChiTietBaoDuong() {
     }
@@ -88,20 +88,20 @@ public class ChiTietBaoDuong implements Serializable {
         this.noiDung = noiDung;
     }
 
-    public NhanVien getIdNV() {
-        return idNV;
+    public NhanVien getNhanVien() {
+        return nhanVien;
     }
 
-    public void setIdNV(NhanVien idNV) {
-        this.idNV = idNV;
+    public void setNhanVien(NhanVien nhanVien) {
+        this.nhanVien = nhanVien;
     }
 
-    public SoBaoHanh getIdSBH() {
-        return idSBH;
+    public SoBaoHanh getSoBaoHanh() {
+        return soBaoHanh;
     }
 
-    public void setIdSBH(SoBaoHanh idSBH) {
-        this.idSBH = idSBH;
+    public void setSoBaoHanh(SoBaoHanh soBaoHanh) {
+        this.soBaoHanh = soBaoHanh;
     }
 
     @Override

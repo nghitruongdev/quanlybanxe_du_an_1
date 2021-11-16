@@ -55,17 +55,17 @@ public class SanPham implements Serializable {
     private double giaTien;
     @Column(name = "moTa")
     private String moTa;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sku")
-    private List<ChiTietSanPham> chiTietSanPhamList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sku")
+    @OneToMany(mappedBy = "sanPham")
+    private List<ChiTietHoaDon> chiTietHoaDonList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sanPham")
     private List<ChiTietXuatKho> chiTietXuatKhoList;
     @JoinColumn(name = "id_Model", referencedColumnName = "id_Model")
     @ManyToOne(optional = false)
-    private ModelSanPham idModel;
+    private ModelSanPham modelSanPham;
     @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
     @ManyToOne(optional = false)
-    private NhanVien idNV;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sku")
+    private NhanVien nhanVien;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sanPham")
     private List<ChiTietNhapKho> chiTietNhapKhoList;
 
     public SanPham() {
@@ -156,12 +156,12 @@ public class SanPham implements Serializable {
         this.moTa = moTa;
     }
 
-    public List<ChiTietSanPham> getChiTietSanPhamList() {
-        return chiTietSanPhamList;
+    public List<ChiTietHoaDon> getChiTietHoaDonList() {
+        return chiTietHoaDonList;
     }
 
-    public void setChiTietSanPhamList(List<ChiTietSanPham> chiTietSanPhamList) {
-        this.chiTietSanPhamList = chiTietSanPhamList;
+    public void setChiTietHoaDonList(List<ChiTietHoaDon> chiTietHoaDonList) {
+        this.chiTietHoaDonList = chiTietHoaDonList;
     }
 
     public List<ChiTietXuatKho> getChiTietXuatKhoList() {
@@ -172,20 +172,20 @@ public class SanPham implements Serializable {
         this.chiTietXuatKhoList = chiTietXuatKhoList;
     }
 
-    public ModelSanPham getIdModel() {
-        return idModel;
+    public ModelSanPham getModelSanPham() {
+        return modelSanPham;
     }
 
-    public void setIdModel(ModelSanPham idModel) {
-        this.idModel = idModel;
+    public void setModelSanPham(ModelSanPham modelSanPham) {
+        this.modelSanPham = modelSanPham;
     }
 
-    public NhanVien getIdNV() {
-        return idNV;
+    public NhanVien getNhanVien() {
+        return nhanVien;
     }
 
-    public void setIdNV(NhanVien idNV) {
-        this.idNV = idNV;
+    public void setNhanVien(NhanVien nhanVien) {
+        this.nhanVien = nhanVien;
     }
 
     public List<ChiTietNhapKho> getChiTietNhapKhoList() {

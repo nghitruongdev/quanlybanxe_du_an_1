@@ -6,9 +6,7 @@
 package com.ultramotor.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -38,16 +35,14 @@ public class ChiTietNhapKho implements Serializable {
     @Column(name = "soLuong")
     private int soLuong;
     @Basic(optional = false)
-    @Column(name = "GIANHAP")
-    private double gianhap;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCTNK")
-    private List<ChiTietSanPham> chiTietSanPhamList;
+    @Column(name = "giaNhap")
+    private double giaNhap;
     @JoinColumn(name = "id_PN", referencedColumnName = "id_PN")
     @ManyToOne(optional = false)
-    private PhieuNhapKho idPN;
+    private PhieuNhapKho phieuNhapKho;
     @JoinColumn(name = "SKU", referencedColumnName = "SKU")
     @ManyToOne(optional = false)
-    private SanPham sku;
+    private SanPham sanPham;
 
     public ChiTietNhapKho() {
     }
@@ -56,10 +51,10 @@ public class ChiTietNhapKho implements Serializable {
         this.idCTNK = idCTNK;
     }
 
-    public ChiTietNhapKho(String idCTNK, int soLuong, double gianhap) {
+    public ChiTietNhapKho(String idCTNK, int soLuong, double giaNhap) {
         this.idCTNK = idCTNK;
         this.soLuong = soLuong;
-        this.gianhap = gianhap;
+        this.giaNhap = giaNhap;
     }
 
     public String getIdCTNK() {
@@ -78,36 +73,28 @@ public class ChiTietNhapKho implements Serializable {
         this.soLuong = soLuong;
     }
 
-    public double getGianhap() {
-        return gianhap;
+    public double getGiaNhap() {
+        return giaNhap;
     }
 
-    public void setGianhap(double gianhap) {
-        this.gianhap = gianhap;
+    public void setGiaNhap(double giaNhap) {
+        this.giaNhap = giaNhap;
     }
 
-    public List<ChiTietSanPham> getChiTietSanPhamList() {
-        return chiTietSanPhamList;
+    public PhieuNhapKho getPhieuNhapKho() {
+        return phieuNhapKho;
     }
 
-    public void setChiTietSanPhamList(List<ChiTietSanPham> chiTietSanPhamList) {
-        this.chiTietSanPhamList = chiTietSanPhamList;
+    public void setPhieuNhapKho(PhieuNhapKho phieuNhapKho) {
+        this.phieuNhapKho = phieuNhapKho;
     }
 
-    public PhieuNhapKho getIdPN() {
-        return idPN;
+    public SanPham getSanPham() {
+        return sanPham;
     }
 
-    public void setIdPN(PhieuNhapKho idPN) {
-        this.idPN = idPN;
-    }
-
-    public SanPham getSku() {
-        return sku;
-    }
-
-    public void setSku(SanPham sku) {
-        this.sku = sku;
+    public void setSanPham(SanPham sanPham) {
+        this.sanPham = sanPham;
     }
 
     @Override

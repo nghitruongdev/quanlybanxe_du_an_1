@@ -39,11 +39,11 @@ public class DongSanPham implements Serializable {
     private String tenDongSP;
     @JoinColumn(name = "id_LH", referencedColumnName = "id_LH")
     @ManyToOne(optional = false)
-    private LoaiHang idLH;
+    private LoaiHang loaiHang;
     @JoinColumn(name = "id_NSX", referencedColumnName = "id_NSX")
     @ManyToOne(optional = false)
-    private NhaSanXuat idNSX;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDongSP")
+    private NhaSanXuat nhaSanXuat;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dongSanPham")
     private List<ModelSanPham> modelSanPhamList;
 
     public DongSanPham() {
@@ -74,20 +74,20 @@ public class DongSanPham implements Serializable {
         this.tenDongSP = tenDongSP;
     }
 
-    public LoaiHang getIdLH() {
-        return idLH;
+    public LoaiHang getLoaiHang() {
+        return loaiHang;
     }
 
-    public void setIdLH(LoaiHang idLH) {
-        this.idLH = idLH;
+    public void setLoaiHang(LoaiHang loaiHang) {
+        this.loaiHang = loaiHang;
     }
 
-    public NhaSanXuat getIdNSX() {
-        return idNSX;
+    public NhaSanXuat getNhaSanXuat() {
+        return nhaSanXuat;
     }
 
-    public void setIdNSX(NhaSanXuat idNSX) {
-        this.idNSX = idNSX;
+    public void setNhaSanXuat(NhaSanXuat nhaSanXuat) {
+        this.nhaSanXuat = nhaSanXuat;
     }
 
     public List<ModelSanPham> getModelSanPhamList() {

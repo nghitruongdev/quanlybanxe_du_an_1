@@ -40,11 +40,11 @@ public class DichVu implements Serializable {
     @Basic(optional = false)
     @Column(name = "donGia")
     private double donGia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDV")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dichVu")
     private List<ChiTietHoaDon> chiTietHoaDonList;
     @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
     @ManyToOne(optional = false)
-    private NhanVien idNV;
+    private NhanVien nhanVien;
 
     public DichVu() {
     }
@@ -91,12 +91,12 @@ public class DichVu implements Serializable {
         this.chiTietHoaDonList = chiTietHoaDonList;
     }
 
-    public NhanVien getIdNV() {
-        return idNV;
+    public NhanVien getNhanVien() {
+        return nhanVien;
     }
 
-    public void setIdNV(NhanVien idNV) {
-        this.idNV = idNV;
+    public void setNhanVien(NhanVien nhanVien) {
+        this.nhanVien = nhanVien;
     }
 
     @Override

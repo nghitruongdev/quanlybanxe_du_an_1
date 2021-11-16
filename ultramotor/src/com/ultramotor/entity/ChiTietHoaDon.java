@@ -40,16 +40,16 @@ public class ChiTietHoaDon implements Serializable {
     @Basic(optional = false)
     @Column(name = "donGia")
     private double donGia;
-    @JoinColumn(name = "id_SP", referencedColumnName = "id_SP")
-    @ManyToOne(optional = false)
-    private ChiTietSanPham idSP;
     @JoinColumn(name = "idDV", referencedColumnName = "idDV")
     @ManyToOne(optional = false)
-    private DichVu idDV;
+    private DichVu dichVu;
     @JoinColumn(name = "idHD", referencedColumnName = "idHD")
     @ManyToOne(optional = false)
-    private HoaDon idHD;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCTHD")
+    private HoaDon hoaDon;
+    @JoinColumn(name = "SKU", referencedColumnName = "SKU")
+    @ManyToOne
+    private SanPham sanPham;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chiTietHoaDon")
     private List<SoBaoHanh> soBaoHanhList;
 
     public ChiTietHoaDon() {
@@ -80,28 +80,28 @@ public class ChiTietHoaDon implements Serializable {
         this.donGia = donGia;
     }
 
-    public ChiTietSanPham getIdSP() {
-        return idSP;
+    public DichVu getDichVu() {
+        return dichVu;
     }
 
-    public void setIdSP(ChiTietSanPham idSP) {
-        this.idSP = idSP;
+    public void setDichVu(DichVu dichVu) {
+        this.dichVu = dichVu;
     }
 
-    public DichVu getIdDV() {
-        return idDV;
+    public HoaDon getHoaDon() {
+        return hoaDon;
     }
 
-    public void setIdDV(DichVu idDV) {
-        this.idDV = idDV;
+    public void setHoaDon(HoaDon hoaDon) {
+        this.hoaDon = hoaDon;
     }
 
-    public HoaDon getIdHD() {
-        return idHD;
+    public SanPham getSanPham() {
+        return sanPham;
     }
 
-    public void setIdHD(HoaDon idHD) {
-        this.idHD = idHD;
+    public void setSanPham(SanPham sanPham) {
+        this.sanPham = sanPham;
     }
 
     public List<SoBaoHanh> getSoBaoHanhList() {

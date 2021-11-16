@@ -36,10 +36,10 @@ public class ChiTietXuatKho implements Serializable {
     private int soLuong;
     @JoinColumn(name = "id_PX", referencedColumnName = "id_PX")
     @ManyToOne(optional = false)
-    private PhieuXuatKho idPX;
+    private PhieuXuatKho phieuXuatKho;
     @JoinColumn(name = "SKU", referencedColumnName = "SKU")
     @ManyToOne(optional = false)
-    private SanPham sku;
+    private SanPham sanPham;
 
     public ChiTietXuatKho() {
     }
@@ -69,20 +69,20 @@ public class ChiTietXuatKho implements Serializable {
         this.soLuong = soLuong;
     }
 
-    public PhieuXuatKho getIdPX() {
-        return idPX;
+    public PhieuXuatKho getPhieuXuatKho() {
+        return phieuXuatKho;
     }
 
-    public void setIdPX(PhieuXuatKho idPX) {
-        this.idPX = idPX;
+    public void setPhieuXuatKho(PhieuXuatKho phieuXuatKho) {
+        this.phieuXuatKho = phieuXuatKho;
     }
 
-    public SanPham getSku() {
-        return sku;
+    public SanPham getSanPham() {
+        return sanPham;
     }
 
-    public void setSku(SanPham sku) {
-        this.sku = sku;
+    public void setSanPham(SanPham sanPham) {
+        this.sanPham = sanPham;
     }
 
     @Override

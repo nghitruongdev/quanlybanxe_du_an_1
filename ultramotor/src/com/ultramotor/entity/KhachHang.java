@@ -59,11 +59,11 @@ public class KhachHang implements Serializable {
     private Boolean thanhVien;
     @Column(name = "GhiChu")
     private String ghiChu;
-    @OneToMany(mappedBy = "idKH")
+    @OneToMany(mappedBy = "khachHang")
     private List<HoaDon> hoaDonList;
     @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
     @ManyToOne
-    private NhanVien idNV;
+    private NhanVien nhanVien;
 
     public KhachHang() {
     }
@@ -168,12 +168,12 @@ public class KhachHang implements Serializable {
         this.hoaDonList = hoaDonList;
     }
 
-    public NhanVien getIdNV() {
-        return idNV;
+    public NhanVien getNhanVien() {
+        return nhanVien;
     }
 
-    public void setIdNV(NhanVien idNV) {
-        this.idNV = idNV;
+    public void setNhanVien(NhanVien nhanVien) {
+        this.nhanVien = nhanVien;
     }
 
     @Override
