@@ -16,12 +16,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class XImage {
 
     public static Image getAppIcon() {
-        URL url = XImage.class.getResource("/com/edusys/img/logo.png");
+        URL url = XImage.class.getResource("/com/ultramotor/img/logo.png");
         return new ImageIcon(url).getImage();
     }
 
     public static Icon getIcon(String fileName) {
-        URL url = XImage.class.getResource("/com/edusys/img/icon/" + fileName);
+        URL url = XImage.class.getResource("/com/ultramotor/img/icon/" + fileName);
         return new ImageIcon(url);
     }
 
