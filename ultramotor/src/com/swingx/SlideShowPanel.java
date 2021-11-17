@@ -1,6 +1,5 @@
 package com.swingx;
 
-import com.swingx.PictureBox;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -42,7 +41,6 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
     public void setAuto(int miliseconds) {
         timer = new Timer(miliseconds, (ActionEvent e) -> {
             next();
-            System.out.println("Timer is running");
         });
         timer.start();
     }
