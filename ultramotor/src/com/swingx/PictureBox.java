@@ -13,6 +13,8 @@ import javax.swing.JLayeredPane;
 
 public class PictureBox extends JLayeredPane {
 
+    private Icon image;
+
     public Icon getImage() {
         return image;
     }
@@ -21,7 +23,12 @@ public class PictureBox extends JLayeredPane {
         this.image = image;
     }
 
-    private Icon image;
+    public PictureBox() {
+    }
+
+    public PictureBox(Icon image) {
+        this.image = image;
+    }
 
     @Override
     protected void paintComponent(Graphics grphcs) {
