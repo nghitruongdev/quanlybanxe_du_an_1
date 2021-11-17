@@ -1,22 +1,31 @@
-
 package com.ultramotor.ui.khachhang;
 
+import java.awt.CardLayout;
 import java.awt.Color;
-
 
 public class KhachHangFrame extends javax.swing.JFrame {
 
     public KhachHangFrame() {
         initComponents();
-        getContentPane().setBackground(Color.yellow);
+        getContentPane().setBackground(Color.white);
     }
 
+    public void navigateCard(boolean isNext) {
+        CardLayout layout = (CardLayout) pnlMain.getLayout();
+        if (isNext) {
+            layout.next(pnlMain);
+        } else {
+            layout.previous(pnlMain);
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         pnlHeader = new javax.swing.JPanel();
+        btnNext = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         pnlMain = new javax.swing.JPanel();
         welcomePanel1 = new com.ultramotor.ui.khachhang.WelcomePanel();
         jPanel1 = new javax.swing.JPanel();
@@ -31,19 +40,40 @@ public class KhachHangFrame extends javax.swing.JFrame {
 
         pnlHeader.setBackground(new java.awt.Color(255, 51, 0));
 
+        btnNext.setText("jButton1");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("jButton2");
+
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
         pnlHeaderLayout.setHorizontalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNext)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addGap(198, 198, 198))
         );
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 52, Short.MAX_VALUE)
+            .addGroup(pnlHeaderLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNext)
+                    .addComponent(jButton2))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pnlMain.setLayout(new java.awt.CardLayout());
         pnlMain.add(welcomePanel1, "card8");
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 0));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -58,6 +88,8 @@ public class KhachHangFrame extends javax.swing.JFrame {
 
         pnlMain.add(jPanel1, "card2");
 
+        jPanel2.setBackground(new java.awt.Color(255, 51, 0));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -70,6 +102,8 @@ public class KhachHangFrame extends javax.swing.JFrame {
         );
 
         pnlMain.add(jPanel2, "card3");
+
+        jPanel3.setBackground(new java.awt.Color(153, 0, 153));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -84,6 +118,8 @@ public class KhachHangFrame extends javax.swing.JFrame {
 
         pnlMain.add(jPanel3, "card4");
 
+        jPanel4.setBackground(new java.awt.Color(255, 153, 153));
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -97,6 +133,8 @@ public class KhachHangFrame extends javax.swing.JFrame {
 
         pnlMain.add(jPanel4, "card5");
 
+        jPanel5.setBackground(new java.awt.Color(102, 153, 255));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -109,6 +147,8 @@ public class KhachHangFrame extends javax.swing.JFrame {
         );
 
         pnlMain.add(jPanel5, "card6");
+
+        jPanel6.setBackground(new java.awt.Color(153, 255, 153));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -144,9 +184,10 @@ public class KhachHangFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNextActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -161,13 +202,17 @@ public class KhachHangFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(KhachHangFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KhachHangFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(KhachHangFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KhachHangFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(KhachHangFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KhachHangFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(KhachHangFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KhachHangFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -180,6 +225,8 @@ public class KhachHangFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNext;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

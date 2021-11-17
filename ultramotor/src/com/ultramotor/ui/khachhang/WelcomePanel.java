@@ -1,8 +1,7 @@
 package com.ultramotor.ui.khachhang;
 
+import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
@@ -26,14 +25,7 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide2.jpeg")),
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide3.jpg")));
         pnlSlideshow.setAuto(2000);
-        cboLang.addActionListener((ActionEvent e) -> {
-            System.out.println(cboLang.getSelectedIndex());
-            if (cboLang.getSelectedIndex() == 0) {
-                setLang("Vietnamese");
-            } else {
-                setLang("English");
-            }
-        });
+        addListeners();
     }
 
     @Override
@@ -51,6 +43,26 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
         }
         revalidate();
     }
+
+    private void addListeners() {
+        cboLang.addActionListener((ActionEvent e) -> {
+            System.out.println(cboLang.getSelectedIndex());
+            if (cboLang.getSelectedIndex() == 0) {
+                setLang("Vietnamese");
+            } else {
+                setLang("English");
+            }
+        });
+        
+        btnContinue.addActionListener((ActionEvent e)->{
+            Container con = this.getTopLevelAncestor();
+            if(con instanceof KhachHangFrame){
+                ((KhachHangFrame)con).navigateCard(true);
+            }
+        });
+    }
+    
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
