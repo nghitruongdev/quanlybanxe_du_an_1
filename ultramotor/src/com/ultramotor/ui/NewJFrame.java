@@ -5,19 +5,26 @@
  */
 package com.ultramotor.ui;
 
+import com.ultramotor.dao.NhapKhoDAO;
+import com.ultramotor.dao.XuatKhoDAO;
+import com.ultramotor.entity.ChiTietNhapKho;
+import com.ultramotor.entity.PhieuNhapKho;
+import com.ultramotor.util.MsgBox;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author thaian
  */
 public class NewJFrame extends javax.swing.JFrame {
-private JPanel chillPanel;
     /**
      * Creates new form NewJFrame
      */
     public NewJFrame() {
         initComponents();
+        fillTable();
     }
 
     /**
@@ -44,7 +51,7 @@ private JPanel chillPanel;
         txtSoLuong = new javax.swing.JTextField();
         txtGiaNhap = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblPN = new javax.swing.JTable();
         btnInDanhSach = new javax.swing.JButton();
         btnSendMail = new javax.swing.JButton();
         txtNgayNhap = new javax.swing.JTextField();
@@ -88,7 +95,7 @@ private JPanel chillPanel;
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblPN.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -104,7 +111,7 @@ private JPanel chillPanel;
                 "Mã phiếu", "Mã sản phẩm", "Ngày nhập", "Nhân viên nhập", "Sô lượng", "Giá nhập"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblPN);
 
         btnInDanhSach.setBackground(new java.awt.Color(0, 153, 255));
         btnInDanhSach.setText("In danh sách");
@@ -299,11 +306,36 @@ private JPanel chillPanel;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tblPN;
     private javax.swing.JTextField txtGiaNhap;
     private javax.swing.JTextField txtMaPN;
     private javax.swing.JTextField txtMaSKU;
     private javax.swing.JTextField txtNgayNhap;
     private javax.swing.JTextField txtSoLuong;
     // End of variables declaration//GEN-END:variables
+    NhapKhoDAO dao= new NhapKhoDAO();
+void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblPN.getModel();
+        model.setRowCount(0);
+        List<PhieuNhapKho> ctnk = dao.selectAll();
+        try {
+            List<PhieuNhapKho> list = dao.selectAll();
+            for (PhieuNhapKho pnk : list) {
+                Object[] row = {
+                    pnk.getIdPN(),
+                    pnk.getChiTietNhapKhoList(),
+                    pnk.getNgayNhap(),
+                    pnk.getIdNV(),
+                    pnk.getChiTietNhapKhoList(),
+                    pnk.getChiTietNhapKhoList(),};
+                model.addRow(row);
+            }
+        } 
+        catch (Exception e) {
+            MsgBox.error("Lỗi truy vấn dữ liệu!");
+        }
+        
+    }
 }
+        
+
