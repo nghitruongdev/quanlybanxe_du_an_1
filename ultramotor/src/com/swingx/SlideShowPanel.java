@@ -32,7 +32,7 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
         coms = new ArrayList<>();
 
         TimingTarget target = getTimingTarget();
-        animator = getAnimator(target);
+        animator = initAnimator(target);
 
         setLayout(new MigLayout("fill, insets 0", "[fill, center]", "3[fill]3"));
         add(panel, "w 100% -6!");
@@ -59,7 +59,7 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
         navigate(false);
     }
 
-    public void setImages(Icon... images) {
+    public void addImages(Icon... images) {
         coms.clear();
         for (Icon image : images) {
             this.coms.add(new PictureBox(image));
@@ -86,6 +86,18 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
 
     }
 
+    public void navigate(int index) {
+        if (index == currentIndex) {
+            return;
+        }
+        if (!animator.isRunning()) {
+            compExit = panel.getComponent(checkIndex(currentIndex));
+            currentIndex = checkIndex(index);
+            compShow = panel.getComponent(currentIndex);
+            animator.start();
+        }
+    }
+
     private int checkIndex(int index) {
         if (index >= panel.getComponentCount()) {
             return 0;
@@ -98,7 +110,7 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
 
     private void initSlideShow() {
         panel.removeAll();
-        if (coms.size() >= 2) {
+        if (coms.size() >= 1) {
             for (Component com : coms) {
                 com.setVisible(false);
                 panel.add(com, "pos 0 0 0 0");
@@ -144,11 +156,15 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
         };
     }
 
-    private Animator getAnimator(TimingTarget target) {
+    private Animator initAnimator(TimingTarget target) {
         Animator animator = new Animator(1000, target);
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
         animator.setDeceleration(0.5f);
+        return animator;
+    }
+
+    public Animator getAnimator() {
         return animator;
     }
 

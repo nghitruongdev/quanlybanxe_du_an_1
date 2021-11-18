@@ -20,7 +20,7 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
     }
 
     private void init() {
-        pnlSlideshow.setImages(
+        pnlSlideshow.addImages(
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide1.jpg")),
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide2.jpeg")),
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide3.jpg")));
