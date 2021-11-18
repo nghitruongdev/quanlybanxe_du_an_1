@@ -28,7 +28,7 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
         layout = new MigLayout("insets 0");
         panel = new JPanel();
         panel.setLayout(layout);
-        currentIndex = -1;
+        currentIndex = 0;
         coms = new ArrayList<>();
 
         TimingTarget target = getTimingTarget();

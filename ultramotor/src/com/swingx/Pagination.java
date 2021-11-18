@@ -37,7 +37,6 @@ public class Pagination extends JComponent {
     }
 
     public void setCurrentIndex(int index) {
-        
         this.currentIndex = index;
         checkSelect();
     }
@@ -60,11 +59,10 @@ public class Pagination extends JComponent {
         removeAll();
         for (int i = 0; i < totalPage; i++) {
             add(new Item(i, colorMap.getOrDefault(colors[i], Color.black), event), "w 25!, h 25!");
-//            add(new Item(i, colorMap.getOrDefault(colors[i], Color.black), event), "h 100%");
-
         }
-        repaint();
-        revalidate();
+        setCurrentIndex(0);
+//        repaint();
+//        revalidate();
     }
 
 //    public void setAnimation(float alpha) {
@@ -137,6 +135,7 @@ class Item extends JButton {
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         addActionListener((ActionEvent e) -> {
             event.onClick(index);
+            System.out.println(index);
         });
 
         this.index = index;

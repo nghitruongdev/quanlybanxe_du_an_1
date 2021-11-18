@@ -5,10 +5,12 @@
  */
 package com.swingx;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -28,21 +30,16 @@ public class Card extends JPanel {
 
     public Card() {
         setOpaque(false);
-        setBackground(Color.white);
+        setBackground(new Color(250, 250, 250));
         layout = new MigLayout("insets 10", "[fill]", "[center]0[fill,center]");
 
         title = new JLabel("Hello World");
         title.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        title.setBackground(Color.yellow);
+
         pag = new Pagination();
         pnlSlide = new SlideShowPanel();
 
-        addImages(new ImageIcon(getClass().getResource("/com/raven/icon/slide1.jpg")),
-                new ImageIcon(getClass().getResource("/com/raven/icon/slide2.jpeg")),
-                new ImageIcon(getClass().getResource("/com/raven/icon/slide3.jpg"))
-        );
         addPagnitationEvent(pag, pnlSlide);
-        setPagnitationColors("Đỏ", "Đen", "Xanh", "Vàng");
 
         JPanel panel = new JPanel(new MigLayout("insets 0", "[right, grow]0[leading]", "[fill]5[fill]"));
         panel.setOpaque(false);
@@ -53,6 +50,21 @@ public class Card extends JPanel {
         setLayout(layout);
         add(pnlSlide, "w 100%, h 75%, wrap");
         add(panel, "w 100%, h 25%");
+    }
+
+    public void addImagesAndColor(Map<String, Icon> colorMap) {
+        int size = colorMap.size();
+        String[] colors = new String[size];
+        Icon[] hinhs = new Icon[size];
+        int i = 0;
+        for (Map.Entry<String, Icon> entry : colorMap.entrySet()) {
+            colors[i] = entry.getKey();
+            hinhs[i] = entry.getValue();
+            i++;
+        }
+
+        addImages(hinhs);
+        setPagnitationColors(colors);
     }
 
     public void addImages(Icon... images) {
@@ -79,11 +91,16 @@ public class Card extends JPanel {
 
     @Override
     protected void paintComponent(Graphics grphcs) {
+
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
         g2.setColor(getBackground());
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
         super.paintComponent(grphcs);
+
     }
 
     public MigLayout getLayout() {
