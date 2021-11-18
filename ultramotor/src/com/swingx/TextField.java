@@ -35,6 +35,30 @@ public class TextField extends JTextField {
         this.lineColor = lineColor;
     }
 
+    public boolean isDrawLine() {
+        return drawLine;
+    }
+
+    public void setDrawLine(boolean drawLine) {
+        this.drawLine = drawLine;
+    }
+
+    public boolean isValidInput() {
+        return validInput;
+    }
+
+    public void setValidInput(boolean validInput) {
+        this.validInput = validInput;
+    }
+
+    public boolean isAnimate() {
+        return animate;
+    }
+
+    public void setAnimate(boolean animate) {
+        this.animate = animate;
+    }
+
     private final Animator animator;
     private boolean animateHinText = true;
     private float location;
@@ -42,9 +66,12 @@ public class TextField extends JTextField {
     private boolean mouseOver = false;
     private String labelText = "Label";
     private Color lineColor = new Color(3, 155, 216);
+    private boolean drawLine;
+    private boolean animate;
+    private boolean validInput;
 
     public TextField() {
-        setBorder(new EmptyBorder(20, 3, 10, 3));
+        setBorder(new EmptyBorder(20, 10, 10, 10));
         setSelectionColor(new Color(76, 204, 255));
         addMouseListener(new MouseAdapter() {
             @Override
@@ -114,7 +141,13 @@ public class TextField extends JTextField {
         } else {
             g2.setColor(new Color(150, 150, 150));
         }
-        g2.fillRect(2, height - 1, width - 4, 1);
+        if(drawLine){
+            g2.fillRect(0, height - 1, width - 4, 1);        
+        }else{
+            g2.drawRect(0, 0, width-3, height);
+            g2.fillRect(0, height - 1, width - 4, 1);      
+        }
+        
         createHintText(g2);
         createLineStyle(g2);
         g2.dispose();
@@ -127,17 +160,22 @@ public class TextField extends JTextField {
         Rectangle2D r2 = ft.getStringBounds(labelText, g2);
         double height = getHeight() - in.top - in.bottom;
         double textY = (height - r2.getHeight()) / 2;
-        double size;
-        if (animateHinText) {
-            if (show) {
-                size = 18 * (1 - location);
-            } else {
-                size = 18 * location;
+        double size = 18;
+        g2.setColor(getDisabledTextColor());
+//        g2.setFont(new java.awt.Font(getFont().getName(), 0, 14));
+        if (animate) {
+            if (animateHinText) {
+                if (show) {
+                    size = 18 * (1 - location);
+                } else {
+                    size = 18 * location;
+                }
             }
+            g2.drawString(labelText, in.right  , (int) (in.top + textY + ft.getAscent() - size));
         } else {
-            size = 18;
+            g2.drawString(labelText, in.right, (int) (in.top + textY + ft.getAscent() - size));
         }
-        g2.drawString(labelText, in.right, (int) (in.top + textY + ft.getAscent() - size));
+
     }
 
     private void createLineStyle(Graphics2D g2) {
@@ -152,7 +190,12 @@ public class TextField extends JTextField {
                 size = width * location;
             }
             double x = (width - size) / 2;
-            g2.fillRect((int) (x + 2), height - 2, (int) size, 2);
+            if (drawLine) {
+                g2.fillRect((int) (x), height - 2, (int) size, 2);
+            } else {
+                g2.fillRect((int) (x ), height - 2, (int) size, 2);
+                g2.drawRect(0, 0, getWidth()-3, getHeight());
+            }
         }
     }
 
