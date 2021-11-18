@@ -26,11 +26,29 @@ public class Button extends JButton {
         this.effectColor = effectColor;
     }
 
+    public int getRadius() {
+        return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+
+    public boolean isTransparent() {
+        return transparent;
+    }
+
+    public void setTransparent(boolean transparent) {
+        this.transparent = transparent;
+    }
+
     private Animator animator;
     private int targetSize;
     private float animatSize;
     private Point pressedPoint;
     private float alpha;
+    private int radius = 0;
+    private boolean transparent = false;
     private Color effectColor = new Color(173, 173, 173);
 
     public Button() {
@@ -73,7 +91,10 @@ public class Button extends JButton {
         Graphics2D g2 = img.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(getBackground());
-        g2.fillRoundRect(0, 0, width, height, height, height);
+        int r = this.radius == 0 ? height : this.radius;
+        if (!transparent) {
+            g2.fillRoundRect(0, 0, width, height, r, r);
+        }
         if (pressedPoint != null) {
             g2.setColor(effectColor);
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha));
