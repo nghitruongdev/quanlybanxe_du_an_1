@@ -2,7 +2,7 @@
 package com.ultramotor.ui.khachhang;
 
 
-public class ProductDetailsPanel extends javax.swing.JPanel {
+public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang{
 
     public ProductDetailsPanel() {
         initComponents();
@@ -52,4 +52,9 @@ public class ProductDetailsPanel extends javax.swing.JPanel {
     private com.swingx.Card card1;
     private javax.swing.JLabel lblProductInfo;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setLang(String lang) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

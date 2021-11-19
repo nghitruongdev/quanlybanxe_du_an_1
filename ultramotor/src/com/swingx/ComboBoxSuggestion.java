@@ -7,7 +7,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JButton;
@@ -24,22 +23,21 @@ import javax.swing.event.PopupMenuListener;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.plaf.basic.ComboPopup;
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+//import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class ComboBoxSuggestion<E> extends JComboBox<E> {
 
     public ComboBoxSuggestion() {
         setUI(new ComboSuggestionUI());
-        addActionListener((ActionEvent e) -> {
-            ((JTextField) getEditor().getEditorComponent()).setSelectionStart(0);
-            ((JTextField) getEditor().getEditorComponent()).setSelectionEnd(0);
-        });
-
     }
 }
 
 class ComboSuggestionUI extends BasicComboBoxUI {
-
+    
+    public ComboSuggestionUI() {
+    }
+    
+    
     @Override
     public void installUI(JComponent jc) {
         super.installUI(jc);
@@ -50,7 +48,7 @@ class ComboSuggestionUI extends BasicComboBoxUI {
             public void focusGained(FocusEvent fe) {
                 border.setColor(new Color(128, 189, 255));
             }
-
+            
             @Override
             public void focusLost(FocusEvent fe) {
                 border.setColor(new Color(206, 212, 218));
@@ -61,34 +59,34 @@ class ComboSuggestionUI extends BasicComboBoxUI {
             public void popupMenuWillBecomeVisible(PopupMenuEvent pme) {
                 arrowButton.setBackground(new Color(180, 180, 180));
             }
-
+            
             @Override
             public void popupMenuWillBecomeInvisible(PopupMenuEvent pme) {
                 arrowButton.setBackground(new Color(150, 150, 150));
             }
-
+            
             @Override
             public void popupMenuCanceled(PopupMenuEvent pme) {
                 arrowButton.setBackground(new Color(150, 150, 150));
             }
         });
-        AutoCompleteDecorator.decorate(comboBox);
+//        AutoCompleteDecorator.decorate(comboBox);
         txt.setSelectionColor(new Color(54, 189, 248));
         txt.setBorder(new EmptyBorder(0, 4, 0, 4));
         comboBox.setBackground(Color.WHITE);
         comboBox.setBorder(border);
     }
-
+    
     @Override
     protected JButton createArrowButton() {
         return new ArrowButton();
     }
-
+    
     @Override
     protected ComboPopup createPopup() {
         return new ComboSuggestionPopup(comboBox);
     }
-
+    
     @Override
     protected ListCellRenderer createRenderer() {
         return new ListCellRenderer() {
@@ -111,18 +109,18 @@ class ComboSuggestionUI extends BasicComboBoxUI {
             }
         };
     }
-
+    
     @Override
     public void paintCurrentValueBackground(Graphics grphcs, Rectangle rctngl, boolean bln) {
     }
-
+    
     private class ComboSuggestionPopup extends BasicComboPopup {
-
+        
         public ComboSuggestionPopup(JComboBox combo) {
             super(combo);
             setBorder(new Border(1));
         }
-
+        
         @Override
         protected JScrollPane createScroller() {
             JScrollPane scroll = super.createScroller();
@@ -133,15 +131,15 @@ class ComboSuggestionUI extends BasicComboBoxUI {
             return scroll;
         }
     }
-
+    
     private class ArrowButton extends JButton {
-
+        
         public ArrowButton() {
             setContentAreaFilled(false);
             setBorder(new EmptyBorder(5, 5, 5, 5));
             setBackground(new Color(150, 150, 150));
         }
-
+        
         @Override
         public void paint(Graphics grphcs) {
             super.paint(grphcs);
@@ -160,36 +158,36 @@ class ComboSuggestionUI extends BasicComboBoxUI {
             g2.dispose();
         }
     }
-
+    
     private class Border extends EmptyBorder {
-
+        
         public Color getFocusColor() {
             return focusColor;
         }
-
+        
         public void setFocusColor(Color focusColor) {
             this.focusColor = focusColor;
         }
-
+        
         public Color getColor() {
             return color;
         }
-
+        
         public void setColor(Color color) {
             this.color = color;
         }
-
+        
         private Color focusColor = new Color(128, 189, 255);
         private Color color = new Color(206, 212, 218);
-
+        
         public Border(int border) {
             super(border, border, border, border);
         }
-
+        
         public Border() {
             this(5);
         }
-
+        
         @Override
         public void paintBorder(Component cmpnt, Graphics grphcs, int x, int y, int width, int height) {
             Graphics2D g2 = (Graphics2D) grphcs.create();

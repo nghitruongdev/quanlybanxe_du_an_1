@@ -141,13 +141,14 @@ public class TextField extends JTextField {
         } else {
             g2.setColor(new Color(150, 150, 150));
         }
-        if(drawLine){
-            g2.fillRect(0, height - 1, width - 4, 1);        
-        }else{
-            g2.drawRect(0, 0, width-3, height);
-            g2.fillRect(0, height - 1, width - 4, 1);      
+        if (drawLine) {
+            g2.fillRect(0, height - 1, width - 2, 1);
+        } else {
+            g2.drawRect(0, 0, width - 2, height);
+
+            g2.fillRect(0, height - 1, width - 2, 1);
         }
-        
+
         createHintText(g2);
         createLineStyle(g2);
         g2.dispose();
@@ -171,7 +172,7 @@ public class TextField extends JTextField {
                     size = 18 * location;
                 }
             }
-            g2.drawString(labelText, in.right  , (int) (in.top + textY + ft.getAscent() - size));
+            g2.drawString(labelText, in.right, (int) (in.top + textY + ft.getAscent() - size));
         } else {
             g2.drawString(labelText, in.right, (int) (in.top + textY + ft.getAscent() - size));
         }
@@ -191,10 +192,11 @@ public class TextField extends JTextField {
             }
             double x = (width - size) / 2;
             if (drawLine) {
-                g2.fillRect((int) (x), height - 2, (int) size, 2);
+                g2.fillRect((int) (x), height - 2, (int) size + 1, 2);
             } else {
-                g2.fillRect((int) (x ), height - 2, (int) size, 2);
-                g2.drawRect(0, 0, getWidth()-3, getHeight());
+                g2.fillRect((int) (x), height - 2, (int) size + 1, 2);
+                g2.drawRect(0, 0, getWidth() - 2, getHeight());
+                g2.drawRect(1, 1, getWidth() - 4, getHeight() - 2);
             }
         }
     }
