@@ -4,25 +4,35 @@ import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
-import javax.swing.border.EmptyBorder;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class MyTextField extends JFormattedTextField {
 
+    private final int extra_top = 25;
+    private final int extra_bottom = 25;
+    private final int extra = extra_top + extra_bottom;
+
     public MyTextField() {
         setBackground(new Color(255, 255, 255, 0));
-        setBorder(new EmptyBorder(20, 10, 10, 10));
+//        setBackground(Color.yellow);
+        setOpaque(false);
+        setPlaceholder("Hello word");
+        initBorder();
+        validInput = true;
+        allowEmpty = true;
         setSelectionColor(new Color(76, 204, 255));
         addMouseListener(new MouseAdapter() {
             @Override
@@ -65,6 +75,21 @@ public class MyTextField extends JFormattedTextField {
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
         animator.setDeceleration(0.5f);
+
+    }
+
+    private void initBorder() {
+        int left = 10;
+        int right = 10;
+        if (prefixIcon != null) {
+            left += prefixIcon.getIconWidth();
+        }
+        if (suffixIcon != null) {
+            right += suffixIcon.getIconWidth();
+        }
+        int x = roundBorder ? 10 : 0;
+
+        setBorder(BorderFactory.createEmptyBorder(10 + extra_top, left + x, 10 + extra_bottom, right + x));
     }
 
     private void showing(boolean action) {
@@ -86,36 +111,41 @@ public class MyTextField extends JFormattedTextField {
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
         int width = getWidth();
         int height = getHeight();
-        int radius = roundBorder ? height : 0;
+        int radius = roundBorder ? height - extra : 0;
 
         g2.setColor(fieldBackground);
-        g2.fillRoundRect(0, 0, width, height, radius, radius);
+        g2.fillRoundRect(0, extra_top, width, height - extra, radius, radius);
         super.paint(grphcs);
 
-        if (mouseOver) {
+        setLineColor(g2, mouseOver, false);
+
+        if (drawLine) {
+            g2.fillRect(0, height - extra_bottom - 1, width, 1);
+        } else {
+            g2.drawRoundRect(0, extra_top, width - 1, height - extra, radius, radius);
+            g2.fillRect(roundBorder ? (radius / 2) - 5 : 0, height - extra_bottom, width - (roundBorder ? radius - 10 : 2), 1);
+        }
+
+        createHintText(g2);
+        drawBorder(g2);
+        paintIcon(g2);
+        g2.dispose();
+    }
+
+    private void setLineColor(Graphics2D g2, boolean isMouseOver, boolean isFocus) {
+        if (isMouseOver || isFocus) {
             g2.setColor(lineColor);
         } else {
             g2.setColor(new Color(150, 150, 150));
         }
-        if (drawLine) {
-            g2.fillRect(0, height - 1, width, 1);
-        } else {
-            g2.drawRoundRect(0, 0, width - 1, height, radius, radius);
-            g2.fillRect(roundBorder ? (radius / 2) - 5 : 0, height - 1, width - (roundBorder ? radius - 10 : 2), 1);
-        }
-
-        createHintText(g2);
-        initBorder(g2);
-
-        g2.dispose();
     }
 
-    private void initBorder(Graphics2D g2) {
+    private void drawBorder(Graphics2D g2) {
         int height = getHeight();
-        int radius = roundBorder ? height : 0;
+        int radius = roundBorder ? height - extra : 0;
         double width = getWidth() - 4 - (roundBorder && !drawLine ? radius - 10 : 2);
         if (isFocusOwner()) {
-            g2.setColor(lineColor);
+            setLineColor(g2, false, true);
             double size;
             if (show) {
                 size = width * (1 - location);
@@ -124,11 +154,11 @@ public class MyTextField extends JFormattedTextField {
             }
             double x = (width - size) / 2 + (roundBorder && !drawLine ? radius / 2 - 5 : 0);
             if (drawLine) {
-                g2.fillRect((int) (x), height - 2, (int) size + 6, 2);
+                g2.fillRect((int) (x), height - extra_bottom - 2, (int) size + 6, 2);
             } else {
-                g2.drawRoundRect(0, 0, getWidth()-2, height, radius, radius);
-                g2.drawRoundRect(1, 1, getWidth() - 2, getHeight() - 2, radius, radius);
-                g2.fillRect((int) (x), height - 2, (int) size + 6, 2);
+                g2.drawRoundRect(0, extra_top, getWidth() - 2, height - extra, radius, radius);
+                g2.drawRoundRect(1, extra_top + 1, getWidth() - 2, height - 1 - extra, radius, radius);
+                g2.fillRect((int) (x), height - extra_bottom - 1, (int) size + 6, 2);
             }
         }
     }
@@ -137,44 +167,54 @@ public class MyTextField extends JFormattedTextField {
         Insets in = getInsets();
         g2.setColor(new Color(150, 150, 150));
         FontMetrics ft = g2.getFontMetrics();
-        Rectangle2D r2 = ft.getStringBounds(labelText, g2);
-        double height = getHeight() - in.top - in.bottom;
-        double textY = (height - r2.getHeight()) / 2;
-        double size = 18;
+        int fieldSize = (getHeight() - extra);
+        double size = extra_top;
         g2.setColor(getDisabledTextColor());
 //        g2.setFont(new java.awt.Font(getFont().getName(), 0, 14));
         if (animateLabel) {
             if (animateHinText) {
                 if (show) {
-                    size = 18 * (1 - location);
+                    size = size * (1 - location);
                 } else {
-                    size = 18 * location;
+                    size = size * location;
                 }
             }
-            g2.drawString(labelText, in.right, (int) (in.top + textY + ft.getAscent() - size));
+            g2.drawString(label, in.left, (getHeight() - extra_bottom - (fieldSize / 2) + ft.getMaxAscent() / 2 - (int) size - (size != 0 ? 5 : 0)));
+
         } else {
-            g2.drawString(labelText, in.right, (int) (in.top + textY + ft.getAscent() - size));
+            g2.drawString(label, in.left, (int) (0 + extra_top - 10));
             if (!"".equals(placeholder) && (getText().equals(""))) {
-                g2.drawString(placeholder, getInsets().left, (getHeight() - ft.getMaxAscent()));
+                g2.drawString(placeholder, in.left, (getHeight() - extra_bottom - (fieldSize / 2) + ft.getMaxAscent() / 2));
             }
+        }
+        if (!validInput) {
+            g2.setColor(Color.red);
+            g2.drawString(error, in.left, (getHeight() - extra_bottom / 2 + ft.getMaxAscent() / 2));
         }
 
     }
-    
-    private void updateSize(){
-        
+
+    private void paintIcon(Graphics2D g2) {
+        if (prefixIcon != null) {
+            Image prefix = ((ImageIcon) prefixIcon).getImage();
+            int y = (getHeight() - prefixIcon.getIconHeight()) / 2;
+            g2.drawImage(prefix, 3, y, this);
+        }
+
+        if (suffixIcon != null) {
+            Image suffix = ((ImageIcon) suffixIcon).getImage();
+            int y = (getHeight() - suffixIcon.getIconHeight()) / 2;
+            g2.drawImage(suffix, getWidth() - suffixIcon.getIconWidth() - 10, y, this);
+        }
     }
-    private int radius;
-    private int width;
-    private int height;
-    
+
     private final Animator animator;
     private boolean animateHinText = true;
     private float location;
     private boolean show;
     private boolean mouseOver = false;
-    private String labelText = "Label";
-    private String errorText = "";
+    private String label = "Label";
+    private String error = "";
     private String placeholder = "";
 
     private Color lineColor = new Color(3, 155, 216);
@@ -192,16 +232,19 @@ public class MyTextField extends JFormattedTextField {
     public void setText(String string) {
         if (!getText().equals(string)) {
             showing(string.equals(""));
+            if (string.equals("")) {
+                setValidInput(true);
+            }
         }
         super.setText(string);
     }
 
     public String getLabelText() {
-        return labelText;
+        return label;
     }
 
     public void setLabelText(String labelText) {
-        this.labelText = labelText;
+        this.label = labelText;
     }
 
     public Color getLineColor() {
@@ -212,9 +255,9 @@ public class MyTextField extends JFormattedTextField {
         this.lineColor = lineColor;
     }
 
-    public boolean isDrawLine() {
-        return drawLine;
-    }
+//    public boolean isDrawLine() {
+//        return drawLine;
+//    }
 
     public void setDrawLine(boolean drawLine) {
         this.drawLine = drawLine;
@@ -226,24 +269,24 @@ public class MyTextField extends JFormattedTextField {
 
     public void setValidInput(boolean validInput) {
         this.validInput = validInput;
+        repaint();
     }
 
-    public boolean isAnimateLabel() {
-        return animateLabel;
-    }
+//    public boolean isAnimateLabel() {
+//        return animateLabel;
+//    }
 
     public void setAnimateLabel(boolean animate) {
         this.animateLabel = animate;
     }
 
-    public boolean isRoundBorder() {
-        return roundBorder;
-    }
+//    public boolean isRoundBorder() {
+//        return roundBorder;
+//    }
 
-    public void setRoundBorder(boolean roudBorder) {
-        this.roundBorder = roudBorder;
-        int x = roundBorder ? 20 : 10;
-//        setBorder(new EmptyBorder(20, x, 10, x));
+    public void setRoundBorder(boolean roundBorder) {
+        this.roundBorder = roundBorder;
+        initBorder();
     }
 
     public boolean isAllowEmpty() {
@@ -255,16 +298,16 @@ public class MyTextField extends JFormattedTextField {
     }
 
     public String getErrorText() {
-        return errorText;
+        return error;
     }
 
     public void setErrorText(String errorText) {
-        this.errorText = errorText;
+        this.error = errorText;
     }
 
-    public String getPlaceholder() {
-        return placeholder;
-    }
+//    public String getPlaceholder() {
+//        return placeholder;
+//    }
 
     public void setPlaceholder(String placeholder) {
         this.placeholder = placeholder;
@@ -276,6 +319,7 @@ public class MyTextField extends JFormattedTextField {
 
     public void setPrefixIcon(Icon prefixIcon) {
         this.prefixIcon = prefixIcon;
+        initBorder();
     }
 
     public Icon getSuffixIcon() {
@@ -284,6 +328,7 @@ public class MyTextField extends JFormattedTextField {
 
     public void setSuffixIcon(Icon suffixIcon) {
         this.suffixIcon = suffixIcon;
+        initBorder();
     }
 
 }
