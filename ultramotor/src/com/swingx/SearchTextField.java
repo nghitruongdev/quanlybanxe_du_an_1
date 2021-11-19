@@ -6,12 +6,14 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
-public class SearchTextField extends MyTextField {
+public class SearchTextField extends TextField {
 
     Timer timer;
 
     public SearchTextField() {
+        setOnlyField(true);
         setRoundBorder(true);
+        setPrefixIcon(new ImageIcon(getClass().getResource("/com/swingx/icon/search_25px.png")));
         timer = new Timer(1000, (ActionEvent e) -> {
             checkState();
             setSuffixIcon(null);

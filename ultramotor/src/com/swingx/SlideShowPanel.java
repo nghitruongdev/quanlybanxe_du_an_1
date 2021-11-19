@@ -34,7 +34,7 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
         TimingTarget target = getTimingTarget();
         animator = initAnimator(target);
 
-        setLayout(new MigLayout("fill, insets 0", "[fill, center]", "3[fill]3"));
+        setLayout(new MigLayout("fill, insets 0", "[fill, center]", "[fill]"));
         add(panel, "w 100% -6!");
     }
 
@@ -146,10 +146,10 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
                 int locationShow = (int) (width * (1f - fraction));
                 if (next) {
                     layout.setComponentConstraints(compShow, String.format("pos %d 0 100%% 100%%, w 100%%", locationShow));
-                    layout.setComponentConstraints(compExit, String.format("pos -%d 0 %f 100%%", location, width - location));
+                    layout.setComponentConstraints(compExit, String.format("pos -%d 0 %f 100%%", Math.abs(location), width - location));
                 } else {
                     layout.setComponentConstraints(compShow, String.format("pos -%d 0 %f 100%%", locationShow, width - locationShow));
-                    layout.setComponentConstraints(compExit, String.format("pos %d 0 100%% 100%%, w 100%%", location));
+                    layout.setComponentConstraints(compExit, String.format("pos %d 0 100%% 100%%, w 100%%", Math.abs(location)));
                 }
                 panel.revalidate();
             }

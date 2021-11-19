@@ -4,6 +4,7 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 public class WelcomePanel extends javax.swing.JPanel implements Multilang {
 
@@ -25,7 +26,7 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide2.jpeg")),
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide3.jpg")));
         pnlSlideshow.setAuto(2000);
-        
+
         cboLang.setModel(LANG_MODEL_VN);
         addListeners();
     }
@@ -43,42 +44,40 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
             cboLang.setModel(LANG_MODEL_EN);
             cboLang.setSelectedIndex(1);
         }
-        revalidate();
     }
 
     private void addListeners() {
         cboLang.addActionListener((ActionEvent e) -> {
-            System.out.println(cboLang.getSelectedIndex());
             if (cboLang.getSelectedIndex() == 0) {
                 setLang("Vietnamese");
             } else {
                 setLang("English");
             }
         });
-        
-        btnContinue.addActionListener((ActionEvent e)->{
+
+        btnContinue.addActionListener((ActionEvent e) -> {
             Container con = this.getTopLevelAncestor();
-            if(con instanceof KhachHangFrame){
-                ((KhachHangFrame)con).navigateCard(true);
+            if (con instanceof KhachHangFrame) {
+                KhachHangController.navigateCard((JPanel)this.getParent(), true);
             }
         });
     }
-    
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         pnlSlideshow = new com.swingx.SlideShowPanel();
-        jPanel1 = new javax.swing.JPanel();
+        pnlLang = new javax.swing.JPanel();
         lblLang = new javax.swing.JLabel();
         cboLang = new com.swingx.ComboBoxSuggestion();
         btnContinue = new com.swingx.Button();
 
         setBackground(new java.awt.Color(204, 204, 204));
-        setLayout(new java.awt.GridLayout());
+        setLayout(new java.awt.GridLayout(1, 0));
         add(pnlSlideshow);
+
+        pnlLang.setBackground(new java.awt.Color(250, 250, 250));
 
         lblLang.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblLang.setForeground(new java.awt.Color(102, 102, 102));
@@ -93,45 +92,45 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
         btnContinue.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnContinue.setRadius(75);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlLangLayout = new javax.swing.GroupLayout(pnlLang);
+        pnlLang.setLayout(pnlLangLayout);
+        pnlLangLayout.setHorizontalGroup(
+            pnlLangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlLangLayout.createSequentialGroup()
+                .addGroup(pnlLangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlLangLayout.createSequentialGroup()
                         .addGap(83, 83, 83)
                         .addComponent(cboLang, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(pnlLangLayout.createSequentialGroup()
                         .addGap(190, 190, 190)
                         .addComponent(btnContinue, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 119, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 74, Short.MAX_VALUE))
+            .addGroup(pnlLangLayout.createSequentialGroup()
                 .addGap(181, 181, 181)
                 .addComponent(lblLang)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        pnlLangLayout.setVerticalGroup(
+            pnlLangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLangLayout.createSequentialGroup()
                 .addGap(141, 141, 141)
                 .addComponent(lblLang, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cboLang, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(btnContinue, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(257, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
 
-        add(jPanel1);
+        add(pnlLang);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnContinue;
     private com.swingx.ComboBoxSuggestion cboLang;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblLang;
+    private javax.swing.JPanel pnlLang;
     private com.swingx.SlideShowPanel pnlSlideshow;
     // End of variables declaration//GEN-END:variables
 

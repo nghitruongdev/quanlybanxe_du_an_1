@@ -17,7 +17,6 @@ public class ModelSanPham implements Serializable {
     private int doiXe;
     private String id_dongSP;
     private List<SanPham> sanPhamList;
-    private Map<String, Icon> colorHinhMap;
 
     public ModelSanPham() {
     }
@@ -73,13 +72,13 @@ public class ModelSanPham implements Serializable {
         this.id_dongSP = id_dongSP;
     }
 
-    public Map<String, Icon> getColorHinhMap() {
-        return colorHinhMap;
-    }
-
-    public void setColorHinhMap(Map<String, Icon> colorHinhMap) {
-        this.colorHinhMap = colorHinhMap;
-    }
+//    public Map<String, Icon> getColorHinhMap() {
+//        return colorHinhMap;
+//    }
+//
+//    public void setColorHinhMap(Map<String, Icon> colorHinhMap) {
+//        this.colorHinhMap = colorHinhMap;
+//    }
 
     @Override
     public int hashCode() {

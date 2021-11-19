@@ -12,7 +12,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.Map;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
@@ -123,8 +122,8 @@ public class Card extends JPanel {
         this.pnlSlide = pnlSlide;
     }
 
-    public String getTitle() {
-        return title.getText();
+    public JLabel getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {
