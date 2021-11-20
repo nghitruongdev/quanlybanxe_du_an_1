@@ -1,72 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.ultramotor.entity;
 
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+public class SanPham {
 
-/**
- *
- * @author nghipc
- */
-@Entity
-@Table(name = "SanPham")
-@NamedQueries({
-    @NamedQuery(name = "SanPham.findAll", query = "SELECT s FROM SanPham s")})
-public class SanPham implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "SKU")
     private String sku;
-    @Basic(optional = false)
-    @Column(name = "tenSP")
     private String tenSP;
-    @Column(name = "hinh")
     private String hinh;
-    @Basic(optional = false)
-    @Column(name = "mauSac")
     private String mauSac;
-    @Basic(optional = false)
-    @Column(name = "phanKhoi")
     private String phanKhoi;
-    @Column(name = "thoiGianBH")
     private Integer thoiGianBH;
-    @Basic(optional = false)
-    @Column(name = "DiaChiSX")
     private String diaChiSX;
-    @Basic(optional = false)
-    @Column(name = "giaTien")
     private double giaTien;
-    @Column(name = "moTa")
     private String moTa;
-    @OneToMany(mappedBy = "sanPham")
-    private List<ChiTietHoaDon> chiTietHoaDonList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sanPham")
-    private List<ChiTietXuatKho> chiTietXuatKhoList;
-    @JoinColumn(name = "id_Model", referencedColumnName = "id_Model")
-    @ManyToOne(optional = false)
-    private ModelSanPham modelSanPham;
-    @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
-    @ManyToOne(optional = false)
-    private NhanVien nhanVien;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sanPham")
-    private List<ChiTietNhapKho> chiTietNhapKhoList;
+    private String idModel;
+    private String idNV;
 
     public SanPham() {
     }
@@ -75,14 +22,20 @@ public class SanPham implements Serializable {
         this.sku = sku;
     }
 
-    public SanPham(String sku, String tenSP, String mauSac, String phanKhoi, String diaChiSX, double giaTien) {
+    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi, Integer thoiGianBH, String diaChiSX, double giaTien, String moTa, String idModel, String idNV) {
         this.sku = sku;
         this.tenSP = tenSP;
+        this.hinh = hinh;
         this.mauSac = mauSac;
         this.phanKhoi = phanKhoi;
+        this.thoiGianBH = thoiGianBH;
         this.diaChiSX = diaChiSX;
         this.giaTien = giaTien;
+        this.moTa = moTa;
+        this.idModel = idModel;
+        this.idNV = idNV;
     }
+
 
     public String getSku() {
         return sku;
@@ -156,46 +109,23 @@ public class SanPham implements Serializable {
         this.moTa = moTa;
     }
 
-    public List<ChiTietHoaDon> getChiTietHoaDonList() {
-        return chiTietHoaDonList;
+    public String getIdModel() {
+        return idModel;
     }
 
-    public void setChiTietHoaDonList(List<ChiTietHoaDon> chiTietHoaDonList) {
-        this.chiTietHoaDonList = chiTietHoaDonList;
+    public void setIdModel(String idModel) {
+        this.idModel = idModel;
     }
 
-    public List<ChiTietXuatKho> getChiTietXuatKhoList() {
-        return chiTietXuatKhoList;
+    public String getIdNV() {
+        return idNV;
     }
 
-    public void setChiTietXuatKhoList(List<ChiTietXuatKho> chiTietXuatKhoList) {
-        this.chiTietXuatKhoList = chiTietXuatKhoList;
+    public void setIdNV(String idNV) {
+        this.idNV = idNV;
     }
 
-    public ModelSanPham getModelSanPham() {
-        return modelSanPham;
-    }
-
-    public void setModelSanPham(ModelSanPham modelSanPham) {
-        this.modelSanPham = modelSanPham;
-    }
-
-    public NhanVien getNhanVien() {
-        return nhanVien;
-    }
-
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
-    }
-
-    public List<ChiTietNhapKho> getChiTietNhapKhoList() {
-        return chiTietNhapKhoList;
-    }
-
-    public void setChiTietNhapKhoList(List<ChiTietNhapKho> chiTietNhapKhoList) {
-        this.chiTietNhapKhoList = chiTietNhapKhoList;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

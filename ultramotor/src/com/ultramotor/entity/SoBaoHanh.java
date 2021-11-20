@@ -1,46 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.ultramotor.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-/**
- *
- * @author nghipc
- */
-@Entity
-@Table(name = "SoBaoHanh")
-@NamedQueries({
-    @NamedQuery(name = "SoBaoHanh.findAll", query = "SELECT s FROM SoBaoHanh s")})
 public class SoBaoHanh implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id_SBH")
+
     private String idSBH;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "soBaoHanh")
+    private Integer idCTHD;
     private List<ChiTietBaoHanh> chiTietBaoHanhList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "soBaoHanh")
     private List<ChiTietBaoDuong> chiTietBaoDuongList;
-    @JoinColumn(name = "id_CTHD", referencedColumnName = "id_CTHD")
-    @ManyToOne(optional = false)
-    private ChiTietHoaDon chiTietHoaDon;
 
     public SoBaoHanh() {
     }
@@ -56,6 +26,12 @@ public class SoBaoHanh implements Serializable {
     public void setIdSBH(String idSBH) {
         this.idSBH = idSBH;
     }
+
+    public SoBaoHanh(String idSBH, Integer idCTHD) {
+        this.idSBH = idSBH;
+        this.idCTHD = idCTHD;
+    }
+    
 
     public List<ChiTietBaoHanh> getChiTietBaoHanhList() {
         return chiTietBaoHanhList;
@@ -73,14 +49,15 @@ public class SoBaoHanh implements Serializable {
         this.chiTietBaoDuongList = chiTietBaoDuongList;
     }
 
-    public ChiTietHoaDon getChiTietHoaDon() {
-        return chiTietHoaDon;
+    public Integer getIdCTHD() {
+        return idCTHD;
     }
 
-    public void setChiTietHoaDon(ChiTietHoaDon chiTietHoaDon) {
-        this.chiTietHoaDon = chiTietHoaDon;
+    public void setIdCTHD(Integer idCTHD) {
+        this.idCTHD = idCTHD;
     }
 
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -105,5 +82,5 @@ public class SoBaoHanh implements Serializable {
     public String toString() {
         return "com.ultramotor.entity.SoBaoHanh[ idSBH=" + idSBH + " ]";
     }
-    
+
 }

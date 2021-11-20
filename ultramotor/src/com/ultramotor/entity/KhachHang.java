@@ -5,65 +5,23 @@
  */
 package com.ultramotor.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-/**
- *
- * @author nghipc
- */
-@Entity
-@Table(name = "KhachHang")
-@NamedQueries({
-    @NamedQuery(name = "KhachHang.findAll", query = "SELECT k FROM KhachHang k")})
-public class KhachHang implements Serializable {
+public class KhachHang {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "idKH")
     private String idKH;
-    @Basic(optional = false)
-    @Column(name = "HoKH")
     private String hoKH;
-    @Basic(optional = false)
-    @Column(name = "TenKH")
     private String tenKH;
-    @Basic(optional = false)
-    @Column(name = "GioiTinh")
     private boolean gioiTinh;
-    @Basic(optional = false)
-    @Column(name = "NgaySinh")
-    @Temporal(TemporalType.DATE)
     private Date ngaySinh;
-    @Column(name = "DiaChi")
     private String diaChi;
-    @Column(name = "SDT")
     private String sdt;
-    @Column(name = "Email")
     private String email;
-    @Column(name = "ThanhVien")
     private Boolean thanhVien;
-    @Column(name = "GhiChu")
     private String ghiChu;
-    @OneToMany(mappedBy = "khachHang")
     private List<HoaDon> hoaDonList;
-    @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
-    @ManyToOne
-    private NhanVien nhanVien;
+    private String maNV;
 
     public KhachHang() {
     }
@@ -72,12 +30,18 @@ public class KhachHang implements Serializable {
         this.idKH = idKH;
     }
 
-    public KhachHang(String idKH, String hoKH, String tenKH, boolean gioiTinh, Date ngaySinh) {
+    public KhachHang(String idKH, String hoKH, String tenKH, boolean gioiTinh, Date ngaySinh, String diaChi, String sdt, String email, Boolean thanhVien, String ghiChu, String maNV) {
         this.idKH = idKH;
         this.hoKH = hoKH;
         this.tenKH = tenKH;
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
+        this.diaChi = diaChi;
+        this.sdt = sdt;
+        this.email = email;
+        this.thanhVien = thanhVien;
+        this.ghiChu = ghiChu;
+        this.maNV = maNV;
     }
 
     public String getIdKH() {
@@ -168,13 +132,15 @@ public class KhachHang implements Serializable {
         this.hoaDonList = hoaDonList;
     }
 
-    public NhanVien getNhanVien() {
-        return nhanVien;
+    public String getMaNV() {
+        return maNV;
     }
 
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
     }
+
+    
 
     @Override
     public int hashCode() {
@@ -200,5 +166,5 @@ public class KhachHang implements Serializable {
     public String toString() {
         return "com.ultramotor.entity.KhachHang[ idKH=" + idKH + " ]";
     }
-    
+
 }
