@@ -20,10 +20,10 @@ public class Auth {
         return user != null && !isForgotPW;
     }
 
-//    //kiểm tra user login là trưởng phòng
-//    public static boolean isManager() {
-//        return isLogin() && user.getVaiTro();
-//    }
+    //kiểm tra user login là trưởng phòng
+    public static boolean isManager() {
+        return isLogin() && user.getVaiTro().equals("Trưởng phòng");
+    }
 
     //get mã otp cho quên mật khẩu
     public static String getOTP() {

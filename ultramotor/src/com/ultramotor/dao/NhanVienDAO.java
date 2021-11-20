@@ -28,24 +28,25 @@ public class NhanVienDAO implements UltraDAO<NhanVien, String> {
     final String INSERT_SQL = "INSERT INTO NhanVien(id_NV,HONV,TENNV,NGAYSINH,GIOITINH,DIACHI,SDT,EMAIL,LUONG,HINH,VAITRO,MATKHAU,GHICHU)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
     final String UPDATE_SQL = "UPDATE NhanVien SET HONV=?,TENNV=?,NGAYSINH=?,GIOITINH=?,DIACHI=?,SDT=?,EMAIL=?,LUONG=?,HINH=?,VAITRO=?,MATKHAU=?,GHICHU=? WHERE id_NV=?";
     final String DELETE_SQL = "DELETE FROM NhanVien WHERE id_NV=?";
+
     @Override
     public void insert(NhanVien e) {
         XJdbcServer.update(INSERT_SQL,
-                e.getIdNV(),e.getHoNV(),e.getTenNV(),e.getNgaySinh(),e.getGioiTinh(),e.getDiaChi(),
-                e.getSdt(),e.getEmail(),e.getLuong(),e.getHinh(),e.getVaiTro(),e.getMatKhau(),e.getGhiChu());
+                e.getIdNV(), e.getHoNV(), e.getTenNV(), e.getNgaySinh(), e.getGioiTinh(), e.getDiaChi(),
+                e.getSdt(), e.getEmail(), e.getLuong(), e.getHinh(), e.getVaiTro(), e.getMatKhau(), e.getGhiChu());
     }
 
     @Override
     public void update(NhanVien e) {
         XJdbcServer.update(UPDATE_SQL,
-                e.getHoNV(),e.getTenNV(),e.getNgaySinh(),e.getGioiTinh(),e.getDiaChi(),
-                e.getSdt(),e.getEmail(),e.getLuong(),e.getHinh(),e.getVaiTro(),e.getMatKhau(),e.getGhiChu(),e.getIdNV());
+                e.getHoNV(), e.getTenNV(), e.getNgaySinh(), e.getGioiTinh(), e.getDiaChi(),
+                e.getSdt(), e.getEmail(), e.getLuong(), e.getHinh(), e.getVaiTro(), e.getMatKhau(), e.getGhiChu(), e.getIdNV());
     }
 
     @Override
     public void delete(String id) {
         XJdbcServer.update(DELETE_SQL, id);
-   
+
     }
 
     @Override
@@ -62,11 +63,12 @@ public class NhanVienDAO implements UltraDAO<NhanVien, String> {
     public List<NhanVien> selectAll() {
         return this.selectBySQL(SELECT_ALL_SQL);
     }
-    
+
     public NhanVien selectByEmail(String email) {
         List<NhanVien> list = selectBySQL(SQL_SELECT_BY_EMAIL, email);
         return list.isEmpty() ? null : list.get(0);
     }
+
     @Override
     public List<NhanVien> selectBySQL(String sql, Object... args) {
         List<NhanVien> list = new ArrayList<NhanVien>();
@@ -94,7 +96,7 @@ public class NhanVienDAO implements UltraDAO<NhanVien, String> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        
+
     }
 
 //    @Override
@@ -129,7 +131,6 @@ public class NhanVienDAO implements UltraDAO<NhanVien, String> {
 //        }
 //        return list;
 //    }
-
     @Override
     public CachedRowSet getRowSet() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -152,5 +153,9 @@ public class NhanVienDAO implements UltraDAO<NhanVien, String> {
         columns.put("ghiChu", "GhiChu");
         return columns;
     }
-
+    public List<NhanVien> selectByKeyword(String keyWord){
+        String sql= "SELECT * FROM NhanVien WHERE HONV LIKE ? OR TENNV LIKE ? OR id_NV like ? OR SDT like ? ";
+        return this.selectBySQL(sql, "%"+keyWord+"%", "%"+keyWord+"%", "%"+keyWord+"%","%"+keyWord+"%");
+    }
+    
 }

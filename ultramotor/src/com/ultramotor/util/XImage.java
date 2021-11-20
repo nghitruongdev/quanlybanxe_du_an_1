@@ -53,7 +53,7 @@ public class XImage {
             if (icon == null) {
                 throw new Exception();
             }
-            label.setIcon(XImage.resize(icon, 150, 200));
+            label.setIcon(XImage.resize(icon, 270, 240));
             label.setToolTipText(file.getName());
             XFile.saveTemp(file);
         } catch (Exception e) {
