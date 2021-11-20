@@ -84,7 +84,7 @@ class ChiTietNhapKhoDAO extends UltraDAO<ChiTietNhapKho, Integer> {
                         rs.getInt(2),
                         rs.getDouble(3),
                         rs.getString(4),
-                        rs.getString(5)));
+                        rs.getString(5)));                
             }
         } catch (SQLException ex) {
             Logger.getLogger(NhaSanXuatDAO.class.getName()).log(Level.SEVERE, null, ex);

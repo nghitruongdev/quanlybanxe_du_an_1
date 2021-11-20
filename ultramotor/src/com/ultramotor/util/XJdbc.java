@@ -19,7 +19,7 @@ public class XJdbc {
 
     private static Connection con;
     private static RowSetFactory factory;
-    private static final String URL = "jdbc:sqlserver://localhost;databaseName=HONDA;username=sa;password=songlong";
+    private static final String URL = "jdbc:sqlserver://localhost;databaseName=HONDA;username=sa;password=An0836604972";
 
     static {
         try {

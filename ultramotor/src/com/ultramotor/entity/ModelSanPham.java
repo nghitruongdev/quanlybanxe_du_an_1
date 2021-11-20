@@ -16,6 +16,14 @@ public class ModelSanPham implements Serializable {
     private String tenModel;
     private int doiXe;
     private String id_dongSP;
+
+    public String getId_dongSP() {
+        return id_dongSP;
+    }
+
+    public void setId_dongSP(String id_dongSP) {
+        this.id_dongSP = id_dongSP;
+    }
     private List<SanPham> sanPhamList;
 
     public ModelSanPham() {
