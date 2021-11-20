@@ -26,6 +26,7 @@ public class Card extends JPanel {
     private Pagination pag;
     private SlideShowPanel pnlSlide;
     private JLabel title;
+    private Button button;
 
     public Card() {
         setOpaque(false);
@@ -37,7 +38,10 @@ public class Card extends JPanel {
 
         pag = new Pagination();
         pnlSlide = new SlideShowPanel();
-
+        button = new Button();
+        button.setText("Xem thêm");
+        button.setForeground(Color.white);
+        button.setBackground(Color.decode("#54B75E"));
         addPagnitationEvent(pag, pnlSlide);
 
         JPanel panel = new JPanel(new MigLayout("insets 0", "[right, grow]0[leading]", "[fill]5[fill]"));
@@ -45,10 +49,11 @@ public class Card extends JPanel {
         panel.add(pag, "gapleft 5, spanx, gapright 5");
 
         panel.add(title, "align leading,gapx 5");
+        panel.add(button);
 
         setLayout(layout);
-        add(pnlSlide, "w 100%, h 75%, wrap");
-        add(panel, "w 100%, h 25%");
+        add(pnlSlide, "w 100%, h 75%,pushy, wrap");
+        add(panel, "w 100%, h 25%:25%:100");
     }
 
     public void addImagesAndColor(Map<String, Icon> colorMap) {
@@ -130,4 +135,15 @@ public class Card extends JPanel {
         this.title.setText(title);
     }
 
+    public Button getButton() {
+        return button;
+    }
+
+    public void setButton(Button button) {
+        this.button = button;
+    }
+
+    public void removeButton() {
+        this.button.getParent().remove(button);
+    }
 }

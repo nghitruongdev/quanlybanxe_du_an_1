@@ -251,6 +251,7 @@ public class TextField extends JFormattedTextField {
 
     public void setLabelText(String labelText) {
         this.label = labelText;
+        repaint();
     }
 
     public Color getLineColor() {

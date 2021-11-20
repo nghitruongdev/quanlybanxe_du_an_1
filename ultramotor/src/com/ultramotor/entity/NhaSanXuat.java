@@ -9,7 +9,6 @@ public class NhaSanXuat implements Serializable {
     private static final long serialVersionUID = 1L;
     private String idNSX;
     private String tenNSX;
-    private List<DongSanPham> dongSanPhamList;
 
     public NhaSanXuat() {
     }
@@ -39,13 +38,6 @@ public class NhaSanXuat implements Serializable {
         this.tenNSX = tenNSX;
     }
 
-    public List<DongSanPham> getDongSanPhamList() {
-        return dongSanPhamList;
-    }
-
-    public void setDongSanPhamList(List<DongSanPham> dongSanPhamList) {
-        this.dongSanPhamList = dongSanPhamList;
-    }
 
     @Override
     public int hashCode() {
@@ -69,7 +61,7 @@ public class NhaSanXuat implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ultramotor.entity.NhaSanXuat[ idNSX=" + idNSX + " ]";
+        return tenNSX;
     }
     
 }

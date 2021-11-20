@@ -7,33 +7,33 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class WelcomePanel extends javax.swing.JPanel implements Multilang {
-
+    
     final String LANG_SELECT_EN = "Plsease choose a language";
     final String LANG_SELECT_VN = "Vui lòng chọn ngôn ngữ";
     final String CONTINUE_EN = "Continue";
     final String CONTINUE_VN = "Tiếp tục";
     final DefaultComboBoxModel LANG_MODEL_EN = new DefaultComboBoxModel(new String[]{"Vietnamese", "English"});
     final DefaultComboBoxModel LANG_MODEL_VN = new DefaultComboBoxModel(new String[]{"Tiếng Việt", "Tiếng Anh"});
-
+    
     public WelcomePanel() {
         initComponents();
         init();
     }
-
+    
     private void init() {
         pnlSlideshow.addImages(
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide1.jpg")),
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide2.jpeg")),
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide3.jpg")));
         pnlSlideshow.setAuto(2000);
-
+        
         cboLang.setModel(LANG_MODEL_VN);
         addListeners();
     }
-
+    
     @Override
-    public void setLang(String lang) {
-        if ("Vietnamese".equalsIgnoreCase(lang) || "Tiếng Việt".equalsIgnoreCase(lang)) {
+    public void setLang(Lang lang) {
+        if (lang.equals(Lang.VN)) {
             lblLang.setText(LANG_SELECT_VN);
             btnContinue.setText(CONTINUE_VN);
             cboLang.setModel(LANG_MODEL_VN);
@@ -44,25 +44,23 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
             cboLang.setModel(LANG_MODEL_EN);
             cboLang.setSelectedIndex(1);
         }
+        ((KhachHangFrame) this.getTopLevelAncestor()).setLang(lang);
     }
-
+    
     private void addListeners() {
         cboLang.addActionListener((ActionEvent e) -> {
             if (cboLang.getSelectedIndex() == 0) {
-                setLang("Vietnamese");
+                setLang(Lang.VN);
             } else {
-                setLang("English");
+                setLang(Lang.EN);
             }
         });
-
+        
         btnContinue.addActionListener((ActionEvent e) -> {
-            Container con = this.getTopLevelAncestor();
-            if (con instanceof KhachHangFrame) {
-                KhachHangController.navigateCard((JPanel)this.getParent(), true);
-            }
+            KhachHangController.navigateCard((JPanel) this.getParent(), true);
         });
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

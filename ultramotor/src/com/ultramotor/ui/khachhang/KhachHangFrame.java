@@ -1,40 +1,35 @@
 package com.ultramotor.ui.khachhang;
 
-import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class KhachHangFrame extends javax.swing.JFrame {
 
     private KhachHangController ctrl;
-
+    private Lang lang = Lang.VN;
+    
     public KhachHangFrame() {
         initComponents();
         init();
+        addListeners();
     }
 
     private void init() {
         ctrl = new KhachHangController();
-        getContentPane().setBackground(Color.white);
-        initListeners();
+        getContentPane().setBackground(Color.black);
         btnBack.setVisible(false);
         btnNext.setVisible(false);
-
-        updateStatus();
     }
 
     private void updateStatus() {
-        boolean first = pnlWelcome.isShowing();
-        boolean second = pnlSearch.isShowing();
-        boolean last = pnlDetails.isShowing();
-
-        btnBack.setVisible(!first && !last);
-        btnNext.setVisible(!first && !second && !last);
+        btnBack.setVisible(!pnlWelcome.isShowing() );
+//        btnNext.setVisible(!first && !second && !last);
     }
 
-    private void initListeners() {
+    private void addListeners() {
         btnBack.addActionListener((ActionEvent e) -> {
             ctrl.navigateCard(pnlMain, false);
             updateStatus();
@@ -44,8 +39,39 @@ public class KhachHangFrame extends javax.swing.JFrame {
             ctrl.navigateCard(pnlMain, true);
             updateStatus();
         });
+        
+        for (Component comp : pnlMain.getComponents()) {
+            comp.addComponentListener(new ComponentAdapter(){
+                @Override
+                public void componentShown(ComponentEvent ce) {
+                    updateStatus();
+                }
+
+                @Override
+                public void componentHidden(ComponentEvent ce) {
+                    updateStatus();
+                }
+                
+                
+                
+            });
+        }
     }
 
+    public Lang getLang() {
+        return lang;
+    }
+
+    public void setLang(Lang lang) {
+        this.lang = lang;
+        pnlSearch.setLang(lang);
+        pnlProductList.setLang(lang);
+        pnlDetails.setLang(lang);
+    }
+
+    
+
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -53,6 +79,7 @@ public class KhachHangFrame extends javax.swing.JFrame {
         pnlHeader = new javax.swing.JPanel();
         btnNext = new com.swingx.Button();
         btnBack = new com.swingx.Button();
+        jSeparator1 = new javax.swing.JSeparator();
         pnlMain = new javax.swing.JPanel();
         pnlWelcome = new com.ultramotor.ui.khachhang.WelcomePanel();
         pnlSearch = new com.ultramotor.ui.khachhang.SearchPanel();
@@ -60,9 +87,10 @@ public class KhachHangFrame extends javax.swing.JFrame {
         pnlDetails = new com.ultramotor.ui.khachhang.ProductDetailsPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
         pnlHeader.setBackground(new java.awt.Color(255, 255, 255));
+        pnlHeader.setMaximumSize(new java.awt.Dimension(32767, 80));
+        pnlHeader.setPreferredSize(new java.awt.Dimension(1115, 80));
 
         btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/right_50px.png"))); // NOI18N
 
@@ -77,7 +105,8 @@ public class KhachHangFrame extends javax.swing.JFrame {
                 .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(956, Short.MAX_VALUE))
+                .addContainerGap(958, Short.MAX_VALUE))
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pnlHeaderLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnBack, btnNext});
@@ -85,39 +114,27 @@ public class KhachHangFrame extends javax.swing.JFrame {
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeaderLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(10, 10, 10)
+                .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pnlHeaderLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnBack, btnNext});
 
+        getContentPane().add(pnlHeader, java.awt.BorderLayout.NORTH);
+
         pnlMain.setLayout(new java.awt.CardLayout());
+
+        pnlWelcome.setName("ProductList"); // NOI18N
         pnlMain.add(pnlWelcome, "card4");
         pnlMain.add(pnlSearch, "card4");
-        pnlMain.add(pnlProductList, "card3");
-        pnlMain.add(pnlDetails, "card5");
+        pnlMain.add(pnlProductList, "ProductList");
+        pnlMain.add(pnlDetails, "ProductDetails");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(pnlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 1115, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 540, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addGap(0, 75, Short.MAX_VALUE)
-                    .addComponent(pnlMain, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        getContentPane().add(pnlMain, java.awt.BorderLayout.CENTER);
 
         setSize(new java.awt.Dimension(1131, 662));
         setLocationRelativeTo(null);
@@ -131,7 +148,7 @@ public class KhachHangFrame extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -162,6 +179,7 @@ public class KhachHangFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnBack;
     private com.swingx.Button btnNext;
+    private javax.swing.JSeparator jSeparator1;
     private com.ultramotor.ui.khachhang.ProductDetailsPanel pnlDetails;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JPanel pnlMain;

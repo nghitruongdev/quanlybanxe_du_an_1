@@ -129,13 +129,13 @@ class Item extends JButton {
     }
 
     public Item(int index, Color color, PaginationEvent event) {
+        setFocusPainted(false);
         setContentAreaFilled(false);
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setBackground(Color.WHITE);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         addActionListener((ActionEvent e) -> {
             event.onClick(index);
-            System.out.println(index);
         });
 
         this.index = index;

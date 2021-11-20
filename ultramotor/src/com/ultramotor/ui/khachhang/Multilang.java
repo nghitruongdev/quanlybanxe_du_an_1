@@ -1,9 +1,9 @@
 package com.ultramotor.ui.khachhang;
 
 enum Lang {
-
+    VN, EN
 }
     
 public interface Multilang {
-    void setLang(String lang);
+    void setLang(Lang lang);
 }

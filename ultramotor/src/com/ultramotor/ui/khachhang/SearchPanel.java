@@ -1,35 +1,59 @@
 package com.ultramotor.ui.khachhang;
 
-import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionEvent;
 
 public class SearchPanel extends javax.swing.JPanel implements Multilang {
 
-    final String LANG_SELECT_EN = "Plsease choose a language";
-    final String LANG_SELECT_VN = "Vui lòng chọn ngôn ngữ";
-    final String CONTINUE_EN = "Continue";
+    final String NSX_VN = "Chọn hãng xe";
+    final String NSX_EN = "Choose manufacturer";
+    final String DONG_XE_VN = "Chọn loại xe";
+    final String DONG_XE_EN = "Choose product type";
     final String CONTINUE_VN = "Tiếp tục";
-    final DefaultComboBoxModel LANG_MODEL_EN = new DefaultComboBoxModel(new String[]{"Vietnamese", "English"});
-    final DefaultComboBoxModel LANG_MODEL_VN = new DefaultComboBoxModel(new String[]{"Tiếng Việt", "Tiếng Anh"});
+    final String CONTINUE_EN = "Continue";
+    final String SEARCH_VN = "Tìm kiếm";
+    final String SEARCH_EN = "Search";
+
+    private Lang lang;
 
     public SearchPanel() {
         initComponents();
         init();
+        addListeners();
     }
 
     private void init() {
-       
+        KhachHangController.fillComboNSX(cboNSX, lang);
+        KhachHangController.fillComboLoaiHang(cboLoaiXe, lang);
     }
 
     @Override
-    public void setLang(String lang) {
-       
+    public void setLang(Lang lang) {
+        this.lang = lang;
+        if (lang.equals(Lang.VN)) {
+            lblNSX.setText(NSX_VN);
+            lblLoaiXe.setText(DONG_XE_VN);
+            btnTiepTuc.setText(CONTINUE_VN);
+            btnSearch.setText(SEARCH_VN);
+            txtSearch.setLabelText(SEARCH_VN);
+        } else {
+            lblNSX.setText(NSX_EN);
+            lblLoaiXe.setText(DONG_XE_EN);
+            btnTiepTuc.setText(CONTINUE_EN);
+            btnSearch.setText(SEARCH_EN);
+            txtSearch.setLabelText(SEARCH_EN);
+        }
+        init();
     }
 
     private void addListeners() {
-        
-    }
-    
+        btnTiepTuc.addActionListener((ActionEvent e) -> {
+            KhachHangController.showProductList(this.getParent(), KhachHangController.search(cboNSX, cboLoaiXe));
+        });
 
+        btnSearch.addActionListener((ActionEvent e) -> {
+            KhachHangController.showProductList(this.getParent(), KhachHangController.search(txtSearch));
+        });
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -39,13 +63,12 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
         pnlCbo = new javax.swing.JPanel();
         lblNSX = new javax.swing.JLabel();
         cboNSX = new com.swingx.ComboBoxSuggestion();
-        lblDongXe = new javax.swing.JLabel();
-        cboDongXe = new com.swingx.ComboBoxSuggestion();
+        lblLoaiXe = new javax.swing.JLabel();
+        cboLoaiXe = new com.swingx.ComboBoxSuggestion();
         btnTiepTuc = new com.swingx.Button();
         pnlSearch = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         txtSearch = new com.swingx.SearchTextField();
-        lblTimKiem = new javax.swing.JLabel();
         btnSearch = new com.swingx.Button();
 
         setBackground(new java.awt.Color(204, 204, 204));
@@ -79,17 +102,17 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
         gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 50);
         pnlCbo.add(cboNSX, gridBagConstraints);
 
-        lblDongXe.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblDongXe.setText("Vui lòng chọn hãng sản xuất");
+        lblLoaiXe.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblLoaiXe.setText("Vui lòng chọn dòng xe");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 50, 10, 10);
-        pnlCbo.add(lblDongXe, gridBagConstraints);
+        pnlCbo.add(lblLoaiXe, gridBagConstraints);
 
-        cboDongXe.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cboLoaiXe.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -97,7 +120,7 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 20;
         gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 50);
-        pnlCbo.add(cboDongXe, gridBagConstraints);
+        pnlCbo.add(cboLoaiXe, gridBagConstraints);
 
         btnTiepTuc.setBackground(new java.awt.Color(158, 158, 158));
         btnTiepTuc.setText("Tiếp tục");
@@ -119,11 +142,11 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        txtSearch.setAnimateLabel(true);
         txtSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtSearch.setLabelText("Tìm kiếm");
+        txtSearch.setOnlyField(false);
         txtSearch.setPlaceholder("");
-
-        lblTimKiem.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblTimKiem.setText("Tìm kiếm sản phẩm");
 
         btnSearch.setBackground(new java.awt.Color(158, 158, 158));
         btnSearch.setText("Tìm kiếm");
@@ -139,36 +162,26 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
                     .addGroup(pnlSearchLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 18, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSearchLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlSearchLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap(28, Short.MAX_VALUE))
+                    .addGroup(pnlSearchLayout.createSequentialGroup()
+                        .addGap(147, 147, 147)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnlSearchLayout.setVerticalGroup(
             pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSearchLayout.createSequentialGroup()
                 .addGroup(pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlSearchLayout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(lblTimKiem)
+                        .addGap(112, 112, 112)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 296, Short.MAX_VALUE))
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 187, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSearchLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSeparator1)))
                 .addContainerGap())
-            .addGroup(pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlSearchLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         add(pnlSearch);
@@ -178,12 +191,11 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnSearch;
     private com.swingx.Button btnTiepTuc;
-    private com.swingx.ComboBoxSuggestion cboDongXe;
+    private com.swingx.ComboBoxSuggestion cboLoaiXe;
     private com.swingx.ComboBoxSuggestion cboNSX;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lblDongXe;
+    private javax.swing.JLabel lblLoaiXe;
     private javax.swing.JLabel lblNSX;
-    private javax.swing.JLabel lblTimKiem;
     private javax.swing.JPanel pnlCbo;
     private javax.swing.JPanel pnlSearch;
     private com.swingx.SearchTextField txtSearch;
