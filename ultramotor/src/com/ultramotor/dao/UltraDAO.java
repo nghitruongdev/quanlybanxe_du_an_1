@@ -16,7 +16,7 @@ import javax.sql.rowset.CachedRowSet;
  * @author nghipc
  */
 public abstract class UltraDAO<Entity, ID> {
-
+    
     public abstract void insert(Entity e);
 
     public abstract void update(Entity e);
