@@ -11,7 +11,6 @@ public class LoaiHang {
 
     private String idLH;
     private String tenLoaiHang;
-    private List<DongSanPham> dongSanPhamList;
 
     public LoaiHang() {
     }
@@ -41,14 +40,6 @@ public class LoaiHang {
         this.tenLoaiHang = tenLoaiHang;
     }
 
-    public List<DongSanPham> getDongSanPhamList() {
-        return dongSanPhamList;
-    }
-
-    public void setDongSanPhamList(List<DongSanPham> dongSanPhamList) {
-        this.dongSanPhamList = dongSanPhamList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -71,7 +62,7 @@ public class LoaiHang {
 
     @Override
     public String toString() {
-        return "com.ultramotor.entity.LoaiHang[ idLH=" + idLH + " ]";
+        return tenLoaiHang;
     }
     
 }

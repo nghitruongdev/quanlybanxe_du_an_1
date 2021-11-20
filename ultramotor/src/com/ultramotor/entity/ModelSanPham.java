@@ -7,6 +7,8 @@ package com.ultramotor.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import javax.swing.Icon;
 
 public class ModelSanPham implements Serializable {
 
@@ -70,7 +72,21 @@ public class ModelSanPham implements Serializable {
         this.sanPhamList = sanPhamList;
     }
 
-    
+    public String getId_dongSP() {
+        return id_dongSP;
+    }
+
+    public void setId_dongSP(String id_dongSP) {
+        this.id_dongSP = id_dongSP;
+    }
+
+//    public Map<String, Icon> getColorHinhMap() {
+//        return colorHinhMap;
+//    }
+//
+//    public void setColorHinhMap(Map<String, Icon> colorHinhMap) {
+//        this.colorHinhMap = colorHinhMap;
+//    }
 
     @Override
     public int hashCode() {
@@ -94,7 +110,7 @@ public class ModelSanPham implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ultramotor.entity.ModelSanPham[ idModel=" + idModel + " ]";
+        return String.format("%s %d", tenModel, doiXe);
     }
 
 }

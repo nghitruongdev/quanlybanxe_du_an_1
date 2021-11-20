@@ -19,13 +19,11 @@ import javax.swing.table.DefaultTableModel;
  * @author thaian
  */
 public class sanpham extends javax.swing.JFrame {
-    JTable tblSP ;
     /**
      * Creates new form NewJFrame
      */
     public sanpham() {
         initComponents();
-        fillTable();
     }
 
     /**
@@ -327,44 +325,30 @@ public class sanpham extends javax.swing.JFrame {
 
      SanPhamDAO dao_SP = new SanPhamDAO();
 
-    void fillTable() {
-        DefaultTableModel model = (DefaultTableModel) tblSP.getModel();
-        model.setRowCount(0);
-        try {
-            List<SanPham> list = dao_SP.selectAll();
-            for (SanPham sp : list) {
-                Object[] row = {
-                    sp.getSku(),
-                    sp.getTenSP(),
-                    sp.getDiaChiSX(),
-                    sp.getGiaTien(),
-                    sp.getMauSac(),
-                    sp.getThoiGianBH(),
-                    sp.getMoTa(),
-                    sp.getIdNV(),
-                    sp.getIdModel(),
-                    sp.getPhanKhoi(),
-                    sp.getHinh()
-                };
-                model.addRow(row);
-            }
-        } 
-        catch (Exception e) {
-            e.printStackTrace();
-            MsgBox.inform("Lỗi truy vấn dữ liệu!");
-        }
-    }
+//  
     void insert(){
         SanPham model = getForm();
         try {
             dao_SP.insert(model);
-            this.fillTable();
+
             this.clearForm();
             MsgBox.inform("Thêm mới thành công!");
         } 
         catch (Exception e) {
             e.printStackTrace();
             MsgBox.inform( "Thêm mới thất bại!");
+        }
+    }
+    void update(){
+        SanPham model = getForm();
+        try {
+            dao_SP.update(model);
+
+            MsgBox.inform("Cập nhật thành công!");
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+            MsgBox.inform( "Cập nhật thất bại!");
         }
     }
     SanPham getForm(){
