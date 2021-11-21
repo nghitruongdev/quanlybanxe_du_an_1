@@ -1,5 +1,6 @@
 package com.ultramotor.ui.login;
 
+import com.swingx.Button;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,10 +8,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.InputVerifier;
-import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
@@ -20,7 +17,7 @@ public class PanelOTP extends javax.swing.JPanel {
     private ActionListener resendListener;
     private Timer timer;
     private int count;
-    private String infoOTP = "<html>Vui lòng nhập mã OTP đã được gửi đến email của bạn.<br><center> Mã OTP sẽ hết hạn sau <span style=\"color:red;\">%ds.</center></html>";
+    private String infoOTP = "<html>Vui lòng nhập mã OTP đã được gửi đến email của bạn.<br><center> Bạn có thể gửi lại mail sau <span style=\"color:red;\">%ds.</center></html>";
     private String resendInfo = "<html>Bạn vẫn chưa nhận được mã OTP?<br><center></center></html>";
 
     public PanelOTP() {
@@ -32,8 +29,8 @@ public class PanelOTP extends javax.swing.JPanel {
         btnResend.setVisible(false);
         timer = new Timer(1000, (ActionEvent e) -> {
             btnResend.setVisible(false);
-            lblInfo.setText(String.format(infoOTP, 15 - count));
-            if (count == 15) {
+            lblInfo.setText(String.format(infoOTP, 60 - count));
+            if (count == 60) {
                 timer.stop();
                 count = 0;
                 lblInfo.setText(resendInfo);
@@ -55,7 +52,9 @@ public class PanelOTP extends javax.swing.JPanel {
                         } else if (!Character.isDigit(c)) {
                             ke.consume();
                         } else {
-                            field.transferFocus();
+                            if (!"last".equals(field.getName())) {
+                                field.transferFocus();
+                            }
                         }
                     }
 
@@ -87,19 +86,25 @@ public class PanelOTP extends javax.swing.JPanel {
         }
         btnConfirm.addActionListener(confirmListener);
         btnResend.addActionListener(resendListener);
-        timer.start();
+        btnResend.addActionListener((ActionEvent e) -> {
+            if (timer.isRunning()) {
+                timer.stop();
+            }
+            count = 0;
+            timer.start();
+        });
     }
 
     public String getText() {
         return txt1.getText() + txt2.getText() + txt3.getText() + txt4.getText() + txt5.getText() + txt6.getText();
     }
 
-    public ActionListener getConfirmListener() {
-        return confirmListener;
+    public Button getBtnConfirm() {
+        return btnConfirm;
     }
 
-    public ActionListener getResendListener() {
-        return resendListener;
+    public Button getBtnResend() {
+        return btnResend;
     }
 
     @SuppressWarnings("unchecked")
@@ -124,6 +129,7 @@ public class PanelOTP extends javax.swing.JPanel {
         layout.rowHeights = new int[] {0, 10, 0, 10, 0, 10, 0, 10, 0};
         setLayout(layout);
 
+        txt1.setDrawLine(true);
         txt1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txt1.setLabelText("");
         txt1.setName("first"); // NOI18N
@@ -132,11 +138,11 @@ public class PanelOTP extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 20;
         gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
         add(txt1, gridBagConstraints);
 
+        txt2.setDrawLine(true);
         txt2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txt2.setLabelText("");
         txt2.setOnlyField(true);
@@ -148,6 +154,7 @@ public class PanelOTP extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
         add(txt2, gridBagConstraints);
 
+        txt3.setDrawLine(true);
         txt3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txt3.setLabelText("");
         txt3.setOnlyField(true);
@@ -159,6 +166,7 @@ public class PanelOTP extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
         add(txt3, gridBagConstraints);
 
+        txt4.setDrawLine(true);
         txt4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txt4.setLabelText("");
         txt4.setOnlyField(true);
@@ -170,6 +178,7 @@ public class PanelOTP extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
         add(txt4, gridBagConstraints);
 
+        txt5.setDrawLine(true);
         txt5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txt5.setLabelText("");
         txt5.setOnlyField(true);
@@ -181,6 +190,7 @@ public class PanelOTP extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
         add(txt5, gridBagConstraints);
 
+        txt6.setDrawLine(true);
         txt6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txt6.setLabelText("");
         txt6.setName("last"); // NOI18N

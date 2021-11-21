@@ -27,7 +27,6 @@ public class NhanVienFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        nhanVienPanel1 = new com.ultramotor.ui.NhanVienPanel();
         nhanVienPanel2 = new com.ultramotor.ui.NhanVienPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -90,7 +89,6 @@ public class NhanVienFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.ultramotor.ui.NhanVienPanel nhanVienPanel1;
     private com.ultramotor.ui.NhanVienPanel nhanVienPanel2;
     // End of variables declaration//GEN-END:variables
 }

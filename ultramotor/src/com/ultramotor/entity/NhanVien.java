@@ -3,7 +3,7 @@ package com.ultramotor.entity;
 
 import java.util.Date;
 
-public class NhanVien {
+public class NhanVien extends Entity{
 
 
     private String idNV;
