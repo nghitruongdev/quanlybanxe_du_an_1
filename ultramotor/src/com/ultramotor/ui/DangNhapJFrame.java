@@ -13,8 +13,6 @@ import com.ultramotor.util.XMail;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 /**
  *
@@ -29,7 +27,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         initComponents();
         init();
         setLocationRelativeTo(null);
-        
+
     }
 
     /**
@@ -61,12 +59,11 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         lblBackToSignIn1 = new javax.swing.JLabel();
         txtEmail = new com.swingx.TextField();
-        pnlNhapOTP = new javax.swing.JPanel();
+        pnlOTP = new javax.swing.JPanel();
         lblTitleOTP = new javax.swing.JLabel();
-        btnXacNhanOTP = new com.swingx.Button();
         jLabel7 = new javax.swing.JLabel();
         lblBackToSignIn2 = new javax.swing.JLabel();
-        txtOTP = new com.swingx.TextField();
+        pnlNhapOTP = new com.ultramotor.ui.login.PanelOTP();
         pnlDatLaiMK = new javax.swing.JPanel();
         lblTiltleDLMK = new javax.swing.JLabel();
         btnDLMK = new com.swingx.Button();
@@ -89,9 +86,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         pnlAnh.setLayout(pnlAnhLayout);
         pnlAnhLayout.setHorizontalGroup(
             pnlAnhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAnhLayout.createSequentialGroup()
-                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlAnhLayout.setVerticalGroup(
             pnlAnhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,11 +106,6 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         lblQuenMatKhau.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblQuenMatKhau.setForeground(new java.awt.Color(0, 204, 204));
         lblQuenMatKhau.setText("Quên mật khẩu?");
-        lblQuenMatKhau.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblQuenMatKhauMouseClicked(evt);
-            }
-        });
 
         lblTitle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(102, 102, 102));
@@ -123,19 +113,9 @@ public class DangNhapJFrame extends javax.swing.JFrame {
 
         btnDangNhap.setBackground(new java.awt.Color(0, 153, 255));
         btnDangNhap.setText("Đăng nhập");
-        btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDangNhapActionPerformed(evt);
-            }
-        });
 
         btnThoat.setBackground(new java.awt.Color(51, 153, 255));
         btnThoat.setText("Thoát");
-        btnThoat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThoatActionPerformed(evt);
-            }
-        });
 
         txtTenDangNhap.setLabelText("Tên đăng nhập");
 
@@ -212,11 +192,6 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         btnSend.setActionCommand("Cài lại");
         btnSend.setAlignmentX(0.5F);
         btnSend.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnSend.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSendActionPerformed(evt);
-            }
-        });
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel13.setText("Bạn có thể quay lại");
@@ -227,11 +202,6 @@ public class DangNhapJFrame extends javax.swing.JFrame {
 
         txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtEmail.setLabelText("Nhập email");
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlNhapEmailLayout = new javax.swing.GroupLayout(pnlNhapEmail);
         pnlNhapEmail.setLayout(pnlNhapEmailLayout);
@@ -274,23 +244,12 @@ public class DangNhapJFrame extends javax.swing.JFrame {
 
         pnlMain.add(pnlNhapEmail, "NhapEmail");
 
-        pnlNhapOTP.setBackground(new java.awt.Color(255, 255, 255));
-        pnlNhapOTP.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        pnlOTP.setBackground(new java.awt.Color(255, 255, 255));
+        pnlOTP.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         lblTitleOTP.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblTitleOTP.setForeground(new java.awt.Color(0, 153, 255));
         lblTitleOTP.setText("Đặt lại mật khẩu");
-
-        btnXacNhanOTP.setBackground(new java.awt.Color(0, 153, 255));
-        btnXacNhanOTP.setText("Gửi OTP");
-        btnXacNhanOTP.setActionCommand("Cài lại");
-        btnXacNhanOTP.setAlignmentX(0.5F);
-        btnXacNhanOTP.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnXacNhanOTP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXacNhanOTPActionPerformed(evt);
-            }
-        });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Bạn có thể quay lại");
@@ -299,53 +258,40 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         lblBackToSignIn2.setForeground(new java.awt.Color(0, 153, 255));
         lblBackToSignIn2.setText("Đăng nhập");
 
-        txtOTP.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtOTP.setLabelText("Nhập mã OTP");
-        txtOTP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtOTPActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlNhapOTPLayout = new javax.swing.GroupLayout(pnlNhapOTP);
-        pnlNhapOTP.setLayout(pnlNhapOTPLayout);
-        pnlNhapOTPLayout.setHorizontalGroup(
-            pnlNhapOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlNhapOTPLayout.createSequentialGroup()
-                .addContainerGap(100, Short.MAX_VALUE)
-                .addGroup(pnlNhapOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNhapOTPLayout.createSequentialGroup()
-                        .addGroup(pnlNhapOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnlNhapOTPLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblBackToSignIn2))
-                            .addGroup(pnlNhapOTPLayout.createSequentialGroup()
-                                .addComponent(lblTitleOTP)
-                                .addGap(18, 18, 18))
-                            .addComponent(txtOTP, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(105, 105, 105))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNhapOTPLayout.createSequentialGroup()
-                        .addComponent(btnXacNhanOTP, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(158, 158, 158))))
-        );
-        pnlNhapOTPLayout.setVerticalGroup(
-            pnlNhapOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNhapOTPLayout.createSequentialGroup()
-                .addContainerGap(100, Short.MAX_VALUE)
+        javax.swing.GroupLayout pnlOTPLayout = new javax.swing.GroupLayout(pnlOTP);
+        pnlOTP.setLayout(pnlOTPLayout);
+        pnlOTPLayout.setHorizontalGroup(
+            pnlOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlOTPLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(pnlOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlNhapOTP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlOTPLayout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblBackToSignIn2)))
+                .addContainerGap(49, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOTPLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblTitleOTP)
-                .addGap(44, 44, 44)
-                .addComponent(txtOTP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnXacNhanOTP, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
-                .addGroup(pnlNhapOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(116, 116, 116))
+        );
+        pnlOTPLayout.setVerticalGroup(
+            pnlOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOTPLayout.createSequentialGroup()
+                .addContainerGap(42, Short.MAX_VALUE)
+                .addComponent(lblTitleOTP)
+                .addGap(30, 30, 30)
+                .addComponent(pnlNhapOTP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlOTPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(lblBackToSignIn2))
-                .addGap(119, 119, 119))
+                .addGap(152, 152, 152))
         );
 
-        pnlMain.add(pnlNhapOTP, "NhapOTP");
+        pnlMain.add(pnlOTP, "NhapOTP");
 
         pnlDatLaiMK.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -358,11 +304,6 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         btnDLMK.setActionCommand("Cài lại");
         btnDLMK.setAlignmentX(0.5F);
         btnDLMK.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnDLMK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDLMKActionPerformed(evt);
-            }
-        });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setText("Bạn có thể quay lại");
@@ -373,19 +314,9 @@ public class DangNhapJFrame extends javax.swing.JFrame {
 
         pwdMatKhau2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         pwdMatKhau2.setLabelText("Nhập lại mật khẩu mới");
-        pwdMatKhau2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pwdMatKhau2ActionPerformed(evt);
-            }
-        });
 
         pwdMatKhau1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         pwdMatKhau1.setLabelText("Nhập mật khẩu mới");
-        pwdMatKhau1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pwdMatKhau1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlDatLaiMKLayout = new javax.swing.GroupLayout(pnlDatLaiMK);
         pnlDatLaiMK.setLayout(pnlDatLaiMKLayout);
@@ -449,51 +380,6 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btnDangNhapActionPerformed
-
-    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnThoatActionPerformed
-
-    private void lblQuenMatKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuenMatKhauMouseClicked
-
-
-    }//GEN-LAST:event_lblQuenMatKhauMouseClicked
-
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
-
-    private void txtOTPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOTPActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtOTPActionPerformed
-
-    private void pwdMatKhau2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdMatKhau2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pwdMatKhau2ActionPerformed
-
-    private void pwdMatKhau1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdMatKhau1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pwdMatKhau1ActionPerformed
-
-    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSendActionPerformed
-
-    private void btnDLMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDLMKActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnDLMKActionPerformed
-
-    private void btnXacNhanOTPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanOTPActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btnXacNhanOTPActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -538,7 +424,6 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnDangNhap1;
     private com.swingx.Button btnSend;
     private com.swingx.Button btnThoat;
-    private com.swingx.Button btnXacNhanOTP;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel7;
@@ -559,23 +444,21 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlDatLaiMK;
     private javax.swing.JPanel pnlMain;
     private javax.swing.JPanel pnlNhapEmail;
-    private javax.swing.JPanel pnlNhapOTP;
+    private com.ultramotor.ui.login.PanelOTP pnlNhapOTP;
+    private javax.swing.JPanel pnlOTP;
     private com.swingx.PasswordField pwdMatKhau;
     private com.swingx.PasswordField pwdMatKhau1;
     private com.swingx.PasswordField pwdMatKhau2;
     private com.swingx.TextField txtEmail;
-    private com.swingx.TextField txtOTP;
     private com.swingx.TextField txtTenDangNhap;
     // End of variables declaration//GEN-END:variables
     NhanVienDAO dao = new NhanVienDAO();
-
 
     private void init() {
         this.setLocationRelativeTo(null);
         addLabelListeners();
         addBtnListeners();
     }
-
 
     void dangNhap() {
         String manv = txtTenDangNhap.getText();
@@ -610,11 +493,22 @@ public class DangNhapJFrame extends javax.swing.JFrame {
 
     //hiển thị card theo card name
     public void showCard(String name) {
-        ((java.awt.CardLayout) pnlMain.getLayout()).show(pnlMain, name);
-        if (!isVisible()) {
-            setVisible(true);
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+//                    sThread.sleep(300);
+                    ((java.awt.CardLayout) pnlMain.getLayout()).show(pnlMain, name);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }).start();
+//        if (!isVisible()) {
+//            setVisible(true);
+//        }
     }
+
     //thêm listeners cho các button
     private void addBtnListeners() {
 
@@ -632,10 +526,10 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         btnDLMK.addActionListener((ActionEvent e) -> {
             changePW();
         });
-        btnXacNhanOTP.addActionListener((ActionEvent e) -> {
-            checkOTP();
-        });
-        
+//        btnXacNhanOTP.addActionListener((ActionEvent e) -> {
+//            checkOTP();
+//        });
+
     }
 
     //thêm listener cho label
@@ -694,13 +588,13 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     }
 
     private void checkOTP() {
-        if (Auth.getOTP().equals(txtOTP.getText())) {
-            showCard("DatLaiMK");
-            MsgBox.inform("Xác thực OTP thành công!");
-        } else {
-            MsgBox.error("Mã OTP không trùng khớp! Vui lòng thử lại sau");
-            showCard("DangNhap");
-        }
+//        if (Auth.getOTP().equals(txtOTP.getText())) {
+//            showCard("DatLaiMK");
+//            MsgBox.inform("Xác thực OTP thành công!");
+//        } else {
+//            MsgBox.error("Mã OTP không trùng khớp! Vui lòng thử lại sau");
+//            showCard("DangNhap");
+//        }
     }
 
     //thay đổi password của user
@@ -710,7 +604,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
 
         if (!pw.equals(verify)) { // nếu không trùng khớp, thông báo lỗi
             MsgBox.error("Mật khẩu không trùng khớp! Vui lòng kiểm tra lại.");
-        }else {
+        } else {
             Auth.user.setMatKhau(verify); //thay đổi pw user
             new NhanVienDAO().update(Auth.user); //thay đổi trong CSDL
             MsgBox.inform("Cập nhật mật khẩu thành công"); //thông báo 
