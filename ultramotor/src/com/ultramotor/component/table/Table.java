@@ -92,7 +92,6 @@ public class Table extends JTable {
         scroll.setBorder(new EmptyBorder(5, 10, 5, 10));
         scroll.setViewportView(this);
     }
-    int i = 0;
 
     @Override
     public TableCellEditor getCellEditor(int row, int col) {
