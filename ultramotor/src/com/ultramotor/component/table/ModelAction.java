@@ -13,9 +13,3 @@ public class ModelAction {
     }
 }
 
-interface ModelEvent<Entity, Key> {
-
-    void update(Entity e);
-
-    void delete(Key id);
-}

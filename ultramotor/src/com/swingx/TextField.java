@@ -23,7 +23,7 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 public class TextField extends JFormattedTextField {
 
     public TextField() {
-        placeholder = "Hello";
+        placeholder = "";
         validInput = true;
         allowEmpty = true;
         onlyField = false;
