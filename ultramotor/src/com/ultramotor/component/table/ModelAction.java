@@ -11,5 +11,22 @@ public class ModelAction {
         this.entity = entity;
         this.event = event;
     }
-}
 
+    public Entity getEntity() {
+        return entity;
+    }
+
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
+
+    public ModelEvent getEvent() {
+        return event;
+    }
+
+    public void setEvent(ModelEvent event) {
+        this.event = event;
+    }
+    
+    
+}

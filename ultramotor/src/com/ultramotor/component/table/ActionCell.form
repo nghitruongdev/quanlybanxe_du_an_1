@@ -25,9 +25,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              <Component id="btnDelete" min="-2" pref="27" max="-2" attributes="0"/>
+              <Component id="btnEdit" min="-2" pref="27" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-              <Component id="btnDelete1" min="-2" max="-2" attributes="0"/>
+              <Component id="btnDelete" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -39,9 +39,9 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnDelete" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnEdit" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="btnDelete1" max="32767" attributes="0"/>
+                  <Component id="btnDelete" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
           </Group>
@@ -49,7 +49,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="com.swingx.Button" name="btnDelete">
+    <Component class="com.swingx.Button" name="btnEdit">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -70,7 +70,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="com.swingx.Button" name="btnDelete1">
+    <Component class="com.swingx.Button" name="btnDelete">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">

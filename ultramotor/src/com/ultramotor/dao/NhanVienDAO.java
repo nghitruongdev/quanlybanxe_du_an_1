@@ -3,6 +3,7 @@ package com.ultramotor.dao;
 import com.ultramotor.entity.NhanVien;
 import com.ultramotor.entity.NhanVienBanHang;
 import com.ultramotor.entity.NhanVienKho;
+import com.ultramotor.entity.NhanVienKyThuat;
 import com.ultramotor.entity.TruongPhong;
 import com.ultramotor.util.XJdbc;
 import com.ultramotor.util.XJdbcServer;
@@ -13,8 +14,8 @@ import java.util.ArrayList;
 
 public class NhanVienDAO extends UltraDAO<NhanVien, String> {
 
-    final String tableName = "NHANVIEN";
-    {
+//    final String tableName = "NHANVIEN";
+    public NhanVienDAO() {
         TABLE_NAME = "NhanVien";
         SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_NV");
         SELECT_ALL = String.format("select * from %s", TABLE_NAME);
@@ -69,6 +70,11 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
                     case "Nhân Viên Kho":
                         nv = new NhanVienKho();
                         break;
+                    case "Nhân Viên Kỹ Thuật":
+                        nv = new NhanVienKyThuat();
+                        break;
+                    default:
+                        nv = new NhanVien();
                 }
                 nv.setIdNV(rs.getString(1));
                 nv.setHoNV(rs.getString(2));
@@ -102,6 +108,7 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
             }
             return list;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -110,9 +117,10 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
 //        return XJdbc.getRowSet("Select * from NhanVien");
         return XJdbc.getRowSet(SELECT_ALL);
     }
-    public List<NhanVien> selectByKeyword(String keyWord){
-        String sql= "SELECT * FROM NhanVien WHERE HONV LIKE ? OR TENNV LIKE ? OR id_NV like ? OR SDT like ? ";
-        return this.selectBySQL(sql, "%"+keyWord+"%", "%"+keyWord+"%", "%"+keyWord+"%","%"+keyWord+"%");
+
+    public List<NhanVien> selectByKeyword(String keyWord) {
+        String sql = "SELECT * FROM NhanVien WHERE HONV LIKE ? OR TENNV LIKE ? OR id_NV like ? OR SDT like ? ";
+        return this.selectBySQL(sql, "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%");
     }
-    
+
 }
