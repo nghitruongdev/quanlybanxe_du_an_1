@@ -1,25 +1,17 @@
 package com.ultramotor.dao;
 
 import com.ultramotor.entity.NhanVien;
-import com.ultramotor.entity.NhanVienBanHang;
-import com.ultramotor.entity.NhanVienKho;
-import com.ultramotor.entity.TruongPhong;
 import com.ultramotor.util.XJdbc;
 import com.ultramotor.util.XJdbcServer;
 import java.util.List;
 import javax.sql.rowset.CachedRowSet;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class NhanVienDAO extends UltraDAO<NhanVien, String> {
 
     final String tableName = "NHANVIEN";
-    Map<String, String> map = getColumnMap();
+//    Map<String, String> map = getColumnMap();
 
 //    final String SELECT_BY_ID = String.format("select * from %s where %s = ?", tableName, map.get("maNV")); không hiểu cách này (Tú)
     final String SQL_SELECT_BY_EMAIL = "SELECT * FROM NhanVien WHERE Email = ?";
@@ -131,7 +123,7 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
 //        }
 //        return list;
 //    }
-    @Override
+ //   @Override
     public CachedRowSet getRowSet() {
 //        return XJdbc.getRowSet("Select * from NhanVien");
         return XJdbc.getRowSet(SELECT_ALL);

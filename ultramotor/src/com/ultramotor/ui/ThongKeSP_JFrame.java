@@ -5,17 +5,32 @@
  */
 package com.ultramotor.ui;
 
+import com.ultramotor.dao.DongSanPhamDAO;
+import com.ultramotor.dao.LoaiHangDAO;
+import com.ultramotor.dao.ModelSanPhamDAO;
+import com.ultramotor.dao.NhaSanXuatDAO;
+import com.ultramotor.dao.SanPhamDAO;
+import com.ultramotor.entity.DongSanPham;
+import com.ultramotor.entity.LoaiHang;
+import com.ultramotor.entity.ModelSanPham;
+import com.ultramotor.entity.NhaSanXuat;
+import com.ultramotor.entity.SanPham;
+import com.ultramotor.util.MsgBox;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author thaian
  */
-public class LoaiHangPanel extends javax.swing.JFrame {
+public class ThongKeSP_JFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form LoaiHangPanel
+     * Creates new form NewJFrame
      */
-    public LoaiHangPanel() {
+    public ThongKeSP_JFrame() {
         initComponents();
+
     }
 
     /**
@@ -27,17 +42,24 @@ public class LoaiHangPanel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        thongKeSP_Panel1 = new com.ultramotor.ui.ThongKeSP_Panel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(thongKeSP_Panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(thongKeSP_Panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -60,24 +82,28 @@ public class LoaiHangPanel extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoaiHangPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThongKeSP_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoaiHangPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThongKeSP_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoaiHangPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThongKeSP_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoaiHangPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThongKeSP_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        ThongKeSP_Panel panel = new ThongKeSP_Panel();
+        panel.setVisible(true);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
             public void run() {
-                new LoaiHangPanel().setVisible(true);
+                new ThongKeSP_JFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.ultramotor.ui.ThongKeSP_Panel thongKeSP_Panel1;
     // End of variables declaration//GEN-END:variables
+    
 }

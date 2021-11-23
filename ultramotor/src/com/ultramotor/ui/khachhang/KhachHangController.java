@@ -1,5 +1,7 @@
 package com.ultramotor.ui.khachhang;
 
+import com.ultramotor.dao.LoaiHangDAO;
+import com.ultramotor.dao.NhaSanXuatDAO;
 import com.ultramotor.entity.LoaiHang;
 import com.ultramotor.entity.ModelSanPham;
 import com.ultramotor.entity.NhaSanXuat;
@@ -44,21 +46,40 @@ public class KhachHangController {
     }
 
     public static void fillComboNSX(JComboBox cbo, Lang lang) {
-        List<NhaSanXuat> list = new ArrayList<>();
-        ///do some database stuff hêre
-
-        cbo.setModel(new DefaultComboBoxModel(list.toArray()));
-        cbo.insertItemAt(new NhaSanXuat(null, lang == Lang.VN ? "Tất cả" : "All"), 0);
-        cbo.setSelectedIndex(0);
+//        List<NhaSanXuat> list = new ArrayList<>();
+//        ///do some database stuff hêre
+//
+//        cbo.setModel(new DefaultComboBoxModel(list.toArray()));
+//        cbo.insertItemAt(new NhaSanXuat(null, lang == Lang.VN ? "Tất cả" : "All"), 0);
+//        cbo.setSelectedIndex(0);
+        NhaSanXuatDAO dao_NSX = new NhaSanXuatDAO();
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cbo.getModel();
+        model.removeAllElements();
+        List<NhaSanXuat> list = dao_NSX.selectAll();    
+        for (NhaSanXuat cd : list) {
+            model.addElement(cd);
+            
+        }
+        cbo.insertItemAt(new NhaSanXuat(null, lang == Lang.EN ? "All" : "Tất cả"), 0);
+       
     }
 
     public static void fillComboLoaiHang(JComboBox cbo, Lang lang) {
-        List<LoaiHang> list = new ArrayList<>();
-        ///do some database stuff hêre
-
-        cbo.setModel(new DefaultComboBoxModel(list.toArray()));
-        cbo.insertItemAt(new LoaiHang(null, lang == Lang.VN ? "Tất cả" : "All"), 0);
-        cbo.setSelectedIndex(0);
+//        List<LoaiHang> list = new ArrayList<>();
+//        ///do some database stuff hêre
+//
+//        cbo.setModel(new DefaultComboBoxModel(list.toArray()));
+//        cbo.insertItemAt(new LoaiHang(null, lang == Lang.VN ? "Tất cả" : "All"), 0);
+//        cbo.setSelectedIndex(0);
+        LoaiHangDAO dao_LH = new LoaiHangDAO();
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cbo.getModel();
+        model.removeAllElements();
+        List<LoaiHang> list = dao_LH.selectAll();    
+        for (LoaiHang cd : list) {
+            model.addElement(cd);
+            
+        }
+        cbo.insertItemAt(new NhaSanXuat(null, lang == Lang.EN ? "All" : "Tất cả"), 0);
     }
 
     public static List<ModelSanPham> search(JTextField field) {

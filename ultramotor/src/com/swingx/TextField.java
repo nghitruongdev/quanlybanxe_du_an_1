@@ -11,7 +11,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -95,15 +94,7 @@ public class TextField extends JFormattedTextField {
         setBorder(BorderFactory.createEmptyBorder(top + extra_top, left + x, bottom + extra_bottom, right + x));
     }
 
-        }
-        int x = roundBorder ? 10 : 0;
-
-        extra_top = !onlyField ? 25 : 0;
-        extra_bottom = !onlyField ? 25 : 0;
-        extra = extra_top + extra_bottom;
-        setBorder(BorderFactory.createEmptyBorder(top + extra_top, left + x, bottom + extra_bottom, right + x));
-    }
- private void showing(boolean action) {
+    private void showing(boolean action) {
         if (animator.isRunning()) {
             animator.stop();
         } else {
@@ -114,47 +105,6 @@ public class TextField extends JFormattedTextField {
         location = 1f - location;
         animator.start();
     }
-
-public void setDrawLine(boolean drawLine) {
-    this.drawLine = drawLine;
-}
-
-public boolean isValidInput() {
-    return validInput;
-}
-
-public void setValidInput(boolean validInput) {
-    this.validInput = validInput;
-}
-
-public boolean isAnimate() {
-    return animate;
-}
-
-public void setAnimate(boolean animate) {
-    this.animate = animate;
-}
-
-private final Animator animator;
-private boolean animateHinText = true;
-private float location;
-private boolean show;
-private boolean mouseOver = false;
-private String labelText = "Label";
-private Color lineColor = new Color(3, 155, 216);
-private boolean drawLine;
-private boolean animate;
-private boolean validInput;
-
-public TextField() {
-    setBorder(new EmptyBorder(20, 10, 10, 10));
-    setSelectionColor(new Color(76, 204, 255));
-    addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseEntered(MouseEvent me) {
-            mouseOver = true;
-            repaint();
-        }
 
     @Override
     public void paint(Graphics grphcs) {
@@ -182,11 +132,6 @@ public TextField() {
         paintIcon(g2);
         g2.dispose();
     }
-    animator.setStartFraction(1f - location);
-    show = action;
-    location = 1f - location;
-    animator.start();
-}
 
     private void setLineColor(Graphics2D g2, boolean isMouseOver, boolean isFocus) {
         if (isMouseOver || isFocus) {
@@ -263,7 +208,6 @@ public TextField() {
             g2.drawImage(suffix, getWidth() - suffixIcon.getIconWidth() - 10, y, this);
         }
     }
-}
 
     private final Animator animator;
     private boolean animateHinText = true;
@@ -398,5 +342,4 @@ public TextField() {
         initBorder();
     }
 
-}
 }
