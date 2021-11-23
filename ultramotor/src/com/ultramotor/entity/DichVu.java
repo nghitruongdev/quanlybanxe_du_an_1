@@ -5,46 +5,15 @@
  */
 package com.ultramotor.entity;
 
-import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-/**
- *
- * @author nghipc
- */
-@Entity
-@Table(name = "DichVu")
-@NamedQueries({
-    @NamedQuery(name = "DichVu.findAll", query = "SELECT d FROM DichVu d")})
-public class DichVu implements Serializable {
+public class DichVu {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "idDV")
     private String idDV;
-    @Basic(optional = false)
-    @Column(name = "tenDV")
     private String tenDV;
-    @Basic(optional = false)
-    @Column(name = "donGia")
     private double donGia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dichVu")
+    private String idNV;
     private List<ChiTietHoaDon> chiTietHoaDonList;
-    @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
-    @ManyToOne(optional = false)
-    private NhanVien nhanVien;
 
     public DichVu() {
     }
@@ -53,10 +22,11 @@ public class DichVu implements Serializable {
         this.idDV = idDV;
     }
 
-    public DichVu(String idDV, String tenDV, double donGia) {
+    public DichVu(String idDV, String tenDV, double donGia, String idNV) {
         this.idDV = idDV;
         this.tenDV = tenDV;
         this.donGia = donGia;
+        this.idNV = idNV;
     }
 
     public String getIdDV() {
@@ -91,13 +61,14 @@ public class DichVu implements Serializable {
         this.chiTietHoaDonList = chiTietHoaDonList;
     }
 
-    public NhanVien getNhanVien() {
-        return nhanVien;
+    public String getIdNV() {
+        return idNV;
     }
 
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
+    public void setIdNV(String idNV) {
+        this.idNV = idNV;
     }
+
 
     @Override
     public int hashCode() {
@@ -123,5 +94,5 @@ public class DichVu implements Serializable {
     public String toString() {
         return "com.ultramotor.entity.DichVu[ idDV=" + idDV + " ]";
     }
-    
+
 }

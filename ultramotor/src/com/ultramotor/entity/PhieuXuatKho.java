@@ -5,46 +5,20 @@
  */
 package com.ultramotor.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
 
 /**
  *
  * @author nghipc
  */
-@Entity
-@Table(name = "PhieuXuatKho")
-@NamedQueries({
-    @NamedQuery(name = "PhieuXuatKho.findAll", query = "SELECT p FROM PhieuXuatKho p")})
-public class PhieuXuatKho implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id_PX")
+public class PhieuXuatKho {
+   
     private String idPX;
-    @Basic(optional = false)
-    @Column(name = "ngayXuat")
-    @Temporal(TemporalType.DATE)
     private Date ngayXuat;
-    @JoinColumn(name = "id_NV", referencedColumnName = "id_NV")
-    @ManyToOne(optional = false)
-    private NhanVien nhanVien;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phieuXuatKho")
+    private String idNV;
     private List<ChiTietXuatKho> chiTietXuatKhoList;
 
     public PhieuXuatKho() {
@@ -54,9 +28,10 @@ public class PhieuXuatKho implements Serializable {
         this.idPX = idPX;
     }
 
-    public PhieuXuatKho(String idPX, Date ngayXuat) {
+    public PhieuXuatKho(String idPX, Date ngayXuat, String idNV) {
         this.idPX = idPX;
         this.ngayXuat = ngayXuat;
+        this.idNV = idNV;
     }
 
     public String getIdPX() {
@@ -75,13 +50,14 @@ public class PhieuXuatKho implements Serializable {
         this.ngayXuat = ngayXuat;
     }
 
-    public NhanVien getNhanVien() {
-        return nhanVien;
+    public String getIdNV() {
+        return idNV;
     }
 
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
+    public void setIdNV(String idNV) {
+        this.idNV = idNV;
     }
+
 
     public List<ChiTietXuatKho> getChiTietXuatKhoList() {
         return chiTietXuatKhoList;

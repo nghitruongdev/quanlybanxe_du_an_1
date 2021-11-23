@@ -7,44 +7,16 @@ package com.ultramotor.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.Map;
+import javax.swing.Icon;
 
-/**
- *
- * @author nghipc
- */
-@Entity
-@Table(name = "ModelSanPham")
-@NamedQueries({
-    @NamedQuery(name = "ModelSanPham.findAll", query = "SELECT m FROM ModelSanPham m")})
 public class ModelSanPham implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id_Model")
     private String idModel;
-    @Basic(optional = false)
-    @Column(name = "tenModel")
     private String tenModel;
-    @Basic(optional = false)
-    @Column(name = "doiXe")
     private int doiXe;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modelSanPham")
+    private String id_dongSP;
     private List<SanPham> sanPhamList;
-    @JoinColumn(name = "id_DongSP", referencedColumnName = "id_DongSP")
-    @ManyToOne(optional = false)
-    private DongSanPham dongSanPham;
 
     public ModelSanPham() {
     }
@@ -53,10 +25,11 @@ public class ModelSanPham implements Serializable {
         this.idModel = idModel;
     }
 
-    public ModelSanPham(String idModel, String tenModel, int doiXe) {
+    public ModelSanPham(String idModel, String tenModel, int doiXe, String id_dongSP) {
         this.idModel = idModel;
         this.tenModel = tenModel;
         this.doiXe = doiXe;
+        this.id_dongSP = id_dongSP;
     }
 
     public String getIdModel() {
@@ -91,13 +64,21 @@ public class ModelSanPham implements Serializable {
         this.sanPhamList = sanPhamList;
     }
 
-    public DongSanPham getDongSanPham() {
-        return dongSanPham;
+    public String getId_dongSP() {
+        return id_dongSP;
     }
 
-    public void setDongSanPham(DongSanPham dongSanPham) {
-        this.dongSanPham = dongSanPham;
+    public void setId_dongSP(String id_dongSP) {
+        this.id_dongSP = id_dongSP;
     }
+
+//    public Map<String, Icon> getColorHinhMap() {
+//        return colorHinhMap;
+//    }
+//
+//    public void setColorHinhMap(Map<String, Icon> colorHinhMap) {
+//        this.colorHinhMap = colorHinhMap;
+//    }
 
     @Override
     public int hashCode() {
@@ -121,7 +102,7 @@ public class ModelSanPham implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ultramotor.entity.ModelSanPham[ idModel=" + idModel + " ]";
+        return String.format("%s %d", tenModel, doiXe);
     }
-    
+
 }

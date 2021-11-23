@@ -1,31 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ultramotor.dao;
 
+import java.sql.ResultSetMetaData;
 import java.util.List;
-import javax.sql.rowset.CachedRowSet;
 
-/**
- *
- * @author nghipc
- */
-public interface UltraDAO<Entity, ID> {
+public abstract class UltraDAO<Entity, ID> {
 
-    void insert(Entity e);
+    public ResultSetMetaData meta;
+    protected String TABLE_NAME;
+    protected String SELECT_BY_ID;
+    protected String SELECT_ALL;
 
-    void update(Entity e);
+    public abstract void insert(Entity e);
 
-    void delete(ID id);
+    public abstract void update(Entity e);
 
-    Entity selectByID(ID id);
+    public abstract void delete(ID id);
 
-    List<Entity> selectAll();
+    public abstract List<Entity> selectBySQL(String sql, Object... args);
 
-    List<Entity> selectBySQL(String sql, Object... args);
+    public Entity selectByID(ID id) {
+        List<Entity> list = selectBySQL(SELECT_BY_ID, id);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
+    }
 
-    CachedRowSet getRowSet();
+    public List<Entity> selectAll() {
+        return selectBySQL(SELECT_ALL);
+    }
 
 }
