@@ -1,23 +1,26 @@
 package com.ultramotor.util;
 
 import com.ultramotor.entity.NhanVien;
+import java.awt.event.ActionEvent;
+import javax.swing.Timer;
 
 public class Auth {
-   
+
     public static NhanVien user;
-    public static String otp;
-    public static boolean isForgotPW = false;
+    private static String otp;
+    public static boolean forgotPW = false;
+    private static Timer timer;
 
     //clear info của user login
     public static void clear() {
         user = null;
         otp = "";
-        isForgotPW = false;
+        forgotPW = false;
     }
 
     //kiểm tra đăng nhập
     public static boolean isLogin() {
-        return user != null && !isForgotPW;
+        return user != null && !forgotPW;
     }
 
     //kiểm tra user login là trưởng phòng
@@ -32,7 +35,19 @@ public class Auth {
 
     //get mã otp mới cho quên mật khẩu
     public static String getNewOTP() {
-        otp = String.format("%05d", (int) (Math.random() * 1000000));
+        otp = String.format("%06d", (int) (Math.random() * 1000000));
+        System.out.println(otp);
+        if (timer == null) {
+            timer = new Timer(5 * 60 * 1000, (ActionEvent e) -> {
+                otp = "";
+                timer.stop();
+                System.out.println("Timer stopped");
+            });
+        }
+        if (timer.isRunning()) {
+            timer.stop();
+        }
+        timer.start();
         return getOTP();
     }
 
@@ -42,6 +57,16 @@ public class Auth {
         if (k == MsgBox.YES_OPTION) {
             System.exit(0);
         }
-
     }
+
+    public static boolean isForgotPW() {
+        return forgotPW;
+    }
+
+//    public static void setForgotPW(boolean forgotPW) {
+//        Auth.forgotPW = forgotPW;
+//        if (!forgotPW) {
+//            timer.stop();
+//        }
+//    }
 }

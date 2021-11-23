@@ -10,6 +10,9 @@ go
 use HONDA
 go
 
+drop table if exists NhanVien
+go
+
 CREATE TABLE NhanVien(
     id_NV NVARCHAR(10) PRIMARY KEY,
     HoNV NVARCHAR(20) NOT NULL,

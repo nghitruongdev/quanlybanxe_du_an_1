@@ -1,6 +1,7 @@
 package com.swingx;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -22,6 +23,7 @@ public class ImageAvatar extends JComponent {
 
     public void setIcon(Icon icon) {
         this.icon = icon;
+        repaint();
     }
 
     public int getBorderSize() {
@@ -37,6 +39,11 @@ public class ImageAvatar extends JComponent {
 
     @Override
     protected void paintComponent(Graphics grphcs) {
+        if (grphcs == null) {
+            return;
+        }
+        grphcs.setColor(getParent().getBackground());
+        grphcs.fillRect(0, 0, getWidth(), getHeight());
         if (icon != null) {
             int width = getWidth();
             int height = getHeight();

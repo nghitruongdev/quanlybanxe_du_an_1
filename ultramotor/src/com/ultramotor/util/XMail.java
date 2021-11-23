@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -20,6 +22,7 @@ import javax.mail.internet.MimeMultipart;
  * @author nghipc
  */
 public class XMail {
+
     //create a session to send mail
     private static Session getSession() {
         Properties p = new Properties();
@@ -37,16 +40,22 @@ public class XMail {
 
     /**
      * Gửi mail tới một địa chỉ, không có file attachment
+     *
      * @param email địa chỉ email người nhận
      * @param content nội dung email
      * @param subject tiêu đề mail
      */
     public static void sendMail(String email, String content, String subject) {
-        sendMail(Collections.singletonMap(email, content), subject, null);
+        sendMail(email, content, subject, null);
+    }
+
+    public static void sendMail(String email, String content, String subject, File file) {
+        sendMail(Collections.singletonMap(email, content), subject, file);
     }
 
     /**
      * Gửi mail tới nhiều người với nội dung tương ứng, có file đính kèm
+     *
      * @param map Key: email address, Value: mail content
      * @param subject tiêu đề mail
      * @param file attachment file
@@ -85,7 +94,17 @@ public class XMail {
                 }
                 //gửi mail
 //                System.out.println("Sending");
-                Transport.send(msg);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Transport.send(msg);
+                        } catch (MessagingException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }).start();
+
             } catch (MessagingException | IOException ex) {
                 ex.printStackTrace();
             }
