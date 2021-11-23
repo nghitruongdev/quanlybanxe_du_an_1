@@ -17,7 +17,10 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.text.ParseException;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
@@ -31,7 +34,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
 
     public NhanVienInfoPanel() {
         initComponents();
-//        fillComboVaiTro();
+        fillComboVaiTro();
         fixTextPane(jScrollPane2);
         fixRadioPanel();
         this.addComponentListener(new ComponentAdapter() {
@@ -106,20 +109,25 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
     }
 
     public NhanVien getForm() {
-        NhanVien nv = new NhanVien();
-        nv.setIdNV(txtMaNV.getText());
-        nv.setHoNV(txtHoNV.getText());
-        nv.setTenNV(txtTenNV.getText());
-        nv.setNgaySinh(XDate.parse(txtNgaySinh.getText()));
-        nv.setDiaChi(txtDiaChi.getText());
-        nv.setSdt(txtSDT.getText());
-        nv.setEmail(txtEmail.getText());
-        nv.setLuong(Float.parseFloat(txtLuong.getText()));
-        nv.setVaiTro((String) cboVaiTro.getSelectedItem());
-        nv.setHinh(lblHinh.getToolTipText());
-        nv.setGhiChu(txtGhiChu.getText());
-        nv.setGioiTinh(rdoNam.isSelected());
-        return nv;
+        try {
+            NhanVien nv = new NhanVien();
+            nv.setIdNV(txtMaNV.getText());
+            nv.setHoNV(txtHoNV.getText());
+            nv.setTenNV(txtTenNV.getText());
+            nv.setNgaySinh(XDate.parse(txtNgaySinh.getText(),"dd-MM-yyyy"));
+            nv.setDiaChi(txtDiaChi.getText());
+            nv.setSdt(txtSDT.getText());
+            nv.setEmail(txtEmail.getText());
+            nv.setLuong(Float.parseFloat(txtLuong.getText()));
+            nv.setVaiTro((String) cboVaiTro.getSelectedItem());
+            nv.setHinh(lblHinh.getToolTipText());
+            nv.setGhiChu(txtGhiChu.getText());
+            nv.setGioiTinh(rdoNam.isSelected());
+            return nv;
+        } catch (ParseException ex) {
+            Logger.getLogger(NhanVienInfoPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public void setForm(NhanVien nv) {
@@ -138,34 +146,12 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
 
     private void addListeners() {
         btnReset.addActionListener((ActionEvent e) -> {
-            System.out.println("reseting");
             reset();
         });
 
-        btnReset.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
-                System.out.println("I'm clicking reset button");
-            }
-
-        });
         btnCapNhat.addActionListener((ActionEvent e) -> {
-            System.out.println("reseting");
         });
 
-        System.out.println("Button udpate has " + btnCapNhat.getAncestorListeners().length);
-//        for (Component c : pnlMain.getComponents()) {
-//            if (c instanceof JTextField) {
-//                ((JTextField) c).addFocusListener(new FocusAdapter(){
-//                    @Override
-//                    public void focusGained(FocusEvent fe) {
-//                        System.out.println(c.getSize().width);
-//                    }
-//                    
-//                    
-//                });
-//            }
-//        }
         lblHinh.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
@@ -226,6 +212,10 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         btnCapNhat.addActionListener(updateListener);
     }
 
+    public void setFieldFocus(FocusAdapter adapter){
+        txtMaNV.addFocusListener(adapter);
+    }
+    
     public NhanVien getNhanVien() {
         return nv;
     }

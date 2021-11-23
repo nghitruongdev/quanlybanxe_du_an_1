@@ -27,11 +27,7 @@ public class XJdbcServer extends XJdbc {
         return XJdbc.getStmt(sql, args);
     }
 
-    public static void update(String sql, String[] types, Object... args) {
-        try {
+    public static void update(String sql, String[] types, Object... args) throws SQLException {
             getStmt(sql, types, args).executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(XJdbcServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

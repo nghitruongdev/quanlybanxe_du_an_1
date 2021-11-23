@@ -1,10 +1,12 @@
-
 package com.ultramotor.entity;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+//import java.sql.Date;
+import java.sql.Types;
 import java.util.Date;
 
-public class NhanVien extends Entity{
-
+public class NhanVien extends Entity {
 
     private String idNV;
     private String hoNV;
@@ -41,6 +43,24 @@ public class NhanVien extends Entity{
         this.vaiTro = vaiTro;
         this.matKhau = matKhau;
         this.ghiChu = ghiChu;
+    }
+
+    public static SQLServerDataTable getDataServerTable() throws SQLServerException {
+        SQLServerDataTable dataTable = new SQLServerDataTable();
+        dataTable.addColumnMetadata("id_NV", Types.NVARCHAR);
+        dataTable.addColumnMetadata("HoNV", Types.NVARCHAR);
+        dataTable.addColumnMetadata("TenNV", Types.NVARCHAR);
+        dataTable.addColumnMetadata("NgaySinh", Types.VARCHAR);
+        dataTable.addColumnMetadata("GioiTinh", Types.BIT);
+        dataTable.addColumnMetadata("DiaChi", Types.NVARCHAR);
+        dataTable.addColumnMetadata("SDT", Types.NVARCHAR);
+        dataTable.addColumnMetadata("Email", Types.NVARCHAR);
+        dataTable.addColumnMetadata("Luong", Types.FLOAT);
+        dataTable.addColumnMetadata("Hinh", Types.NVARCHAR);
+        dataTable.addColumnMetadata("VaiTro", Types.NVARCHAR);
+        dataTable.addColumnMetadata("matKhau", Types.NVARCHAR);
+        dataTable.addColumnMetadata("GhiChu", Types.NVARCHAR);
+        return dataTable;
     }
 
     public String getIdNV() {
@@ -171,5 +191,5 @@ public class NhanVien extends Entity{
     public String toString() {
         return "com.ultramotor.entity.NhanVien[ idNV=" + idNV + " ]";
     }
-    
+
 }

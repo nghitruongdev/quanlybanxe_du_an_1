@@ -1,5 +1,6 @@
 package com.ultramotor.dao;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
 import com.ultramotor.entity.NhanVien;
 import com.ultramotor.entity.NhanVienBanHang;
 import com.ultramotor.entity.NhanVienKho;
@@ -10,6 +11,7 @@ import com.ultramotor.util.XJdbcServer;
 import java.util.List;
 import javax.sql.rowset.CachedRowSet;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class NhanVienDAO extends UltraDAO<NhanVien, String> {
@@ -27,7 +29,8 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
     final String INSERT_SQL = "INSERT INTO NhanVien(id_NV,HONV,TENNV,NGAYSINH,GIOITINH,DIACHI,SDT,EMAIL,LUONG,HINH,VAITRO,MATKHAU,GHICHU)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
     final String UPDATE_SQL = "UPDATE NhanVien SET HONV=?,TENNV=?,NGAYSINH=?,GIOITINH=?,DIACHI=?,SDT=?,EMAIL=?,LUONG=?,HINH=?,VAITRO=?,MATKHAU=?,GHICHU=? WHERE id_NV=?";
     final String DELETE_SQL = "DELETE FROM NhanVien WHERE id_NV=?";
-
+    final String MERGE_SQL = "exec usp_updateNhanVien ?";
+    
     @Override
     public void insert(NhanVien e) {
         XJdbcServer.update(INSERT_SQL,
@@ -123,4 +126,7 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
         return this.selectBySQL(sql, "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%");
     }
 
+    public void mergeTable(SQLServerDataTable table) throws SQLException{
+        XJdbcServer.update(MERGE_SQL, new String[]{"NhanVien"}, table);
+    }
 }

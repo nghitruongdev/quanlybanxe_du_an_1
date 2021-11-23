@@ -123,7 +123,6 @@ public class SendMailPanel extends javax.swing.JPanel {
     }
 
     public void setNguoiNhan(String... emails) {
-//        txtTo.setText(list.toString().replaceAll("[\\[\\]]", ""));
         txtTo.setText(Arrays.toString(emails).replaceAll("[\\[\\]]", ""));
     }
 
@@ -151,7 +150,6 @@ public class SendMailPanel extends javax.swing.JPanel {
             }
 
         });
-
     }
 
     private void setLabelWithAsterisk() {

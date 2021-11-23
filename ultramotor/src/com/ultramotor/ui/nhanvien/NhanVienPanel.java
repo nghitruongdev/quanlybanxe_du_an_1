@@ -1,6 +1,7 @@
 package com.ultramotor.ui.nhanvien;
 
-import com.ultramotor.ui.*;
+import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.swingx.CloseButton;
 import com.ultramotor.component.table.ModelAction;
 import com.ultramotor.component.table.ModelEvent;
@@ -9,18 +10,21 @@ import com.ultramotor.entity.NhanVien;
 import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDate;
+import com.ultramotor.util.XMail;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.text.ParseException;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 
@@ -31,6 +35,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
     ModelEvent event;
     private NhanVienInfoPanel pnlInfo;
     private SendMailPanel pnlSendMail;
+    private DefaultTableModel model;
 
     public NhanVienPanel() {
         initComponents();
@@ -41,7 +46,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
         initTable();
         pnlInfo = new NhanVienInfoPanel();
         pnlSendMail = new SendMailPanel();
-
         event = new ModelEvent<NhanVien>() {
             @Override
             public void update(NhanVien e) {
@@ -55,84 +59,41 @@ public class NhanVienPanel extends javax.swing.JPanel {
             }
 
         };
-        this.fillTable(getList());
+        fillTable();
         addListeners();
     }
 
-    private List<NhanVien> getList() {
-        List<NhanVien> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            list.add(new NhanVien("PS1900" + i,
-                    "Lê", "Thanh Tú",
-                    XDate.parse("24-10-1999"),
-                    (i % 2 == 0),
-                    "Hồ Chí Minh",
-                    "0921850113",
-                    "tultps18884@fpt.edu.vn",
-                    5000000d,
-                    "",
-                    "Nhân Viên",
-                    "",
-                    "")
-            );
+    private void save() {
+        try {
+            SQLServerDataTable dataTable = NhanVien.getDataServerTable();
+            for (int i = 0; i < tblNhanVien.getRowCount(); i++) {
+                dataTable.addRow(getInfo(i));
+            }
+            dao.mergeTable(dataTable);
+            MsgBox.inform("Lưu dữ liệu thành công");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        return list;
     }
 
     private void initTable() {
         Object[] columns = {"Select", "ID", "Họ Và Tên", "Ngày Sinh", "Giới Tính", "Địa chỉ", "Số ĐT", "Email", "Lương", "Hình", "Vai Trò", "Mật Khẩu", "Ghi Chú", "Actions"};
-        DefaultTableModel model = new DefaultTableModel(columns, 0);
+        model = new DefaultTableModel(columns, 0);
         tblNhanVien.setModel(model);
         tblNhanVien.fixTable(jScrollPane4);
-    }
-
-    void insert() throws ParseException {
-//        if (!Auth.isManager()) {
-//            MsgBox.inform("Bạn không có quyền thêm nhân viên!");
-//        } else {
-//        NhanVien nv = getForm();
-        NhanVien nv = null;
-        if (nv.getMatKhau().length() < 3 || nv.getMatKhau().length() > 16) {
-            MsgBox.inform("Vui lòng nhập kí tự mật khẩu từ 3 - 16 kí tự!");
-            return;
-        }
-        try {
-            dao.insert(nv);
-//            this.fillTable();
-//            this.clearForm();
-            MsgBox.inform("Thêm mới thành công!");
-        } catch (Exception e) {
-            MsgBox.inform("Thêm mới thất bại!");
-        }
-//    }
-    }
-
-    void update() {
-//        NhanVien nv = getForm();
-        try {
-//            dao.update(nv);
-//            this.fillTable();
-//            this.clearForm();
-            MsgBox.inform("Cập nhật thành công!");
-        } catch (Exception e) {
-            MsgBox.inform("Cập nhật thất bại!");
-        }
     }
 
     private void deleteNV(String maNV) {
         if (!Auth.isManager()) {
             MsgBox.inform("Bạn không có quyền xóa nhân viên!");
         } else {
-//            String manv = nv.getIdNV();
             if (maNV.equals(Auth.user.getIdNV())) {
                 MsgBox.inform("Bạn không được xóa chính bạn!");
             } else if (MsgBox.confirm("Bạn thực sự muốn xóa nhân viên này?", false) == 0) {
-                try {
-                    dao.delete(maNV);
-                    this.fillTable();
-                    MsgBox.inform("Xóa thành công!");
-                } catch (Exception e) {
-                    MsgBox.inform("Xóa thất bại!");
+                int index = getIndexNhanVien(maNV);
+                if (index != -1) {
+                    tblNhanVien.getCellEditor().stopCellEditing();
+                    model.removeRow(index);
                 }
             }
         }
@@ -148,7 +109,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
             }
         }
         sendMail(emails.toArray(new String[emails.size()]));
-
     }
 
     private void sendMail(String... emails) {
@@ -157,7 +117,16 @@ public class NhanVienPanel extends javax.swing.JPanel {
         showPanel("sendMail");
     }
 
-    Object[] getInfo(NhanVien nv) {
+    private Object[] getInfo(int index) {
+        NhanVien nv = (NhanVien) ((ModelAction) tblNhanVien.getValueAt(index, tblNhanVien.getColumnCount() - 1)).getEntity();
+        return new Object[]{nv.getIdNV(), nv.getHoNV(), nv.getTenNV(),
+            XDate.toString(nv.getNgaySinh(), "yyyy-MM-dd"), nv.getGioiTinh(), nv.getDiaChi(),
+            nv.getSdt(), nv.getEmail(), nv.getLuong(),
+            nv.getHinh(), nv.getVaiTro(), nv.getMatKhau() != null ? nv.getMatKhau() : getRandomPassword(nv),
+            nv.getGhiChu()};
+    }
+
+    private Object[] getInfo(NhanVien nv) {
         return new Object[]{
             false, nv.getIdNV(), nv.getHoNV() + " " + nv.getTenNV(),
             XDate.toString(nv.getNgaySinh(), "dd/MM/yyyy"),
@@ -252,8 +221,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
             @Override
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 //code xử lý keyReleased ở đây.
-//                fillTable();
-                fillTable(getList());
+                fillTable();
             }
         });
 
@@ -266,9 +234,67 @@ public class NhanVienPanel extends javax.swing.JPanel {
             sendMail();
         });
 
+        btnSave.addActionListener((ActionEvent e) -> {
+            save();
+        });
         pnlInfo.setMailListener((ActionEvent e) -> {
             sendMail(pnlInfo.getNhanVien().getEmail());
         });
+
+        pnlInfo.setUpdateListener((ActionEvent e) -> {
+            NhanVien nv = pnlInfo.getForm();
+            if (nv == null) {
+                return;
+            }
+            pnlInfo.setForm(nv);
+            int index = getIndexNhanVien(nv.getIdNV());
+            if (index == -1) {
+                model.addRow(getInfo(nv));
+                MsgBox.inform("Thêm mới nhân viên thành công");
+
+            } else {
+                model.removeRow(index);
+                model.insertRow(index, getInfo(nv));
+                MsgBox.inform("Cập nhật nhân viên thành công");
+            }
+        });
+
+        pnlInfo.setFieldFocus(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                JTextField field = (JTextField) e.getSource();
+                String maNV = field.getText().trim();
+                int index = getIndexNhanVien(maNV);
+                if (index != -1) {
+                    MsgBox.error("Mã nhân viên đã tồn tại!");
+                    field.setText("");
+                    field.requestFocus();
+                }
+            }
+        });
+    }
+
+    private int getIndexNhanVien(String maNV) {
+        for (int i = 0; i < tblNhanVien.getRowCount(); i++) {
+            if (tblNhanVien.getValueAt(i, 1).toString().equalsIgnoreCase(maNV)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private static String getRandomPassword(NhanVien nv) {
+        //48 ->57, 65->90, 97->122
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() < 8) {
+            int random = (int) (Math.floor(Math.random() * 123)) + 48;
+            if (random < 48 || random > 57 && random < 65 || random > 90 && random < 97 || random > 122) {
+                continue;
+            }
+            sb.append((char) random);
+        }
+        XMail.sendMail(nv.getEmail(), "Mật khẩu đăng nhập ứng dụng Ultramotor của bạn là: " + sb.toString() + ". Vui lòng đổi mật khẩu sau khi đăng nhập.", "MẬT KHẨU ĐĂNG NHẬP ỨNG DỤNG");
+        return sb.toString();
     }
 
     @SuppressWarnings("unchecked")
@@ -283,6 +309,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         txtTimKiem = new com.swingx.SearchTextField();
         btnExport = new com.swingx.Button();
         btnGuiMail = new com.swingx.Button();
+        btnSave = new com.swingx.Button();
 
         pnlQuanLyNV.setBackground(new java.awt.Color(255, 255, 255));
         pnlQuanLyNV.setName("QLNV"); // NOI18N
@@ -354,6 +381,12 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        btnSave.setBackground(new java.awt.Color(92, 167, 51));
+        btnSave.setForeground(new java.awt.Color(255, 255, 255));
+        btnSave.setText("Lưu dữ liệu");
+        btnSave.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSave.setRadius(10);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -362,20 +395,26 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(pnlQuanLyNV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(pnlQuanLyNV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnExport;
     private com.swingx.Button btnGuiMail;
+    private com.swingx.Button btnSave;
     private com.swingx.Button btnThemMoi;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblQLNV;
