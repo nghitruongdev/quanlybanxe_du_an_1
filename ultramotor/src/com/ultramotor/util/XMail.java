@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -44,12 +46,11 @@ public class XMail {
      * @param subject tiêu đề mail
      */
     public static void sendMail(String email, String content, String subject) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                sendMail(Collections.singletonMap(email, content), subject, null);
-            }
-        }).start();
+        sendMail(email, content, subject, null);
+    }
+
+    public static void sendMail(String email, String content, String subject, File file) {
+        sendMail(Collections.singletonMap(email, content), subject, file);
     }
 
     /**
@@ -93,7 +94,17 @@ public class XMail {
                 }
                 //gửi mail
 //                System.out.println("Sending");
-                Transport.send(msg);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Transport.send(msg);
+                        } catch (MessagingException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }).start();
+
             } catch (MessagingException | IOException ex) {
                 ex.printStackTrace();
             }

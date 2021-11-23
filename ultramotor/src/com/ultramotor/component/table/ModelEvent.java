@@ -1,8 +1,8 @@
 package com.ultramotor.component.table;
 
-public interface ModelEvent<Entity, Key> {
+public interface ModelEvent<Entity> {
 
     void update(Entity e);
 
-    void delete(Key id);
+    void delete(Entity e);
 }
