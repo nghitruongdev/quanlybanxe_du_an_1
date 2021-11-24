@@ -1,6 +1,13 @@
 package com.ultramotor.ui.khachhang;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.beans.PropertyChangeEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SearchPanel extends javax.swing.JPanel implements Multilang {
 
@@ -22,8 +29,10 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
     }
 
     private void init() {
-        KhachHangController.fillComboNSX(cboNSX, lang);
-        KhachHangController.fillComboLoaiHang(cboLoaiXe, lang);
+        this.addPropertyChangeListener("ancestor", (PropertyChangeEvent e) -> {
+//            KhachHangController.fillComboNSX(cboNSX, lang);
+//            KhachHangController.fillComboLoaiHang(cboLoaiXe, lang);
+        });
     }
 
     @Override
@@ -47,15 +56,29 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
 
     private void addListeners() {
         btnTiepTuc.addActionListener((ActionEvent e) -> {
-            KhachHangController.showProductList(this.getParent(), KhachHangController.search(cboNSX, cboLoaiXe));
+            new Thread(new Runnable(){
+                @Override
+                public void run() {
+                    KhachHangController.sleepThread(300);
+                    KhachHangController.showProductList(getParent(), KhachHangController.search(cboNSX, cboLoaiXe));
+                }
+            }).start();
+            
         });
 
         btnSearch.addActionListener((ActionEvent e) -> {
-            KhachHangController.showProductList(this.getParent(), KhachHangController.search(txtSearch));
+            new Thread(new Runnable(){
+                @Override
+                public void run() {
+                    KhachHangController.sleepThread(300);
+                    KhachHangController.showProductList(getParent(), KhachHangController.search(txtSearch));
+                }
+            }).start();
+            
         });
     }
-
-    @SuppressWarnings("unchecked")
+    
+        @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;

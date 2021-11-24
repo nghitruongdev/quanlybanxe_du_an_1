@@ -105,7 +105,7 @@ public class KhachHangFrame extends javax.swing.JFrame {
                 .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(958, Short.MAX_VALUE))
+                .addContainerGap(1036, Short.MAX_VALUE))
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
@@ -126,6 +126,7 @@ public class KhachHangFrame extends javax.swing.JFrame {
 
         getContentPane().add(pnlHeader, java.awt.BorderLayout.NORTH);
 
+        pnlMain.setMinimumSize(new java.awt.Dimension(500, 355));
         pnlMain.setLayout(new java.awt.CardLayout());
 
         pnlWelcome.setName("ProductList"); // NOI18N
@@ -136,7 +137,7 @@ public class KhachHangFrame extends javax.swing.JFrame {
 
         getContentPane().add(pnlMain, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(1131, 662));
+        setSize(new java.awt.Dimension(1209, 662));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

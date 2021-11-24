@@ -4,44 +4,51 @@ import com.swingx.Card;
 import com.swingx.MyScrollBar;
 import com.ultramotor.entity.ModelSanPham;
 import com.ultramotor.entity.SanPham;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Timer;
 import net.miginfocom.swing.MigLayout;
 
 public class ProductListPanel extends javax.swing.JPanel implements Multilang {
-    
+
     final String SAP_XEP_VN = "Sắp xếp";
     final String SAP_XEP_EN = "Sort";
     final String GIA_TIEN_VN = "Giá tiền";
     final String GIA_TIEN_EN = "Price";
     final String THINH_HANH_VN = "Thịnh hành";
     final String THINH_HANH_EN = "Popularity";
-    
+
     public ProductListPanel() {
         initComponents();
         init();
     }
-    private MigLayout layout;
     private List<ModelSanPham> list;
-    
+    private Timer timer;
+    int count = 0;
+
     private void init() {
-//        double width = 0;
-//        System.out.println(width);
-        layout = new MigLayout("insets 20, wrap 4, fillx", "", "[]30[]");
+        MigLayout layout = new MigLayout("insets 20, fillx, wrap 4", "[center][center][center][center]", "[]30[]");
         panel.setLayout(layout);
         jScrollPane1.setVerticalScrollBar(new MyScrollBar());
         jScrollPane1.setViewportView(panel);
-//        panel.revalidate();
-//        panel.setBackground(Color.red);
-        panel.repaint();
 
-//        list = getListExample();
-//        fillPanel();
-//        setLang(((KhachHangFrame) this.getTopLevelAncestor()).getLang());
+        timer = new Timer(1000, (ActionEvent e) -> {
+            fillPanel();
+            timer.stop();
+        });
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                timer.setCoalesce(true);
+                timer.restart();
+            }
+        });
     }
-    
+
     public void setList(List<ModelSanPham> list) {
         this.list = list;
         if (list.isEmpty()) {
@@ -49,24 +56,30 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
         }
         fillPanel();
     }
-    
-    private void fillPanel() {
+
+    private synchronized void fillPanel() {
+        if (list == null) {
+            return;
+        }
         panel.removeAll();
+        int width = (int) (getWidth() * 0.2d);
         list.stream().map(model -> {
             Card card = new ProductCard(model);
-            card.getButton().addActionListener((ActionEvent e)->{
-                KhachHangController.showDetails(this.getParent(), model);
+            card.getButton().addActionListener((ActionEvent e) -> {
+                new Thread(() -> {
+                    KhachHangController.sleepThread(300);
+                    KhachHangController.showDetails(this.getParent(), model);
+                }).start();
             });
             return card;
         }).forEachOrdered(card -> {
-            int width = (int) (panel.getWidth()*0.2);
-            panel.add(card, "w "+ width +", h " + (width*3/2 - 15));
+            panel.add(card, "w " + width + ", h " + (width * 3 / 2));
+//            panel.add(card, "w 20%, h 280!");
+
         });
-//        panel.revalidate();
-//        panel.repaint();
-//        System.out.println("Panel finish repainted");
+//        System.out.println("Height: " + (width * 3 / 2 - 15));
     }
-    
+
     @Override
     public void setLang(Lang lang) {
         if (lang.equals(Lang.VN)) {
@@ -79,14 +92,13 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
             rdoThinhHanh.setText(THINH_HANH_EN);
         }
     }
-    
+
     List<ModelSanPham> getListExample() {
         String[] colors = {"Đỏ", "Trắng", "Đen", "Vàng", "Xanh"};
-        
+
         List<ModelSanPham> list = new ArrayList<>();
         for (int i = 2010; i < 2022; i++) {
             ModelSanPham model = new ModelSanPham();
-            model.setTenModel("Airblade");
             model.setDoiXe(i);
             List<SanPham> spList = new ArrayList<>();
             for (int j = 0; j < 3; j++) {
@@ -94,19 +106,18 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
                         "Airblade",
                         j % 2 == 0 ? "slide1.jpg" : "slide3.jpg",
                         colors[(int) Math.floor((Math.random() * 5))],
-                        j % 2 == 0 ? "125cc" : "150cc",
+                        j % 2 == 0 ? "125cc" : "150cc", 2020,
                         36, "Vietnam",
                         50000000, "",
                         "", ""
                 ));
                 model.setSanPhamList(spList);
-                
             }
             list.add(model);
         }
         return list;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.rowset.CachedRowSet;
@@ -44,7 +46,7 @@ public class XJdbc {
     }
 
     public static ResultSet query(String sql, Object... args) {
-         ResultSet rs = null;
+        ResultSet rs = null;
         try {
             PreparedStatement pstmt = getStmt(sql, args);
             rs = pstmt.executeQuery();
@@ -55,17 +57,20 @@ public class XJdbc {
     }
 
     public static Object value(String sql, Object... args) {
-        Object value = null;
+        List<Object> list = valueList(sql, args);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    public static List<Object> valueList(String sql, Object... args) {
+        List<Object> list = new ArrayList<>();
         try (ResultSet rs = query(sql, args)) {
-            if (rs.next()) {
-                value = rs.getObject(1);
+            while (rs.next()) {
+                list.add(rs.getObject(1));
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            closeCon();
+
         }
-        return value;
+        return list;
     }
 
     public static CachedRowSet getRowSet(String sql, Object... args) {

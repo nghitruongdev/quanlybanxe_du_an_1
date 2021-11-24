@@ -34,22 +34,22 @@ public class Card extends JPanel {
         layout = new MigLayout("insets 10", "[fill]", "[center]0[fill,center]");
 
         title = new JLabel("Hello World");
-        title.setFont(new java.awt.Font("Segoe UI", 0, 16));
+        title.setFont(new java.awt.Font("Segoe UI", 0, 14));
 
         pag = new Pagination();
         pnlSlide = new SlideShowPanel();
+        addPagnitationEvent(pag, pnlSlide);
         button = new Button();
         button.setText("Xem thêm");
         button.setForeground(Color.white);
         button.setBackground(Color.decode("#54B75E"));
-        addPagnitationEvent(pag, pnlSlide);
+        button.setFont(new java.awt.Font("Segoe UI", 0, 14));
 
-        JPanel panel = new JPanel(new MigLayout("insets 0", "[right, grow]0[leading]", "[fill]5[fill]"));
+        JPanel panel = new JPanel(new MigLayout("insets 0", "[right, grow]0[leading]", "[fill]5[fill, center]"));
         panel.setOpaque(false);
         panel.add(pag, "gapleft 5, spanx, gapright 5");
-
-        panel.add(title, "align leading,gapx 5");
-        panel.add(button);
+        panel.add(title, " align leading, pushy, gapx 5, wrap");
+        panel.add(button, "h 30!, w 50%!, center");
 
         setLayout(layout);
         add(pnlSlide, "w 100%, h 75%,pushy, wrap");

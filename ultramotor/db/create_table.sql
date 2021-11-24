@@ -17,7 +17,7 @@ CREATE TABLE NhanVien(
     id_NV NVARCHAR(10) PRIMARY KEY,
     HoNV NVARCHAR(20) NOT NULL,
     TenNV NVARCHAR(20) NOT NULL,
-    NgaySinh DATETIME NOT NULL,
+    NgaySinh DATE NOT NULL,
     GioiTinh BIT NOT NULL,
     DiaChi NVARCHAR(255) NOT NULL,
     SDT NVARCHAR(10) NOT NULL,
@@ -48,34 +48,27 @@ CREATE TABLE KhachHang(
 GO 
 
 CREATE TABLE LoaiHang(
-    id_LH NVARCHAR(20) PRIMARY KEY,
+    id_LH VARCHAR(20) PRIMARY KEY,
     TenLoaiHang NVARCHAR(255) NOT NULL 
 )
 GO
 
 CREATE TABLE NhaSanXuat(
-    id_NSX NVARCHAR(20) PRIMARY KEY,
+    id_NSX VARCHAR(20) PRIMARY KEY,
     TenNSX NVARCHAR(255) NOT NULL 
 )
 GO
 
 CREATE TABLE DongSanPham(
-    id_DongSP NVARCHAR(20) PRIMARY KEY,
+    id_DongSP VARCHAR(20) PRIMARY KEY,
     tenDongSP NVARCHAR(100) NOT NULL,
-    id_LH NVARCHAR(20) NOT NULL,
-    id_NSX NVARCHAR(20) NOT NULL,
+    id_LH VARCHAR(20) NOT NULL,
+    id_NSX VARCHAR(20) NOT NULL,
     CONSTRAINT FK_LoaiHang_DongSanPham FOREIGN KEY (id_LH) REFERENCES LOAIHANG(id_LH),
     CONSTRAINT FK_NhaSanXuat_DongSanPham FOREIGN KEY (id_NSX) REFERENCES NHASANXUAT(id_NSX)
 )
 GO
 
-CREATE TABLE ModelSanPham(
-	id_Model VARCHAR(10) PRIMARY KEY,
-	tenModel NVARCHAR(100) NOT NULL,
-	doiXe INT NOT NULL, 
-	id_DongSP NVARCHAR(20) NOT NULL REFERENCES DongSanPham(id_DongSP)
-)
-GO
 
 CREATE TABLE SanPham(
     SKU NVARCHAR(20) PRIMARY KEY,
@@ -83,29 +76,17 @@ CREATE TABLE SanPham(
     hinh NVARCHAR(20),
     mauSac NVARCHAR(20) NOT NULL,
     phanKhoi NVARCHAR(20) NOT NULL,
+    doiXe INT NOT NULL,
     thoiGianBH INT,
     DiaChiSX NVARCHAR(255) NOT NULL,
     giaTien FLOAT NOT NULL,
     moTa NVARCHAR(255),
-    id_Model VARCHAR(10) NOT NULL,
+    id_DongSP VARCHAR(20) NOT NULL,
     id_NV NVARCHAR(10) NOT NULL,
     CONSTRAINT FK_SanPham_NhanVien FOREIGN KEY (id_NV) REFERENCES NhanVien(id_NV),
-    CONSTRAINT FK_SanPham_Model FOREIGN KEY (id_Model) REFERENCES ModelSanPham(id_Model)
+    CONSTRAINT FK_SanPham_Model FOREIGN KEY (id_DongSP) REFERENCES DongSanPham(id_DongSP)
 )
 GO
-
-
-
--- CREATE TABLE ChiTietSanPham(
---     id_SP NVARCHAR(10) PRIMARY KEY,
---     soKhung NVARCHAR(50) NOT NULL,
---     soMay NVARCHAR(50) NOT NULL,
---     SKU NVARCHAR(20) NOT NULL,
---     id_CTNK NVARCHAR(10) NOT NULL,
---     CONSTRAINT FK_ChiTietSanPham_SanPham FOREIGN KEY (SKU) REFERENCES SANPHAM(SKU),
---     CONSTRAINT FK_ChiTietSanPham_ChiTietNhapKho FOREIGN KEY (id_CTNK) REFERENCES CHITIETNHAPKHO(id_CTNK)
--- )
--- GO
 
 CREATE TABLE DichVu(
     idDV NVARCHAR(10) PRIMARY KEY,
@@ -205,3 +186,12 @@ CREATE TABLE ChiTietXuatKho(
     CONSTRAINT FK_ChiTieuXuatKho_PhieuXuatKho FOREIGN KEY (id_PX) REFERENCES PHIEUXUATKHO(id_PX)
 )
 GO
+
+
+SELECT DISTINCT dsp.id_DongSP, TenLoaiHang, TenNSX, DiaChiSX, TenDongSP, doiXe, phanKhoi, thoiGianBH, giaTien
+from SanPham sp 
+	join DongSanPham dsp on sp.id_DongSP = dsp.id_DongSP
+	join NhaSanXuat nsx on dsp.id_NSX = dsp.id_NSX
+	join LoaiHang lh on lh.id_LH = dsp.id_LH
+WHERE dsp.id_DongSP like '%%'
+

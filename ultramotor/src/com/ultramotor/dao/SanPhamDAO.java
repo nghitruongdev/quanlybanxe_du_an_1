@@ -1,6 +1,7 @@
 package com.ultramotor.dao;
 
 import com.ultramotor.entity.HoaDon;
+import com.ultramotor.entity.ModelSanPham;
 import com.ultramotor.entity.SanPham;
 import com.ultramotor.util.XJdbc;
 import java.sql.ResultSet;
@@ -45,15 +46,21 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getInt(6),
-                        rs.getString(7),
-                        rs.getDouble(8),
-                        rs.getString(9),
+                        rs.getInt(7),
+                        rs.getString(8), 
+                        rs.getFloat(9),
                         rs.getString(10),
-                        rs.getString(11)));
+                        rs.getString(11),
+                        rs.getString(12)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(NhaSanXuatDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    public List<SanPham> getListSP(ModelSanPham model) {
+        String sql = "SELECT * FROM SanPham WHERE id_DongSP = ? AND DoiXe = ? AND PhanKhoi = ?";
+        return selectBySQL(sql, model.getId_dongSP(), model.getDoiXe(), model.getPhanKhoi());
     }
 }

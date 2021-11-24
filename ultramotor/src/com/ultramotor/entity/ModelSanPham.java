@@ -1,55 +1,101 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ultramotor.entity;
 
-import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
-import javax.swing.Icon;
 
-public class ModelSanPham implements Serializable {
+public class ModelSanPham {
 
-    private String idModel;
-    private String tenModel;
-    private int doiXe;
     private String id_dongSP;
+    private String tenDongSP;
+    private String phanKhoi;
+    private String tenLH;
+    private String tenNSX;
+    private String diachiSX;
+    private int doiXe;
+    private int thoigianBH;
+    private double giaTien;
     private List<SanPham> sanPhamList;
 
     public ModelSanPham() {
     }
 
-    public ModelSanPham(String idModel) {
-        this.idModel = idModel;
-    }
-
-    public ModelSanPham(String idModel, String tenModel, int doiXe, String id_dongSP) {
-        this.idModel = idModel;
-        this.tenModel = tenModel;
-        this.doiXe = doiXe;
+    public ModelSanPham(String id_dongSP, String tenDongSP, String phanKhoi, String tenLH, String tenNSX, String diachiSX, int doiXe, int thoigianBH, double giaTien) {
         this.id_dongSP = id_dongSP;
+        this.tenDongSP = tenDongSP;
+        this.phanKhoi = phanKhoi;
+        this.tenLH = tenLH;
+        this.tenNSX = tenNSX;
+        this.diachiSX = diachiSX;
+        this.doiXe = doiXe;
+        this.thoigianBH = thoigianBH;
+        this.giaTien = giaTien;
     }
 
-    public String getIdModel() {
-        return idModel;
+    public String getId_dongSP() {
+        return id_dongSP;
     }
 
-    public void setIdModel(String idModel) {
-        this.idModel = idModel;
-    }
-
-    public String getTenModel() {
-        return tenModel;
-    }
-
-    public void setTenModel(String tenModel) {
-        this.tenModel = tenModel;
+    public String getPhanKhoi() {
+        return phanKhoi;
     }
 
     public int getDoiXe() {
         return doiXe;
+    }
+
+    public String getTenDongSP() {
+        return tenDongSP;
+    }
+
+    public void setTenDongSP(String tenDongSP) {
+        this.tenDongSP = tenDongSP;
+    }
+
+    public String getTenLH() {
+        return tenLH;
+    }
+
+    public void setTenLH(String tenLH) {
+        this.tenLH = tenLH;
+    }
+
+    public String getTenNSX() {
+        return tenNSX;
+    }
+
+    public void setTenNSX(String tenNSX) {
+        this.tenNSX = tenNSX;
+    }
+
+    public String getDiachiSX() {
+        return diachiSX;
+    }
+
+    public void setDiachiSX(String diachiSX) {
+        this.diachiSX = diachiSX;
+    }
+
+    public int getThoigianBH() {
+        return thoigianBH;
+    }
+
+    public void setThoigianBH(int thoigianBH) {
+        this.thoigianBH = thoigianBH;
+    }
+
+    public double getGiaTien() {
+        return giaTien;
+    }
+
+    public void setGiaTien(double giaTien) {
+        this.giaTien = giaTien;
+    }
+
+    public void setId_dongSP(String id_dongSP) {
+        this.id_dongSP = id_dongSP;
+    }
+
+    public void setPhanKhoi(String phanKhoi) {
+        this.phanKhoi = phanKhoi;
     }
 
     public void setDoiXe(int doiXe) {
@@ -64,45 +110,9 @@ public class ModelSanPham implements Serializable {
         this.sanPhamList = sanPhamList;
     }
 
-    public String getId_dongSP() {
-        return id_dongSP;
-    }
-
-    public void setId_dongSP(String id_dongSP) {
-        this.id_dongSP = id_dongSP;
-    }
-
-//    public Map<String, Icon> getColorHinhMap() {
-//        return colorHinhMap;
-//    }
-//
-//    public void setColorHinhMap(Map<String, Icon> colorHinhMap) {
-//        this.colorHinhMap = colorHinhMap;
-//    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idModel != null ? idModel.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ModelSanPham)) {
-            return false;
-        }
-        ModelSanPham other = (ModelSanPham) object;
-        if ((this.idModel == null && other.idModel != null) || (this.idModel != null && !this.idModel.equals(other.idModel))) {
-            return false;
-        }
-        return true;
-    }
-
     @Override
     public String toString() {
-        return String.format("%s %d", tenModel, doiXe);
+        return String.format("%s %s %d %s",  tenNSX, tenDongSP, doiXe, phanKhoi);
     }
 
 }

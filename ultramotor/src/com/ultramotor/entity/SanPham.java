@@ -8,11 +8,12 @@ public class SanPham {
     private String hinh;
     private String mauSac;
     private String phanKhoi;
-    private Integer thoiGianBH;
+    private int doiXe;
+    private int thoiGianBH;
     private String diaChiSX;
     private double giaTien;
     private String moTa;
-    private String idModel;
+    private String idDongSP;
     private String idNV;
 
     public SanPham() {
@@ -22,17 +23,18 @@ public class SanPham {
         this.sku = sku;
     }
 
-    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi, Integer thoiGianBH, String diaChiSX, double giaTien, String moTa, String idModel, String idNV) {
+    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi,int doiXe, int thoiGianBH, String diaChiSX, double giaTien, String moTa, String idDongSP, String idNV) {
         this.sku = sku;
         this.tenSP = tenSP;
         this.hinh = hinh;
         this.mauSac = mauSac;
         this.phanKhoi = phanKhoi;
+        this.doiXe = doiXe;
         this.thoiGianBH = thoiGianBH;
         this.diaChiSX = diaChiSX;
         this.giaTien = giaTien;
         this.moTa = moTa;
-        this.idModel = idModel;
+        this.idDongSP = idDongSP;
         this.idNV = idNV;
     }
 
@@ -77,11 +79,11 @@ public class SanPham {
         this.phanKhoi = phanKhoi;
     }
 
-    public Integer getThoiGianBH() {
+    public int getThoiGianBH() {
         return thoiGianBH;
     }
 
-    public void setThoiGianBH(Integer thoiGianBH) {
+    public void setThoiGianBH(int thoiGianBH) {
         this.thoiGianBH = thoiGianBH;
     }
 
@@ -109,12 +111,12 @@ public class SanPham {
         this.moTa = moTa;
     }
 
-    public String getIdModel() {
-        return idModel;
+    public String getIdDongSP() {
+        return idDongSP;
     }
 
-    public void setIdModel(String idModel) {
-        this.idModel = idModel;
+    public void setIdDongSP(String idDongSP) {
+        this.idDongSP = idDongSP;
     }
 
     public String getIdNV() {
@@ -125,6 +127,15 @@ public class SanPham {
         this.idNV = idNV;
     }
 
+    public int getDoiXe() {
+        return doiXe;
+    }
+
+    public void setDoiXe(int doiXe) {
+        this.doiXe = doiXe;
+    }
+
+    
     
     @Override
     public int hashCode() {

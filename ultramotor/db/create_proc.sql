@@ -28,7 +28,7 @@ BEGIN
 	THEN UPDATE SET 
 		HoNV = Source.HoNV, 
 		TenNV = Source.TenNV, 
-		NgaySinh = CONVERT(DATETIME2, Source.NgaySinh, 102),
+		NgaySinh = CONVERT(DATE, Source.NgaySinh),
 		GioiTinh = Source.GioiTinh,
 		DiaChi = Source.DiaChi,
 		SDT = Source.SDT, 
@@ -43,5 +43,3 @@ BEGIN
 	THEN DELETE;
 END
 GO
-
-select * from NhanVien

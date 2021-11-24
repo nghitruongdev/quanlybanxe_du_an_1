@@ -38,7 +38,10 @@ public class ProductCard extends Card {
     private Map<String, Icon> getImageAndColor(List<SanPham> list){
         Map<String, Icon> map = new HashMap<>();
         for (SanPham sp : list) {
+            try{
             map.put(sp.getMauSac(), new ImageIcon(getClass().getResource("/com/ultramotor/img/sp/" + sp.getHinh())));
+            }catch(Exception e){
+            }
         }
         return map;
     }

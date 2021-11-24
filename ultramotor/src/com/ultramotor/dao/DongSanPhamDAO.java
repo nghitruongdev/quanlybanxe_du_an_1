@@ -1,6 +1,8 @@
 package com.ultramotor.dao;
 
 import com.ultramotor.entity.DongSanPham;
+import com.ultramotor.entity.LoaiHang;
+import com.ultramotor.entity.NhaSanXuat;
 import com.ultramotor.util.XJdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,4 +51,20 @@ public class DongSanPhamDAO extends UltraDAO<DongSanPham, String> {
         return list;
     }
 
+    public List<DongSanPham> getDongSPByNSXvaLoaiHang(NhaSanXuat nsx, LoaiHang lh) {
+        String sql = "SELECT * FROM DongSanPham WHERE id_NSX LIKE ? AND id_LH LIKE ?";
+        String idNSX = "";
+        String idLH = "";
+        if (nsx != null && nsx.getIdNSX() != null) {
+            idNSX = nsx.getIdNSX();
+        }
+        if (lh != null && lh.getIdLH() != null) {
+            idLH = lh.getIdLH();
+        }
+        return selectBySQL(sql, getLikeSQL(idNSX), getLikeSQL(idLH));
+    }
+
+    private String getLikeSQL(String s) {
+        return "%" + s + "%";
+    }
 }

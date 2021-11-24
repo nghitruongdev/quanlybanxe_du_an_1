@@ -2,7 +2,6 @@ package com.ultramotor.ui.khachhang;
 
 import com.ultramotor.entity.ModelSanPham;
 import com.ultramotor.entity.SanPham;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,11 +15,6 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
         pnlCard.removeButton();
     }
 
-    @Override
-    public void setLang(Lang lang) {
-        this.lang = lang;
-    }
-
     public void setProductDetails(ModelSanPham model) {
         pnlCard.setModel(model);
         lblProductInfo.setText(getInfo(model));
@@ -29,14 +23,14 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
 
     private String getInfo(ModelSanPham model) {
         List<SanPham> list = model.getSanPhamList();
-        String tenSP = model.getTenModel();
+        String tenSP = model.toString();
         String doiXe = String.valueOf(model.getDoiXe());
-        String nhaSX = "Honda";
-        String diaChiSX = "Vietnam";
-        String warranty = String.valueOf(list.get(0).getThoiGianBH());
-         String colors = toString(getColors(list));
-        String phanKhoi = toString(getPhanKhoi(list));
-        String giaTien = toString(getGiaTien(list));
+        String nhaSX = model.getTenNSX();
+        String diaChiSX = model.getDiachiSX();
+        String warranty = String.valueOf(model.getThoigianBH());
+        String colors = getColors(list);
+        String phanKhoi = model.getPhanKhoi();
+        String giaTien = String.valueOf(model.getGiaTien());
         if (lang.equals(Lang.VN)) {
             return String.format("<html> <h1 style=\"font-size: large; color: aqua;padding-left: 20;\">Thông Số Kỹ Thuật</h1>\n"
                     + "  <ul>\n"
@@ -92,33 +86,18 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
                     warranty,
                     giaTien);
     }
-    private Set getColors(List<SanPham> list){
+   
+    private String getColors(List<SanPham> list){
         Set<String> colors = new HashSet<>();
         list.forEach(sp -> {
             colors.add(sp.getMauSac());
         });
-        return colors;
+        return colors.toString().replaceAll("[\\[\\]]","");
     }
     
-    private Set getPhanKhoi(List<SanPham> list){
-        Set<String> set = new HashSet<>();
-        list.forEach(sp -> {
-            set.add(sp.getPhanKhoi());
-        });
-        return set;
-    }
-    
-    private Set getGiaTien(List<SanPham> list){
-        Set<String> set = new HashSet<>();
-        list.forEach(sp -> {
-            set.add(String.format("%.2f", sp.getGiaTien()));
-        });
-        return set;
-    }
-
-    private String toString(Collection<String> col){
-        StringBuilder sb = new StringBuilder();
-        return col.toString();
+    @Override
+    public void setLang(Lang lang) {
+        this.lang = lang;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
