@@ -68,6 +68,15 @@ public class Table extends JTable {
                         cell.setBackground(Color.WHITE);
                     }
                     return cell;
+                } else if (o instanceof ModelView) {
+                    ModelView data = (ModelView) o;
+                    ViewCell cell = new ViewCell(data);
+                    if (selected) {
+                        cell.setBackground(new Color(239, 244, 255));
+                    } else {
+                        cell.setBackground(Color.WHITE);
+                    }
+                    return cell;
                 } else {
                     Component com = super.getTableCellRendererComponent(jtable, o, selected, focus, i, i1);
                     setBorder(noFocusBorder);
@@ -97,9 +106,11 @@ public class Table extends JTable {
     public TableCellEditor getCellEditor(int row, int col) {
         Object o = this.getValueAt(row, col);
         if (o instanceof ModelAction) {
-            return new EntityCellEditor();
+            return new ActionCellEditor();
         } else if (o instanceof Boolean) {
             return super.getDefaultEditor(Boolean.class);
+        } else if (o instanceof ModelView) {
+            return new ViewCellEditor();
         }
         return super.getCellEditor(row, col);
     }
@@ -107,16 +118,16 @@ public class Table extends JTable {
     @Override
     public boolean isCellEditable(int i, int i1) {
         Class c = this.getValueAt(i, i1).getClass();
-        return c == Boolean.class || c == ModelAction.class;
+        return c == Boolean.class || c == ModelAction.class || c==ModelView.class;
     }
 
 }
 
-class EntityCellEditor extends DefaultCellEditor {
+class ActionCellEditor extends DefaultCellEditor {
 
     private ModelAction data;
 
-    public EntityCellEditor() {
+    public ActionCellEditor() {
         super(new JCheckBox());
     }
 
@@ -124,6 +135,28 @@ class EntityCellEditor extends DefaultCellEditor {
     public Component getTableCellEditorComponent(JTable jtable, Object o, boolean bln, int row, int column) {
         data = (ModelAction) o;
         ActionCell cell = new ActionCell(data);
+        cell.setBackground(new Color(239, 244, 255));
+        return cell;
+    }
+
+    @Override
+    public Object getCellEditorValue() {
+        return data;
+    }
+}
+
+class ViewCellEditor extends DefaultCellEditor {
+
+    private ModelView data;
+
+    public ViewCellEditor() {
+        super(new JCheckBox());
+    }
+
+    @Override
+    public Component getTableCellEditorComponent(JTable jtable, Object o, boolean bln, int row, int column) {
+        data = (ModelView) o;
+        ViewCell cell = new ViewCell(data);
         cell.setBackground(new Color(239, 244, 255));
         return cell;
     }

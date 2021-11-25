@@ -63,6 +63,13 @@ public class NhanVienPanel extends javax.swing.JPanel {
         addListeners();
     }
 
+    private void initTable() {
+        Object[] columns = {"Select", "ID", "Họ Và Tên", "Ngày Sinh", "Giới Tính", "Địa chỉ", "Số ĐT", "Email", "Lương", "Hình", "Vai Trò", "Mật Khẩu", "Ghi Chú", "Actions"};
+        model = new DefaultTableModel(columns, 0);
+        tblNhanVien.setModel(model);
+        tblNhanVien.fixTable(jScrollPane4);
+    }
+
     private void save() {
         try {
             SQLServerDataTable dataTable = NhanVien.getDataServerTable();
@@ -74,13 +81,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-    }
-
-    private void initTable() {
-        Object[] columns = {"Select", "ID", "Họ Và Tên", "Ngày Sinh", "Giới Tính", "Địa chỉ", "Số ĐT", "Email", "Lương", "Hình", "Vai Trò", "Mật Khẩu", "Ghi Chú", "Actions"};
-        model = new DefaultTableModel(columns, 0);
-        tblNhanVien.setModel(model);
-        tblNhanVien.fixTable(jScrollPane4);
     }
 
     private void deleteNV(String maNV) {

@@ -150,48 +150,55 @@ CREATE TABLE ChiTietBaoDuong(
 )
 GO
 
+DROP TABLE IF EXISTS PhieuNhapKho
+GO
+
 CREATE TABLE PhieuNhapKho(
     id_PN NVARCHAR(10) PRIMARY KEY,
-	ngayNhap DATE NOT NULL DEFAULT GETDATE(),
+	ngayNhap DATETIME2 NOT NULL DEFAULT GETDATE(),
     id_NV NVARCHAR(10) NOT NULL,
     CONSTRAINT FK_NhanVien_PhieuNhapKho FOREIGN KEY (id_NV) REFERENCES NhanVien(id_NV)
 )
 GO
 
+DROP TABLE IF EXISTS ChiTietNhapKho
+GO
+
 CREATE TABLE ChiTietNhapKho(
-    id_CTNK INT IDENTITY(1,1) PRIMARY KEY,
+    id_CTNK INT NOT NULL,
+    SKU NVARCHAR(20) NOT NULL,
     soLuong INT NOT NULL,
     giaNhap FLOAT NOT NULL,
-    SKU NVARCHAR(20) NOT NULL,
     id_PN NVARCHAR(10) NOT NULL,
+	PRIMARY KEY (id_CTNK, id_PN),
     CONSTRAINT FK_ChiTietNhapKho_SanPham FOREIGN KEY (SKU) REFERENCES SANPHAM(SKU),
     CONSTRAINT FK_ChiTieuNhapKho_PhieuNhapKho FOREIGN KEY (id_PN) REFERENCES PHIEUNHAPKHO(id_PN)
 )
 GO
 
-CREATE TABLE PhieuXuatKho(
-    id_PX NVARCHAR(10) PRIMARY KEY,
-    ngayXuat DATE NOT NULL DEFAULT GETDATE(),
-    id_NV NVARCHAR(10) NOT NULL,
-    CONSTRAINT FK_NhanVien_PhieuXuatKho FOREIGN KEY (id_NV) REFERENCES NhanVien(id_NV)
-)
-GO
+-- CREATE TABLE PhieuXuatKho(
+--     id_PX NVARCHAR(10) PRIMARY KEY,
+--     ngayXuat DATE NOT NULL DEFAULT GETDATE(),
+--     id_NV NVARCHAR(10) NOT NULL,
+--     CONSTRAINT FK_NhanVien_PhieuXuatKho FOREIGN KEY (id_NV) REFERENCES NhanVien(id_NV)
+-- )
+-- GO
 
-CREATE TABLE ChiTietXuatKho(
-    ID_CTXK INT IDENTITY(1,1) PRIMARY KEY,
-    soLuong INT NOT NULL,
-    SKU NVARCHAR(20) NOT NULL,
-    id_PX NVARCHAR(10) NOT NULL,
-    CONSTRAINT FK_ChiTietXuatKho_SanPham FOREIGN KEY (SKU) REFERENCES SANPHAM(SKU),
-    CONSTRAINT FK_ChiTieuXuatKho_PhieuXuatKho FOREIGN KEY (id_PX) REFERENCES PHIEUXUATKHO(id_PX)
-)
-GO
+-- CREATE TABLE ChiTietXuatKho(
+--     ID_CTXK INT IDENTITY(1,1) PRIMARY KEY,
+--     soLuong INT NOT NULL,
+--     SKU NVARCHAR(20) NOT NULL,
+--     id_PX NVARCHAR(10) NOT NULL,
+--     CONSTRAINT FK_ChiTietXuatKho_SanPham FOREIGN KEY (SKU) REFERENCES SANPHAM(SKU),
+--     CONSTRAINT FK_ChiTieuXuatKho_PhieuXuatKho FOREIGN KEY (id_PX) REFERENCES PHIEUXUATKHO(id_PX)
+-- )
+-- GO
 
 
-SELECT DISTINCT dsp.id_DongSP, TenLoaiHang, TenNSX, DiaChiSX, TenDongSP, doiXe, phanKhoi, thoiGianBH, giaTien
-from SanPham sp 
-	join DongSanPham dsp on sp.id_DongSP = dsp.id_DongSP
-	join NhaSanXuat nsx on dsp.id_NSX = dsp.id_NSX
-	join LoaiHang lh on lh.id_LH = dsp.id_LH
-WHERE dsp.id_DongSP like '%%'
+-- SELECT DISTINCT dsp.id_DongSP, TenLoaiHang, TenNSX, DiaChiSX, TenDongSP, doiXe, phanKhoi, thoiGianBH, giaTien
+-- from SanPham sp 
+-- 	join DongSanPham dsp on sp.id_DongSP = dsp.id_DongSP
+-- 	join NhaSanXuat nsx on dsp.id_NSX = dsp.id_NSX
+-- 	join LoaiHang lh on lh.id_LH = dsp.id_LH
+-- WHERE dsp.id_DongSP like '%%'
 

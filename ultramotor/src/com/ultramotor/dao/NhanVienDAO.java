@@ -127,6 +127,6 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
     }
 
     public void mergeTable(SQLServerDataTable table) throws SQLException{
-        XJdbcServer.update(MERGE_SQL, new String[]{"NhanVien"}, table);
+        XJdbcServer.update(MERGE_SQL, new String[]{"NhanVienType"}, table);
     }
 }

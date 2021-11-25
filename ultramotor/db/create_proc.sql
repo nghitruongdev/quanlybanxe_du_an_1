@@ -9,12 +9,13 @@ GO
 --Tạo proc thêm, xoá, sửa khách hàng
 --Tạo proc thêm, xoá, sửa sản phẩm
 --Tạo proc thêm, xoá, sửa hoá đơn + hoá đơn chi tiết
---Tạo proc thêm, xoá, sửa 
+
+--Tạo proc thêm, xoá, sửa NhanVien--------------------------------------------------------------------------
 DROP PROC IF EXISTS usp_updateNhanVien
 GO
 
 CREATE PROC usp_updateNhanVien
-(@sourceTable NhanVien readonly)
+(@sourceTable NhanVienType readonly)
 AS
 BEGIN
 	MERGE NhanVien as Target
@@ -41,5 +42,18 @@ BEGIN
 
 	WHEN NOT MATCHED BY Source
 	THEN DELETE;
+END
+GO
+
+-- Tạo proc NhapKho -------------------------------------------------------------------------------
+drop proc if exists usp_insert_ChiTietNhapKho
+go
+
+create proc usp_insert_ChiTietNhapKho
+	(@source ChiTietNhapKhoType READONLY)
+AS 
+BEGIN
+	insert into ChiTietNhapKho
+	select * from @source
 END
 GO

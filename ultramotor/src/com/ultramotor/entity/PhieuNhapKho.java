@@ -5,10 +5,11 @@
  */
 package com.ultramotor.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PhieuNhapKho {
+public class PhieuNhapKho extends Entity{
 
     private String idPN;
     private Date ngayNhap;
@@ -26,6 +27,7 @@ public class PhieuNhapKho {
         this.idPN = idPN;
         this.ngayNhap = ngayNhap;
         this.idNV = idNV;
+        this.chiTietNhapKhoList = new ArrayList<>();
     }
 
     public String getIdPN() {
@@ -53,7 +55,7 @@ public class PhieuNhapKho {
     }
 
     public List<ChiTietNhapKho> getChiTietNhapKhoList() {
-        return chiTietNhapKhoList;
+        return this.chiTietNhapKhoList;
     }
 
     public void setChiTietNhapKhoList(List<ChiTietNhapKho> chiTietNhapKhoList) {
@@ -84,5 +86,12 @@ public class PhieuNhapKho {
     public String toString() {
         return "com.ultramotor.entity.PhieuNhapKho[ idPN=" + idPN + " ]";
     }
-    
+
+    public double getTongTien() {
+        double sum = 0;
+        if (chiTietNhapKhoList != null && !chiTietNhapKhoList.isEmpty()) {
+            sum = chiTietNhapKhoList.stream().map(ct -> ct.getGiaNhap()).reduce(sum, (accumulator, _item) -> accumulator + _item);
+        }
+        return sum;
+    }
 }

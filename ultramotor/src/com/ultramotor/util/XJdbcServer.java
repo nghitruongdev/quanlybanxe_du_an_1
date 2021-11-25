@@ -5,8 +5,6 @@ import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class XJdbcServer extends XJdbc {
 
@@ -15,10 +13,14 @@ public class XJdbcServer extends XJdbc {
             if (sql.startsWith("exec")) {
                 SQLServerCallableStatement stmt = (SQLServerCallableStatement) getCon().prepareCall(sql);
                 for (int i = 0; i < types.length; i++) {
-                    if (args[i] instanceof SQLServerDataTable) {
-                        stmt.setStructured(i + 1, types[i], (SQLServerDataTable) args[i]);
-                    } else if (args[i] instanceof ResultSet) {
-                        stmt.setStructured(i + 1, types[i], (ResultSet) args[i]);
+                    if (types[i] != null) {
+                        if (args[i] instanceof SQLServerDataTable) {
+                            stmt.setStructured(i + 1, types[i], (SQLServerDataTable) args[i]);
+                        } else if (args[i] instanceof ResultSet) {
+                            stmt.setStructured(i + 1, types[i], (ResultSet) args[i]);
+                        }
+                    } else {
+                        stmt.setObject(i + 1, args[i]);
                     }
                 }
                 return stmt;
@@ -28,6 +30,6 @@ public class XJdbcServer extends XJdbc {
     }
 
     public static void update(String sql, String[] types, Object... args) throws SQLException {
-            getStmt(sql, types, args).executeUpdate();
+        getStmt(sql, types, args).executeUpdate();
     }
 }
