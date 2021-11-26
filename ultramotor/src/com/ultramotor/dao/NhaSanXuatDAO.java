@@ -49,8 +49,8 @@ public class NhaSanXuatDAO extends UltraDAO<NhaSanXuat, String> {
     }
 
 //    @Override
-    public CachedRowSet getRowSet() {
-        return XJdbc.getRowSet(SELECT_ALL);
-    }
+//    public CachedRowSet getRowSet() {
+//        return XJdbc.getRowSet(SELECT_ALL);
+//    }
 
 }

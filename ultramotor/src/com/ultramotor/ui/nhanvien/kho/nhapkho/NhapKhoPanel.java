@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class NhapKhoPanel extends javax.swing.JPanel {
@@ -94,7 +96,7 @@ public class NhapKhoPanel extends javax.swing.JPanel {
         } catch (SQLException ex) {
             dao.delete(pnk.getIdPN());
             MsgBox.error(ex.getMessage());
-//            Logger.getLogger(NhapKhoPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NhapKhoPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

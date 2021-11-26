@@ -152,7 +152,19 @@ create proc usp_insert_NhapKho
 	(@chitiet ChiTietNhapKhoType READONLY)
 AS
 BEGIN
-	INSERT INTO ChiTietNhapKho
-		SELECT * FROM @chitiet
+	-- BEGIN TRY
+	-- 	BEGIN TRANSACTION;
+
+		INSERT INTO ChiTietNhapKho
+		SELECT * FROM @chitiet;
+
+	-- 	COMMIT TRANSACTION;
+	-- END TRY
+	-- BEGIN CATCH
+	-- 	Declare @msg VARCHAR(255) = ERROR_MESSAGE();
+	-- 	ROLLBACK TRANSACTION;
+	-- 	RAISERROR(N'Thoi toi da noi roi ma anh khong chiu nghe', 11, 1)
+	-- END CATCH
+	
 END
 GO

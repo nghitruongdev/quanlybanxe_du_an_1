@@ -295,7 +295,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         CachedRowSet rs;
         spMap = new HashMap<>();
         try {
-            rs = XJdbc.getRowSet("SELECT SKU, TenSP FROM SanPham");
+            rs = XJdbc.query("SELECT SKU, TenSP FROM SanPham");
             while (rs.next()) {
                 spMap.put(rs.getString(1).toUpperCase(), rs.getString(2));
             }

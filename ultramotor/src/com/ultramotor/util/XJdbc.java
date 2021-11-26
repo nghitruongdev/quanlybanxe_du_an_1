@@ -19,7 +19,6 @@ import javax.sql.rowset.RowSetProvider;
  */
 public class XJdbc {
 
-    private static Connection con;
     private static RowSetFactory factory;
     private static final String URL = "jdbc:sqlserver://localhost;databaseName=HONDA;username=sa;password=songlong";
 
@@ -31,8 +30,7 @@ public class XJdbc {
         }
     }
 
-    protected static PreparedStatement getStmt(String sql, Object... args) throws SQLException {
-        con = getCon();
+    protected static PreparedStatement getStmt(Connection con, String sql, Object... args) throws SQLException {
         PreparedStatement pstmt;
         if (sql.trim().startsWith("{")) {
             pstmt = con.prepareCall(sql);
@@ -45,15 +43,16 @@ public class XJdbc {
         return pstmt;
     }
 
-    public static ResultSet query(String sql, Object... args) {
-        ResultSet rs = null;
-        try {
-            PreparedStatement pstmt = getStmt(sql, args);
-            rs = pstmt.executeQuery();
-        } catch (SQLException ex) {
-            Logger.getLogger(XJdbc.class.getName()).log(Level.SEVERE, null, ex);
+    public static CachedRowSet query(String sql, Object... args) throws SQLException {
+        CachedRowSet cRs = factory.createCachedRowSet();
+        try (Connection con = getCon()) {
+            try (PreparedStatement pstmt = getStmt(con, sql, args)) {
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    cRs.populate(rs);
+                }
+            }
         }
-        return rs;
+        return cRs;
     }
 
     public static Object value(String sql, Object... args) {
@@ -73,48 +72,16 @@ public class XJdbc {
         return list;
     }
 
-    public static CachedRowSet getRowSet(String sql, Object... args) {
-        CachedRowSet crs = null;
-        try (ResultSet rs = query(sql, args)) {
-            crs = factory.createCachedRowSet();
-            crs.populate(rs);
-        } catch (SQLException ex) {
-            Logger.getLogger(XJdbc.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return crs;
-    }
-
-    public static int update(String sql, Object... args) {
-        int count = 0;
-        try (PreparedStatement pstmt = getStmt(sql, args)) {
-            count = pstmt.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            closeCon();
-        }
-        return count;
-    }
-
-    public static Connection getCon() {
-        try {
-            if (con == null || con.isClosed()) {
-                con = DriverManager.getConnection(URL);
+    public static int update(String sql, Object... args) throws SQLException {
+        try (Connection con = getCon()) {
+            try (PreparedStatement pstmt = getStmt(con, sql, args)) {
+                return pstmt.executeUpdate();
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         }
-        return con;
     }
 
-    public static void closeCon() {
-        try {
-            if (con != null) {
-                con.close();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+    public static Connection getCon() throws SQLException {
+        return DriverManager.getConnection(URL);
     }
 
     public static RowSetFactory getFactory() {

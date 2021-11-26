@@ -13,10 +13,11 @@ import javax.sql.rowset.CachedRowSet;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class NhanVienDAO extends UltraDAO<NhanVien, String> {
 
-//    final String tableName = "NHANVIEN";
     public NhanVienDAO() {
         TABLE_NAME = "NhanVien";
         SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_NV");
@@ -30,24 +31,36 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
     final String UPDATE_SQL = "UPDATE NhanVien SET HONV=?,TENNV=?,NGAYSINH=?,GIOITINH=?,DIACHI=?,SDT=?,EMAIL=?,LUONG=?,HINH=?,VAITRO=?,MATKHAU=?,GHICHU=? WHERE id_NV=?";
     final String DELETE_SQL = "DELETE FROM NhanVien WHERE id_NV=?";
     final String MERGE_SQL = "exec usp_updateNhanVien ?";
-    
+
     @Override
     public void insert(NhanVien e) {
-        XJdbcServer.update(INSERT_SQL,
-                e.getIdNV(), e.getHoNV(), e.getTenNV(), e.getNgaySinh(), e.getGioiTinh(), e.getDiaChi(),
-                e.getSdt(), e.getEmail(), e.getLuong(), e.getHinh(), e.getVaiTro(), e.getMatKhau(), e.getGhiChu());
+        try {
+            XJdbcServer.update(INSERT_SQL,
+                    e.getIdNV(), e.getHoNV(), e.getTenNV(), e.getNgaySinh(), e.getGioiTinh(), e.getDiaChi(),
+                    e.getSdt(), e.getEmail(), e.getLuong(), e.getHinh(), e.getVaiTro(), e.getMatKhau(), e.getGhiChu());
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void update(NhanVien e) {
-        XJdbcServer.update(UPDATE_SQL,
-                e.getHoNV(), e.getTenNV(), e.getNgaySinh(), e.getGioiTinh(), e.getDiaChi(),
-                e.getSdt(), e.getEmail(), e.getLuong(), e.getHinh(), e.getVaiTro(), e.getMatKhau(), e.getGhiChu(), e.getIdNV());
+        try {
+            XJdbcServer.update(UPDATE_SQL,
+                    e.getHoNV(), e.getTenNV(), e.getNgaySinh(), e.getGioiTinh(), e.getDiaChi(),
+                    e.getSdt(), e.getEmail(), e.getLuong(), e.getHinh(), e.getVaiTro(), e.getMatKhau(), e.getGhiChu(), e.getIdNV());
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void delete(String id) {
-        XJdbcServer.update(DELETE_SQL, id);
+        try {
+            XJdbcServer.update(DELETE_SQL, id);
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -93,21 +106,6 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
                 nv.setMatKhau(rs.getString(12));
                 nv.setGhiChu(rs.getString(13));
                 list.add(nv);
-//                NhanVien entity = new NhanVien();
-//                entity.setIdNV(rs.getString("id_NV"));
-//                entity.setHoNV(rs.getString("HONV"));
-//                entity.setTenNV(rs.getString("TENNV"));
-//                entity.setNgaySinh(rs.getDate("NGAYSINH"));
-//                entity.setGioiTinh(rs.getBoolean("GIOITINH"));
-//                entity.setDiaChi(rs.getString("DIACHI"));
-//                entity.setSdt(rs.getString("SDT"));
-//                entity.setEmail(rs.getString("EMAIL"));
-//                entity.setLuong(rs.getFloat("LUONG"));
-//                entity.setHinh(rs.getString("HINH"));
-//                entity.setVaiTro(rs.getString("VAITRO"));
-//                entity.setMatKhau(rs.getString("MATKHAU"));
-//                entity.setGhiChu(rs.getString("GHICHU"));
-//                list.add(entity);
             }
             return list;
         } catch (Exception e) {
@@ -116,9 +114,8 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
         }
     }
 
-    public CachedRowSet getRowSet() {
-//        return XJdbc.getRowSet("Select * from NhanVien");
-        return XJdbc.getRowSet(SELECT_ALL);
+    public CachedRowSet getRowSet() throws SQLException {
+        return XJdbc.query(SELECT_ALL);
     }
 
     public List<NhanVien> selectByKeyword(String keyWord) {
@@ -126,7 +123,7 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
         return this.selectBySQL(sql, "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%");
     }
 
-    public void mergeTable(SQLServerDataTable table) throws SQLException{
+    public void mergeTable(SQLServerDataTable table) throws SQLException {
         XJdbcServer.update(MERGE_SQL, new String[]{"NhanVienType"}, table);
     }
 }

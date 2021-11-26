@@ -2,16 +2,17 @@ package com.ultramotor.util;
 
 import com.microsoft.sqlserver.jdbc.SQLServerCallableStatement;
 import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class XJdbcServer extends XJdbc {
 
-    private static PreparedStatement getStmt(String sql, String[] types, Object... args) throws SQLException {
+    private static PreparedStatement getStmt(Connection con, String sql, String[] types, Object... args) throws SQLException {
+        SQLServerCallableStatement stmt = (SQLServerCallableStatement) con.prepareCall(sql);
         if (types != null) {
             if (sql.startsWith("exec")) {
-                SQLServerCallableStatement stmt = (SQLServerCallableStatement) getCon().prepareCall(sql);
                 for (int i = 0; i < types.length; i++) {
                     if (types[i] != null) {
                         if (args[i] instanceof SQLServerDataTable) {
@@ -26,10 +27,14 @@ public class XJdbcServer extends XJdbc {
                 return stmt;
             }
         }
-        return XJdbc.getStmt(sql, args);
+        return XJdbc.getStmt(con, sql, args);
     }
 
-    public static void update(String sql, String[] types, Object... args) throws SQLException {
-        getStmt(sql, types, args).executeUpdate();
+    public static int update(String sql, String[] types, Object... args) throws SQLException {
+        try (Connection con = getCon()) {
+            try (PreparedStatement stmt = getStmt(con, sql, types, args)) {
+                return stmt.executeUpdate();
+            }
+        }
     }
 }

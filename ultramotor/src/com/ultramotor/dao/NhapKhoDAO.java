@@ -19,16 +19,19 @@ public class NhapKhoDAO extends UltraDAO<PhieuNhapKho, String> {
         SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_PN");
         SELECT_ALL = String.format("select * from %s", TABLE_NAME);
     }
-    final String INSERT_SQL = String.format("INSERT INTO %s (%s, %s ,%s ) VALUES (?, ?, ?)",TABLE_NAME, "id_PN", "ngayNhap", "id_NV");
+    final String INSERT_SQL = String.format("INSERT INTO %s (%s, %s ,%s ) VALUES (?, ?, ?)", TABLE_NAME, "id_PN", "ngayNhap", "id_NV");
     final String DELETE_SQL = String.format("DELETE FROM %s WHERE %s = ?", TABLE_NAME, "id_PN");
-    final String INSERT_CHITIET = "exec usp_insert_NhapKho (?, ?)";
-    
-    
+    final String INSERT_CHITIET = "exec usp_insert_NhapKho (?, ?, ?, ?)";
+
     static ChiTietNhapKhoDAO dao = new ChiTietNhapKhoDAO();
 
     @Override
     public void insert(PhieuNhapKho e) {
-        XJdbc.update(INSERT_SQL, e.getIdPN(), e.getNgayNhap(), e.getIdNV());
+        try {
+            XJdbc.update(INSERT_SQL, e.getIdPN(), e.getNgayNhap(), e.getIdNV());
+        } catch (SQLException ex) {
+            Logger.getLogger(NhapKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -38,7 +41,11 @@ public class NhapKhoDAO extends UltraDAO<PhieuNhapKho, String> {
 
     @Override
     public void delete(String id) {
-        XJdbc.update(DELETE_SQL, id);
+        try {
+            XJdbc.update(DELETE_SQL, id);
+        } catch (SQLException ex) {
+            Logger.getLogger(NhapKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -63,7 +70,10 @@ public class NhapKhoDAO extends UltraDAO<PhieuNhapKho, String> {
         insert(pnk);
         dao.insert(chiTiet);
     }
-    
+//    public void insertWithChiTiet(PhieuNhapKho pnk, SQLServerDataTable chiTiet) throws SQLException {
+//        XJdbcServer.update(INSERT_CHITIET, new String[]{"ChiTietNhapKhoType", null, null, null}, chiTiet, pnk.getIdPN(), pnk.getNgayNhap(), pnk.getIdNV());
+//    }
+
 }
 
 class ChiTietNhapKhoDAO extends UltraDAO<ChiTietNhapKho, Integer> {
