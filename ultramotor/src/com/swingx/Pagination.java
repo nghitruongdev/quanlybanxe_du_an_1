@@ -34,6 +34,7 @@ public class Pagination extends JComponent {
         colorMap.put("Xanh", Color.blue);
         colorMap.put("Vàng", Color.yellow);
         colorMap.put("Đỏ", Color.red);
+        colorMap.put("Xám", Color.GRAY);
     }
 
     public void setCurrentIndex(int index) {
