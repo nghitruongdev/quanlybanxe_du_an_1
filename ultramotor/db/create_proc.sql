@@ -46,14 +46,108 @@ END
 GO
 
 -- Tạo proc NhapKho -------------------------------------------------------------------------------
-drop proc if exists usp_insert_ChiTietNhapKho
+drop proc if exists usp_insert_NhapKho
 go
 
-create proc usp_insert_ChiTietNhapKho
-	(@source ChiTietNhapKhoType READONLY)
+create proc usp_insert_NhapKho
+	(@phieunhap PhieuNhapKhoType READONLY, @chitiet ChiTietNhapKhoType READONLY)
 AS 
 BEGIN
-	insert into ChiTietNhapKho
-	select * from @source
+	--thêm dữ liệu bảng phiếu nhập kho
+	INSERT INTO PhieuNhapKho
+		SELECT * FROM @phieunhap;
+	
+	SET XACT_ABORT ON;
+	BEGIN TRY
+		BEGIN TRANSACTION;
+			--thêm dữ liệu bảng chi tiết nhập kho
+			INSERT INTO ChiTietNhapKho
+				SELECT * FROM @chitiet;
+
+		COMMIT TRANSACTION;
+	END TRY
+	BEGIN CATCH
+		SELECT   
+			 ERROR_NUMBER() AS ErrorNumber  
+			,ERROR_SEVERITY() AS ErrorSeverity  
+			,ERROR_STATE() AS ErrorState  
+			,ERROR_LINE () AS ErrorLine  
+			,ERROR_PROCEDURE() AS ErrorProcedure  
+			,ERROR_MESSAGE() AS ErrorMessage;  
+
+		IF (XACT_STATE()) = -1
+		BEGIN
+			PRINT  
+				N'The transaction is in an uncommittable state.' +  
+				'Rolling back transaction.'  
+			ROLLBACK TRANSACTION;
+
+			DELETE FROM PhieuNhapKho WHERE id_PN IN (SELECT id_PN FROM @phieunhap);
+
+			RAISERROR (N'Cập nhật dữ liệu trong Database không thành công.', -- Message text.  
+           10, -- Severity,  
+           1)-- State,
+           --N'number', -- First argument.  
+           --5); -- Second argument.  
+		-- The message text returned is: This is message number 5.
+		END;
+
+		IF (XACT_STATE()) = 1  
+		BEGIN  
+			PRINT  
+				N'The transaction is committable.' +  
+				'Committing transaction.'  
+			COMMIT TRANSACTION;     
+		END;
+
+	END CATCH
+END
+GO
+
+-- Tạo proc NhapKho -------------------------------------------------------------------------------
+drop proc if exists usp_insert_NhapKho
+go
+
+create proc usp_insert_NhapKho
+	(@chitiet ChiTietNhapKhoType READONLY)
+AS 
+BEGIN
+	
+	SET XACT_ABORT ON;
+	BEGIN TRY
+		BEGIN TRANSACTION;
+			--thêm dữ liệu bảng chi tiết nhập kho
+			INSERT INTO ChiTietNhapKho
+				SELECT * FROM @chitiet;
+
+		COMMIT TRANSACTION;
+	END TRY
+	BEGIN CATCH
+		IF (XACT_STATE()) = -1
+		BEGIN
+			PRINT  
+				N'The transaction is in an uncommittable state.' +  
+				'Rolling back transaction.'  
+			ROLLBACK TRANSACTION;
+
+			DELETE FROM PhieuNhapKho WHERE id_PN IN (SELECT id_PN FROM @chitiet);
+
+			RAISERROR (N'Cập nhật dữ liệu trong Database không thành công.', -- Message text.  
+           10, -- Severity,  
+           1)-- State,
+           --N'number', -- First argument.  
+           --5); -- Second argument.  
+		-- The message text returned is: This is message number 5.
+		END;
+
+		IF (XACT_STATE()) = 1  
+		BEGIN  
+			PRINT  
+				N'The transaction is committable.' +  
+				'Committing transaction.'  
+			COMMIT TRANSACTION;     
+		END;
+
+	END CATCH
 END
 GO

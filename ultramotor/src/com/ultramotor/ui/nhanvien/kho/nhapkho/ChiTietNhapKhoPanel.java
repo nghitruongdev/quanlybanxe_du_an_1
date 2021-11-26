@@ -6,6 +6,8 @@ import com.ultramotor.dao.SanPhamDAO;
 import com.ultramotor.entity.ChiTietNhapKho;
 import com.ultramotor.entity.PhieuNhapKho;
 import com.ultramotor.util.Auth;
+import com.ultramotor.util.MsgBox;
+import com.ultramotor.util.XDate;
 import com.ultramotor.util.XJdbc;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,15 +19,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
 import javax.swing.JSpinner.NumberEditor;
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
 
     private PhieuNhapKho pnk;
     private ModelEvent event;
-    private SanPhamDAO daoSP;
     private DefaultTableModel model;
     private KeyAdapter numberKeyAdapter;
     private boolean viewOnly = false;
@@ -130,6 +129,27 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
                 updateStatus();
             }
         });
+
+        //add FocusEvent check Mã Nhập Kho có tồn tại trong Database
+        txtMaPhieuNhap.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (NhapKhoPanel.nhapKhoList.contains(new PhieuNhapKho(txtMaPhieuNhap.getText()))) {
+                    MsgBox.error("Mã phiếu nhập kho đã tồn tại");
+                    txtMaPhieuNhap.setText("");
+                    txtMaPhieuNhap.requestFocus();
+                }
+            }
+
+        });
+
+        txtMaPhieuNhap.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+
+            }
+
+        });
     }
 
     private String timTenSP(String sku) {
@@ -138,7 +158,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
     }
 
     private void initTableChiTiet() {
-        String[] columns = {"STT", "Mã phiếu", "Mã Sản Phẩm", "Số Lượng", "Giá Nhập", "Actions"};
+        String[] columns = {"STT", "Mã phiếu", "Mã Sản Phẩm", "Tên Sản Phẩm", "Số Lượng", "Giá Nhập", "Actions"};
         model = new DefaultTableModel(columns, 0);
         tblChiTiet.setModel(model);
         tblChiTiet.setShowVerticalLines(true);
@@ -172,7 +192,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         tblChiTiet.createDefaultColumnsFromModel();
         resetForm();
 
-        txtMaPhieuNhap.setText(String.format("PNK %02d", NhapKhoPanel.nhapKhoList.size() + 1));
+        txtMaPhieuNhap.setText(getMaPhieuNhap());
         txtMaPhieuNhap.setEditable(true);
         txtMaPhieuNhap.requestFocus();
         pnk = null;
@@ -230,6 +250,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
             ct.getIdCTNK(),
             ct.getIdPN(),
             ct.getSKU(),
+            timTenSP(ct.getSKU()),
             ct.getSoLuong(),
             ct.getGiaNhap(),
             new ModelAction(ct, event)
@@ -247,6 +268,10 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
 
     public void setSaveListener(ActionListener ls) {
         btnSave.addActionListener(ls);
+    }
+
+    private String getMaPhieuNhap() {
+        return String.format("PNK%s", XDate.toString(new Date(), "yyyyMMddhhmmss"));
     }
 
     private void sleepThread(int milisec) {
@@ -286,6 +311,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         lbtGiaNhap.setText("Giá nhập");
 
         txtMaPhieuNhap.setEditable(false);
+        txtMaPhieuNhap.setBackground(new java.awt.Color(255, 255, 255));
 
         lblSoluong.setText("Số lượng");
 

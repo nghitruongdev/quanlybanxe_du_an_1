@@ -13,30 +13,31 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class NhapKhoDAO extends UltraDAO<PhieuNhapKho, String> {
-    
+
     {
         TABLE_NAME = "PhieuNhapKho";
         SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_PN");
         SELECT_ALL = String.format("select * from %s", TABLE_NAME);
     }
+    final String INSERT_CHITIET = "exec usp_insert_NhapKho (?, ?)";
     final String INSERT_SQL = "INSERT INTO PhieuNhapKho (id_PN, ngayNhap, id_NV) VALUES (?, ?, ?)";
     static ChiTietNhapKhoDAO dao = new ChiTietNhapKhoDAO();
-    
+
     @Override
     public void insert(PhieuNhapKho e) {
-        XJdbc.update(INSERT_SQL, e.getIdPN(), e.getNgayNhap(), e.getIdNV());
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public void update(PhieuNhapKho e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public void delete(String id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public List<PhieuNhapKho> selectBySQL(String sql, Object... args) {
         List<PhieuNhapKho> list = new ArrayList<>();
@@ -54,38 +55,36 @@ public class NhapKhoDAO extends UltraDAO<PhieuNhapKho, String> {
         }
         return list;
     }
-    
-    public void insertWithChiTiet(PhieuNhapKho pnk, SQLServerDataTable table) throws SQLException{
-        insert(pnk);
-        dao.insert(table);
+
+    public void insertWithChiTiet(SQLServerDataTable phieuNhapKho, SQLServerDataTable chiTiet) throws SQLException {
+        XJdbcServer.update(INSERT_CHITIET, new String[]{"PhieuNhapKhoType", "ChiTietNhapKhoType"}, phieuNhapKho, chiTiet);
     }
 }
 
 class ChiTietNhapKhoDAO extends UltraDAO<ChiTietNhapKho, Integer> {
-    
+
     {
         TABLE_NAME = "ChiTietNhapKho";
         SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_CTNK");
         SELECT_ALL = String.format("select * from %s", TABLE_NAME);
     }
     final String SELECT_BY_PHIEU_NHAP = String.format("select * from %s where %s = ?", TABLE_NAME, "id_PN");
-    final String INSERT_MULTIPLE_SQL = "exec usp_updateNhanVien ?";
-    
+
     @Override
     public void insert(ChiTietNhapKho e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public void update(ChiTietNhapKho e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public void delete(Integer id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public List<ChiTietNhapKho> selectBySQL(String sql, Object... args) {
         List<ChiTietNhapKho> list = new ArrayList<>();
@@ -103,12 +102,9 @@ class ChiTietNhapKhoDAO extends UltraDAO<ChiTietNhapKho, Integer> {
         }
         return list;
     }
-    
+
     public List<ChiTietNhapKho> selectByPhieuNhap(String idPN) {
         return selectBySQL(SELECT_BY_PHIEU_NHAP, idPN);
     }
-    
-    public void insert(SQLServerDataTable table) throws SQLException {
-        XJdbcServer.update(INSERT_MULTIPLE_SQL, new String[]{"ChiTietNhapKhoType"}, table);
-    }
+
 }

@@ -6,6 +6,7 @@ import com.ultramotor.component.table.ModelView;
 import com.ultramotor.dao.NhapKhoDAO;
 import com.ultramotor.entity.ChiTietNhapKho;
 import com.ultramotor.entity.PhieuNhapKho;
+import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDate;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,17 +18,17 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class NhapKhoPanel extends javax.swing.JPanel {
-
+    
     private static NhapKhoDAO dao;
     private DefaultTableModel modelNhapKho;
     private ActionListener viewLs;
     static List<PhieuNhapKho> nhapKhoList = new ArrayList<>();
-
+    
     public NhapKhoPanel() {
         initComponents();
         init();
     }
-
+    
     private void init() {
         dao = new NhapKhoDAO();
         nhapKhoList = dao.selectAll();
@@ -41,23 +42,21 @@ public class NhapKhoPanel extends javax.swing.JPanel {
         fillTablePhieuNhap();
         addListeners();
     }
-
+    
     private void initTablePhieuNhap() {
         String[] columns = {"STT", "Mã Phiếu", "Ngày Nhập", "Nhân Viên Nhập", "Tổng tiền", "Actions"};
         modelNhapKho = new DefaultTableModel(columns, 5);
         tblPhieuNhap.setModel(modelNhapKho);
         tblPhieuNhap.fixTable(scrollPhieuNhap);
     }
-
+    
     private void fillTablePhieuNhap() {
-        DefaultTableModel model = (DefaultTableModel) tblPhieuNhap.getModel();
-        model.setRowCount(0);
-        List<PhieuNhapKho> list = dao.selectAll();
-        for (PhieuNhapKho pnk : list) {
-            model.addRow(getInfo(pnk));
+        modelNhapKho.setRowCount(0);
+        for (PhieuNhapKho pnk : nhapKhoList) {
+            modelNhapKho.addRow(getInfo(pnk));
         }
     }
-
+    
     Object[] getInfo(PhieuNhapKho pnk) {
         return new Object[]{
             tblPhieuNhap.getRowCount() + 1,
@@ -68,7 +67,7 @@ public class NhapKhoPanel extends javax.swing.JPanel {
             new ModelView(pnk, viewLs)
         };
     }
-
+    
     Object[] getInfo(ChiTietNhapKho ct) {
         return new Object[]{
             ct.getIdCTNK(),
@@ -78,40 +77,45 @@ public class NhapKhoPanel extends javax.swing.JPanel {
             ct.getIdPN()
         };
     }
-
+    
     private void insert(PhieuNhapKho pnk) {
         try {
-            modelNhapKho.addRow(getInfo(pnk));
-            SQLServerDataTable table = ChiTietNhapKho.getDataServerTable();
+            SQLServerDataTable nhapKhoTable = PhieuNhapKho.getDataServerTable();
+            nhapKhoTable.addRow(pnk.getIdPN(), pnk.getNgayNhap(), pnk.getIdNV());
+            SQLServerDataTable chiTietTable = ChiTietNhapKho.getDataServerTable();
             for (ChiTietNhapKho ct : pnk.getChiTietNhapKhoList()) {
-                table.addRow(getInfo(ct));
+                chiTietTable.addRow(getInfo(ct));
             }
-            dao.insertWithChiTiet(pnk, table);
+            //tiến hành thêm vào cơ sở dữ liệu
+            dao.insertWithChiTiet(nhapKhoTable, chiTietTable);
             nhapKhoList.add(pnk);
+            modelNhapKho.addRow(getInfo(pnk));
+            pnlChiTiet.reset();
         } catch (SQLException ex) {
+            MsgBox.error(ex.getMessage());
             Logger.getLogger(NhapKhoPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private void addListeners() {
         pnlChiTiet.setSaveListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 PhieuNhapKho pnk = pnlChiTiet.getPhieuNhapKho();
                 insert(pnk);
-                pnlChiTiet.reset();
+                
             }
         });
     }
-
+    
     private void sleepThread(int milisec) {
         try {
             Thread.sleep(milisec);
         } catch (InterruptedException e) {
-
+            
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

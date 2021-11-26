@@ -5,9 +5,13 @@
  */
 package com.ultramotor.entity;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class PhieuNhapKho extends Entity{
 
@@ -30,6 +34,13 @@ public class PhieuNhapKho extends Entity{
         this.chiTietNhapKhoList = new ArrayList<>();
     }
 
+     public static SQLServerDataTable getDataServerTable() throws SQLServerException {
+        SQLServerDataTable dataTable = new SQLServerDataTable();
+        dataTable.addColumnMetadata("id_PN", Types.NVARCHAR);
+        dataTable.addColumnMetadata("ngayNhap", Types.DATE);
+        dataTable.addColumnMetadata("id_NV", Types.NVARCHAR);
+        return dataTable;
+    }
     public String getIdPN() {
         return idPN;
     }
@@ -64,23 +75,30 @@ public class PhieuNhapKho extends Entity{
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idPN != null ? idPN.hashCode() : 0);
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.idPN);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PhieuNhapKho)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        PhieuNhapKho other = (PhieuNhapKho) object;
-        if ((this.idPN == null && other.idPN != null) || (this.idPN != null && !this.idPN.equals(other.idPN))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PhieuNhapKho other = (PhieuNhapKho) obj;
+        if (!Objects.equals(this.idPN, other.idPN)) {
             return false;
         }
         return true;
     }
+
+    
 
     @Override
     public String toString() {
