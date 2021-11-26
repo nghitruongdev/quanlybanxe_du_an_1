@@ -53,12 +53,14 @@ create proc usp_insert_NhapKho
 	(@phieunhap PhieuNhapKhoType READONLY, @chitiet ChiTietNhapKhoType READONLY)
 AS 
 BEGIN
-	--thêm dữ liệu bảng phiếu nhập kho
 	INSERT INTO PhieuNhapKho
-		SELECT * FROM @phieunhap;
+		SELECT TOP(1) * FROM @phieunhap;
 	
 	SET XACT_ABORT ON;
 	BEGIN TRY
+		--thêm dữ liệu bảng phiếu nhập kho
+	
+
 		BEGIN TRANSACTION;
 			--thêm dữ liệu bảng chi tiết nhập kho
 			INSERT INTO ChiTietNhapKho
@@ -82,7 +84,7 @@ BEGIN
 				'Rolling back transaction.'  
 			ROLLBACK TRANSACTION;
 
-			DELETE FROM PhieuNhapKho WHERE id_PN IN (SELECT id_PN FROM @phieunhap);
+			
 
 			RAISERROR (N'Cập nhật dữ liệu trong Database không thành công.', -- Message text.  
            10, -- Severity,  
@@ -92,13 +94,7 @@ BEGIN
 		-- The message text returned is: This is message number 5.
 		END;
 
-		IF (XACT_STATE()) = 1  
-		BEGIN  
-			PRINT  
-				N'The transaction is committable.' +  
-				'Committing transaction.'  
-			COMMIT TRANSACTION;     
-		END;
+		DELETE FROM PhieuNhapKho WHERE id_PN IN (SELECT id_PN FROM @chitiet);
 
 	END CATCH
 END
@@ -149,5 +145,14 @@ BEGIN
 		END;
 
 	END CATCH
+END
+GO
+
+create proc usp_insert_NhapKho
+	(@chitiet ChiTietNhapKhoType READONLY)
+AS
+BEGIN
+	INSERT INTO ChiTietNhapKho
+		SELECT * FROM @chitiet
 END
 GO

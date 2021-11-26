@@ -33,14 +33,14 @@ public class PhieuNhapKho extends Entity{
         this.idNV = idNV;
         this.chiTietNhapKhoList = new ArrayList<>();
     }
-
-     public static SQLServerDataTable getDataServerTable() throws SQLServerException {
-        SQLServerDataTable dataTable = new SQLServerDataTable();
-        dataTable.addColumnMetadata("id_PN", Types.NVARCHAR);
-        dataTable.addColumnMetadata("ngayNhap", Types.DATE);
-        dataTable.addColumnMetadata("id_NV", Types.NVARCHAR);
-        return dataTable;
-    }
+//
+//     public static SQLServerDataTable getDataServerTable() throws SQLServerException {
+//        SQLServerDataTable dataTable = new SQLServerDataTable();
+//        dataTable.addColumnMetadata("id_PN", Types.NVARCHAR);
+//        dataTable.addColumnMetadata("ngayNhap", Types.DATE);
+//        dataTable.addColumnMetadata("id_NV", Types.NVARCHAR);
+//        return dataTable;
+//    }
     public String getIdPN() {
         return idPN;
     }

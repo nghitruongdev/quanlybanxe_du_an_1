@@ -1,7 +1,6 @@
 package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.ultramotor.component.table.ModelView;
 import com.ultramotor.dao.NhapKhoDAO;
 import com.ultramotor.entity.ChiTietNhapKho;
@@ -13,22 +12,20 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class NhapKhoPanel extends javax.swing.JPanel {
-    
+
     private static NhapKhoDAO dao;
     private DefaultTableModel modelNhapKho;
     private ActionListener viewLs;
     static List<PhieuNhapKho> nhapKhoList = new ArrayList<>();
-    
+
     public NhapKhoPanel() {
         initComponents();
         init();
     }
-    
+
     private void init() {
         dao = new NhapKhoDAO();
         nhapKhoList = dao.selectAll();
@@ -42,21 +39,21 @@ public class NhapKhoPanel extends javax.swing.JPanel {
         fillTablePhieuNhap();
         addListeners();
     }
-    
+
     private void initTablePhieuNhap() {
         String[] columns = {"STT", "Mã Phiếu", "Ngày Nhập", "Nhân Viên Nhập", "Tổng tiền", "Actions"};
         modelNhapKho = new DefaultTableModel(columns, 5);
         tblPhieuNhap.setModel(modelNhapKho);
         tblPhieuNhap.fixTable(scrollPhieuNhap);
     }
-    
+
     private void fillTablePhieuNhap() {
         modelNhapKho.setRowCount(0);
         for (PhieuNhapKho pnk : nhapKhoList) {
             modelNhapKho.addRow(getInfo(pnk));
         }
     }
-    
+
     Object[] getInfo(PhieuNhapKho pnk) {
         return new Object[]{
             tblPhieuNhap.getRowCount() + 1,
@@ -67,7 +64,7 @@ public class NhapKhoPanel extends javax.swing.JPanel {
             new ModelView(pnk, viewLs)
         };
     }
-    
+
     Object[] getInfo(ChiTietNhapKho ct) {
         return new Object[]{
             ct.getIdCTNK(),
@@ -77,45 +74,49 @@ public class NhapKhoPanel extends javax.swing.JPanel {
             ct.getIdPN()
         };
     }
-    
+
     private void insert(PhieuNhapKho pnk) {
+        if (pnk == null) {
+            return;
+        }
         try {
-            SQLServerDataTable nhapKhoTable = PhieuNhapKho.getDataServerTable();
-            nhapKhoTable.addRow(pnk.getIdPN(), pnk.getNgayNhap(), pnk.getIdNV());
             SQLServerDataTable chiTietTable = ChiTietNhapKho.getDataServerTable();
             for (ChiTietNhapKho ct : pnk.getChiTietNhapKhoList()) {
                 chiTietTable.addRow(getInfo(ct));
             }
+
             //tiến hành thêm vào cơ sở dữ liệu
-            dao.insertWithChiTiet(nhapKhoTable, chiTietTable);
+            dao.insertWithChiTiet(pnk, chiTietTable);
             nhapKhoList.add(pnk);
             modelNhapKho.addRow(getInfo(pnk));
             pnlChiTiet.reset();
+
         } catch (SQLException ex) {
+            dao.delete(pnk.getIdPN());
             MsgBox.error(ex.getMessage());
-            Logger.getLogger(NhapKhoPanel.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(NhapKhoPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void addListeners() {
         pnlChiTiet.setSaveListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 PhieuNhapKho pnk = pnlChiTiet.getPhieuNhapKho();
                 insert(pnk);
-                
+
             }
         });
     }
-    
+
     private void sleepThread(int milisec) {
         try {
             Thread.sleep(milisec);
         } catch (InterruptedException e) {
-            
+
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

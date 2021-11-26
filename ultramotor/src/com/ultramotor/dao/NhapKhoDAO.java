@@ -19,13 +19,16 @@ public class NhapKhoDAO extends UltraDAO<PhieuNhapKho, String> {
         SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_PN");
         SELECT_ALL = String.format("select * from %s", TABLE_NAME);
     }
+    final String INSERT_SQL = String.format("INSERT INTO %s (%s, %s ,%s ) VALUES (?, ?, ?)",TABLE_NAME, "id_PN", "ngayNhap", "id_NV");
+    final String DELETE_SQL = String.format("DELETE FROM %s WHERE %s = ?", TABLE_NAME, "id_PN");
     final String INSERT_CHITIET = "exec usp_insert_NhapKho (?, ?)";
-    final String INSERT_SQL = "INSERT INTO PhieuNhapKho (id_PN, ngayNhap, id_NV) VALUES (?, ?, ?)";
+    
+    
     static ChiTietNhapKhoDAO dao = new ChiTietNhapKhoDAO();
 
     @Override
     public void insert(PhieuNhapKho e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        XJdbc.update(INSERT_SQL, e.getIdPN(), e.getNgayNhap(), e.getIdNV());
     }
 
     @Override
@@ -35,7 +38,7 @@ public class NhapKhoDAO extends UltraDAO<PhieuNhapKho, String> {
 
     @Override
     public void delete(String id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        XJdbc.update(DELETE_SQL, id);
     }
 
     @Override
@@ -56,9 +59,11 @@ public class NhapKhoDAO extends UltraDAO<PhieuNhapKho, String> {
         return list;
     }
 
-    public void insertWithChiTiet(SQLServerDataTable phieuNhapKho, SQLServerDataTable chiTiet) throws SQLException {
-        XJdbcServer.update(INSERT_CHITIET, new String[]{"PhieuNhapKhoType", "ChiTietNhapKhoType"}, phieuNhapKho, chiTiet);
+    public void insertWithChiTiet(PhieuNhapKho pnk, SQLServerDataTable chiTiet) throws SQLException {
+        insert(pnk);
+        dao.insert(chiTiet);
     }
+    
 }
 
 class ChiTietNhapKhoDAO extends UltraDAO<ChiTietNhapKho, Integer> {
@@ -69,6 +74,7 @@ class ChiTietNhapKhoDAO extends UltraDAO<ChiTietNhapKho, Integer> {
         SELECT_ALL = String.format("select * from %s", TABLE_NAME);
     }
     final String SELECT_BY_PHIEU_NHAP = String.format("select * from %s where %s = ?", TABLE_NAME, "id_PN");
+    final String INSERT_MULTIPLE_CHITIET = "exec usp_insert_NhapKho ?";
 
     @Override
     public void insert(ChiTietNhapKho e) {
@@ -107,4 +113,7 @@ class ChiTietNhapKhoDAO extends UltraDAO<ChiTietNhapKho, Integer> {
         return selectBySQL(SELECT_BY_PHIEU_NHAP, idPN);
     }
 
+    public void insert(SQLServerDataTable table) throws SQLException {
+        XJdbcServer.update(INSERT_MULTIPLE_CHITIET, new String[]{"ChiTietNhapKhoType"}, table);
+    }
 }

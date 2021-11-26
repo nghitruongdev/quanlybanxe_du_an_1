@@ -2,7 +2,6 @@ package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
 import com.ultramotor.component.table.ModelAction;
 import com.ultramotor.component.table.ModelEvent;
-import com.ultramotor.dao.SanPhamDAO;
 import com.ultramotor.entity.ChiTietNhapKho;
 import com.ultramotor.entity.PhieuNhapKho;
 import com.ultramotor.util.Auth;
@@ -17,12 +16,21 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sql.rowset.CachedRowSet;
 import javax.swing.JSpinner.NumberEditor;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
 
+    private Map<String, String> spMap;
     private PhieuNhapKho pnk;
     private ModelEvent event;
     private DefaultTableModel model;
@@ -35,6 +43,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
     }
 
     private void init() {
+        initMap();
         initListeners();
         initTableChiTiet();
         reset();
@@ -79,7 +88,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
                 new Thread(() -> {
                     sleepThread(300);
                     tblChiTiet.getCellEditor().stopCellEditing();
-                    model.removeRow(tblChiTiet.getSelectedRow());
+                    removeRow();
                     setForm(e);
                     txtMaSKU.requestFocus();
                     viewOnly = false;
@@ -92,7 +101,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
                 new Thread(() -> {
                     sleepThread(300);
                     tblChiTiet.getCellEditor().stopCellEditing();
-                    remove();
+                    removeRow();
                 }).start();
             }
         };
@@ -153,8 +162,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
     }
 
     private String timTenSP(String sku) {
-        Object o = XJdbc.value("SELECT tenSP FROM SANPHAM WHERE SKU = ?", sku);
-        return o == null ? "" : String.valueOf(o);
+        return spMap.getOrDefault(sku.toUpperCase().trim(), "");
     }
 
     private void initTableChiTiet() {
@@ -232,7 +240,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
 
         //Auth.user still null
         if (pnk == null) {
-            pnk = new PhieuNhapKho(idPhieu, new Date(), Auth.user == null ? "" : Auth.user.getIdNV());
+            pnk = new PhieuNhapKho(idPhieu, new Date(), Auth.user == null ? "NV01" : Auth.user.getIdNV());
         }
         pnk.getChiTietNhapKhoList().add(ct);
 
@@ -240,8 +248,9 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         resetForm();
     }
 
-    private void remove() {
+    private void removeRow() {
         int row = tblChiTiet.getSelectedRow();
+        pnk.getChiTietNhapKhoList().remove(row);
         model.removeRow(row);
     }
 
@@ -279,6 +288,20 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
             Thread.sleep(milisec);
         } catch (InterruptedException e) {
 
+        }
+    }
+
+    private void initMap() {
+        CachedRowSet rs;
+        spMap = new HashMap<>();
+        try {
+            rs = XJdbc.getRowSet("SELECT SKU, TenSP FROM SanPham");
+            while (rs.next()) {
+                spMap.put(rs.getString(1).toUpperCase(), rs.getString(2));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ChiTietNhapKhoPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
