@@ -1,9 +1,12 @@
 package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
+import com.swingx.CloseButton;
 import com.ultramotor.util.BarcodeHelper;
 import com.ultramotor.util.XFile;
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -18,7 +21,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import net.miginfocom.swing.MigLayout;
 
 public class Item extends javax.swing.JPanel {
 
@@ -32,17 +38,27 @@ public class Item extends javax.swing.JPanel {
         initComponents();
         file = XFile.getTempFile("bc", ".png");
         btnDelete.addActionListener(deleteListener);
-        txtMaSKU.addFocusListener(new FocusAdapter() {
+        txtTenSP.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 createBarcode();
             }
+        });
 
+        btnTim.addActionListener((ActionEvent e) -> {
+            openSearchDialog();
         });
     }
 
+    private void openSearchDialog() {
+        TimSPPanel panel = new TimSPPanel();
+        new Thread(() -> {
+            getDialog(panel).setVisible(true);
+        }).start();
+    }
+
     public void createBarcode() {
-        String text = txtMaSKU.getText();
+        String text = txtTenSP.getText();
         BarcodeHelper.create39Barcode(file, text);
         try {
             lblBarcode.setIcon(new ImageIcon(ImageIO.read(file).getScaledInstance(lblBarcode.getWidth(), lblBarcode.getHeight(), Image.SCALE_SMOOTH)));
@@ -68,9 +84,42 @@ public class Item extends javax.swing.JPanel {
         btnDelete.addActionListener(deleteListener);
     }
 
-    public void setSelected(boolean isSelected){
+    public void setSelected(boolean isSelected) {
         chk.setSelected(isSelected);
     }
+
+    private JDialog getDialog(JPanel panel) {
+        JDialog dialog = new JDialog((Frame) this.getTopLevelAncestor(), true);
+        dialog.setUndecorated(true);
+        dialog.setBackground(new Color(255, 255, 255, 0));
+        JPanel con = new JPanel() {
+            @Override
+            public void paint(Graphics grphcs) {
+                Graphics2D g2 = (Graphics2D) grphcs;
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 5, 5);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                super.paint(grphcs);
+            }
+        };
+
+        con.setOpaque(false);
+        con.setBackground(new Color(250, 250, 250));
+        con.setLayout(new MigLayout("inset 5 20 20 5", "[center]", "[20!][fill, center, grow]"));
+        con.add(new CloseButton(), "al right, wrap");
+        con.add(panel, "pushy, center, gapright 15");
+//        dialog.setBounds(this.getWidth() / 2, this.getHeight(), this.getWidth() / 4, 0);
+
+        dialog.setSize(this.getWidth() / 2, this.getHeight());
+        dialog.getContentPane().add(con);
+        dialog.pack();
+
+        dialog.setLocation(this.getWidth() / 4, (this.getHeight() - dialog.getHeight()) / 2);
+        dialog.setLocationRelativeTo(this.getParent());
+        return dialog;
+    }
+
     @Override
     protected void paintComponent(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
@@ -89,9 +138,14 @@ public class Item extends javax.swing.JPanel {
 
         btnDelete = new com.swingx.Button();
         lblBarcode = new javax.swing.JLabel();
-        txtMaSKU = new javax.swing.JTextField();
-        jSpinner1 = new javax.swing.JSpinner();
+        txtTenSP = new javax.swing.JTextField();
+        spnSoLuong = new javax.swing.JSpinner();
         chk = new javax.swing.JCheckBox();
+        lblTenSP = new javax.swing.JLabel();
+        txtMaSKU = new javax.swing.JTextField();
+        lblMaSKu = new javax.swing.JLabel();
+        lblSoLuong = new javax.swing.JLabel();
+        btnTim = new com.swingx.Button();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
@@ -102,9 +156,21 @@ public class Item extends javax.swing.JPanel {
         lblBarcode.setBackground(new java.awt.Color(204, 204, 204));
         lblBarcode.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
-        txtMaSKU.setText("jTextField1");
-
         chk.setOpaque(false);
+
+        lblTenSP.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        lblTenSP.setText("Tên Sản Phẩm");
+
+        lblMaSKu.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        lblMaSKu.setText("Mã SKU");
+
+        lblSoLuong.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        lblSoLuong.setText("Số Lượng");
+
+        btnTim.setBackground(new java.awt.Color(255, 102, 102));
+        btnTim.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        btnTim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/search_in_list_25px.png"))); // NOI18N
+        btnTim.setTransparent(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -114,44 +180,69 @@ public class Item extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(chk, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtMaSKU, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTenSP))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMaSKu)
+                    .addComponent(txtMaSKU, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSoLuong)
+                    .addComponent(spnSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(lblBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMaSKU, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chk, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 11, Short.MAX_VALUE)
-                        .addComponent(lblBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 11, Short.MAX_VALUE)
+                .addComponent(lblBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTenSP)
+                            .addComponent(lblMaSKu)
+                            .addComponent(lblSoLuong))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(chk, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtTenSP, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                            .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(1, 1, 1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(spnSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtMaSKU, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnDelete;
+    private com.swingx.Button btnTim;
     private javax.swing.JCheckBox chk;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel lblBarcode;
+    private javax.swing.JLabel lblMaSKu;
+    private javax.swing.JLabel lblSoLuong;
+    private javax.swing.JLabel lblTenSP;
+    private javax.swing.JSpinner spnSoLuong;
     private javax.swing.JTextField txtMaSKU;
+    private javax.swing.JTextField txtTenSP;
     // End of variables declaration//GEN-END:variables
 
 }
