@@ -6,7 +6,6 @@ public class ChiTietHoaDon {
 
     private Integer idCTHD;
     private double donGia;
-    private String idDV;
     private String idHD;
     private String SKU;
 
@@ -18,13 +17,12 @@ public class ChiTietHoaDon {
     }
 
     public ChiTietHoaDon(double donGia, String idDV, String idHD, String SKU) {
-        this(null, donGia, idDV, idHD, SKU);
+        this(null, donGia, idHD, SKU);
     }
 
-    public ChiTietHoaDon(Integer idCTHD, double donGia, String idDV, String idHD, String SKU) {
+    public ChiTietHoaDon(Integer idCTHD, double donGia, String idHD, String SKU) {
         this.idCTHD = idCTHD;
         this.donGia = donGia;
-        this.idDV = idDV;
         this.idHD = idHD;
         this.SKU = SKU;
     }
@@ -45,13 +43,6 @@ public class ChiTietHoaDon {
         this.donGia = donGia;
     }
 
-    public String getIdDV() {
-        return idDV;
-    }
-
-    public void setIdDV(String idDV) {
-        this.idDV = idDV;
-    }
 
     public String getIdHD() {
         return idHD;

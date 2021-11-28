@@ -109,6 +109,9 @@
         <Property name="onlyField" type="boolean" value="true"/>
         <Property name="placeholder" type="java.lang.String" value="Ng&#x1b0;&#x1edd;i g&#x1eed;i"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFromActionPerformed"/>
+      </Events>
     </Component>
     <Component class="com.swingx.Button" name="btnGui">
       <Properties>

@@ -90,15 +90,15 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
             model.setDoiXe(i);
             List<SanPham> spList = new ArrayList<>();
             for (int j = 0; j < 3; j++) {
-                spList.add(new SanPham("SP0000" + i + "" + j,
-                        "Airblade",
-                        j % 2 == 0 ? "slide1.jpg" : "slide3.jpg",
-                        colors[(int) Math.floor((Math.random() * 5))],
-                        j % 2 == 0 ? "125cc" : "150cc",
-                        36, "Vietnam",
-                        50000000, "",
-                        "", ""
-                ));
+//                spList.add(new SanPham("SP0000" + i + "" + j,
+//                        "Airblade",
+//                        j % 2 == 0 ? "slide1.jpg" : "slide3.jpg",
+//                        colors[(int) Math.floor((Math.random() * 5))],
+//                        j % 2 == 0 ? "125cc" : "150cc",
+//                        36, "Vietnam",
+//                        50000000, "",
+//                        "", ""
+//                ));
                 model.setSanPhamList(spList);
                 
             }

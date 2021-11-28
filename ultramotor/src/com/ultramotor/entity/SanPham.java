@@ -8,12 +8,15 @@ public class SanPham {
     private String hinh;
     private String mauSac;
     private String phanKhoi;
+    private Integer doiXe;
     private Integer thoiGianBH;
     private String diaChiSX;
     private double giaTien;
     private String moTa;
-    private String idModel;
+    private Integer tonKho;
+    private String idDongSP;
     private String idNV;
+    
 
     public SanPham() {
     }
@@ -22,21 +25,31 @@ public class SanPham {
         this.sku = sku;
     }
 
-    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi, Integer thoiGianBH, String diaChiSX, double giaTien, String moTa, String idModel, String idNV) {
+    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi,Integer doiXe, Integer thoiGianBH, String diaChiSX, double giaTien, String moTa, Integer tonKho, String idModel, String idNV) {
         this.sku = sku;
         this.tenSP = tenSP;
         this.hinh = hinh;
         this.mauSac = mauSac;
         this.phanKhoi = phanKhoi;
+        this.doiXe = doiXe;
         this.thoiGianBH = thoiGianBH;
         this.diaChiSX = diaChiSX;
         this.giaTien = giaTien;
         this.moTa = moTa;
-        this.idModel = idModel;
+        this.idDongSP = idDongSP;
         this.idNV = idNV;
+        this.tonKho = tonKho;
     }
 
+    public Integer gettonKho() {
+        return tonKho;
+    }
 
+    public void settonKho(Integer TonKho) {
+        this.tonKho = TonKho;
+    }
+
+    
     public String getSku() {
         return sku;
     }
@@ -109,13 +122,23 @@ public class SanPham {
         this.moTa = moTa;
     }
 
-    public String getIdModel() {
-        return idModel;
+    public Integer getDoiXe() {
+        return doiXe;
     }
 
-    public void setIdModel(String idModel) {
-        this.idModel = idModel;
+    public String getIdDongSP() {
+        return idDongSP;
     }
+
+    public void setDoiXe(Integer doiXe) {
+        this.doiXe = doiXe;
+    }
+
+    public void setIdDongSP(String idDongSP) {
+        this.idDongSP = idDongSP;
+    }
+
+
 
     public String getIdNV() {
         return idNV;

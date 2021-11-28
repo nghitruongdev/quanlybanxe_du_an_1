@@ -66,7 +66,7 @@ public class XImage {
             }
             if (comp instanceof JLabel) {
                 JLabel label = (JLabel) comp;
-                label.setIcon(XImage.resize(icon, 270, 240));
+                label.setIcon(XImage.resize(icon, 220, 150));
                 label.setToolTipText(file.getName());
 
             } else if (comp instanceof ImageAvatar) {

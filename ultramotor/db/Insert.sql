@@ -49,6 +49,7 @@ insert into LoaiHang values
 ('LH09', N'Xe số'),
 ('LH10', N'Xe số');
 
+select * from LoaiHang
 
 
 -- NHÀ SẢN XUẤT
@@ -80,35 +81,21 @@ insert into DongSanPham values
 ('SP10', 'Vespa', 'LH02', 'NSX10');
 
 
-
--- MODEL SẢN PHẨM
-insert into ModelSanPham values
-('MSP01', 'Air Blade 150', '2021', 'SP01'),
-('MSP02', 'SH Mode 125', '2021', 'SP02'),
-('MSP03', 'Jenus 125', '2021', 'SP03'),
-('MSP04', 'Exciter 155', '2021', 'SP04'),
-('MSP05', 'Satria 150', '2021', 'SP05'),
-('MSP06', 'Raider 150', '2021', 'SP06'),
-('MSP07', 'Angela 50', '2021', 'SP07'),
-('MSP08', 'Galaxy 50', '2021', 'SP08'),
-('MSP09', 'Liberty 125', '2021', 'SP09'),
-('MSP10', 'Vespa 125', '2021', 'SP10');
-
-
-
 -- SẢN PHẨM
 insert into SanPham values
-('SK01', 'Air Blade 150', 'ab.jpg', N'Đen', '150cc', '3', 'TPHCM', '4500000000', N'Honda Air Blade 150cc 2021 mang phong cách mạnh mẽ', 'MSP01', 'NV01'),
-('SK02', 'SH Mode 125', 'sh.jpg', N'Đỏ đen', '125cc', '3', 'TPHCM',  '59000000', N'Honda SH Mode 125cc 2021 mang phong cách mạnh mẽ', 'MSP02', 'NV02'),
-('SK03', 'Jenus 125', 'jenus.jpg', N'Trắng', '125cc', '3', 'TPHCM',  '29000000', N'Yamaha Jenus 125cc 2021 mang phong cách mạnh mẽ', 'MSP03', 'NV03'),
-('SK04', 'Exciter 155', 'exciter.jpg', N'Xanh', '155cc', '3', 'TPHCM','55000000', N'Yamaha Exciter 155cc 2021 mang phong cách mạnh mẽ', 'MSP04', 'NV04'),
-('SK05', 'Satria 150', 'satria.jpg', N'Đỏ đen', '150cc', '3', 'TPHCM', '60000000', N'Suzuki Satria 150cc 2021 đã được cải tiến và nâng cấp','MSP05', 'NV05'),
-('SK06', 'Raider 150', 'raider.jpg', N'Đen', '150cc', '3', 'TPHCM', '50000000', N'Suzuki Raider 150cc 2021 đã được cải tiến và nâng cấp','MSP06', 'NV06'),
-('SK07', 'Angela 50', 'angela.jpg', N'Trắng', '50cc', '3', 'TPHCM', '18000000', N'SYM Angela 50cc 2021 đã được cải tiến và nâng cấp','MSP07', 'NV08'),
-('SK08', 'Galaxy 50', 'galaxy.jpg', N'Đỏ', '50cc', '3', 'TPHCM', '18000000', N'SYM Galaxy 50cc 2021 đã được cải tiến và nâng cấp','MSP08', 'NV08'),
-('SK09', 'Liberty 125', 'liberty.jpg', N'Trắng', '125cc', '3', 'TPHCM', '60000000', N'Piaggio Liberty 125cc 2021 với vẻ bề ngoài lột xác','MSP09', 'NV09'),
-('SK10', 'Vespa 125', 'vespa', N'Đỏ', '125cc', '3', 'TPHCM', '80000000', N'Piaggio Vespa 125cc 2021 với vẻ bề ngoài lột xác','MSP10', 'NV10');
-
+('SK01', 'Air Blade 150', 'ab.jpg', N'Đen', '150cc',2021, '3', 'TPHCM', '4500000000', N'Honda Air Blade 150cc 2021 mang phong cách mạnh mẽ', 'SP01', 'NV01'),
+('SK11', 'Air Blade 150', 'ab.jpg', N'Đen', '150cc',2020, '3', 'TPHCM', '4500000000', N'Honda Air Blade 150cc 2021 mang phong cách mạnh mẽ', 'SP01', 'NV01'),
+('SK12', 'Air Blade 150', 'ab.jpg', N'Đen', '125cc',2021, '3', 'TPHCM', '4500000000', N'Honda Air Blade 150cc 2021 mang phong cách mạnh mẽ', 'SP01', 'NV01'),
+('SK13', 'Air Blade 150', 'ab.jpg', N'Đen', '150cc',2020, '3', 'TPHCM', '4500000000', N'Honda Air Blade 150cc 2021 mang phong cách mạnh mẽ', 'SP01', 'NV01'),
+('SK02', 'SH Mode 125', 'sh.jpg', N'Đỏ đen', '125cc',2021, '3', 'TPHCM',  '59000000', N'Honda SH Mode 125cc 2021 mang phong cách mạnh mẽ', 'SP02', 'NV02'),
+('SK03', 'Jenus 125', 'jenus.jpg', N'Trắng', '125cc',2021, '3', 'TPHCM',  '29000000', N'Yamaha Jenus 125cc 2021 mang phong cách mạnh mẽ', 'SP03', 'NV03'),
+('SK04', 'Exciter 155', 'exciter.jpg', N'Xanh', '155cc',2021, '3', 'TPHCM','55000000', N'Yamaha Exciter 155cc 2021 mang phong cách mạnh mẽ', 'SP04', 'NV04'),
+('SK05', 'Satria 150', 'satria.jpg', N'Đỏ đen', '150cc',2021, '3', 'TPHCM', '60000000', N'Suzuki Satria 150cc 2021 đã được cải tiến và nâng cấp','SP05', 'NV05'),
+('SK06', 'Raider 150', 'raider.jpg', N'Đen', '150cc',2021, '3', 'TPHCM', '50000000', N'Suzuki Raider 150cc 2021 đã được cải tiến và nâng cấp','SP06', 'NV06'),
+('SK07', 'Angela 50', 'angela.jpg', N'Trắng', '50cc',2021, '3', 'TPHCM', '18000000', N'SYM Angela 50cc 2021 đã được cải tiến và nâng cấp','SP07', 'NV08'),
+('SK08', 'Galaxy 50', 'galaxy.jpg', N'Đỏ', '50cc', '3',2021, 'TPHCM', '18000000', N'SYM Galaxy 50cc 2021 đã được cải tiến và nâng cấp','SP08', 'NV08'),
+('SK09', 'Liberty 125', 'liberty.jpg', N'Trắng', '125cc',2021, '3', 'TPHCM', '60000000', N'Piaggio Liberty 125cc 2021 với vẻ bề ngoài lột xác','SP09', 'NV09'),
+('SK10', 'Vespa 125', 'vespa', N'Đỏ', '125cc',2021, '3', 'TPHCM', '80000000', N'Piaggio Vespa 125cc 2021 với vẻ bề ngoài lột xác','SP10', 'NV10');
 
 
 -- DỊCH VỤ

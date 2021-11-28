@@ -8,7 +8,7 @@ package com.ultramotor.entity;
 import java.util.Date;
 import java.util.List;
 
-public class KhachHang {
+public class KhachHang extends Entity{
 
     private String idKH;
     private String hoKH;
@@ -164,7 +164,7 @@ public class KhachHang {
 
     @Override
     public String toString() {
-        return "com.ultramotor.entity.KhachHang[ idKH=" + idKH + " ]";
+        return tenKH;
     }
 
 }

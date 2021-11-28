@@ -1,5 +1,6 @@
-package com.ultramotor.ui.nhanvien;
+package com.ultramotor.ui.quanlykhachhang;
 
+import com.ultramotor.ui.nhanvien.*;
 import com.swingx.MyScrollBar;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XMail;
@@ -192,6 +193,11 @@ public class SendMailPanel extends javax.swing.JPanel {
 
         txtFrom.setOnlyField(true);
         txtFrom.setPlaceholder("Người gửi");
+        txtFrom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFromActionPerformed(evt);
+            }
+        });
 
         btnGui.setBackground(new java.awt.Color(0, 153, 255));
         btnGui.setForeground(new java.awt.Color(255, 255, 255));
@@ -284,8 +290,7 @@ public class SendMailPanel extends javax.swing.JPanel {
                         .addGap(61, 61, 61))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnGui, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnGui, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -330,6 +335,10 @@ public class SendMailPanel extends javax.swing.JPanel {
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancel, btnUpload, lblTepDinhKem});
 
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFromActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFromActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
