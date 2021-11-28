@@ -11,11 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sql.rowset.FilteredRowSet;
 
 public class ModelSanPhamDAO {
 
     private DongSanPhamDAO daoDongSP = new DongSanPhamDAO();
     private SanPhamDAO daoSP = new SanPhamDAO();
+    private FilteredRowSet frs;
 
     public List<ModelSanPham> selectAll() {
         return getModelByNSXvaLoaiHang(new NhaSanXuat(null), new LoaiHang(null));
@@ -31,13 +33,9 @@ public class ModelSanPhamDAO {
     }
 
     public List<ModelSanPham> getModelByDongSP(String idDong) {
-        String sql = "SELECT DISTINCT dsp.id_DongSP, TenLoaiHang, TenNSX, DiaChiSX, TenDongSP, doiXe, phanKhoi, thoiGianBH, giaTien\n"
-                + "from SanPham sp \n"
-                + "	join DongSanPham dsp on sp.id_DongSP = dsp.id_DongSP\n"
-                + "	join NhaSanXuat nsx on dsp.id_NSX = dsp.id_NSX\n"
-                + "	join LoaiHang lh on lh.id_LH = dsp.id_LH WHERE dsp.id_DongSP = ?";
-        List<ModelSanPham> model = selectBySQL(sql, idDong);
-        return model;
+        String sql = "exec usp_select_modelSP ?";
+        List<ModelSanPham> modelList = selectBySQL(sql, idDong);
+        return modelList;
     }
 
     private List<ModelSanPham> selectBySQL(String sql, Object... args) {
@@ -53,7 +51,8 @@ public class ModelSanPhamDAO {
                         rs.getString("DiaChiSX"),
                         rs.getInt("DoiXe"),
                         rs.getInt("ThoiGianBH"),
-                        rs.getDouble("GiaTien"));
+                        rs.getDouble("GiaTien"),
+                        rs.getInt("SoLuongBan"));
                 model.setSanPhamList(daoSP.getListSP(model));
                 list.add(model);
             }
@@ -63,4 +62,12 @@ public class ModelSanPhamDAO {
         return list;
     }
 
+    private void initRowSet() {
+        try (ResultSet rs = XJdbc.query("exec usp_select_modelSP ?", "%%")) {
+            frs = XJdbc.getFactory().createFilteredRowSet();
+            frs.populate(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(ModelSanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

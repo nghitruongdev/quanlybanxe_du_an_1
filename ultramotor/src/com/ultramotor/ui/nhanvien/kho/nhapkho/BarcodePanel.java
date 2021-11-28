@@ -1,11 +1,18 @@
 package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
+import com.swingx.CloseButton;
 import com.swingx.MyScrollBar;
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -32,8 +39,9 @@ public class BarcodePanel extends javax.swing.JPanel {
         pnlMain.setLayout(layout);
     }
     
-    private void addItem() {
+    private void addItem(String sku) {
         Item item = new Item(deleteListener);
+        item.setMaSKU(sku);
         pnlMain.add(item, "gapbottom 10");
         pnlMain.revalidate();
     }
@@ -44,7 +52,7 @@ public class BarcodePanel extends javax.swing.JPanel {
     
     private void addListeners() {
         btnAdd.addActionListener((ActionEvent e) -> {
-            addItem();
+            openSearchDialog();
         });
         
         deleteListener = (ActionEvent e) -> {
@@ -80,11 +88,53 @@ public class BarcodePanel extends javax.swing.JPanel {
         frame.setVisible(true);
         
     }
+
+    private void openSearchDialog() {
+        TimSPPanel panel = new TimSPPanel();
+        panel.setDoneListener((ActionEvent e)->{
+            addItem(panel.getMaSP());
+            panel.reset();
+        });
+        new Thread(() -> {
+            getDialog(panel).setVisible(true);
+        }).start();
+    }
+    
+    private JDialog getDialog(JPanel panel) {
+        JDialog dialog = new JDialog((Frame) this.getTopLevelAncestor(), true);
+        dialog.setUndecorated(true);
+        dialog.setBackground(new Color(255, 255, 255, 0));
+        JPanel con = new JPanel() {
+            @Override
+            public void paint(Graphics grphcs) {
+                Graphics2D g2 = (Graphics2D) grphcs;
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 5, 5);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                super.paint(grphcs);
+            }
+        };
+        
+        con.setOpaque(false);
+        con.setBorder(BorderFactory.createLineBorder(new Color(209, 209, 209)));
+        con.setBackground(new Color(250, 250, 250));
+        con.setLayout(new MigLayout("inset 5 20 20 5", "[center]", "[20!][fill, center, grow]"));
+        con.add(new CloseButton(), "al right, wrap");
+        con.add(panel, "pushy, center, gapright 15");
+
+        dialog.setSize(this.getWidth() / 2, this.getHeight());
+        dialog.getContentPane().add(con);
+        dialog.pack();
+        
+        dialog.setLocation(this.getWidth() / 4, (this.getHeight() - dialog.getHeight()) / 2);
+        dialog.setLocationRelativeTo(this.getParent());
+        return dialog;
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         pnlFooter = new javax.swing.JPanel();
         btnAdd = new com.swingx.Button();
@@ -137,7 +187,7 @@ public class BarcodePanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFooterLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(chkAll)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 437, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDeleteAll, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDeleteAll1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,9 +244,7 @@ public class BarcodePanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(pnlFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(pnlFooter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(scroll)
         );
         layout.setVerticalGroup(

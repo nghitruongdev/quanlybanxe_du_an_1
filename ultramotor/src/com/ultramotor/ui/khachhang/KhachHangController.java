@@ -9,7 +9,6 @@ import com.ultramotor.entity.NhaSanXuat;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Container;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -18,22 +17,12 @@ import javax.swing.JTextField;
 
 public class KhachHangController {
 
-    private static final NhaSanXuatDAO daoNSX;
-    private static final LoaiHangDAO daoLH;
-    private static final ModelSanPhamDAO daoModel;
-
-    static {
-        daoNSX = new NhaSanXuatDAO();
-        daoLH = new LoaiHangDAO();
-        daoModel = new ModelSanPhamDAO();
-    }
+    private static final List<NhaSanXuat> listNSX = new NhaSanXuatDAO().selectAll();
+    private static final List<LoaiHang> listLH = new LoaiHangDAO().selectAll();
+    private static final ModelSanPhamDAO daoModel = new ModelSanPhamDAO();
 
     public static void showCard(JPanel panel, String cardName) {
         ((CardLayout) panel.getLayout()).show(panel, cardName);
-//        new Thread(() -> {
-//            sleepThread(300);
-//            
-//        }).start();
     }
 
     public static void navigateCard(JPanel panel, boolean isNext) {
@@ -49,31 +38,36 @@ public class KhachHangController {
     }
 
     public static void fillComboNSX(JComboBox cbo, Lang lang) {
-        List<NhaSanXuat> list = daoNSX.selectAll();
-        ///do some database stuff hêre
-
-        cbo.setModel(new DefaultComboBoxModel(list.toArray()));
-        cbo.insertItemAt(new NhaSanXuat(null, lang == Lang.VN ? "Tất cả" : "All"), 0);
+        cbo.setModel(new DefaultComboBoxModel(listNSX.toArray()));
+        cbo.insertItemAt(new NhaSanXuat(null, lang == Lang.EN ? "All": "Tất cả"), 0);
         cbo.setSelectedIndex(0);
     }
 
     public static void fillComboLoaiHang(JComboBox cbo, Lang lang) {
-        List<LoaiHang> list = daoLH.selectAll();
-        ///do some database stuff hêre
-
-        cbo.setModel(new DefaultComboBoxModel(list.toArray()));
-        cbo.insertItemAt(new LoaiHang(null, lang == Lang.VN ? "Tất cả" : "All"), 0);
+        cbo.setModel(new DefaultComboBoxModel(listLH.toArray()));
+        cbo.insertItemAt(new LoaiHang(null, lang == Lang.EN ?  "All": "Tất cả"), 0);
         cbo.setSelectedIndex(0);
     }
 
     public static List<ModelSanPham> search(JTextField field) {
-        String text = field.getText();
         List<ModelSanPham> list = daoModel.selectAll();
-        List<ModelSanPham> newList = new ArrayList<>();
-        list.stream().filter(modelSanPham -> (modelSanPham.toString().contains(text))).forEachOrdered(modelSanPham -> {
-            newList.add(modelSanPham);
-        });
-        return newList;
+        if (field.getText().isEmpty()) {
+            return list;
+        }
+
+        String[] text = field.getText().trim().toLowerCase().split(" ");
+        list.removeIf(model
+                -> !containsWord(model.getInfo().trim().toLowerCase(), text));
+        return list;
+    }
+
+    private static boolean containsWord(String s, String[] words) {
+        for (String word : words) {
+            if (!s.contains(word)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static List<ModelSanPham> search(JComboBox cboNSX, JComboBox cboLoaiHang) {
@@ -83,24 +77,26 @@ public class KhachHangController {
     }
 
     public static void showProductList(Container container, List<ModelSanPham> list) {
-       for (Component com : container.getComponents()) {
-                if (com instanceof ProductListPanel) {
-                    ((ProductListPanel) com).setList(list);
-                    showCard((JPanel) container, "ProductList");
-                }
+        for (Component com : container.getComponents()) {
+            if (com instanceof ProductListPanel) {
+                showCard((JPanel) container, "ProductList");
+                ((ProductListPanel) com).setList(list);
+                return;
             }
+        }
     }
 
     public static void showDetails(Container container, ModelSanPham model) {
-       for (Component com : container.getComponents()) {
-                if (com instanceof ProductDetailsPanel) {
-                    ((ProductDetailsPanel) com).setProductDetails(model);
-                    showCard((JPanel) container, "ProductDetails");
-                }
+        for (Component com : container.getComponents()) {
+            if (com instanceof ProductDetailsPanel) {
+                ((ProductDetailsPanel) com).setProductDetails(model);
+                showCard((JPanel) container, "ProductDetails");
+                return;
             }
+        }
     }
 
-    public static void sleepThread(int miliseconds) {
+    private static void sleepThread(int miliseconds) {
         try {
             Thread.sleep(miliseconds);
         } catch (InterruptedException e) {

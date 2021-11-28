@@ -10,6 +10,8 @@ GO
 --Tạo proc thêm, xoá, sửa sản phẩm
 --Tạo proc thêm, xoá, sửa hoá đơn + hoá đơn chi tiết
 
+
+
 --Tạo proc thêm, xoá, sửa NhanVien--------------------------------------------------------------------------
 DROP PROC IF EXISTS usp_updateNhanVien
 GO
@@ -168,3 +170,51 @@ BEGIN
 	
 END
 GO
+
+
+DROP FUNCTION IF EXISTS fn_soLuongBanSp
+GO
+
+CREATE FUNCTION fn_soLuongBanSp
+(@sku NVARCHAR(20))
+RETURNS INT
+AS
+BEGIN
+	RETURN (SELECT COUNT(*) FROM ChiTietHoaDon WHERE SKU = @sku)
+END;
+GO
+
+DROP FUNCTION IF EXISTS fn_soLuongTonSp
+GO
+
+CREATE FUNCTION fn_soLuongTonSp
+(@sku NVARCHAR(20))
+RETURNS INT
+AS
+BEGIN
+	RETURN (
+	(SELECT sum(soLuong) FROM ChiTietNhapKho  WHERE SKU = @sku GROUP BY SKU) 
+	- (dbo.fn_soLuongBanSp(@sku)))
+END
+GO
+
+DROP PROC IF EXISTS usp_select_modelSP
+GO
+
+--tạo proc xem sản phẩm theo model, chỉ bao gồm những sản phẩm còn hàng
+CREATE PROC usp_select_modelSP
+(@id_DongSP VARCHAR(20))
+AS
+BEGIN
+	SELECT DISTINCT dsp.id_DongSP, TenLoaiHang, TenNSX, DiaChiSX, TenDongSP, doiXe, phanKhoi, thoiGianBH, giaTien, sum(dbo.fn_soLuongBanSp(SKU)) as N'SoLuongBan'
+    FROM SanPham sp
+        join DongSanPham dsp on sp.id_DongSP = dsp.id_DongSP
+        join NhaSanXuat nsx on dsp.id_NSX = nsx.id_NSX
+        join LoaiHang lh on lh.id_LH = dsp.id_LH
+	WHERE dsp.id_DongSP like @id_DongSP --AND dbo.fn_soLuongTonSp(SKU)>0
+	GROUP BY dsp.id_DongSP, TenLoaiHang, TenNSX, DiaChiSX, TenDongSP, doiXe, phanKhoi, thoiGianBH, giaTien
+END
+GO
+
+exec  usp_select_modelSP '%%'
+			

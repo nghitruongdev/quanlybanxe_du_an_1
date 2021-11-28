@@ -1,6 +1,8 @@
 package com.ultramotor.entity;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ModelSanPham {
 
@@ -13,12 +15,13 @@ public class ModelSanPham {
     private int doiXe;
     private int thoigianBH;
     private double giaTien;
+    private int soLuongBan;
     private List<SanPham> sanPhamList;
 
     public ModelSanPham() {
     }
 
-    public ModelSanPham(String id_dongSP, String tenDongSP, String phanKhoi, String tenLH, String tenNSX, String diachiSX, int doiXe, int thoigianBH, double giaTien) {
+    public ModelSanPham(String id_dongSP, String tenDongSP, String phanKhoi, String tenLH, String tenNSX, String diachiSX, int doiXe, int thoigianBH, double giaTien, int soLuongBan) {
         this.id_dongSP = id_dongSP;
         this.tenDongSP = tenDongSP;
         this.phanKhoi = phanKhoi;
@@ -28,6 +31,7 @@ public class ModelSanPham {
         this.doiXe = doiXe;
         this.thoigianBH = thoigianBH;
         this.giaTien = giaTien;
+        this.soLuongBan = soLuongBan;
     }
 
     public String getId_dongSP() {
@@ -102,6 +106,21 @@ public class ModelSanPham {
         this.doiXe = doiXe;
     }
 
+    public int getSoLuongBan() {
+        return soLuongBan;
+    }
+
+    public void setSoLuongBan(int soLuongBan) {
+        this.soLuongBan = soLuongBan;
+    }
+
+    public String getMauSac(){
+        Set<String> colors = new HashSet<>();
+        for (SanPham sp : sanPhamList) {
+            colors.add(sp.getMauSac());
+        }
+        return colors.toString().replaceAll("[\\[\\]]", "");
+    }
     public List<SanPham> getSanPhamList() {
         return sanPhamList;
     }
@@ -112,7 +131,11 @@ public class ModelSanPham {
 
     @Override
     public String toString() {
-        return String.format("%s %s %d %s",  tenNSX, tenDongSP, doiXe, phanKhoi);
+        return String.format("%s %s %d", tenNSX, tenDongSP, doiXe);
+    }
+
+    public String getInfo() {
+        return String.format("%s %s %s %s %s", toString(), diachiSX, tenLH, phanKhoi, getMauSac().replaceAll(",", " "));
     }
 
 }

@@ -53,14 +53,8 @@ public class DongSanPhamDAO extends UltraDAO<DongSanPham, String> {
 
     public List<DongSanPham> getDongSPByNSXvaLoaiHang(NhaSanXuat nsx, LoaiHang lh) {
         String sql = "SELECT * FROM DongSanPham WHERE id_NSX LIKE ? AND id_LH LIKE ?";
-        String idNSX = "";
-        String idLH = "";
-        if (nsx != null && nsx.getIdNSX() != null) {
-            idNSX = nsx.getIdNSX();
-        }
-        if (lh != null && lh.getIdLH() != null) {
-            idLH = lh.getIdLH();
-        }
+        String idNSX = (nsx != null && nsx.getIdNSX() != null) ? nsx.getIdNSX() : "";
+        String idLH = (lh != null && lh.getIdLH() != null) ? lh.getIdLH() : "";
         return selectBySQL(sql, getLikeSQL(idNSX), getLikeSQL(idLH));
     }
 

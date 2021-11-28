@@ -1,7 +1,6 @@
 package com.ultramotor.ui.nhanvien;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.swingx.CloseButton;
 import com.ultramotor.component.table.ModelAction;
 import com.ultramotor.component.table.ModelEvent;

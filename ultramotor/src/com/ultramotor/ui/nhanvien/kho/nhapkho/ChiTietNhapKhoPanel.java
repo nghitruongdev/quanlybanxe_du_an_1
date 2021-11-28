@@ -70,17 +70,17 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
             resetForm();
         });
 
-        btnThem.addActionListener((ActionEvent e) -> {
-
-        });
-
-        btnThem.addActionListener((ActionEvent e) -> {
-
-        });
-
-        btnThem.addActionListener((ActionEvent e) -> {
-
-        });
+//        btnThem.addActionListener((ActionEvent e) -> {
+//
+//        });
+//
+//        btnThem.addActionListener((ActionEvent e) -> {
+//
+//        });
+//
+//        btnThem.addActionListener((ActionEvent e) -> {
+//
+//        });
 
         event = new ModelEvent<ChiTietNhapKho>() {
             @Override

@@ -105,7 +105,7 @@ public class KhachHangFrame extends javax.swing.JFrame {
                 .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1036, Short.MAX_VALUE))
+                .addContainerGap(1243, Short.MAX_VALUE))
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
@@ -137,7 +137,7 @@ public class KhachHangFrame extends javax.swing.JFrame {
 
         getContentPane().add(pnlMain, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(1209, 662));
+        setSize(new java.awt.Dimension(1416, 662));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

@@ -33,8 +33,8 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -49,36 +49,57 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cboNSX" min="-2" pref="163" max="-2" attributes="0"/>
-                          <Component id="lblNSX" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cboLoaiXe" min="-2" pref="163" max="-2" attributes="0"/>
-                          <Component id="lblLoaiXe" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblPhanKhoi" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="cboPhanKhoi" alignment="0" min="-2" pref="163" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblMauSac" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="cboMauSac" alignment="0" min="-2" pref="163" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="cboNSX" alignment="0" pref="163" max="32767" attributes="0"/>
+                          <Component id="lblNSX" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtMaSKU" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="txtSearch" alignment="1" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="cboLoaiXe" min="-2" pref="163" max="-2" attributes="0"/>
+                                  <Component id="lblLoaiXe" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="btnDone" min="-2" pref="82" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtSearch" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="txtMaSKU" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblLoaiXe" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblNSX" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -114,7 +135,9 @@
                       <Component id="cboMauSac" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btnDone" min="-2" pref="36" max="-2" attributes="0"/>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -123,7 +146,7 @@
     <Component class="javax.swing.JLabel" name="lblNSX">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="0"/>
+          <Font name="Segoe UI" size="13" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Nh&#xe0; S&#x1ea3;n Xu&#x1ea5;t"/>
       </Properties>
@@ -135,7 +158,7 @@
     <Component class="javax.swing.JLabel" name="lblLoaiXe">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="0"/>
+          <Font name="Segoe UI" size="13" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Lo&#x1ea1;i Xe"/>
       </Properties>
@@ -145,7 +168,7 @@
     <Component class="javax.swing.JLabel" name="lblDongXe">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="0"/>
+          <Font name="Segoe UI" size="13" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="D&#xf2;ng Xe"/>
       </Properties>
@@ -153,7 +176,7 @@
     <Component class="javax.swing.JLabel" name="lblDoiXe">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="0"/>
+          <Font name="Segoe UI" size="13" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="&#x110;&#x1edd;i Xe"/>
       </Properties>
@@ -165,7 +188,7 @@
     <Component class="javax.swing.JLabel" name="lblPhanKhoi">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="0"/>
+          <Font name="Segoe UI" size="13" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Ph&#xe2;n Kh&#x1ed1;i"/>
       </Properties>
@@ -175,9 +198,33 @@
     <Component class="javax.swing.JLabel" name="lblMauSac">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="0"/>
+          <Font name="Segoe UI" size="13" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="M&#xe0;u S&#x1eaf;c"/>
+      </Properties>
+    </Component>
+    <Component class="com.swingx.SearchTextField" name="txtSearch">
+    </Component>
+    <Component class="com.swingx.TextField" name="txtMaSKU">
+      <Properties>
+        <Property name="onlyField" type="boolean" value="true"/>
+        <Property name="placeholder" type="java.lang.String" value="M&#xe3; SKU"/>
+      </Properties>
+    </Component>
+    <Component class="com.swingx.Button" name="btnDone">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="62" green="a1" red="37" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="XONG"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="14" style="1"/>
+        </Property>
+        <Property name="radius" type="int" value="10"/>
       </Properties>
     </Component>
   </SubComponents>

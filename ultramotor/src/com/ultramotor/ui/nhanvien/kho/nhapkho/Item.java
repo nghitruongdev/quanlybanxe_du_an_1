@@ -1,11 +1,12 @@
 package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
 import com.swingx.CloseButton;
+import com.ultramotor.dao.SanPhamDAO;
 import com.ultramotor.util.BarcodeHelper;
 import com.ultramotor.util.XFile;
+import com.ultramotor.util.XJdbc;
 import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Desktop;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -21,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -29,6 +31,7 @@ import net.miginfocom.swing.MigLayout;
 public class Item extends javax.swing.JPanel {
 
     private File file;
+    private SanPhamDAO dao;
 
     public Item() {
         this(null);
@@ -36,9 +39,10 @@ public class Item extends javax.swing.JPanel {
 
     public Item(ActionListener deleteListener) {
         initComponents();
+        dao = new SanPhamDAO();
         file = XFile.getTempFile("bc", ".png");
         btnDelete.addActionListener(deleteListener);
-        txtTenSP.addFocusListener(new FocusAdapter() {
+        txtMaSKU.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 createBarcode();
@@ -52,13 +56,18 @@ public class Item extends javax.swing.JPanel {
 
     private void openSearchDialog() {
         TimSPPanel panel = new TimSPPanel();
+        panel.setDoneListener((ActionEvent e) -> {
+            setMaSKU(panel.getMaSP());
+            ((JDialog) ((JComponent) e.getSource()).getTopLevelAncestor()).dispose();
+        });
+
         new Thread(() -> {
             getDialog(panel).setVisible(true);
         }).start();
     }
 
     public void createBarcode() {
-        String text = txtTenSP.getText();
+        String text = txtMaSKU.getText();
         BarcodeHelper.create39Barcode(file, text);
         try {
             lblBarcode.setIcon(new ImageIcon(ImageIO.read(file).getScaledInstance(lblBarcode.getWidth(), lblBarcode.getHeight(), Image.SCALE_SMOOTH)));
@@ -132,17 +141,31 @@ public class Item extends javax.swing.JPanel {
         super.paintComponent(grphcs);
     }
 
+    public void setMaSKU(String ma) {
+        Object ten = XJdbc.value("SELECT TenSP FROM SanPham WHERE SKU = ?", ma);
+        txtMaSKU.setText(ma);
+        txtTenSP.setText(ten == null ? "" : String.valueOf(ten));
+        new Thread(() -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            createBarcode();
+        }).start();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         btnDelete = new com.swingx.Button();
         lblBarcode = new javax.swing.JLabel();
-        txtTenSP = new javax.swing.JTextField();
+        txtMaSKU = new javax.swing.JTextField();
         spnSoLuong = new javax.swing.JSpinner();
         chk = new javax.swing.JCheckBox();
         lblTenSP = new javax.swing.JLabel();
-        txtMaSKU = new javax.swing.JTextField();
+        txtTenSP = new javax.swing.JTextField();
         lblMaSKu = new javax.swing.JLabel();
         lblSoLuong = new javax.swing.JLabel();
         btnTim = new com.swingx.Button();
@@ -155,6 +178,8 @@ public class Item extends javax.swing.JPanel {
 
         lblBarcode.setBackground(new java.awt.Color(204, 204, 204));
         lblBarcode.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+
+        spnSoLuong.setModel(new javax.swing.SpinnerNumberModel(10, 0, 100, 1));
 
         chk.setOpaque(false);
 
@@ -181,54 +206,56 @@ public class Item extends javax.swing.JPanel {
                 .addComponent(chk, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblTenSP))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtMaSKU, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMaSKu))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMaSKu)
-                    .addComponent(txtMaSKU, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                    .addComponent(lblTenSP)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtTenSP, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblSoLuong)
                     .addComponent(spnSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(lblBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addGap(36, 36, 36))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
-                .addComponent(lblBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblSoLuong)
+                            .addGap(42, 42, 42))
+                        .addComponent(spnSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTenSP)
-                            .addComponent(lblMaSKu)
-                            .addComponent(lblSoLuong))
+                            .addComponent(lblMaSKu))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(chk, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtTenSP, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                            .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(1, 1, 1))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(spnSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtMaSKU, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtMaSKU)
+                                .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtMaSKU, txtTenSP});
+
     }// </editor-fold>//GEN-END:initComponents
 
 

@@ -26,6 +26,7 @@ public class Card extends JPanel {
     private Pagination pag;
     private SlideShowPanel pnlSlide;
     private JLabel title;
+    private JLabel info;
     private Button button;
 
     public Card() {
@@ -35,6 +36,8 @@ public class Card extends JPanel {
 
         title = new JLabel("Hello World");
         title.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        info = new JLabel("HelloWorld");
+        info.setFont(new java.awt.Font("Segoe UI", 0, 14));
 
         pag = new Pagination();
         pnlSlide = new SlideShowPanel();
@@ -47,12 +50,14 @@ public class Card extends JPanel {
 
         JPanel panel = new JPanel(new MigLayout("insets 0", "[right, grow]0[leading]", "[fill]5[fill, center]"));
         panel.setOpaque(false);
+        panel.add(info, "gapleft 5, left");
         panel.add(pag, "gapleft 5, spanx, gapright 5");
         panel.add(title, " align leading, pushy, gapx 5, wrap");
-        panel.add(button, "h 30!, w 50%!, center");
+
+        panel.add(button, "h 30!, w 50%!, center, spanx 2");
 
         setLayout(layout);
-        add(pnlSlide, "w 100%, h 75%,pushy, wrap");
+        add(pnlSlide, "w 100%, h 75%,hmax 75%, wrap");
         add(panel, "w 100%, h 25%:25%:100");
     }
 
@@ -133,6 +138,10 @@ public class Card extends JPanel {
 
     public void setTitle(String title) {
         this.title.setText(title);
+    }
+
+    public void setInfo(String info) {
+        this.info.setText(info);
     }
 
     public Button getButton() {

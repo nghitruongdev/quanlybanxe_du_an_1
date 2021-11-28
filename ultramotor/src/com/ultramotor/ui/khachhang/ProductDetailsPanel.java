@@ -2,25 +2,32 @@ package com.ultramotor.ui.khachhang;
 
 import com.ultramotor.entity.ModelSanPham;
 import com.ultramotor.entity.SanPham;
+import java.awt.Color;
+import java.awt.Font;
+import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.swing.JLabel;
 
 public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang {
-
+    
     private Lang lang = Lang.VN;
-
+    
     public ProductDetailsPanel() {
         initComponents();
         pnlCard.removeButton();
+        JLabel title = pnlCard.getTitle();
+        title.setFont(new Font("Segoe UI", 1, 24));
+        title.setForeground(Color.GREEN);
     }
-
+    
     public void setProductDetails(ModelSanPham model) {
-        pnlCard.setModel(model);
+        pnlCard.setModel(model, lang);
         lblProductInfo.setText(getInfo(model));
         repaint();
     }
-
+    
     private String getInfo(ModelSanPham model) {
         List<SanPham> list = model.getSanPhamList();
         String tenSP = model.toString();
@@ -30,9 +37,11 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
         String warranty = String.valueOf(model.getThoigianBH());
         String colors = getColors(list);
         String phanKhoi = model.getPhanKhoi();
-        String giaTien = String.valueOf(model.getGiaTien());
+        DecimalFormat format = new DecimalFormat("#,##0.00 VNĐ");
+        String giaTien = format.format(model.getGiaTien());
+//        String giaTien = String.format("%#,###.2f VNĐ", model.getGiaTien());
         if (lang.equals(Lang.VN)) {
-            return String.format("<html> <h1 style=\"font-size: large; color: aqua;padding-left: 20;\">Thông Số Kỹ Thuật</h1>\n"
+            return String.format("<html> <h1 style=\"font-size:36;font-weight: bold; color: green;padding-left: 20;\">THÔNG SỐ KỸ THUẬT</h1>\n"
                     + "  <ul>\n"
                     + "      <li>Tên sản phẩm: %s</li>\n"
                     + "      <br>\n"
@@ -46,7 +55,7 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
                     + "      <br>\n"
                     + "      <li>Nơi sản xuất: %s</li>\n"
                     + "      <br>\n"
-                    + "      <li>Thời gian bảo hành: %s</li>\n"
+                    + "      <li>Thời gian bảo hành: %s tháng</li>\n"
                     + "      <br>\n"
                     + "      <li><span style=\"color: red;\">Giá Tiền:</span> %s</li>\n"
                     + "  </ul></html>",
@@ -73,32 +82,33 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
                 + "      <br>\n"
                 + "      <li>Made in: %s</li>\n"
                 + "      <br>\n"
-                + "      <li>Warranty: %s</li>\n"
+                + "      <li>Warranty: %s months</li>\n"
                 + "      <br>\n"
                 + "      <li><span style=\"color: red;\">Price-tag:</span> %s</li>\n"
                 + "  </ul></html>",
                 tenSP,
-                    colors,
-                    phanKhoi,
-                    doiXe,
-                    nhaSX,
-                    diaChiSX,
-                    warranty,
-                    giaTien);
+                colors,
+                phanKhoi,
+                doiXe,
+                nhaSX,
+                diaChiSX,
+                warranty,
+                giaTien);
     }
-   
-    private String getColors(List<SanPham> list){
+    
+    private String getColors(List<SanPham> list) {
         Set<String> colors = new HashSet<>();
         list.forEach(sp -> {
             colors.add(sp.getMauSac());
         });
-        return colors.toString().replaceAll("[\\[\\]]","");
+        return colors.toString().replaceAll("[\\[\\]]", "");
     }
     
     @Override
     public void setLang(Lang lang) {
         this.lang = lang;
     }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -115,10 +125,9 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
         pnlInfo.setLayout(new java.awt.BorderLayout());
 
         lblProductInfo.setBackground(new java.awt.Color(255, 255, 250));
-        lblProductInfo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblProductInfo.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
         lblProductInfo.setText("jLabel1");
         lblProductInfo.setToolTipText("");
-        lblProductInfo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         pnlInfo.add(lblProductInfo, java.awt.BorderLayout.CENTER);
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
