@@ -18,8 +18,8 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
     final String TABLE_NAME = "SanPham";
     final String SELECT_BY_ID_SQL = "SELECT * FROM SanPham WHERE SKU = ?";
     final String SELECT_ALL_SQL = "SELECT * FROM SanPham";
-    final String INSERT_SQL = "insert into SanPham(SKU, tenSp, hinh, mauSac, phanKhoi, thoiGianBH,DiaChiSX,giaTien, moTa,id_Model, id_NV ) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-    final String UPDATE_SQL = "UPDATE SanPham SET  tenSp = ?, hinh = ?, mauSac= ?, phanKhoi= ?, thoiGianBH = ?,DiaChiSX=? ,giaTien= ?, moTa= ?,id_Model = ?, id_NV = ? WHERE SKU=?";
+    final String INSERT_SQL = "insert into SanPham(SKU, tenSp, hinh, mauSac, phanKhoi,doiXe,thoiGianBH,DiaChiSX,giaTien, moTa,id_DongSP, id_NV ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+    final String UPDATE_SQL = "UPDATE SanPham SET  tenSp = ?, hinh = ?, mauSac= ?, phanKhoi= ?,doiXe=?, thoiGianBH = ?,DiaChiSX=? ,giaTien= ?, moTa= ?,id_DongSP = ?, id_NV = ? WHERE SKU=?";
     final String DELETE_SQL = "DELETE FROM SanPham WHERE SKU = ?";
 
     @Override
@@ -30,11 +30,12 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
                 e.getHinh(),
                 e.getMauSac(),
                 e.getPhanKhoi(),
+                e.getDoiXe(),
                 e.getThoiGianBH(),
                 e.getDiaChiSX(),
                 e.getGiaTien(),
                 e.getMoTa(),
-                e.getIdModel(),
+                e.getIdDongSP(),
                 e.getIdNV());
     }
 
@@ -45,11 +46,12 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
                 e.getHinh(),
                 e.getMauSac(),
                 e.getPhanKhoi(),
+                e.getDoiXe(),
                 e.getThoiGianBH(),
                 e.getDiaChiSX(),
                 e.getGiaTien(),
                 e.getMoTa(),
-                e.getIdModel(),
+                e.getIdDongSP(),
                 e.getIdNV(),
                 e.getSku());
     }
@@ -83,12 +85,13 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6),
-                        rs.getString(7),
-                        rs.getDouble(8),
-                        rs.getString(9),
+                        rs.getInt(6), 
+                        rs.getInt(7),
+                        rs.getString(8),
+                        rs.getDouble(9),
                         rs.getString(10),
-                        rs.getString(11)));
+                        rs.getString(11),
+                        rs.getString(12)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(NhaSanXuatDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,7 +99,7 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
         return list;
     }
     public List<SanPham> selectByKeyword(String keyWord){
-        String sql= "SELECT * FROM SanPham WHERE tenSP like ? or mauSac like ? ";
-        return this.selectBySQL(sql, "%"+keyWord+"%","%"+keyWord+"%");
+        String sql= "SELECT * FROM SanPham WHERE SKU like ? or tenSP like ? or mauSac like ? or id_DongSP like ? or id_NV like ? or phanKhoi like ? or giaTien like ?";
+        return this.selectBySQL(sql, "%"+keyWord+"%","%"+keyWord+"%","%"+keyWord+"%","%"+keyWord+"%","%"+keyWord+"%","%"+keyWord+"%","%"+keyWord+"%");
     }
 }

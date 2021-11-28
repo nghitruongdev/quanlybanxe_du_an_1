@@ -6,7 +6,7 @@
 package com.ultramotor.entity;
 
 
-public class DongSanPham {
+public class DongSanPham extends Entity{
 
     private String idDongSP;
     private String tenDongSP;

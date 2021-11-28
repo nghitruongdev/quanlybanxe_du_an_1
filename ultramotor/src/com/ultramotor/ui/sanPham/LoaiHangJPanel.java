@@ -8,7 +8,15 @@ package com.ultramotor.ui.sanPham;
 import com.ultramotor.dao.LoaiHangDAO;
 import com.ultramotor.entity.LoaiHang;
 import com.ultramotor.util.MsgBox;
+import com.ultramotor.util.XImage;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,14 +24,81 @@ import javax.swing.table.DefaultTableModel;
  * @author thaian
  */
 public class LoaiHangJPanel extends javax.swing.JPanel {
-
+    private LoaiHang lh;
     /**
      * Creates new form LoaiHangJPanel
      */
     public LoaiHangJPanel() {
         initComponents();
+        
+    }
+    LoaiHangDAO dao_LH = new LoaiHangDAO();
+    int row = -1;
+    
+    void init(){
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentHidden(ComponentEvent ce) {
+                System.out.println("Component Hidden");
+            }
+
+            @Override
+            public void componentShown(ComponentEvent ce) {
+                System.out.println("Component Showned");
+            }
+
+            @Override
+            public void componentResized(ComponentEvent ce) {
+                System.out.println("Component Resized");
+                addListeners();
+            }
+
+        });
     }
 
+    public LoaiHang getForm_LH() {
+        LoaiHang lh = new LoaiHang();
+        lh.setIdLH(txtID_LH.getText());
+        lh.setTenLoaiHang(txtTenLH.getText());
+        return lh;
+    }
+
+    public void clearForm_LH(){
+        
+            txtID_LH.setText("");
+            txtTenLH.setText("");
+        
+        
+    }
+    void setFrom_LH(){
+        if (lh== null) {
+            clearForm_LH();
+            return;
+        }
+        txtID_LH.setText(lh.getIdLH());
+        txtTenLH.setText(lh.getTenLoaiHang());
+    }
+
+    public void setForm_LH(LoaiHang lh) {
+        this.lh = lh;
+        setFrom_LH();
+    }
+    private void addListeners() {
+        btnSua.addActionListener((ActionEvent e) -> {
+        });
+        btnThem.addActionListener((ActionEvent e) -> {
+        });
+
+    }
+    public void setUpdateLH_Listener(ActionListener updateListener) {
+        btnSua.addActionListener(updateListener);
+    }
+    public void setADDLH_Listener(ActionListener updateListener) {
+        btnThem.addActionListener(updateListener);
+    }
+
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,9 +115,6 @@ public class LoaiHangJPanel extends javax.swing.JPanel {
         txtTenLH = new javax.swing.JTextField();
         txtID_LH = new javax.swing.JTextField();
         btnThem = new com.swingx.Button();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblLoaiHang = new javax.swing.JTable();
-        btnXoa = new com.swingx.Button();
         btnSua = new com.swingx.Button();
 
         pnlLoaiHang.setBackground(new java.awt.Color(255, 255, 255));
@@ -56,45 +128,9 @@ public class LoaiHangJPanel extends javax.swing.JPanel {
 
         btnThem.setBackground(new java.awt.Color(0, 153, 153));
         btnThem.setText("Thêm ");
-        btnThem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemActionPerformed(evt);
-            }
-        });
-
-        tblLoaiHang.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "ID_LoaiHang", "Tên Loại Hàng"
-            }
-        ));
-        tblLoaiHang.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblLoaiHangMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblLoaiHang);
-
-        btnXoa.setBackground(new java.awt.Color(0, 153, 153));
-        btnXoa.setText("Xoá");
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
-            }
-        });
 
         btnSua.setBackground(new java.awt.Color(0, 153, 153));
         btnSua.setText("Sửa");
-        btnSua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSuaActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlLoaiHangLayout = new javax.swing.GroupLayout(pnlLoaiHang);
         pnlLoaiHang.setLayout(pnlLoaiHangLayout);
@@ -105,25 +141,19 @@ public class LoaiHangJPanel extends javax.swing.JPanel {
                 .addGroup(pnlLoaiHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlLoaiHangLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(86, 86, 86))
+                        .addGap(92, 92, 92))
                     .addGroup(pnlLoaiHangLayout.createSequentialGroup()
+                        .addGroup(pnlLoaiHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlLoaiHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(txtID_LH, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addGroup(pnlLoaiHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(txtTenLH, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtID_LH, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlLoaiHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
-                            .addGroup(pnlLoaiHangLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
+                            .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(26, Short.MAX_VALUE))))
         );
         pnlLoaiHangLayout.setVerticalGroup(
             pnlLoaiHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,24 +161,20 @@ public class LoaiHangJPanel extends javax.swing.JPanel {
                 .addGap(13, 13, 13)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(pnlLoaiHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlLoaiHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlLoaiHangLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtID_LH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
+                        .addComponent(txtID_LH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlLoaiHangLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTenLH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlLoaiHangLayout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtTenLH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlLoaiHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -163,127 +189,17 @@ public class LoaiHangJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        // TODO add your handling code here:
-        this.insert();
-    }//GEN-LAST:event_btnThemActionPerformed
-
-    private void tblLoaiHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLoaiHangMouseClicked
-        // TODO add your handling code here:
-        if (evt.getClickCount() == 1) {
-            this.row = tblLoaiHang.getSelectedRow();
-            this.edit();
-        }
-    }//GEN-LAST:event_tblLoaiHangMouseClicked
-
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
-        this.delete();
-    }//GEN-LAST:event_btnXoaActionPerformed
-
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
-        this.update();
-    }//GEN-LAST:event_btnSuaActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnSua;
     private com.swingx.Button btnThem;
-    private com.swingx.Button btnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlLoaiHang;
-    private javax.swing.JTable tblLoaiHang;
     private javax.swing.JTextField txtID_LH;
     private javax.swing.JTextField txtTenLH;
     // End of variables declaration//GEN-END:variables
 
-LoaiHangDAO dao_LH = new LoaiHangDAO();
-    int row = -1;
 
-    void fillTableLoaiHang() {
-        DefaultTableModel model = (DefaultTableModel) tblLoaiHang.getModel();
-        model.setRowCount(0);
-        try {
-            List<LoaiHang> list = dao_LH.selectAll();
-            for (LoaiHang lh : list) {
-                Object[] row = {
-                    lh.getIdLH(),
-                    lh.getTenLoaiHang()
-                };
-                model.addRow(row);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            MsgBox.inform("Lỗi truy vấn dữ liệu!");
-        }
-    }
-
-    void insert() {
-        LoaiHang model = getForm();
-        try {
-            dao_LH.insert(model);
-            this.fillTableLoaiHang();
-            this.clearForm();
-            MsgBox.inform("Thêm mới thành công!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            MsgBox.inform("Thêm mới thất bại!");
-        }
-    }
-
-    void update() {
-        LoaiHang model = getForm();
-        try {
-            dao_LH.update(model);
-            this.fillTableLoaiHang();
-            MsgBox.inform("Cập nhật thành công!");
-        } catch (Exception e) {
-            MsgBox.inform("Cập nhật thất bại!");
-        }
-    }
-
-    void delete() {
-
-        String maLH = txtID_LH.getText();
-        try {
-            dao_LH.delete(maLH);
-            this.fillTableLoaiHang();
-            this.clearForm();
-            MsgBox.inform("Xóa thành công!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            MsgBox.inform("Xoá thất bại");
-        }
-
-    }
-
-    LoaiHang getForm() {
-        LoaiHang lh = new LoaiHang();
-        lh.setIdLH(txtID_LH.getText());
-        lh.setTenLoaiHang(txtTenLH.getText());
-        return lh;
-    }
-
-    void clearForm() {
-        LoaiHang lh = new LoaiHang();
-        this.setForm(lh);
-//        this.row = -1;
-//        this.updateStatus();
-    }
-
-    void setForm(LoaiHang lh) {
-        txtID_LH.setText(lh.getIdLH());
-        txtTenLH.setText(lh.getTenLoaiHang());
-
-    }
-
-    void edit() {
-        String maLH = (String) tblLoaiHang.getValueAt(this.row, 0);
-        LoaiHang lh = dao_LH.selectByID(maLH);
-        this.setForm(lh);
-    }
 }

@@ -2,6 +2,7 @@ package com.ultramotor.ui.khachhang;
 
 import com.swingx.Card;
 import com.swingx.MyScrollBar;
+import com.ultramotor.entity.DongSanPham;
 import com.ultramotor.entity.ModelSanPham;
 import com.ultramotor.entity.SanPham;
 import java.awt.Color;
@@ -80,32 +81,34 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
         }
     }
     
-    List<ModelSanPham> getListExample() {
+    List<SanPham> getListExample() {
         String[] colors = {"Đỏ", "Trắng", "Đen", "Vàng", "Xanh"};
-        
-        List<ModelSanPham> list = new ArrayList<>();
+
+        List<SanPham> list = new ArrayList<>();
         for (int i = 2010; i < 2022; i++) {
-            ModelSanPham model = new ModelSanPham();
-            model.setTenModel("Airblade");
-            model.setDoiXe(i);
-            List<SanPham> spList = new ArrayList<>();
-            for (int j = 0; j < 3; j++) {
-                spList.add(new SanPham("SP0000" + i + "" + j,
-                        "Airblade",
-                        j % 2 == 0 ? "slide1.jpg" : "slide3.jpg",
-                        colors[(int) Math.floor((Math.random() * 5))],
-                        j % 2 == 0 ? "125cc" : "150cc",
-                        36, "Vietnam",
-                        50000000, "",
-                        "", ""
-                ));
-                model.setSanPhamList(spList);
-                
-            }
+            SanPham model = new SanPham();
+            model.getHinh();
+            model.getMauSac();
+            model.getTenSP();
+//            List<SanPham> spList = new ArrayList<>();
+//            for (int j = 0; j < 3; j++) {
+//                spList.add(new SanPham("SP0000" + i + "" + j,
+//                        "Airblade",
+//                        j % 2 == 0 ? "slide1.jpg" : "slide3.jpg",
+//                        colors[(int) Math.floor((Math.random() * 5))],
+//                        j % 2 == 0 ? "125cc" : "150cc", 2020,
+//                        36, "Vietnam",
+//                        50000000, "",
+//                        "", ""
+//                ));
+//                model.setSanPhamList(spList);
+//            }
             list.add(model);
         }
         return list;
     }
+        
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

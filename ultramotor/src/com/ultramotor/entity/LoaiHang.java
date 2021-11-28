@@ -7,7 +7,7 @@ package com.ultramotor.entity;
 
 import java.util.List;
 
-public class LoaiHang {
+public class LoaiHang extends Entity{
 
     private String idLH;
     private String tenLoaiHang;

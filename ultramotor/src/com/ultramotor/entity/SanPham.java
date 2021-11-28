@@ -1,18 +1,19 @@
 
 package com.ultramotor.entity;
 
-public class SanPham {
+public class SanPham extends Entity{
 
     private String sku;
     private String tenSP;
     private String hinh;
     private String mauSac;
     private String phanKhoi;
+    private Integer doiXe;
     private Integer thoiGianBH;
     private String diaChiSX;
     private double giaTien;
     private String moTa;
-    private String idModel;
+    private String idDongSP;
     private String idNV;
 
     public SanPham() {
@@ -22,20 +23,23 @@ public class SanPham {
         this.sku = sku;
     }
 
-    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi, Integer thoiGianBH, String diaChiSX, double giaTien, String moTa, String idModel, String idNV) {
+    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi, Integer doiXe, Integer thoiGianBH, String diaChiSX, double giaTien, String moTa, String idDongSP, String idNV) {
         this.sku = sku;
         this.tenSP = tenSP;
         this.hinh = hinh;
         this.mauSac = mauSac;
         this.phanKhoi = phanKhoi;
+        this.doiXe = doiXe;
         this.thoiGianBH = thoiGianBH;
         this.diaChiSX = diaChiSX;
         this.giaTien = giaTien;
         this.moTa = moTa;
-        this.idModel = idModel;
+        this.idDongSP = idDongSP;
         this.idNV = idNV;
     }
+    
 
+    
 
     public String getSku() {
         return sku;
@@ -109,12 +113,22 @@ public class SanPham {
         this.moTa = moTa;
     }
 
-    public String getIdModel() {
-        return idModel;
+    public Integer getDoiXe() {
+        return doiXe;
     }
 
-    public void setIdModel(String idModel) {
-        this.idModel = idModel;
+    public void setDoiXe(Integer doiXe) {
+        this.doiXe = doiXe;
+    }
+
+   
+
+    public String getIdDongSP() {
+        return idDongSP;
+    }
+
+    public void setIdDongSP(String idDongSP) {
+        this.idDongSP = idDongSP;
     }
 
     public String getIdNV() {
@@ -124,7 +138,6 @@ public class SanPham {
     public void setIdNV(String idNV) {
         this.idNV = idNV;
     }
-
     
     @Override
     public int hashCode() {

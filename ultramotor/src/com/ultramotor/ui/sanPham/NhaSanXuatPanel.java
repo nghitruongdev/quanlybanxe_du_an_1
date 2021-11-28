@@ -8,6 +8,10 @@ package com.ultramotor.ui.sanPham;
 import com.ultramotor.dao.NhaSanXuatDAO;
 import com.ultramotor.entity.NhaSanXuat;
 import com.ultramotor.util.MsgBox;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  * @author thaian
  */
 public class NhaSanXuatPanel extends javax.swing.JPanel {
-
+    private NhaSanXuat nsx;
     /**
      * Creates new form NhaSanXuatPanel
      */
@@ -41,9 +45,6 @@ public class NhaSanXuatPanel extends javax.swing.JPanel {
         txtTenNSX = new javax.swing.JTextField();
         txtID_NSX = new javax.swing.JTextField();
         btnThem = new com.swingx.Button();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblNSX = new javax.swing.JTable();
-        btnXoa = new com.swingx.Button();
         btnSua = new com.swingx.Button();
 
         pnlNhaSanXuat.setBackground(new java.awt.Color(255, 255, 255));
@@ -57,70 +58,33 @@ public class NhaSanXuatPanel extends javax.swing.JPanel {
 
         btnThem.setBackground(new java.awt.Color(0, 153, 153));
         btnThem.setText("Thêm ");
-        btnThem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemActionPerformed(evt);
-            }
-        });
-
-        tblNSX.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "ID_NSX", "Tên Nhà Sản Xuất"
-            }
-        ));
-        tblNSX.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblNSXMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblNSX);
-
-        btnXoa.setBackground(new java.awt.Color(0, 153, 153));
-        btnXoa.setText("Xoá");
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
-            }
-        });
 
         btnSua.setBackground(new java.awt.Color(0, 153, 153));
         btnSua.setText("Sửa");
-        btnSua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSuaActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlNhaSanXuatLayout = new javax.swing.GroupLayout(pnlNhaSanXuat);
         pnlNhaSanXuat.setLayout(pnlNhaSanXuatLayout);
         pnlNhaSanXuatLayout.setHorizontalGroup(
             pnlNhaSanXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNhaSanXuatLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(pnlNhaSanXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlNhaSanXuatLayout.createSequentialGroup()
-                        .addGroup(pnlNhaSanXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(txtID_NSX, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-                            .addComponent(txtTenNSX))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlNhaSanXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap()
+                        .addGroup(pnlNhaSanXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlNhaSanXuatLayout.createSequentialGroup()
-                                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(pnlNhaSanXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(txtID_NSX, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(8, 8, 8)))))
+                                .addGroup(pnlNhaSanXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(txtTenNSX, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlNhaSanXuatLayout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100)
+                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlNhaSanXuatLayout.setVerticalGroup(
@@ -129,31 +93,27 @@ public class NhaSanXuatPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addGroup(pnlNhaSanXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlNhaSanXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlNhaSanXuatLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtID_NSX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(txtID_NSX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlNhaSanXuatLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTenNSX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(txtTenNSX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlNhaSanXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlNhaSanXuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(pnlNhaSanXuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,126 +121,85 @@ public class NhaSanXuatPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        // TODO add your handling code here:
-        this.insert();
-    }//GEN-LAST:event_btnThemActionPerformed
-
-    private void tblNSXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNSXMouseClicked
-        // TODO add your handling code here:
-        if (evt.getClickCount() == 1) {
-            this.row = tblNSX.getSelectedRow();
-            this.edit();
-        }
-    }//GEN-LAST:event_tblNSXMouseClicked
-
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
-        this.delete();
-    }//GEN-LAST:event_btnXoaActionPerformed
-
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
-        this.update();
-    }//GEN-LAST:event_btnSuaActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnSua;
     private com.swingx.Button btnThem;
-    private com.swingx.Button btnXoa;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlNhaSanXuat;
-    private javax.swing.JTable tblNSX;
     private javax.swing.JTextField txtID_NSX;
     private javax.swing.JTextField txtTenNSX;
     // End of variables declaration//GEN-END:variables
 NhaSanXuatDAO dao_NSX = new NhaSanXuatDAO();
     int row = -1;
     void init(){
-        fillTableNhaSanXuat();
+
         this.row = -1;
-    }
-    void fillTableNhaSanXuat() {
-        DefaultTableModel model = (DefaultTableModel) tblNSX.getModel();
-        model.setRowCount(0);
-        try {
-            List<NhaSanXuat> list = dao_NSX.selectAll();
-            for (NhaSanXuat nsx : list) {
-                Object[] row = {
-                    nsx.getIdNSX(),
-                    nsx.getTenNSX()
-                };
-                model.addRow(row);
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentHidden(ComponentEvent ce) {
+                System.out.println("Component Hidden");
             }
-        } 
-        catch (Exception e) {
-            e.printStackTrace();
-            MsgBox.inform("Lỗi truy vấn dữ liệu!");
-        }
-    }
-    void insert(){
-        NhaSanXuat model = getForm();
-        try {
-            dao_NSX.insert(model);
-            this.fillTableNhaSanXuat();
-            this.clearForm();
-            MsgBox.inform("Thêm mới thành công!");
-        } 
-        catch (Exception e) {
-            e.printStackTrace();
-            MsgBox.inform( "Thêm mới thất bại!");
-        }
+
+            @Override
+            public void componentShown(ComponentEvent ce) {
+                System.out.println("Component Showned");
+            }
+
+            @Override
+            public void componentResized(ComponentEvent ce) {
+                System.out.println("Component Resized");
+                addListeners();
+            }
+
+        });
     }
     
-    void update() {
-        NhaSanXuat model = getForm();
-        try {
-            dao_NSX.update(model);
-            this.fillTableNhaSanXuat();
-            MsgBox.inform("Cập nhật thành công!");
-        } catch (Exception e) {
-            MsgBox.inform("Cập nhật thất bại!");
-        }
-    }
-
-    void delete() {
-
-        String maNSX = txtID_NSX.getText();
-        try {
-            dao_NSX.delete(maNSX);
-            this.fillTableNhaSanXuat();
-            this.clearForm();
-            MsgBox.inform("Xóa thành công!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            MsgBox.inform("Xoá thất bại");
-        }
-
-    }
-    NhaSanXuat getForm(){
+    // Bang Nha San Xuat
+    
+    public NhaSanXuat getForm_NSX(){
         NhaSanXuat nsx = new NhaSanXuat();
         nsx.setIdNSX(txtID_NSX.getText());
         nsx.setTenNSX(txtTenNSX.getText());
         return nsx;
     }
-    void clearForm(){
-        NhaSanXuat nsx = new NhaSanXuat();
-        this.setForm(nsx);
-//        this.row = -1;
-//        this.updateStatus();
-    } 
-     void setForm(NhaSanXuat nsx){
-        txtID_NSX.setText(nsx.getIdNSX());
-        txtTenNSX.setText(nsx.getTenNSX());
+    
+    public void clearForm_NSX(){
+        
+            txtID_NSX.setText("");
+            txtTenNSX.setText("");
+        
         
     }
-     void edit() {
-        String maNSX = (String) tblNSX.getValueAt(this.row, 0);
-        NhaSanXuat nsx = dao_NSX.selectByID(maNSX);
-        this.setForm(nsx);
+    void setFrom_NSX(){
+        if (nsx== null) {
+            clearForm_NSX();
+            return;
+        }
+        txtID_NSX.setText(nsx.getIdNSX());
+        txtTenNSX.setText(nsx.getTenNSX());
     }
+
+    public void setForm_NSX(NhaSanXuat nsx) {
+        this.nsx = nsx;
+        setFrom_NSX();
+    }
+    
+    private void addListeners() {
+        btnSua.addActionListener((ActionEvent e) -> {
+        });
+        btnThem.addActionListener((ActionEvent e) -> {
+        });
+
+    }
+
+    public void setAddNSX_Listener(ActionListener updateListener) {
+        btnThem.addActionListener(updateListener);
+    }
+    public void setUpdateNSX_Listener(ActionListener updateListener) {
+        btnSua.addActionListener(updateListener);
+    }
+    
 }

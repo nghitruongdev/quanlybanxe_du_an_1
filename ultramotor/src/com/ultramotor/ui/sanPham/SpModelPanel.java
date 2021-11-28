@@ -14,6 +14,7 @@ import com.ultramotor.entity.LoaiHang;
 import com.ultramotor.entity.ModelSanPham;
 import com.ultramotor.entity.NhaSanXuat;
 import com.ultramotor.util.MsgBox;
+import java.util.HashSet;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -56,7 +57,7 @@ public class SpModelPanel extends javax.swing.JPanel {
         tblModelSP = new javax.swing.JTable();
         btnXoa = new com.swingx.Button();
         btnSua = new com.swingx.Button();
-        txtID_DongSP = new javax.swing.JTextField();
+        cboMSP_IdDSP = new com.swingx.ComboBoxSuggestion();
 
         pnlModelSP.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -132,7 +133,7 @@ public class SpModelPanel extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addGroup(pnlModelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtDoiXe, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                                    .addComponent(txtID_DongSP)))
+                                    .addComponent(cboMSP_IdDSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(pnlModelSPLayout.createSequentialGroup()
                                 .addGroup(pnlModelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel13)
@@ -171,19 +172,17 @@ public class SpModelPanel extends javax.swing.JPanel {
                         .addGroup(pnlModelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
                             .addComponent(txtDoiXe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(11, 11, 11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlModelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16)
-                            .addComponent(txtID_DongSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12))
-                    .addGroup(pnlModelSPLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addComponent(cboMSP_IdDSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlModelSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -200,25 +199,25 @@ public class SpModelPanel extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        this.insert();
+        this.insert_MSP();
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void tblModelSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblModelSPMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 1) {
             this.row = tblModelSP.getSelectedRow();
-            this.edit();
+            this.edit_MSP();
         }
     }//GEN-LAST:event_tblModelSPMouseClicked
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
-        this.delete();
+        this.delete_MSP();
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-        this.update();
+        this.update_MSP();
     }//GEN-LAST:event_btnSuaActionPerformed
 
 
@@ -226,6 +225,7 @@ public class SpModelPanel extends javax.swing.JPanel {
     private com.swingx.Button btnSua;
     private com.swingx.Button btnThem;
     private com.swingx.Button btnXoa;
+    private com.swingx.ComboBoxSuggestion cboMSP_IdDSP;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -235,26 +235,25 @@ public class SpModelPanel extends javax.swing.JPanel {
     private javax.swing.JPanel pnlModelSP;
     private javax.swing.JTable tblModelSP;
     private javax.swing.JTextField txtDoiXe;
-    private javax.swing.JTextField txtID_DongSP;
     private javax.swing.JTextField txtID_Model;
     private javax.swing.JTextField txtTenModel;
     // End of variables declaration//GEN-END:variables
-  ModelSanPhamDAO dao_msp = new ModelSanPhamDAO();
+  ModelSanPhamDAO dao_MSP = new ModelSanPhamDAO();
     DongSanPhamDAO dao_DongSP = new DongSanPhamDAO();
     int row = -1;
 
     void init() {
-        fillTable();
-
+        fillTableModelSP();
+        fillComboVaiTro();
         this.row = -1;
     }
 
 
-    void fillTable() {
+    void fillTableModelSP() {
         DefaultTableModel model = (DefaultTableModel) tblModelSP.getModel();
         model.setRowCount(0);
         try {
-            List<ModelSanPham> list = dao_msp.selectAll();
+            List<ModelSanPham> list = dao_MSP.selectAll();
             for (ModelSanPham msp : list) {
                 Object[] row = {
                     msp.getIdModel(),
@@ -269,13 +268,20 @@ public class SpModelPanel extends javax.swing.JPanel {
             MsgBox.inform("Lỗi truy vấn dữ liệu!");
         }
     }
-
-    void insert() {
-        ModelSanPham model = getForm();
+    private void fillComboVaiTro() {
+        HashSet<String> set = new HashSet();
+        new DongSanPhamDAO().selectAll().forEach((msp) -> {
+            set.add(msp.getIdDongSP());
+        });
+        cboMSP_IdDSP.setModel(new DefaultComboBoxModel(set.toArray()));
+    }
+    // Bang ModelSP
+    void insert_MSP() {
+        ModelSanPham model = getForm_MSP();
         try {
-            dao_msp.insert(model);
-            this.fillTable();
-            this.clearForm();
+            dao_MSP.insert(model);
+            this.fillTableModelSP();
+            this.clearForm_MSP();
             MsgBox.inform("Thêm mới thành công!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -283,24 +289,24 @@ public class SpModelPanel extends javax.swing.JPanel {
         }
     }
 
-    void update() {
-        ModelSanPham model = getForm();
+    void update_MSP() {
+        ModelSanPham model = getForm_MSP();
         try {
-            dao_msp.update(model);
-            this.fillTable();
+            dao_MSP.update(model);
+            this.fillTableModelSP();
             MsgBox.inform("Cập nhật thành công!");
         } catch (Exception e) {
             MsgBox.inform("Cập nhật thất bại!");
         }
     }
 
-    void delete() {
+    void delete_MSP() {
 
         String maModelSP = txtID_Model.getText();
         try {
-            dao_msp.delete(maModelSP);
-            this.fillTable();
-            this.clearForm();
+            dao_MSP.delete(maModelSP);
+            this.fillTableModelSP();
+            this.clearForm_MSP();
             MsgBox.inform("Xóa thành công!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -309,32 +315,33 @@ public class SpModelPanel extends javax.swing.JPanel {
 
     }
 
-    ModelSanPham getForm() {
+    ModelSanPham getForm_MSP() {
         ModelSanPham msp = new ModelSanPham();
         msp.setIdModel(txtID_Model.getText());
         msp.setTenModel(txtTenModel.getText());
         msp.setDoiXe(Integer.valueOf(txtDoiXe.getText()));
-        msp.setId_dongSP(txtID_DongSP.getText());
+        msp.setId_dongSP((String) cboMSP_IdDSP.getSelectedItem());
         return msp;
     }
 
-    void clearForm() {
+    void clearForm_MSP() {
         ModelSanPham msp = new ModelSanPham();
-        this.setForm(msp);
-//        this.row = -1;
+        this.setForm_MSP(msp);
+        this.row = -1;
 //        this.updateStatus();
     }
 
-    void setForm(ModelSanPham msp) {
+    void setForm_MSP(ModelSanPham msp) {
         txtID_Model.setText(msp.getIdModel());
         txtTenModel.setText(msp.getTenModel());
         txtDoiXe.setText(String.valueOf(msp.getDoiXe()));
-        txtID_DongSP.setText(msp.getId_dongSP());
+        cboMSP_IdDSP.setSelectedItem(msp.getId_dongSP());
     }
 
-    void edit() {
+    void edit_MSP() {
         String maModleSP = (String) tblModelSP.getValueAt(this.row, 0);
-        ModelSanPham msp = dao_msp.selectByID(maModleSP);
-        this.setForm(msp);
+        ModelSanPham msp = dao_MSP.selectByID(maModleSP);
+        this.setForm_MSP(msp);
+//        showCard("ModelSP");
     }
 }

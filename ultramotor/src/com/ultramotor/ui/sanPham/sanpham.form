@@ -23,12 +23,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pblSP" alignment="0" max="32767" attributes="0"/>
+          <Component id="pblSP" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pblSP" alignment="0" max="32767" attributes="0"/>
+          <Component id="pblSP" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -43,72 +43,47 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblMaSKU" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblMaDong" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblMauSac" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblDiaChiSX" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="lblTGBH" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtMaSKU" alignment="0" pref="122" max="32767" attributes="0"/>
-                              <Component id="txtID_Model" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="txtTGBH" alignment="0" pref="189" max="32767" attributes="0"/>
+                              <Component id="lblVaiTro" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="cboSP_IdDongSP" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
+                              <Component id="txtMaSKU" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtMauSac" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtDiaChiSX" alignment="1" max="32767" attributes="0"/>
-                              <Component id="txtTGBH" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtDiaChiSX" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="109" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                  <Component id="lblGiatien" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblMaNV" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblPhanKhoi" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtPhanKhoi" pref="174" max="32767" attributes="0"/>
+                                  <Component id="txtGiaTien" max="32767" attributes="0"/>
+                                  <Component id="txtTenSP" max="32767" attributes="0"/>
+                                  <Component id="txtMaNV" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="lblTenSP" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDoiXe" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtMaNV" alignment="0" pref="106" max="32767" attributes="0"/>
-                              <Component id="txtTenSP" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtGiaTien" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtPhanKhoi" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="lblHinh" max="32767" attributes="0"/>
+                                  <Component id="lblVaiTro1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane1" alignment="0" pref="271" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="btnLuuSanPham" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnCapNhatSP" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnXoaSP" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="lblHinh" min="-2" pref="215" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="lblMoTa" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" min="-2" pref="556" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="124" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="btnLuuSanPham" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnCapNhatSP" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnXoaSP" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="jScrollPane4" alignment="0" max="32767" attributes="0"/>
                   </Group>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -116,52 +91,51 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="31" pref="31" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblMaSKU" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtMaSKU" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblTenSP" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtMaSKU" alignment="3" min="-2" pref="91" max="-2" attributes="0"/>
                               <Component id="txtTenSP" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblMaDong" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtID_Model" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblMaNV" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtMaNV" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblGiatien" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtGiaTien" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblMauSac" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtMauSac" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtPhanKhoi" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblDiaChiSX" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtDiaChiSX" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                  <Component id="lblVaiTro" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="cboSP_IdDongSP" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="txtMauSac" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="lblPhanKhoi" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="txtMaNV" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="txtGiaTien" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblTGBH" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtTGBH" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="txtPhanKhoi" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="txtDoiXe" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="txtDiaChiSX" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="txtTGBH" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <Component id="lblHinh" alignment="0" min="-2" pref="192" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblMoTa" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jScrollPane1" min="-2" pref="137" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <Component id="lblHinh" min="-2" pref="192" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                          <Component id="lblVaiTro1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="137" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnLuuSanPham" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnCapNhatSP" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -169,85 +143,14 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" min="-2" pref="151" max="-2" attributes="0"/>
-                  <EmptySpace pref="84" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                  <Component id="jScrollPane4" min="-2" pref="165" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="lblMaSKU">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="M&#xe3; SKU"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblMaDong">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="ID_Model"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblMauSac">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="M&#xe0;u s&#x1eaf;c"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblTenSP">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="T&#xea;n s&#x1ea3;n ph&#x1ea9;m"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblMaNV">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="M&#xe3; nh&#xe2;n vi&#xea;n"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblGiatien">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Gi&#xe1; ti&#x1ec1;n"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblPhanKhoi">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Ph&#xe2;n kh&#x1ed1;i"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblTGBH">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="TGBH"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblDiaChiSX">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&#x110;&#x1ecb;a ch&#x1ec9; SX"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblMoTa">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="M&#xf4; t&#x1ea3;"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtID_Model">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtID_ModelActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtMaSKU">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtMauSac">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtTenSP">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtMaNV">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtGiaTien">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtPhanKhoi">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtTGBH">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtDiaChiSX">
-        </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -295,28 +198,39 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCapNhatSPActionPerformed"/>
           </Events>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+        <Component class="com.swingx.Button" name="btnXoaSP">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Xo&#xe1;"/>
+          </Properties>
+        </Component>
+        <Component class="com.swingx.ComboBoxSuggestion" name="cboSP_IdDongSP">
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane4">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tblSP">
+            <Component class="com.ultramotor.component.table.Table" name="tblSP">
               <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="99" red="0" type="rgb"/>
+                </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="11" rowCount="9">
-                    <Column editable="true" title="M&#xe3; SKU" type="java.lang.String"/>
-                    <Column editable="true" title="T&#xea;n SP" type="java.lang.String"/>
-                    <Column editable="true" title="M&#xe0;u s&#x1eaf;c" type="java.lang.String"/>
-                    <Column editable="true" title="Ph&#xe2;n kh&#x1ed1;i" type="java.lang.String"/>
-                    <Column editable="true" title="TGBH" type="java.lang.String"/>
-                    <Column editable="true" title="&#x110;.ch&#x1ec9; SX" type="java.lang.String"/>
-                    <Column editable="true" title="Gi&#xe1; ti&#x1ec1;n" type="java.lang.Float"/>
+                  <Table columnCount="12" rowCount="4">
+                    <Column editable="true" title="SKU" type="java.lang.Object"/>
+                    <Column editable="true" title="T&#xea;n SP" type="java.lang.Object"/>
+                    <Column editable="true" title="M&#xe0;u S&#x1eaf;c" type="java.lang.Object"/>
+                    <Column editable="true" title="Ph&#xe2;n Kh&#x1ed1;i" type="java.lang.Object"/>
+                    <Column editable="true" title="Th&#x1edd;i gian BH" type="java.lang.Object"/>
+                    <Column editable="true" title="&#x110;&#x1ecb;a ch&#x1ec9; SX" type="java.lang.Object"/>
+                    <Column editable="true" title="Gi&#xe1; Ti&#x1ec1;n" type="java.lang.Object"/>
+                    <Column editable="true" title="M&#xf4; t&#x1ea3;" type="java.lang.Object"/>
+                    <Column editable="true" title="&#x110;&#x1edd;i xe" type="java.lang.Object"/>
                     <Column editable="true" title="H&#xec;nh" type="java.lang.Object"/>
-                    <Column editable="true" title="M&#xf4; t&#x1ea3;" type="java.lang.String"/>
-                    <Column editable="true" title="id_ModelSP" type="java.lang.String"/>
-                    <Column editable="true" title="id_NV" type="java.lang.String"/>
+                    <Column editable="true" title="Id_DSP" type="java.lang.Object"/>
+                    <Column editable="true" title="Id_NV" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -329,9 +243,65 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="com.swingx.Button" name="btnXoaSP">
+        <Component class="com.swingx.TextField" name="txtMaSKU">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Xo&#xe1;"/>
+            <Property name="labelText" type="java.lang.String" value="SKU"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblVaiTro">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="66" red="66" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="ID_Model"/>
+          </Properties>
+        </Component>
+        <Component class="com.swingx.TextField" name="txtMauSac">
+          <Properties>
+            <Property name="labelText" type="java.lang.String" value="M&#xe0;u S&#x1eaf;c"/>
+          </Properties>
+        </Component>
+        <Component class="com.swingx.TextField" name="txtDiaChiSX">
+          <Properties>
+            <Property name="labelText" type="java.lang.String" value="&#x110;&#x1ecb;a ch&#x1ec9; SX"/>
+          </Properties>
+        </Component>
+        <Component class="com.swingx.TextField" name="txtTGBH">
+          <Properties>
+            <Property name="labelText" type="java.lang.String" value="TGBH"/>
+          </Properties>
+        </Component>
+        <Component class="com.swingx.TextField" name="txtTenSP">
+          <Properties>
+            <Property name="labelText" type="java.lang.String" value="T&#xea;n SP"/>
+          </Properties>
+        </Component>
+        <Component class="com.swingx.TextField" name="txtMaNV">
+          <Properties>
+            <Property name="labelText" type="java.lang.String" value="M&#xe3; NV"/>
+          </Properties>
+        </Component>
+        <Component class="com.swingx.TextField" name="txtGiaTien">
+          <Properties>
+            <Property name="labelText" type="java.lang.String" value="Gi&#xe1; Ti&#x1ec1;n"/>
+          </Properties>
+        </Component>
+        <Component class="com.swingx.TextField" name="txtPhanKhoi">
+          <Properties>
+            <Property name="labelText" type="java.lang.String" value="Ph&#xe2;n Kh&#x1ed1;i"/>
+          </Properties>
+        </Component>
+        <Component class="com.swingx.TextField" name="txtDoiXe">
+          <Properties>
+            <Property name="labelText" type="java.lang.String" value="&#x110;&#x1edd;i xe"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblVaiTro1">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="66" red="66" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="M&#xf4; t&#x1ea3;"/>
           </Properties>
         </Component>
       </SubComponents>
