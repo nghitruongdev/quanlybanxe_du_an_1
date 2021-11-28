@@ -19,7 +19,7 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
         pnlCard.removeButton();
         JLabel title = pnlCard.getTitle();
         title.setFont(new Font("Segoe UI", 1, 24));
-        title.setForeground(Color.GREEN);
+        title.setForeground(new Color(117, 196, 125));
     }
     
     public void setProductDetails(ModelSanPham model) {
@@ -68,7 +68,7 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
                     warranty,
                     giaTien);
         }
-        return String.format("<html> <h1 style=\"font-size: large; color: aqua;padding-left: 20;\">SPECIFICATION DETAILS</h1>\n"
+        return String.format("<html> <h1 style=\"font-size:36;font-weight: bold; color: green;padding-left: 20;\">SPECIFICATION DETAILS</h1>\n"
                 + "  <ul>\n"
                 + "      <li>Product Name: %s</li>\n"
                 + "      <br>\n"
@@ -128,6 +128,7 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
         lblProductInfo.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
         lblProductInfo.setText("jLabel1");
         lblProductInfo.setToolTipText("");
+        lblProductInfo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         pnlInfo.add(lblProductInfo, java.awt.BorderLayout.CENTER);
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);

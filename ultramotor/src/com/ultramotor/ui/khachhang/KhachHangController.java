@@ -39,13 +39,13 @@ public class KhachHangController {
 
     public static void fillComboNSX(JComboBox cbo, Lang lang) {
         cbo.setModel(new DefaultComboBoxModel(listNSX.toArray()));
-        cbo.insertItemAt(new NhaSanXuat(null, lang == Lang.EN ? "All": "Tất cả"), 0);
+        cbo.insertItemAt(new NhaSanXuat(null, lang == Lang.EN ? "All" : "Tất cả"), 0);
         cbo.setSelectedIndex(0);
     }
 
     public static void fillComboLoaiHang(JComboBox cbo, Lang lang) {
         cbo.setModel(new DefaultComboBoxModel(listLH.toArray()));
-        cbo.insertItemAt(new LoaiHang(null, lang == Lang.EN ?  "All": "Tất cả"), 0);
+        cbo.insertItemAt(new LoaiHang(null, lang == Lang.EN ? "All" : "Tất cả"), 0);
         cbo.setSelectedIndex(0);
     }
 
@@ -73,14 +73,31 @@ public class KhachHangController {
     public static List<ModelSanPham> search(JComboBox cboNSX, JComboBox cboLoaiHang) {
         NhaSanXuat nsx = (NhaSanXuat) cboNSX.getSelectedItem();
         LoaiHang lh = (LoaiHang) cboLoaiHang.getSelectedItem();
-        return daoModel.getModelByNSXvaLoaiHang(nsx, lh);
+
+        String tenNSX = nsx.getIdNSX() != null ? nsx.getTenNSX() : "";
+        String tenLH = lh.getIdLH() != null ? lh.getTenLoaiHang() : "";
+        
+        List<ModelSanPham> list = daoModel.selectAll();
+        if (tenNSX.isEmpty() && tenLH.isEmpty()) {
+            return list;
+        }
+        list.removeIf(model
+                -> (!tenNSX.isEmpty() && !tenNSX.equalsIgnoreCase(model.getTenNSX()))
+                || (!tenLH.isEmpty() && !tenLH.equalsIgnoreCase(model.getTenLH())));
+//        System.out.println("--------Print Result-----------");
+//        for (ModelSanPham model : list) {
+//            System.out.println("Ten NSX: " + model.getTenNSX());
+//            System.out.println("Ten LH: " + model.getTenLH());
+//
+//        }
+        return list;
     }
 
     public static void showProductList(Container container, List<ModelSanPham> list) {
         for (Component com : container.getComponents()) {
             if (com instanceof ProductListPanel) {
-                showCard((JPanel) container, "ProductList");
                 ((ProductListPanel) com).setList(list);
+                 showCard((JPanel) container, "ProductList");
                 return;
             }
         }

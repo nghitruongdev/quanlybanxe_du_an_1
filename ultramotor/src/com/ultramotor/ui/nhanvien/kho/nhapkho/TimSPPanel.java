@@ -1,6 +1,7 @@
 package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
 import com.ultramotor.util.MsgBox;
+import com.ultramotor.util.SearchFilter;
 import com.ultramotor.util.XJdbc;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -65,7 +66,7 @@ public class TimSPPanel extends javax.swing.JPanel {
         });
 
         cboMauSac.addActionListener((ActionEvent e) -> {
-            setFilter(rs, new NameFilter(cboMauSac.getSelectedItem(), "mauSac"));
+            setFilter(rs, new SearchFilter(cboMauSac.getSelectedItem(), "mauSac"));
             Collection<String> col = findItem("SKU");
             txtMaSKU.setText(col.size() > 0 ? ((String) col.toArray()[0]) : "");
         });
@@ -77,29 +78,29 @@ public class TimSPPanel extends javax.swing.JPanel {
     }
 
     private void fillCboLoaiXe() {
-        setFilter(rs, new NameFilter(cboNSX.getSelectedItem(), "TenNSX"));
+        setFilter(rs, new SearchFilter(cboNSX.getSelectedItem(), "TenNSX"));
         fillComboBox(cboLoaiXe, findItem("TenLoaiHang"), true);
     }
 
     private void fillCboDongXe() {
-        setFilter(rs, new NameFilter(cboLoaiXe.getSelectedItem(), "TenLoaiHang"));
+        setFilter(rs, new SearchFilter(cboLoaiXe.getSelectedItem(), "TenLoaiHang"));
         fillComboBox(cboDongXe, findItem("tenDongSP"), true);
     }
 
     private void fillCboDoiXe() {
-        setFilter(rs, new NameFilter(cboDongXe.getSelectedItem(), "tenDongSP"));
+        setFilter(rs, new SearchFilter(cboDongXe.getSelectedItem(), "tenDongSP"));
         fillComboBox(cboDoiXe, findItem("doiXe"), true);
 
     }
 
     private void fillCboPhanKhoi() {
-        setFilter(rs, new NameFilter(cboDoiXe.getSelectedItem(), "doiXe"));
+        setFilter(rs, new SearchFilter(cboDoiXe.getSelectedItem(), "doiXe"));
         fillComboBox(cboPhanKhoi, findItem("phanKhoi"), true);
 
     }
 
     private void fillCboMauSac() {
-        setFilter(rs, new NameFilter(cboPhanKhoi.getSelectedItem(), "phanKhoi"));
+        setFilter(rs, new SearchFilter(cboPhanKhoi.getSelectedItem(), "phanKhoi"));
         fillComboBox(cboMauSac, findItem("mauSac"), false);
     }
 
@@ -348,67 +349,4 @@ public class TimSPPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 }
 
-class NameFilter implements Predicate {
 
-    private Object value;
-    private String columnName = null;
-    private int column = -1;
-
-    public NameFilter(Object value, String columnName) {
-        this.value = value;
-        this.columnName = columnName;
-    }
-
-    public NameFilter(Object value, int columnIndex) {
-        this.value = value;
-        this.column = columnIndex;
-    }
-
-    @Override
-    public boolean evaluate(Object value, int column) throws SQLException {
-        if (column == this.column) {
-            if (this.value instanceof String && value instanceof String) {
-                return ((String) this.value).equalsIgnoreCase(String.valueOf(value));
-            } else {
-                return Objects.equals(this.value, value);
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean evaluate(Object value, String columnName) throws SQLException {
-        if (columnName.equalsIgnoreCase(this.columnName)) {
-            if (this.value instanceof String) {
-                return ((String) this.value).equalsIgnoreCase(String.valueOf(value));
-            } else {
-                return Objects.equals(this.value, value);
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean evaluate(RowSet rs) {
-        if (rs == null) {
-            return false;
-        }
-        Object val = null;
-        try {
-            if (this.column > 0) {
-                val = rs.getObject(column);
-            } else if (this.columnName != null) {
-                val = rs.getObject(columnName);
-            }
-            if (this.value instanceof String) {
-                return ((String) this.value).equalsIgnoreCase(String.valueOf(val));
-            } else {
-                return Objects.equals(this.value, val);
-            }
-        } catch (SQLException e) {
-        }
-        return false;
-
-    }
-
-}
