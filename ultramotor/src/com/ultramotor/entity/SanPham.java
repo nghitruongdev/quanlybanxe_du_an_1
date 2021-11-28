@@ -13,6 +13,7 @@ public class SanPham {
     private String diaChiSX;
     private double giaTien;
     private String moTa;
+    private int tonKho;
     private String idDongSP;
     private String idNV;
 
@@ -23,7 +24,7 @@ public class SanPham {
         this.sku = sku;
     }
 
-    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi,int doiXe, int thoiGianBH, String diaChiSX, double giaTien, String moTa, String idDongSP, String idNV) {
+    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi,int doiXe, int thoiGianBH, String diaChiSX, double giaTien, String moTa, int tonKho, String idDongSP, String idNV) {
         this.sku = sku;
         this.tenSP = tenSP;
         this.hinh = hinh;
@@ -36,9 +37,18 @@ public class SanPham {
         this.moTa = moTa;
         this.idDongSP = idDongSP;
         this.idNV = idNV;
+        this.tonKho = tonKho;
     }
 
+    public int gettonKho() {
+        return tonKho;
+    }
 
+    public void settonKho(int TonKho) {
+        this.tonKho = TonKho;
+    }
+
+    
     public String getSku() {
         return sku;
     }

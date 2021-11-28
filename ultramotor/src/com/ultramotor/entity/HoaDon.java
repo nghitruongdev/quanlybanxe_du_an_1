@@ -8,7 +8,7 @@ package com.ultramotor.entity;
 import java.util.Date;
 import java.util.List;
 
-public class HoaDon  {
+public class HoaDon extends Entity{
 
     private String idHD;
     private Date thoiGian;

@@ -42,8 +42,8 @@
                           <Component id="txtChuDe" alignment="0" pref="352" max="32767" attributes="0"/>
                           <Component id="txtFrom" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnUpload" min="-2" pref="113" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                              <Component id="btnUpload" min="-2" pref="97" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="lblTepDinhKem" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="btnCancel" min="-2" pref="18" max="-2" attributes="0"/>
@@ -109,6 +109,9 @@
         <Property name="onlyField" type="boolean" value="true"/>
         <Property name="placeholder" type="java.lang.String" value="Ng&#x1b0;&#x1edd;i g&#x1eed;i"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFromActionPerformed"/>
+      </Events>
     </Component>
     <Component class="com.swingx.Button" name="btnGui">
       <Properties>

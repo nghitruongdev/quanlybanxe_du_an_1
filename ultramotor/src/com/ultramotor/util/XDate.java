@@ -14,6 +14,7 @@ public class XDate {
 
     private static final SimpleDateFormat df = new SimpleDateFormat();
     private static final String DEFAULT_PATTERN = "dd-MM-yyyy";
+
     /**
      * Chuyển ngày từ kiểu String sang kiểu Date
      *
@@ -34,11 +35,12 @@ public class XDate {
         df.applyPattern(pattern);
         return df.parse(date);
     }
-    public static String toString(Date date){
-            return toString(date, DEFAULT_PATTERN);
+
+    public static String toString(Date date) {
+        return toString(date, DEFAULT_PATTERN);
     }
-    
-     /**
+
+    /**
      * Định dạng lại ngày theo mẫu pattern
      *
      * @param date ngày cần chuyển
@@ -49,6 +51,7 @@ public class XDate {
         df.applyPattern(pattern);
         return df.format(date);
     }
+
 
     public static Date convert(Date date, String pattern){
         try {
@@ -65,5 +68,9 @@ public class XDate {
     public static Date addDays(Date date, long days) {
         date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
         return date;
+    }
+
+    public static Date now() {
+        return new Date();
     }
 }

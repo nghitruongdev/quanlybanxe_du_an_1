@@ -1,5 +1,6 @@
-package com.ultramotor.ui.nhanvien;
+package com.ultramotor.ui.quanlykhachhang;
 
+import com.ultramotor.ui.nhanvien.*;
 import com.swingx.MyScrollBar;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XMail;
@@ -123,6 +124,7 @@ public class SendMailPanel extends javax.swing.JPanel {
     }
 
     public void setNguoiNhan(String... emails) {
+//        txtTo.setText(list.toString().replaceAll("[\\[\\]]", ""));
         txtTo.setText(Arrays.toString(emails).replaceAll("[\\[\\]]", ""));
     }
 
@@ -150,6 +152,7 @@ public class SendMailPanel extends javax.swing.JPanel {
             }
 
         });
+
     }
 
     private void setLabelWithAsterisk() {
@@ -190,6 +193,11 @@ public class SendMailPanel extends javax.swing.JPanel {
 
         txtFrom.setOnlyField(true);
         txtFrom.setPlaceholder("Người gửi");
+        txtFrom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFromActionPerformed(evt);
+            }
+        });
 
         btnGui.setBackground(new java.awt.Color(0, 153, 255));
         btnGui.setForeground(new java.awt.Color(255, 255, 255));
@@ -272,8 +280,8 @@ public class SendMailPanel extends javax.swing.JPanel {
                             .addComponent(txtChuDe, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                             .addComponent(txtFrom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(77, 77, 77)
+                                .addComponent(btnUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblTepDinhKem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -327,6 +335,10 @@ public class SendMailPanel extends javax.swing.JPanel {
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancel, btnUpload, lblTepDinhKem});
 
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFromActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFromActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
