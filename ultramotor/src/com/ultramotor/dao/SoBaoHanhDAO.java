@@ -16,22 +16,22 @@ public class SoBaoHanhDAO extends UltraDAO<SoBaoHanh, String> {
 
     {
         TABLE_NAME = "SoBaoHanh";
-        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_SBH");
-        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id_SBH");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
     }
 
     @Override
-    public void insert(SoBaoHanh e) {
+    public int insert(SoBaoHanh e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void update(SoBaoHanh e) {
+    public int update(SoBaoHanh e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void delete(String id) {
+    public int delete(String id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -54,22 +54,22 @@ class BaoHanhDAO extends UltraDAO<ChiTietBaoHanh, Integer> {
 
     {
         TABLE_NAME = "ChiTietBaoHanh";
-        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id");
-        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
     }
 
     @Override
-    public void insert(ChiTietBaoHanh e) {
+    public int insert(ChiTietBaoHanh e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void update(ChiTietBaoHanh e) {
+    public int update(ChiTietBaoHanh e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void delete(Integer id) {
+    public int delete(Integer id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -97,22 +97,22 @@ class BaoDuongDAO extends UltraDAO<ChiTietBaoDuong, Integer> {
 
     {
         TABLE_NAME = "ChiTietBaoDuong";
-        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id");
-        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
     }
 
     @Override
-    public void insert(ChiTietBaoDuong e) {
+    public int insert(ChiTietBaoDuong e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void update(ChiTietBaoDuong e) {
+    public int update(ChiTietBaoDuong e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void delete(Integer id) {
+    public int delete(Integer id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

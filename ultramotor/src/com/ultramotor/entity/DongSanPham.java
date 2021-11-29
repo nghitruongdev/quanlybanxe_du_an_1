@@ -6,7 +6,7 @@
 package com.ultramotor.entity;
 
 
-public class DongSanPham {
+public class DongSanPham extends Entity{
 
     private String idDongSP;
     private String tenDongSP;
@@ -81,7 +81,7 @@ public class DongSanPham {
 
     @Override
     public String toString() {
-        return "com.ultramotor.entity.DongSanPham[ idDongSP=" + idDongSP + " ]";
+        return tenDongSP;
     }
     
 }

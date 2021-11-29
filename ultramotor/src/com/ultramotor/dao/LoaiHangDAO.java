@@ -13,23 +13,25 @@ public class LoaiHangDAO extends UltraDAO<LoaiHang, String> {
 
     {
         TABLE_NAME = "LoaiHang";
-        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_LH");
-        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id_LH");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
+    }
+    final String INSERT_SQL = String.format("exec usp_insert_%s ?, ?", TABLE_NAME);
+    final String DELETE_SQL = String.format("DELETE FROM %s WHERE %s = ?", TABLE_NAME, "id_LH");
+
+    @Override
+    public int insert(LoaiHang e) {
+        return XJdbc.update(INSERT_SQL, e.getIdLH(), e.getTenLoaiHang());
     }
 
     @Override
-    public void insert(LoaiHang e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int update(LoaiHang e) {
+        return insert(e);
     }
 
     @Override
-    public void update(LoaiHang e) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void delete(String id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int delete(String id) {
+        return XJdbc.update(DELETE_SQL, id);
     }
 
     @Override

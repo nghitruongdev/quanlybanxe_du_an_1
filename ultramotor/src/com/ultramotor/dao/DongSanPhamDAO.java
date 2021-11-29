@@ -15,23 +15,25 @@ public class DongSanPhamDAO extends UltraDAO<DongSanPham, String> {
 
     {
         TABLE_NAME = "DongSanPham";
-        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_DongSP");
-        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id_DongSP");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
+    }
+    final String INSERT_SQL = String.format("exec usp_insert_%s ?, ?, ?, ?", TABLE_NAME);
+    final String DELETE_SQL = String.format("DELETE FROM %s WHERE %s = ?", TABLE_NAME, "id_DongSP");
+
+    @Override
+    public int insert(DongSanPham e) {
+        return XJdbc.update(INSERT_SQL, e.getIdDongSP(), e.getTenDongSP(), e.getIdLH(), e.getIdNSX());
     }
 
     @Override
-    public void insert(DongSanPham e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int update(DongSanPham e) {
+        return insert(e);
     }
 
     @Override
-    public void update(DongSanPham e) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void delete(String id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int delete(String id) {
+        return XJdbc.update(DELETE_SQL, id);
     }
 
     @Override

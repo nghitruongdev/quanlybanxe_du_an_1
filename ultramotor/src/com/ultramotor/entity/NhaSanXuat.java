@@ -4,7 +4,7 @@ package com.ultramotor.entity;
 import java.io.Serializable;
 import java.util.List;
 
-public class NhaSanXuat implements Serializable {
+public class NhaSanXuat extends Entity{
 
     private static final long serialVersionUID = 1L;
     private String idNSX;

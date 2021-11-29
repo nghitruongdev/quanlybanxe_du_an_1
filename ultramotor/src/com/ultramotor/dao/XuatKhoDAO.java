@@ -14,22 +14,22 @@ public class XuatKhoDAO extends UltraDAO<PhieuXuatKho, String> {
 
     {
         TABLE_NAME = "PhieuXuatKho";
-        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_PX");
-        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id_PX");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
     }
 
     @Override
-    public void insert(PhieuXuatKho e) {
+    public int insert(PhieuXuatKho e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void update(PhieuXuatKho e) {
+    public int update(PhieuXuatKho e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void delete(String id) {
+    public int delete(String id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -54,22 +54,22 @@ class ChiTietXuatKhoDAO extends UltraDAO<ChiTietXuatKho, Integer> {
 
     {
         TABLE_NAME = "ChiTietXuatKho";
-        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "ID_CTXK");
-        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "ID_CTXK");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
     }
 
     @Override
-    public void insert(ChiTietXuatKho e) {
+    public int insert(ChiTietXuatKho e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void update(ChiTietXuatKho e) {
+    public int update(ChiTietXuatKho e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void delete(Integer id) {
+    public int delete(Integer id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

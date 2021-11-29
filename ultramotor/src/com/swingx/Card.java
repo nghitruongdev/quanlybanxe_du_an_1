@@ -16,10 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
-/**
- *
- * @author nghipc
- */
 public class Card extends JPanel {
 
     private MigLayout layout;

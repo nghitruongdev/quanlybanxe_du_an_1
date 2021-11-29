@@ -72,12 +72,15 @@ public class XJdbc {
         return list;
     }
 
-    public static int update(String sql, Object... args) throws SQLException {
+    public static int update(String sql, Object... args) {
         try (Connection con = getCon()) {
             try (PreparedStatement pstmt = getStmt(con, sql, args)) {
                 return pstmt.executeUpdate();
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(XJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return -1;
     }
 
     public static Connection getCon() throws SQLException {

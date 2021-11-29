@@ -4,6 +4,9 @@ import com.swingx.MyScrollBar;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -16,6 +19,8 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 public class Table extends JTable {
+
+    private List<Integer> columnEditable;
 
     public Table() {
         super();
@@ -37,17 +42,6 @@ public class Table extends JTable {
         setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean selected, boolean focus, int i, int i1) {
-//                if (o instanceof ModelProfile) {
-//                    ModelProfile data = (ModelProfile) o;
-//                    Profile cell = new Profile(data);
-//                    if (selected) {
-//                        cell.setBackground(new Color(239, 244, 255));
-//                    } else {
-//                        cell.setBackground(Color.WHITE);
-//                    }
-//                    return cell;
-//
-//                } else 
                 if (o instanceof Boolean) {
                     TableCellRenderer tcr = getDefaultRenderer(Boolean.class);
                     JCheckBox cell = (JCheckBox) tcr;
@@ -116,9 +110,20 @@ public class Table extends JTable {
     }
 
     @Override
-    public boolean isCellEditable(int i, int i1) {
-        Class c = this.getValueAt(i, i1).getClass();
-        return c == Boolean.class || c == ModelAction.class || c==ModelView.class;
+    public boolean isCellEditable(int row, int column) {
+        Class c = this.getValueAt(row, column).getClass();
+        return c == Boolean.class || c == ModelAction.class || c == ModelView.class || (this.columnEditable != null && this.columnEditable.contains(column));
+    }
+
+    public List<Integer> getColumnEditable() {
+        return columnEditable;
+    }
+
+    public void addColumnEditable(Integer... column) {
+        if (this.columnEditable == null) {
+            this.columnEditable = new ArrayList<>();
+        }
+        this.columnEditable.addAll(Arrays.asList(column));
     }
 
 }

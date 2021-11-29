@@ -13,22 +13,22 @@ public class DichVuDAO extends UltraDAO<DichVu, String> {
 
     {
         TABLE_NAME = "DichVu";
-        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "idDV");
-        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "idDV");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
     }
 
     @Override
-    public void insert(DichVu e) {
+    public int insert(DichVu e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void update(DichVu e) {
+    public int update(DichVu e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void delete(String id) {
+    public int delete(String id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

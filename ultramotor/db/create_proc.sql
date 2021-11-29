@@ -52,105 +52,6 @@ drop proc if exists usp_insert_NhapKho
 go
 
 create proc usp_insert_NhapKho
-	(@phieunhap PhieuNhapKhoType READONLY, @chitiet ChiTietNhapKhoType READONLY)
-AS 
-BEGIN
-	INSERT INTO PhieuNhapKho
-		SELECT TOP(1) * FROM @phieunhap;
-	
-	SET XACT_ABORT ON;
-	BEGIN TRY
-		--thêm dữ liệu bảng phiếu nhập kho
-	
-
-		BEGIN TRANSACTION;
-			--thêm dữ liệu bảng chi tiết nhập kho
-			INSERT INTO ChiTietNhapKho
-				SELECT * FROM @chitiet;
-
-		COMMIT TRANSACTION;
-	END TRY
-	BEGIN CATCH
-		SELECT   
-			 ERROR_NUMBER() AS ErrorNumber  
-			,ERROR_SEVERITY() AS ErrorSeverity  
-			,ERROR_STATE() AS ErrorState  
-			,ERROR_LINE () AS ErrorLine  
-			,ERROR_PROCEDURE() AS ErrorProcedure  
-			,ERROR_MESSAGE() AS ErrorMessage;  
-
-		IF (XACT_STATE()) = -1
-		BEGIN
-			PRINT  
-				N'The transaction is in an uncommittable state.' +  
-				'Rolling back transaction.'  
-			ROLLBACK TRANSACTION;
-
-			
-
-			RAISERROR (N'Cập nhật dữ liệu trong Database không thành công.', -- Message text.  
-           10, -- Severity,  
-           1)-- State,
-           --N'number', -- First argument.  
-           --5); -- Second argument.  
-		-- The message text returned is: This is message number 5.
-		END;
-
-		DELETE FROM PhieuNhapKho WHERE id_PN IN (SELECT id_PN FROM @chitiet);
-
-	END CATCH
-END
-GO
-
--- Tạo proc NhapKho -------------------------------------------------------------------------------
-drop proc if exists usp_insert_NhapKho
-go
-
-create proc usp_insert_NhapKho
-	(@chitiet ChiTietNhapKhoType READONLY)
-AS 
-BEGIN
-	
-	SET XACT_ABORT ON;
-	BEGIN TRY
-		BEGIN TRANSACTION;
-			--thêm dữ liệu bảng chi tiết nhập kho
-			INSERT INTO ChiTietNhapKho
-				SELECT * FROM @chitiet;
-
-		COMMIT TRANSACTION;
-	END TRY
-	BEGIN CATCH
-		IF (XACT_STATE()) = -1
-		BEGIN
-			PRINT  
-				N'The transaction is in an uncommittable state.' +  
-				'Rolling back transaction.'  
-			ROLLBACK TRANSACTION;
-
-			DELETE FROM PhieuNhapKho WHERE id_PN IN (SELECT id_PN FROM @chitiet);
-
-			RAISERROR (N'Cập nhật dữ liệu trong Database không thành công.', -- Message text.  
-           10, -- Severity,  
-           1)-- State,
-           --N'number', -- First argument.  
-           --5); -- Second argument.  
-		-- The message text returned is: This is message number 5.
-		END;
-
-		IF (XACT_STATE()) = 1  
-		BEGIN  
-			PRINT  
-				N'The transaction is committable.' +  
-				'Committing transaction.'  
-			COMMIT TRANSACTION;     
-		END;
-
-	END CATCH
-END
-GO
-
-create proc usp_insert_NhapKho
 	(@chitiet ChiTietNhapKhoType READONLY)
 AS
 BEGIN
@@ -217,4 +118,101 @@ END
 GO
 
 exec  usp_select_modelSP '%%'
-			
+
+
+-- tạo proc cập nhật loại hàng
+
+DROP PROC IF EXISTS usp_insert_LoaiHang
+GO
+
+CREATE PROC usp_insert_LoaiHang
+(
+	@id_LH VARCHAR(20),
+    @TenLoaiHang NVARCHAR(255)
+)
+AS
+BEGIN
+	IF NOT EXISTS (SELECT 0 FROM LoaiHang WHERE id_LH = @id_LH)
+			INSERT INTO LoaiHang VALUES (@id_LH, @TenLoaiHang)
+	ELSE
+		UPDATE LoaiHang SET TenLoaiHang = @TenLoaiHang WHERE id_LH = @id_LH
+END
+GO
+
+DROP PROC IF EXISTS usp_insert_NhaSanXuat
+GO
+
+CREATE PROC usp_insert_NhaSanXuat
+(
+	@id_NSX VARCHAR(20),
+    @TenNSX NVARCHAR(255)
+)
+AS
+BEGIN
+	IF NOT EXISTS (SELECT 0 FROM NhaSanXuat WHERE id_NSX = @id_NSX)
+			INSERT INTO NhaSanXuat VALUES (@id_NSX, @TenNSX)
+	ELSE
+		UPDATE NhaSanXuat SET TenNSX = @TenNSX WHERE id_NSX = @id_NSX
+END
+GO
+
+
+DROP PROC IF EXISTS usp_insert_DongSanPham
+GO
+
+CREATE PROC usp_insert_DongSanPham
+(	
+	@id_DongSP VARCHAR(20),
+    @tenDongSP NVARCHAR(100),
+    @id_LH VARCHAR(20),
+    @id_NSX VARCHAR(20)
+)
+AS
+BEGIN
+	IF NOT EXISTS (SELECT 0 FROM DongSanPham WHERE id_DongSP = @id_DongSP)
+			INSERT INTO DongSanPham VALUES (@id_DongSP, @tenDongSP, @id_LH, @id_NSX)
+	ELSE
+		UPDATE DongSanPham SET tenDongSP = @tenDongSP, id_LH = @id_LH, id_NSX = @id_NSX WHERE id_DongSP = @id_DongSP
+END
+GO
+
+DROP PROC IF EXISTS usp_insert_SanPham
+GO
+
+CREATE PROC usp_insert_SanPham
+(
+	@SKU NVARCHAR(20),
+    @tenSP NVARCHAR(100),
+    @hinh NVARCHAR(20) = '',
+    @mauSac NVARCHAR(20),
+    @phanKhoi NVARCHAR(20),
+    @doiXe INT,
+    @thoiGianBH INT,
+    @DiaChiSX NVARCHAR(255) = N'Vietnam',
+    @giaTien FLOAT,
+    @moTa NVARCHAR(255) = '',
+    @id_DongSP VARCHAR(20),
+    @id_NV NVARCHAR(10)
+)
+AS
+BEGIN
+	IF NOT EXISTS (SELECT 0 FROM SanPham WHERE SKU = @SKU)
+			INSERT INTO SanPham VALUES (@SKU, @tenSP, @hinh, @mauSac, @phanKhoi, @doiXe , @thoiGianBH, @DiaChiSX, @giaTien, @moTa, @id_DongSP, @id_NV)
+	ELSE
+		UPDATE SanPham 
+		SET 
+			tenSP = @tenSP,
+			hinh = @hinh,
+			mauSac = @mauSac,
+			phanKhoi = @phanKhoi,
+			doiXe = @doiXe,
+			thoiGianBH = @thoiGianBH,
+			DiaChiSX = @DiaChiSX,
+			giaTien = @giaTien,
+			moTa = @moTa,
+			id_DongSP = @id_DongSP,
+			id_NV = @id_NV
+		WHERE SKU = @SKU
+END
+GO
+

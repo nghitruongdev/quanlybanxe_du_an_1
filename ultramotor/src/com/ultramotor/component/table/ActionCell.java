@@ -13,6 +13,7 @@ public class ActionCell extends javax.swing.JPanel {
         this.model = model;
         
         btnEdit.addActionListener((ActionEvent e)->{
+            System.out.println(model.getEvent()==null);
             model.getEvent().update(model.getEntity());
         });
         

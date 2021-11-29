@@ -1,7 +1,6 @@
-
 package com.ultramotor.entity;
 
-public class SanPham {
+public class SanPham extends Entity {
 
     private String sku;
     private String tenSP;
@@ -24,7 +23,7 @@ public class SanPham {
         this.sku = sku;
     }
 
-    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi,int doiXe, int thoiGianBH, String diaChiSX, double giaTien, String moTa, int tonKho, String idDongSP, String idNV) {
+    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi, int doiXe, int thoiGianBH, String diaChiSX, double giaTien, String moTa, String idDongSP, String idNV) {
         this.sku = sku;
         this.tenSP = tenSP;
         this.hinh = hinh;
@@ -37,7 +36,6 @@ public class SanPham {
         this.moTa = moTa;
         this.idDongSP = idDongSP;
         this.idNV = idNV;
-        this.tonKho = tonKho;
     }
 
     public int gettonKho() {
@@ -48,7 +46,6 @@ public class SanPham {
         this.tonKho = TonKho;
     }
 
-    
     public String getSku() {
         return sku;
     }
@@ -145,8 +142,6 @@ public class SanPham {
         this.doiXe = doiXe;
     }
 
-    
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -171,5 +166,5 @@ public class SanPham {
     public String toString() {
         return "com.ultramotor.entity.SanPham[ sku=" + sku + " ]";
     }
-    
+
 }

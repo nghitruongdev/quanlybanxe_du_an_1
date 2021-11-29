@@ -237,8 +237,8 @@ public class TextField extends JFormattedTextField {
     @Override
     public void setText(String string) {
         if (!getText().equals(string)) {
-            showing(string.equals(""));
-            if (string.equals("")) {
+            showing(string == null || string.equals(""));
+            if ("".equals(string)) {
                 setValidInput(true);
             }
         }

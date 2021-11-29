@@ -14,23 +14,25 @@ public class NhaSanXuatDAO extends UltraDAO<NhaSanXuat, String> {
 
     {
         TABLE_NAME = "NhaSanXuat";
-        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_NSX");
-        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id_NSX");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
+    }
+    final String INSERT_SQL = String.format("exec usp_insert_%s ?, ?", TABLE_NAME);
+    final String DELETE_SQL = String.format("DELETE FROM %s WHERE %s = ?", TABLE_NAME, "id_NSX");
+
+    @Override
+    public int insert(NhaSanXuat e) {
+        return XJdbc.update(INSERT_SQL, e.getIdNSX(), e.getTenNSX());
     }
 
     @Override
-    public void insert(NhaSanXuat e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int update(NhaSanXuat e) {
+        return insert(e);
     }
 
     @Override
-    public void update(NhaSanXuat e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void delete(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int delete(String id) {
+        return XJdbc.update(DELETE_SQL, id);
     }
 
     @Override
@@ -47,10 +49,5 @@ public class NhaSanXuatDAO extends UltraDAO<NhaSanXuat, String> {
         }
         return list;
     }
-
-//    @Override
-//    public CachedRowSet getRowSet() {
-//        return XJdbc.getRowSet(SELECT_ALL);
-//    }
 
 }

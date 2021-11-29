@@ -16,8 +16,8 @@ public class NhapKhoDAO extends UltraDAO<PhieuNhapKho, String> {
 
     {
         TABLE_NAME = "PhieuNhapKho";
-        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_PN");
-        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id_PN");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
     }
     final String INSERT_SQL = String.format("INSERT INTO %s (%s, %s ,%s ) VALUES (?, ?, ?)", TABLE_NAME, "id_PN", "ngayNhap", "id_NV");
     final String DELETE_SQL = String.format("DELETE FROM %s WHERE %s = ?", TABLE_NAME, "id_PN");
@@ -26,26 +26,18 @@ public class NhapKhoDAO extends UltraDAO<PhieuNhapKho, String> {
     static ChiTietNhapKhoDAO dao = new ChiTietNhapKhoDAO();
 
     @Override
-    public void insert(PhieuNhapKho e) {
-        try {
-            XJdbc.update(INSERT_SQL, e.getIdPN(), e.getNgayNhap(), e.getIdNV());
-        } catch (SQLException ex) {
-            Logger.getLogger(NhapKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public int insert(PhieuNhapKho e) {
+        return XJdbc.update(INSERT_SQL, e.getIdPN(), e.getNgayNhap(), e.getIdNV());
     }
 
     @Override
-    public void update(PhieuNhapKho e) {
+    public int update(PhieuNhapKho e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void delete(String id) {
-        try {
-            XJdbc.update(DELETE_SQL, id);
-        } catch (SQLException ex) {
-            Logger.getLogger(NhapKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public int delete(String id) {
+        return XJdbc.update(DELETE_SQL, id);
     }
 
     @Override
@@ -70,34 +62,30 @@ public class NhapKhoDAO extends UltraDAO<PhieuNhapKho, String> {
         insert(pnk);
         dao.insert(chiTiet);
     }
-//    public void insertWithChiTiet(PhieuNhapKho pnk, SQLServerDataTable chiTiet) throws SQLException {
-//        XJdbcServer.update(INSERT_CHITIET, new String[]{"ChiTietNhapKhoType", null, null, null}, chiTiet, pnk.getIdPN(), pnk.getNgayNhap(), pnk.getIdNV());
-//    }
-
 }
 
 class ChiTietNhapKhoDAO extends UltraDAO<ChiTietNhapKho, Integer> {
 
     {
         TABLE_NAME = "ChiTietNhapKho";
-        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_CTNK");
-        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id_CTNK");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
     }
     final String SELECT_BY_PHIEU_NHAP = String.format("select * from %s where %s = ?", TABLE_NAME, "id_PN");
     final String INSERT_MULTIPLE_CHITIET = "exec usp_insert_NhapKho ?";
 
     @Override
-    public void insert(ChiTietNhapKho e) {
+    public int insert(ChiTietNhapKho e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void update(ChiTietNhapKho e) {
+    public int update(ChiTietNhapKho e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void delete(Integer id) {
+    public int delete(Integer id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

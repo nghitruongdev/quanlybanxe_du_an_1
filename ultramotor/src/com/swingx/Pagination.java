@@ -1,6 +1,7 @@
 package com.swingx;
 
 import com.ultramotor.ui.khachhang.*;
+import com.ultramotor.util.MyConstants;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
@@ -25,17 +26,17 @@ public class Pagination extends JComponent {
     private String[] colors;
     private PaginationEvent event;
     private MigLayout layout;
-    public static Map<String, Color> colorMap;
+    public static Map<String, Color> colorMap = MyConstants.colorMap;
 
-    static {
-        colorMap = new HashMap<>();
-        colorMap.put("Trắng", Color.white);
-        colorMap.put("Đen", Color.black);
-        colorMap.put("Xanh", Color.blue);
-        colorMap.put("Vàng", Color.yellow);
-        colorMap.put("Đỏ", Color.red);
-        colorMap.put("Xám", Color.GRAY);
-    }
+//    static {
+//        colorMap = new HashMap<>();
+//        colorMap.put("Trắng", Color.white);
+//        colorMap.put("Đen", Color.black);
+//        colorMap.put("Xanh", Color.blue);
+//        colorMap.put("Vàng", Color.yellow);
+//        colorMap.put("Đỏ", Color.red);
+//        colorMap.put("Xám", Color.GRAY);
+//    }
 
     public void setCurrentIndex(int index) {
         this.currentIndex = index;
@@ -98,13 +99,13 @@ public class Pagination extends JComponent {
         this.event = event;
     }
 
-    public static Map<String, Color> getColorMap() {
-        return colorMap;
-    }
-
-    public static void setColorMap(Map<String, Color> colorMap) {
-        Pagination.colorMap = colorMap;
-    }
+//    public static Map<String, Color> getColorMap() {
+//        return colorMap;
+//    }
+//
+//    public static void setColorMap(Map<String, Color> colorMap) {
+//        Pagination.colorMap = colorMap;
+//    }
 
     public Pagination() {
         layout = new MigLayout("insets 5", "[fill, center]0[fill, center]");
