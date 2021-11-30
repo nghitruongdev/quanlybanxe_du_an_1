@@ -111,7 +111,11 @@ public class Table extends JTable {
 
     @Override
     public boolean isCellEditable(int row, int column) {
-        Class c = this.getValueAt(row, column).getClass();
+        Object o = this.getValueAt(row, column);
+        if (o == null) {
+            return false;
+        }
+        Class c = o.getClass();
         return c == Boolean.class || c == ModelAction.class || c == ModelView.class || (this.columnEditable != null && this.columnEditable.contains(column));
     }
 

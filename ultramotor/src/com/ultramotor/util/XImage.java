@@ -1,6 +1,7 @@
 package com.ultramotor.util;
 
 import com.swingx.ImageAvatar;
+import com.swingx.PictureBox;
 import java.awt.Image;
 import java.io.File;
 import java.net.URL;
@@ -36,16 +37,6 @@ public class XImage {
         chooser.addChoosableFileFilter(new FileNameExtensionFilter("Images", "jpeg", "jpg", "png", "gif", "bmp", "webmp"));
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.showOpenDialog(null);
-//        new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        try{
-//                            Thread.sleep(1000);
-//                           
-//                        }catch(InterruptedException e){
-//                        }
-//                    }
-//                }).start();
          setIcon(chooser.getSelectedFile(), comp);
     }
 
@@ -58,11 +49,11 @@ public class XImage {
     public static void setIcon(File file, JComponent comp) {
         try {
             if (file == null || !file.isFile() || !file.exists()) {
-                throw new Exception();
+                throw new Exception("Không tìm thấy file");
             }
             ImageIcon icon = new ImageIcon(file.getAbsolutePath());
             if (icon == null) {
-                throw new Exception();
+                throw new Exception("Không load được hình ảnh");
             }
             if (comp instanceof JLabel) {
                 JLabel label = (JLabel) comp;
@@ -72,6 +63,11 @@ public class XImage {
             } else if (comp instanceof ImageAvatar) {
                 ImageAvatar avt = (ImageAvatar) comp;
                 avt.setIcon(icon);
+                avt.setToolTipText(file.getName());
+            }else if(comp instanceof PictureBox){
+                PictureBox avt = (PictureBox) comp;
+                System.out.println("PictureBox is + " + comp);
+                avt.setImage(icon);
                 avt.setToolTipText(file.getName());
             }
             XFile.saveTemp(file);

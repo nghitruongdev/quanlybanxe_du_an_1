@@ -5,10 +5,11 @@
  */
 package com.ultramotor.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class HoaDon extends Entity{
+public class HoaDon extends Entity {
 
     private String idHD;
     private Date thoiGian;
@@ -16,7 +17,7 @@ public class HoaDon extends Entity{
     private String trangThai;
     private String idKH;
     private String idNV;
-    private List<ChiTietHoaDon> chiTietHoaDonList;
+    private List<ChiTietHoaDon> listCTHD = new ArrayList<>();
 
     public HoaDon() {
     }
@@ -66,12 +67,16 @@ public class HoaDon extends Entity{
         this.trangThai = trangThai;
     }
 
-    public List<ChiTietHoaDon> getChiTietHoaDonList() {
-        return chiTietHoaDonList;
+    public List<ChiTietHoaDon> getListCTHD() {
+        return listCTHD;
     }
 
-    public void setChiTietHoaDonList(List<ChiTietHoaDon> chiTietHoaDonList) {
-        this.chiTietHoaDonList = chiTietHoaDonList;
+    public void setListCTHD(List<ChiTietHoaDon> listCTHD) {
+        this.listCTHD = listCTHD;
+    }
+
+    public void addCTHD(ChiTietHoaDon ct) {
+        this.listCTHD.add(ct);
     }
 
     public String getIdKH() {
@@ -88,6 +93,12 @@ public class HoaDon extends Entity{
 
     public void setIdNV(String idNV) {
         this.idNV = idNV;
+    }
+
+    public double getTongTien() {
+        double sum = 0;
+        sum = listCTHD.stream().map(ct -> ct.getDonGia()).reduce(sum, (accumulator, _item) -> accumulator + _item);
+        return sum;
     }
 
     @Override
@@ -112,7 +123,7 @@ public class HoaDon extends Entity{
 
     @Override
     public String toString() {
-        return "com.ultramotor.entity.HoaDon[ idHD=" + idHD + " ]";
+        return idHD;
     }
 
 }

@@ -2,11 +2,14 @@ package com.ultramotor.dao;
 
 import com.ultramotor.entity.ModelSanPham;
 import com.ultramotor.entity.SanPham;
+import com.ultramotor.ui.hoadon.HoaDonPanel;
 import com.ultramotor.util.XJdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,12 +17,13 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
 
     {
         TABLE_NAME = "SanPham";
-        SELECT_BY_ID_SQL = String.format("select *, dbo.fn_soLuongTonSp(%s) from %s where %s = ?","SKU", TABLE_NAME, "SKU");
-        SELECT_ALL_SQL = String.format("select *, dbo.fn_soLuongTonSp(%s) from %s", "SKU", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select *, dbo.fn_soLuongTonSp(%s) AS N'SoLuongTon' from %s where %s = ?", "SKU", TABLE_NAME, "SKU");
+        SELECT_ALL_SQL = String.format("select *, dbo.fn_soLuongTonSp(%s) AS N'SoLuongTon' from %s", "SKU", TABLE_NAME);
     }
 
     final String INSERT_SQL = String.format("exec usp_insert_%s ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?", TABLE_NAME);
     final String DELETE_SQL = String.format("DELETE FROM %s WHERE %s = ?", TABLE_NAME, "SKU");
+    final String CHECK_HANG_TON_SQL = String.format("SELECT SKU, dbo.fn_soLuongTonSp(SKU) FROM SanPham");
 //    String INSERT_SQL = "INSERT INTO SanPham(SKU,tenSP,hinh,mauSac,phanKhoi,doiXe,thoiGianBH,DiaChiSX,giaTien,moTa,tonKho,id_DongSP,id_NV)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 //    String UPDATE_SQL = "UPDATE SanPham SET tenSP=?,hinh=?,mauSac=?,phanKhoi=?,doiXe=?,thoiGianBH=?,DiaChiSX=?,giaTien=?,moTa=?,tonKho=? ,id_DongSP=?,id_NV=? WHERE SKU=?";
 //    String DELETE_SQL = "DELETE FROM SanPham WHERE SKU=?";
@@ -54,11 +58,13 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
         }
         return list.get(0);
     }
+    int error = 0;
 
     @Override
     public List<SanPham> selectBySQL(String sql, Object... args) {
         List<SanPham> list = new ArrayList<>();
         try (ResultSet rs = XJdbc.query(sql, args)) {
+            System.out.println("Column Count: " + rs.getMetaData().getColumnCount());
             while (rs.next()) {
                 SanPham sp = new SanPham(
                         rs.getString(1),
@@ -85,5 +91,27 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
     public List<SanPham> getListSP(ModelSanPham model) {
         String sql = "SELECT * FROM SanPham WHERE id_DongSP = ? AND DoiXe = ? AND PhanKhoi = ?";
         return selectBySQL(sql, model.getId_dongSP(), model.getDoiXe(), model.getPhanKhoi());
+    }
+
+    public Set<String> checkHangTonSP(String... skus) {
+        Set<String> set = new HashSet<>();
+        StringBuilder sb = new StringBuilder(CHECK_HANG_TON_SQL).append(" WHERE SKU IN (");
+        for (int i = 0; i < skus.length; i++) {
+            if (i == skus.length - 1) {
+                sb.append(String.format("'%s'",skus[i])).append(")");
+                break;
+            }
+            sb.append(String.format("'%s'",skus[i])).append(", ");
+        }
+        try (ResultSet rs = XJdbc.query(sb.toString())) {
+            while (rs.next()) {
+                if (rs.getInt(2) <= 0) {
+                    set.add(rs.getString(1));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return set;
     }
 }
