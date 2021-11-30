@@ -1,5 +1,7 @@
 package com.ultramotor.entity;
 
+import java.util.Objects;
+
 public class SanPham extends Entity {
 
     private String sku;
@@ -12,7 +14,7 @@ public class SanPham extends Entity {
     private String diaChiSX;
     private double giaTien;
     private String moTa;
-    private int tonKho;
+    private Integer tonKho;
     private String idDongSP;
     private String idNV;
 
@@ -144,23 +146,30 @@ public class SanPham extends Entity {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (sku != null ? sku.hashCode() : 0);
+        int hash = 5;
+        hash = 73 * hash + Objects.hashCode(this.sku);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SanPham)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        SanPham other = (SanPham) object;
-        if ((this.sku == null && other.sku != null) || (this.sku != null && !this.sku.equals(other.sku))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SanPham other = (SanPham) obj;
+        if (!Objects.equals(this.sku, other.sku)) {
             return false;
         }
         return true;
     }
+
+ 
 
     @Override
     public String toString() {

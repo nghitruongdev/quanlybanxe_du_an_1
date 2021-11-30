@@ -5,6 +5,7 @@
  */
 package com.ultramotor.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class HoaDon extends Entity{
     private String trangThai;
     private String idKH;
     private String idNV;
-    private List<ChiTietHoaDon> chiTietHoaDonList;
+    private List<ChiTietHoaDon> listCTHD = new ArrayList<>();
 
     public HoaDon() {
     }
@@ -66,14 +67,17 @@ public class HoaDon extends Entity{
         this.trangThai = trangThai;
     }
 
-    public List<ChiTietHoaDon> getChiTietHoaDonList() {
-        return chiTietHoaDonList;
+    public List<ChiTietHoaDon> getListCTHD() {
+        return listCTHD;
     }
 
-    public void setChiTietHoaDonList(List<ChiTietHoaDon> chiTietHoaDonList) {
-        this.chiTietHoaDonList = chiTietHoaDonList;
+    public void setListCTHD(List<ChiTietHoaDon> listCTHD) {
+        this.listCTHD = listCTHD;
     }
-
+    
+    public void addCTHD(ChiTietHoaDon ct){
+        this.listCTHD.add(ct);
+    }
     public String getIdKH() {
         return idKH;
     }

@@ -2,7 +2,7 @@
 package com.ultramotor.entity;
 
 
-public class ChiTietHoaDon {
+public class ChiTietHoaDon extends Entity{
 
     private Integer idCTHD;
     private double donGia;
@@ -16,7 +16,7 @@ public class ChiTietHoaDon {
         this.idCTHD = idCTHD;
     }
 
-    public ChiTietHoaDon(double donGia, String idDV, String idHD, String SKU) {
+    public ChiTietHoaDon(double donGia, String idHD, String SKU) {
         this(null, donGia, idHD, SKU);
     }
 

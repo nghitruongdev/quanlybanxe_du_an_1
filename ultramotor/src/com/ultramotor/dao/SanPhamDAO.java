@@ -14,8 +14,8 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
 
     {
         TABLE_NAME = "SanPham";
-        SELECT_BY_ID_SQL = String.format("select *, dbo.fn_soLuongTonSp(%s) from %s where %s = ?","SKU", TABLE_NAME, "SKU");
-        SELECT_ALL_SQL = String.format("select *, dbo.fn_soLuongTonSp(%s) from %s", "SKU", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select *, dbo.fn_soLuongTonSp(%s) AS N'SoLuongTon' from %s where %s = ?","SKU", TABLE_NAME, "SKU");
+        SELECT_ALL_SQL = String.format("select *, dbo.fn_soLuongTonSp(%s) AS N'SoLuongTon' from %s", "SKU", TABLE_NAME);
     }
 
     final String INSERT_SQL = String.format("exec usp_insert_%s ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?", TABLE_NAME);
@@ -54,11 +54,12 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
         }
         return list.get(0);
     }
-
+int error = 0;
     @Override
     public List<SanPham> selectBySQL(String sql, Object... args) {
         List<SanPham> list = new ArrayList<>();
         try (ResultSet rs = XJdbc.query(sql, args)) {
+            System.out.println("Column Count: " + rs.getMetaData().getColumnCount());
             while (rs.next()) {
                 SanPham sp = new SanPham(
                         rs.getString(1),
