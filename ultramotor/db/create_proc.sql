@@ -216,3 +216,54 @@ BEGIN
 END
 GO
 
+DROP PROC IF EXISTS usp_insert_KhachHang
+GO
+
+CREATE PROC usp_insert_KhachHang
+(
+	@idKH NVARCHAR(10),
+	@HoKH NVARCHAR(20),
+	@TenKH NVARCHAR(20),
+	@GioiTinh BIT,
+	@NgaySinh DATETIME2,
+	@DiaChi NVARCHAR(255),
+	@SDT NVARCHAR(20), 
+	@Email NVARCHAR(50),
+	@ThanhVien BIT = 0,
+	@GhiChu NVARCHAR(255) = '',
+	@id_NV NVARCHAR(10)
+)
+AS
+BEGIN
+	IF NOT EXISTS (SELECT 0 FROM KhachHang WHERE idKH = @idKH)
+			INSERT INTO KhachHang VALUES (@idKH, @HoKH, @TenKH, @GioiTinh, @NgaySinh, @DiaChi, @SDT, @EMAIL, @ThanhVien, @GHICHU, @id_NV)
+	ELSE
+		UPDATE KhachHang 
+		SET 
+			HoKH = @HoKH,
+			TenKH = @TenKH,
+			GioiTinh = @GioiTinh,
+			NgaySinh = @NgaySinh,
+			DiaChi = @DiaChi,
+			SDT = @SDT, 
+			Email = @Email,
+			ThanhVien = @ThanhVien,
+			GhiChu= @GhiChu,
+			id_NV = @id_NV
+		WHERE idKH = @idKH
+END
+GO
+
+DROP PROC IF EXISTS usp_insert_HoaDon
+GO
+
+CREATE PROC usp_insert_ChiTietHoaDon
+(
+	@chitiet ChiTietHoaDonType READONLY
+)
+AS
+BEGIN
+	INSERT INTO ChiTietHoaDon
+		SELECT * FROM @chitiet
+END
+GO

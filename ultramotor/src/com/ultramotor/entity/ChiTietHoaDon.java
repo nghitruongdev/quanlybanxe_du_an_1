@@ -1,8 +1,10 @@
-
 package com.ultramotor.entity;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.sql.Types;
 
-public class ChiTietHoaDon extends Entity{
+public class ChiTietHoaDon extends Entity {
 
     private Integer idCTHD;
     private double donGia;
@@ -27,6 +29,15 @@ public class ChiTietHoaDon extends Entity{
         this.SKU = SKU;
     }
 
+    public static SQLServerDataTable getDataServerTable() throws SQLServerException {
+        SQLServerDataTable dataTable = new SQLServerDataTable();
+        dataTable.addColumnMetadata("id_CTHD", Types.INTEGER);
+        dataTable.addColumnMetadata("donGia", Types.FLOAT);
+        dataTable.addColumnMetadata("SKU", Types.VARCHAR);
+        dataTable.addColumnMetadata("idHD", Types.VARCHAR);
+        return dataTable;
+    }
+
     public Integer getIdCTHD() {
         return idCTHD;
     }
@@ -42,7 +53,6 @@ public class ChiTietHoaDon extends Entity{
     public void setDonGia(double donGia) {
         this.donGia = donGia;
     }
-
 
     public String getIdHD() {
         return idHD;

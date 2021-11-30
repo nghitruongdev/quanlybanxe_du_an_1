@@ -52,8 +52,7 @@ public class XDate {
         return df.format(date);
     }
 
-
-    public static Date convert(Date date, String pattern){
+    public static Date convert(Date date, String pattern) {
         try {
             return parse(toString(date), pattern);
         } catch (ParseException ex) {
@@ -61,8 +60,13 @@ public class XDate {
         }
         return null;
     }
+
     public static boolean isGreaterThan(Date date1, Date date2) {
         return date1.compareTo(date2) > 0;
+    }
+
+    public static boolean isTheSameDay(Date date1, Date date2) {
+        return toString(date1, "ddMMyyyy").equals(toString(date2, "ddMMyyyy"));
     }
 
     public static Date addDays(Date date, long days) {
@@ -72,5 +76,9 @@ public class XDate {
 
     public static Date now() {
         return new Date();
+    }
+
+    public static void main(String[] args) {
+       
     }
 }

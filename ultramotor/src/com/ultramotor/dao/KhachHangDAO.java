@@ -20,8 +20,9 @@ public class KhachHangDAO extends UltraDAO<KhachHang, String> {
         SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
 
     }
-    String INSERT_SQL = "INSERT INTO KhachHang(idKH,HoKH,TenKH,GioiTinh,NgaySinh,DiaChi,SDT,EMAIL,ThanhVien,GHICHU,id_NV)VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-    String UPDATE_SQL = "UPDATE KhachHang SET HoKH=?,TenKH=?,GioiTinh=?,NgaySinh=?,DiaChi=?,SDT=?,EMAIL=?,ThanhVien=?,GHICHU=?,id_NV=? WHERE idKH=?";
+//    String INSERT_SQL = "INSERT INTO KhachHang(idKH,HoKH,TenKH,GioiTinh,NgaySinh,DiaChi,SDT,EMAIL,ThanhVien,GHICHU,id_NV)VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+    String INSERT_SQL = "exec usp_insert_KhachHang ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
+//    String UPDATE_SQL = "UPDATE KhachHang SET HoKH=?,TenKH=?,GioiTinh=?,NgaySinh=?,DiaChi=?,SDT=?,EMAIL=?,ThanhVien=?,GHICHU=?,id_NV=? WHERE idKH=?";
     String DELETE_SQL = "DELETE FROM KhachHang WHERE idKH=?";
     String SQL_SELECT_BY_EMAIL = "SELECT * FROM KhachHang WHERE Email = ?";
 
@@ -34,9 +35,10 @@ public class KhachHangDAO extends UltraDAO<KhachHang, String> {
 
     @Override
     public int update(KhachHang e) {
-        return XJdbcServer.update(UPDATE_SQL,
-                e.getHoKH(), e.getTenKH(), e.getGioiTinh(), e.getNgaySinh(), e.getDiaChi(),
-                e.getSdt(), e.getEmail(), e.getThanhVien(), e.getGhiChu(), e.getMaNV(), e.getIdKH());
+//        return XJdbcServer.update(UPDATE_SQL,
+//                e.getHoKH(), e.getTenKH(), e.getGioiTinh(), e.getNgaySinh(), e.getDiaChi(),
+//                e.getSdt(), e.getEmail(), e.getThanhVien(), e.getGhiChu(), e.getMaNV(), e.getIdKH());
+        return insert(e);
     }
 
     @Override

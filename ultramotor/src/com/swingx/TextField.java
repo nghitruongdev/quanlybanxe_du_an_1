@@ -27,6 +27,7 @@ public class TextField extends JFormattedTextField {
         validInput = true;
         allowEmpty = true;
         onlyField = false;
+        
         setBackground(new Color(255, 255, 255, 0));
 //        setBackground(Color.yellow);
         setOpaque(false);
@@ -167,7 +168,7 @@ public class TextField extends JFormattedTextField {
 
     private void createHintText(Graphics2D g2) {
         Insets in = getInsets();
-        g2.setColor(new Color(150, 150, 150));
+        g2.setColor(hintColor);
         FontMetrics ft = g2.getFontMetrics();
         int fieldSize = (getHeight() - extra);
         double size = extra_top / 2 + fieldSize / 2;
@@ -220,7 +221,7 @@ public class TextField extends JFormattedTextField {
     private String placeholder = "";
     private boolean onlyField;
     private Color lineColor = new Color(3, 155, 216);
-
+    private Color hintColor = new Color(150, 150, 150);
     private boolean roundBorder;
     private boolean drawLine;
     private boolean animateLabel;
@@ -343,4 +344,13 @@ public class TextField extends JFormattedTextField {
         initBorder();
     }
 
+    public Color getHintColor() {
+        return hintColor;
+    }
+
+    public void setHintColor(Color hintColor) {
+        this.hintColor = hintColor;
+    }
+
+    
 }

@@ -87,6 +87,10 @@ public class NhanVien extends Entity {
         this.tenNV = tenNV;
     }
 
+    public String getHoTenNV() {
+        return String.format("%s %s", hoNV, tenNV);
+    }
+
     public Date getNgaySinh() {
         return ngaySinh;
     }

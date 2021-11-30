@@ -26,7 +26,7 @@ public class HoaDon extends Entity {
         this.idHD = idHD;
     }
 
-    public HoaDon(String idHD, Date thoiGian, String loaiThanhToan, String trangThai, String idKH, String idNV) {
+    public HoaDon(String idHD, Date thoiGian, String loaiThanhToan, String trangThai,String idNV, String idKH) {
         this.idHD = idHD;
         this.thoiGian = thoiGian;
         this.loaiThanhToan = loaiThanhToan;
