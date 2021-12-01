@@ -39,6 +39,7 @@ public class MenuButton extends JButton {
         setIcon(icon);
         init();
         setBorder(border);
+        setFocusPainted(false);
     }
 
     private void init() {

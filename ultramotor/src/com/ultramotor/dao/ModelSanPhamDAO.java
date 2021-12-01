@@ -1,7 +1,6 @@
 package com.ultramotor.dao;
 
 import com.ultramotor.entity.ModelSanPham;
-import com.ultramotor.util.SearchFilter;
 import com.ultramotor.util.XJdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,19 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.sql.rowset.FilteredRowSet;
 
 public class ModelSanPhamDAO {
 
-    private SanPhamDAO daoSP = new SanPhamDAO();
-    private FilteredRowSet frs;
+    private final SanPhamDAO daoSP = new SanPhamDAO();
 
     public ModelSanPhamDAO() {
-        initRowSet();
+//        initRowSet();
     }
 
     public List<ModelSanPham> selectAll() {
-        return selectByResultSet(frs);
+        return selectBySQL("exec usp_select_modelSP ?", "%%");
     }
 
     private List<ModelSanPham> selectBySQL(String sql, Object... args) {
@@ -58,15 +55,5 @@ public class ModelSanPhamDAO {
                     .getName()).log(Level.SEVERE, null, ex);
         }
         return list;
-    }
-
-    private void initRowSet() {
-        try (ResultSet rs = XJdbc.query("exec usp_select_modelSP ?", "%%")) {
-            frs = XJdbc.getFactory().createFilteredRowSet();
-            frs.populate(rs);
-        } catch (SQLException ex) {
-            Logger.getLogger(ModelSanPhamDAO.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }
