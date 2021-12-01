@@ -4,7 +4,6 @@ import com.swingx.model.ModelMenu;
 import com.ultramotor.entity.NhanVien;
 import com.ultramotor.entity.NhanVienBanHang;
 import com.ultramotor.entity.NhanVienKho;
-import com.ultramotor.entity.TruongPhong;
 import com.ultramotor.ui.hoadon.HoaDonPanel;
 import com.ultramotor.ui.nhanvien.NhanVienPanel;
 import com.ultramotor.ui.nhanvien.kho.nhapkho.BarcodePanel;
@@ -15,13 +14,9 @@ import com.ultramotor.util.Auth;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -72,11 +67,6 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -93,10 +83,6 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -126,12 +112,13 @@ public class MainFrame extends javax.swing.JFrame {
         pnlHoaDon = new HoaDonPanel();
         setLocationRelativeTo(null);
         NhanVien user = Auth.user;
+        
         if (user == null) {
 //            return;
         }
+        
         pnlMain.setUser(user);
         addMenus(user);
-
     }
 
     private void addMenus(NhanVien user) {
@@ -144,8 +131,7 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
 
-        ModelMenu mnuNhanVien = new ModelMenu("Quản lý nhân viên", new ImageIcon(), getEvent("NhanVien")
-        );
+        ModelMenu mnuNhanVien = new ModelMenu("Quản lý nhân viên", new ImageIcon(), getEvent("NhanVien"));
         ModelMenu mnuHoaDon = new ModelMenu("Quản lý hoá đơn", new ImageIcon(new File(path, "refresh_25px.png").getPath()), getEvent("HoaDon"));
         ModelMenu mnuKhachHang = new ModelMenu("Quản lý khách hàng", new ImageIcon(new File(path, "refresh_25px.png").getPath()), getEvent("KhachHang"));
         ModelMenu mnuSanPham = new ModelMenu("Quản lý sản phẩm", new ImageIcon(new File(path, "refresh_25px.png").getPath()), getEvent("SanPham"));
@@ -186,12 +172,6 @@ public class MainFrame extends javax.swing.JFrame {
         if (panel == null) {
             return;
         }
-        showForm(panel);
-    }
-
-    private void showForm(JPanel panel) {
-        SwingUtilities.invokeLater(() -> {
-            pnlMain.showForm(panel);
-        });
+        pnlMain.showForm(panel);
     }
 }

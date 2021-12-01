@@ -27,19 +27,19 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
     }
 
     private void init() {
-        this.addComponentListener(new ComponentAdapter(){
+        this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
-                 KhachHangController.fillComboNSX(cboNSX, lang);
-            KhachHangController.fillComboLoaiHang(cboLoaiXe, lang);
+                KhachHangController.fillComboNSX(cboNSX, lang);
+                KhachHangController.fillComboLoaiHang(cboLoaiXe, lang);
             }
         });
-        
-        txtSearch.addKeyListener(new KeyAdapter(){
+
+        txtSearch.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 int keycode = e.getExtendedKeyCode();
-                if(keycode==KeyEvent.VK_ENTER){
+                if (keycode == KeyEvent.VK_ENTER) {
                     btnSearch.doClick();
                 }
             }
@@ -53,9 +53,9 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
             }
-        
+
         });
-        
+
     }
 
     @Override

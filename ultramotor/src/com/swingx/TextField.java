@@ -11,7 +11,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -29,7 +28,6 @@ public class TextField extends JFormattedTextField {
         onlyField = false;
         
         setBackground(new Color(255, 255, 255, 0));
-//        setBackground(Color.yellow);
         setOpaque(false);
         initBorder();
         setSelectionColor(new Color(76, 204, 255));
@@ -310,9 +308,6 @@ public class TextField extends JFormattedTextField {
         this.error = errorText;
     }
 
-//    public String getPlaceholder() {
-//        return placeholder;
-//    }
     public void setPlaceholder(String placeholder) {
         this.placeholder = placeholder;
     }

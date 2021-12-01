@@ -1,10 +1,10 @@
-
 package com.ultramotor.ui;
 
 import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.entity.NhanVien;
 import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
+import com.ultramotor.util.MyVerifier;
 import com.ultramotor.util.XMail;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
 public class DangNhapJFrame extends javax.swing.JFrame {
 
@@ -448,7 +449,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         addLabelListeners();
         addBtnListeners();
-
+        setFieldName();
     }
 
     void dangNhap() {
@@ -620,4 +621,18 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         }
     }
 
+    private void setFieldName() {
+        txtEmail.setName("Email");
+        txtTenDangNhap.setName("id");
+        pwdMatKhau.setName("Mật Khẩu");
+        pwdMatKhau1.setName("Mật Khẩu");
+        pwdMatKhau2.setName("Xác nhận mật khẩu");
+        setFieldVerifier(txtEmail, txtTenDangNhap, pwdMatKhau, pwdMatKhau1, pwdMatKhau2);
+    }
+
+    private void setFieldVerifier(JTextComponent... comp) {
+        for (JTextComponent field : comp) {
+            field.setInputVerifier(MyVerifier.DANG_NHAP_VERIFIER);
+        }
+    }
 }

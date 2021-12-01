@@ -148,11 +148,11 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
                 int location = (int) (width * fraction);
                 int locationShow = (int) (width * (1f - fraction));
                 if (next) {
-                    layout.setComponentConstraints(compShow, String.format("pos %d 0 100%% 100%%, w 100%%", locationShow));
-                    layout.setComponentConstraints(compExit, String.format("pos -%d 0 %f 100%%", Math.abs(location), width - location));
+                    layout.setComponentConstraints(compShow, "pos " + locationShow + " 0 100% 100%, w 100%");
+                    layout.setComponentConstraints(compExit, "pos -" + location + " 0 " + (width - location) + " 100%");
                 } else {
-                    layout.setComponentConstraints(compShow, String.format("pos -%d 0 %f 100%%", locationShow, width - locationShow));
-                    layout.setComponentConstraints(compExit, String.format("pos %d 0 100%% 100%%, w 100%%", Math.abs(location)));
+                    layout.setComponentConstraints(compShow, "pos -" + locationShow + " 0 " + (width - locationShow) + " 100%");
+                    layout.setComponentConstraints(compExit, "pos " + location + " 0 100% 100%, w 100%");
                 }
                 panel.revalidate();
             }
