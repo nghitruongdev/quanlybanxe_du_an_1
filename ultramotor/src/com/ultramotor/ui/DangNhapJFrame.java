@@ -448,6 +448,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         addLabelListeners();
         addBtnListeners();
+
     }
 
     void dangNhap() {
