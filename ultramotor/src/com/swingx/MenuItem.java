@@ -1,4 +1,3 @@
-
 package com.swingx;
 
 import com.swingx.event.EventMenu;
@@ -6,30 +5,36 @@ import com.swingx.event.EventMenuSelected;
 import com.swingx.model.ModelMenu;
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.Arrays;
 import net.miginfocom.swing.MigLayout;
 
 public class MenuItem extends javax.swing.JPanel {
+
     private float alpha;
     private ModelMenu model;
     private boolean open;
     private EventMenuSelected eventSelected;
     private int index;
-    
-    public MenuItem(ModelMenu model,EventMenu event, EventMenuSelected eventSelected,int index ) {
+
+    public MenuItem(ModelMenu model, EventMenu event, EventMenuSelected eventSelected, int index) {
         initComponents();
         this.model = model;
         this.eventSelected = eventSelected;
         this.index = index;
+        Font myfont = new Font("Segoe UI", 0, 14);
         setOpaque(false);
-        setLayout(new MigLayout("wrap, fillx, insets 0","[fill]","[fill, 40!]0[fill, 35!]"));
-        MenuButton firstItem = new MenuButton(model.getIcon(), "      "+model.getMenuName());
-        firstItem.addActionListener(e->{
-            if(model.getSubMenu().length>0){
-                if(event.menuPressed(MenuItem.this, !open)){
-                    open= !open;
+        setLayout(new MigLayout("wrap, fillx, insets 0", "[fill]", "[fill, 40!]0[fill, 35!]"));
+        MenuButton firstItem = new MenuButton(model.getIcon(), "      " + model.getMenuName());
+        firstItem.setFont(myfont);
+        firstItem.addActionListener(model.getEvent());
+        firstItem.addActionListener(e -> {
+            if (model.getSubMenu().length > 0) {
+                if (event.menuPressed(MenuItem.this, !open)) {
+                    open = !open;
                 }
             }
             eventSelected.menuSelected(index, -1);
@@ -38,8 +43,9 @@ public class MenuItem extends javax.swing.JPanel {
         int subMenuIndex = -1;
         for (String s : model.getSubMenu()) {
             MenuButton item = new MenuButton(s);
+            item.setFont(myfont);
             item.setIndex(++subMenuIndex);
-            item.addActionListener(e->{
+            item.addActionListener(e -> {
                 eventSelected.menuSelected(index, item.getIndex());
             });
             add(item);
@@ -62,7 +68,6 @@ public class MenuItem extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    
     @Override
     protected void paintComponent(Graphics grphcs) {
         int width = getWidth();
@@ -140,5 +145,4 @@ public class MenuItem extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
 }

@@ -45,19 +45,19 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="mainForm1" min="-2" pref="1054" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
+                  <Component id="pnlMain" pref="1054" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="mainForm1" alignment="0" pref="575" max="32767" attributes="0"/>
+              <Component id="pnlMain" alignment="0" pref="575" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="com.ultramotor.component.MainForm" name="mainForm1">
+        <Component class="com.ultramotor.component.MainForm" name="pnlMain">
         </Component>
       </SubComponents>
     </Container>

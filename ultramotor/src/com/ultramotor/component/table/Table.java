@@ -1,6 +1,7 @@
 package com.ultramotor.component.table;
 
 import com.swingx.MyScrollBar;
+import com.swingx.scrollbar.ScrollBarCustom;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -88,7 +89,7 @@ public class Table extends JTable {
 
     public void fixTable(JScrollPane scroll) {
         scroll.getViewport().setBackground(Color.WHITE);
-        scroll.setVerticalScrollBar(new MyScrollBar());
+        scroll.setVerticalScrollBar(new ScrollBarCustom());
         JPanel p = new JPanel();
         p.setBackground(Color.WHITE);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);

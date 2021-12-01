@@ -18,17 +18,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class XImage {
 
-//    public static Image getAppIcon() {
-//        URL url = XImage.class.getResource("/com/ultramotor/img/logo.png");
-//        return new ImageIcon(url).getImage();
-//    }
     public static Icon getIcon(String fileName) {
         URL url = XImage.class.getResource("/com/ultramotor/img/icon/" + fileName);
         return new ImageIcon(url);
     }
 
     public static File read(String fileName) {
-        return new File("logos", fileName);
+        return new File("./logos/"+ fileName);
     }
 
     public static void uploadIcon(JComponent comp) {
@@ -37,7 +33,7 @@ public class XImage {
         chooser.addChoosableFileFilter(new FileNameExtensionFilter("Images", "jpeg", "jpg", "png", "gif", "bmp", "webmp"));
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.showOpenDialog(null);
-         setIcon(chooser.getSelectedFile(), comp);
+        setIcon(chooser.getSelectedFile(), comp);
     }
 
     public static Icon resize(ImageIcon icon, int resizedWidth, int resizedHeight) {

@@ -5,6 +5,8 @@
  */
 package com.ultramotor.component;
 
+import com.swingx.model.ModelMenu;
+import com.ultramotor.entity.NhanVien;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.BorderFactory;
@@ -23,7 +25,7 @@ public class MainForm extends javax.swing.JPanel {
     private MigLayout layout;
     private Header header;
     private Menu menu;
-    private MainPanel main;
+    private MainPanel pnlMain;
     private Animator animator;
 
     public MainForm() {
@@ -36,14 +38,14 @@ public class MainForm extends javax.swing.JPanel {
         bg.setLayout(layout);
         menu = new Menu();
         header = new Header();
-        main = new MainPanel();
+        pnlMain = new MainPanel();
         bg.add(menu, "w 230!, spany 2");
         bg.add(header, "h 60!, wrap");
-        bg.add(main, "w 100%, h 100%");
+        bg.add(pnlMain, "w 100%, h 100%");
         menu.addEvent((int menuIndex, int subMenuIndex) -> {
+            
             System.out.println("Hello world" + menuIndex + ", subMenu: " + subMenuIndex);
         });
-        menu.initMenuItem();
         TimingTarget target = new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
@@ -80,6 +82,19 @@ public class MainForm extends javax.swing.JPanel {
         });
     }
 
+    public void setUser(NhanVien user){
+        header.setUser(user);
+    }
+    
+    public void addMenu(ModelMenu...models){
+        for (ModelMenu model : models) {
+            menu.add(model);
+        }
+    }
+    
+    public void showForm(Component comp){
+        pnlMain.showForm(comp);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
