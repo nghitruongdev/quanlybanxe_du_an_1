@@ -1,100 +1,95 @@
 package com.ultramotor.ui;
 
-import com.ultramotor.component.Header;
-import com.ultramotor.component.Menu;
-import com.swingx.model.ModelMenu;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import net.miginfocom.swing.MigLayout;
-import org.jdesktop.animation.timing.Animator;
-import org.jdesktop.animation.timing.TimingTarget;
-import org.jdesktop.animation.timing.TimingTargetAdapter;
+public class MainFrame extends javax.swing.JFrame {
 
-public class MainFrame extends JFrame {
-
-    public static void main(String[] args) {
-        JFrame frame = new MainFrame();
-//        frame.pack();
-        frame.setVisible(true);
-    }
-    private ActionListener menuListener;
-    private MigLayout layout;
-    private JLayeredPane bg;
-    private Menu menu;
-    private Header header;
-    private MainPanel body;
-    private Animator animator;
-
+  
     public MainFrame() {
-        setLocationRelativeTo(null);
-        this.setSize(1200, 800);
-//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        init();
+        initComponents();
     }
 
-    private void init() {
-        initListeners();
-        layout = new MigLayout("fill", "0[]0[100%, fill]0", "0[fill, top]0");
-        bg = new JLayeredPane();
-        bg.setLayout(layout);
+   
 
-        menu = new Menu();
-        initMenu(menu);
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-        header = new Header();
-        header.addMenuListener(menuListener);
+        bg = new javax.swing.JLayeredPane();
+        mainForm1 = new com.ultramotor.component.MainForm();
 
-        body = new MainPanel();
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        bg.add(menu, "w 230!, spany 2");
-        bg.add(header, "h 70!, wrap");
-        bg.add(body, "w 100%, h 100%");
-        add(bg);
-    }
+        bg.setBackground(new java.awt.Color(245, 245, 245));
+        bg.setOpaque(true);
 
-    private void initListeners() {
-        TimingTarget target = new TimingTargetAdapter() {
-            @Override
-            public void end() {
-                menu.setShowing(!menu.isShowing());
-            }
+        bg.setLayer(mainForm1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-            @Override
-            public void timingEvent(float fraction) {
-                double width;
-                if (menu.isShowing()) {
-                    width = 70 + (160 * (1f - fraction)); //giam dan
-                } else {
-                    width = 70 + (160 * fraction); //tang dan
+        javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
+        bg.setLayout(bgLayout);
+        bgLayout.setHorizontalGroup(
+            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bgLayout.createSequentialGroup()
+                .addComponent(mainForm1, javax.swing.GroupLayout.PREFERRED_SIZE, 1054, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
+        );
+        bgLayout.setVerticalGroup(
+            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mainForm1, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bg)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bg)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
                 }
-                layout.setComponentConstraints(menu, String.format("w %f!, spany2", width));
-                menu.revalidate();
-                revalidate();
-
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
-        };
-        animator = new Animator(400, target);
-        animator.setResolution(0);
-        animator.setDeceleration(0.5f);
-        animator.setAcceleration(0.5f);
-        menuListener = (ActionEvent ae) -> {
-            if (!animator.isRunning()) {
-                animator.start();
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainFrame().setVisible(true);
             }
-        };
+        });
     }
 
-    public void initMenu(Menu menu) {
-        menu.addMenu(new ModelMenu("Profile", new ImageIcon(getClass().getResource("/com/raven/icon/user.png"))));
-        menu.addMenu(new ModelMenu("Message", new ImageIcon(getClass().getResource("/com/raven/icon/message.png"))));
-        menu.addMenu(new ModelMenu("Report", new ImageIcon(getClass().getResource("/com/raven/icon/report.png"))));
-        menu.addMenu(new ModelMenu("Setting", new ImageIcon(getClass().getResource("/com/raven/icon/setting.png"))));
-        menu.addMenu(new ModelMenu("Key", new ImageIcon(getClass().getResource("/com/raven/icon/key.png"))));
-    }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLayeredPane bg;
+    private com.ultramotor.component.MainForm mainForm1;
+    // End of variables declaration//GEN-END:variables
 }

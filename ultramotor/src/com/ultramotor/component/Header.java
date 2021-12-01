@@ -49,7 +49,7 @@ public class Header extends JPanel {
 
         add(cmdMenu, "w 50!, h 50!");
         add(pnlInfo,"h 50!");
-        add(avatar, "w 60!, h 60!");
+        add(avatar, "w 50!, h 50!");
         
         popup = new JPopupMenu();
         popup.add(new JMenuItem("Đăng Xuất"));
@@ -76,7 +76,7 @@ public class Header extends JPanel {
         });
     }
     
-    public void addMenuListener(ActionListener al){
+    public void addMenuEvent(ActionListener al){
         cmdMenu.addActionListener(al);
     }
 

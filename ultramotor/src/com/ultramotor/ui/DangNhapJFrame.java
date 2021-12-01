@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 
 public class DangNhapJFrame extends javax.swing.JFrame {
 
-    //
     public DangNhapJFrame() {
         initComponents();
         init();
@@ -69,6 +68,8 @@ public class DangNhapJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UltraMotor - Đăng Nhập");
+        setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        setUndecorated(true);
 
         pnlBackground.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -451,6 +452,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         addLabelListeners();
         addBtnListeners();
+
     }
 
     void dangNhap() {
@@ -568,21 +570,21 @@ public class DangNhapJFrame extends javax.swing.JFrame {
             MsgBox.error("Không tìm thấy địa chỉ Email");
         } else {
             Auth.user = nv; //lưu thông tin user
-        Auth.forgotPW = true; //đánh dấu là user quên pass
-        //soạn nội dung mail với mã OTP
-        String mailContent = "<div><p>Xin chào,</p>"
-                + "<p>Bạn nhận được email này vì bạn hoặc ai đó đã yêu cầu "
-                + "thay đổi mật khẩu cho tài khoản của bạn trong LapTrinhCity.</p>"
-                + "<p>Email này hoàn toàn có thể bỏ qua nếu bạn không yêu cầu thay đổi mật khẩu.</p>"
-                + "<p>Mã OTP của bạn là: " + String.format("<span style =\"color: red\">%s</span>", Auth.getNewOTP()) + "</p>"
-                + "<p>Vui lòng không chia sẻ mã OTP cho bất cứ ai.</p>"
-                + "<p>UltraMotor System Team.</p></div>";
+            Auth.forgotPW = true; //đánh dấu là user quên pass
+            //soạn nội dung mail với mã OTP
+            String mailContent = "<div><p>Xin chào,</p>"
+                    + "<p>Bạn nhận được email này vì bạn hoặc ai đó đã yêu cầu "
+                    + "thay đổi mật khẩu cho tài khoản của bạn trong LapTrinhCity.</p>"
+                    + "<p>Email này hoàn toàn có thể bỏ qua nếu bạn không yêu cầu thay đổi mật khẩu.</p>"
+                    + "<p>Mã OTP của bạn là: " + String.format("<span style =\"color: red\">%s</span>", Auth.getNewOTP()) + "</p>"
+                    + "<p>Vui lòng không chia sẻ mã OTP cho bất cứ ai.</p>"
+                    + "<p>UltraMotor System Team.</p></div>";
 
-        pnlNhapOTP.getBtnResend().addActionListener((ActionEvent e) -> {
-            XMail.sendMail(email, mailContent, "[UltraMotor] KHÔI PHỤC MẬT KHẨU"); //gửi mail
-        });
-        showCard("NhapOTP");
-        pnlNhapOTP.getBtnResend().doClick();
+            pnlNhapOTP.getBtnResend().addActionListener((ActionEvent e) -> {
+                XMail.sendMail(email, mailContent, "[UltraMotor] KHÔI PHỤC MẬT KHẨU"); //gửi mail
+            });
+            showCard("NhapOTP");
+            pnlNhapOTP.getBtnResend().doClick();
         }
     }
 

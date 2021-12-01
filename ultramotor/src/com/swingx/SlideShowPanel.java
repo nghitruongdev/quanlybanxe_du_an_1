@@ -25,6 +25,7 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
     private boolean next;
 
     public SlideShowPanel() {
+        setOpaque(false);
         layout = new MigLayout("insets 0");
         panel = new JPanel();
         panel.setLayout(layout);
@@ -62,7 +63,9 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
     public void addImages(Icon... images) {
         coms.clear();
         for (Icon image : images) {
-            this.coms.add(new PictureBox(image));
+            PictureBox box = new PictureBox(image);
+            box.setOpaque(false);
+            this.coms.add(box);
         }
         initSlideShow();
     }
