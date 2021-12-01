@@ -219,32 +219,6 @@ insert into SanPham values
 ('SK65', 'Piaggio Vespa 2021', 'vesdo.jpg', N'Đỏ', '125cc', '2021', '36', 'TPHCM', '8000000000', N'Vespa là thương hiệu của dòng sản phẩm xe gắn máy yên thấp bánh nhỏ của hãng Piaggio', 'DSP25', 'NV25'),
 ('SK66', 'Piaggio Vespa 2021', 'vestrang.jpg', N'Trắng', '125cc', '2021', '36', 'TPHCM', '8000000000', N'Vespa là thương hiệu của dòng sản phẩm xe gắn máy yên thấp bánh nhỏ của hãng Piaggio', 'DSP25', 'NV25');
 
-
-
--- DỊCH VỤ
-insert into DichVu values
-('DV01', N'Mua bán xe', '100', 'NV01'),
-('DV02', N'Mua bán xe', '100', 'NV02'),
-('DV03', N'Mua bán xe', '100', 'NV03'),
-('DV04', N'Mua bán xe', '100', 'NV04'),
-('DV05', N'Mua bán xe', '100', 'NV05'),
-('DV06', N'Mua bán xe', '100', 'NV06'),
-('DV07', N'Mua bán xe', '100', 'NV07'),
-('DV08', N'Mua bán xe', '100', 'NV08'),
-('DV09', N'Mua bán xe', '100', 'NV09'),
-('DV10', N'Mua bán xe', '100', 'NV10'),
-('DV11', N'Mua bán xe', '100', 'NV11'),
-('DV12', N'Mua bán xe', '100', 'NV12'),
-('DV13', N'Mua bán xe', '100', 'NV13'),
-('DV14', N'Mua bán xe', '100', 'NV14'),
-('DV15', N'Mua bán xe', '100', 'NV15'),
-('DV16', N'Mua bán xe', '100', 'NV16'),
-('DV17', N'Mua bán xe', '100', 'NV17'),
-('DV18', N'Mua bán xe', '100', 'NV18'),
-('DV19', N'Mua bán xe', '100', 'NV19'),
-('DV20', N'Mua bán xe', '100', 'NV20');
-
-
 -- HÓA ĐƠN
 insert into HoaDon values
 ('HD01','2021-01-23', N'Trực tiếp', N'Đã TT', 'NV01','KH01'),
@@ -271,99 +245,34 @@ insert into HoaDon values
 
 --  CHI TIẾT HÓA ĐƠN
 insert into ChiTietHoaDon values
-('50000000', 'DV01', 'SK01', 'HD01'),
-('50000000', 'DV02', 'SK02', 'HD02'),
-('50000000', 'DV03', 'SK03', 'HD03'),
-('90000000', 'DV04', 'SK04', 'HD04'),
-('90000000', 'DV05', 'SK05', 'HD05'),
-('90000000', 'DV06', 'SK06', 'HD06'),
-('60000000', 'DV07', 'SK07', 'HD07'),
-('60000000', 'DV08', 'SK08', 'HD08'),
-('60000000', 'DV09', 'SK09', 'HD09'),
-('40000000', 'DV10', 'SK10', 'HD10'),
-('40000000', 'DV11', 'SK11', 'HD11'),
-('40000000', 'DV12', 'SK12', 'HD12'),
-('70000000', 'DV13', 'SK13', 'HD13'),
-('70000000', 'DV14', 'SK14', 'HD14'),
-('70000000', 'DV15', 'SK15', 'HD15'),
-('50000000', 'DV16', 'SK16', 'HD16'),
-('50000000', 'DV17', 'SK17', 'HD17'),
-('50000000', 'DV18', 'SK18', 'HD18'),
-('20000000', 'DV19', 'SK19', 'HD19'),
-('20000000', 'DV20', 'SK20', 'HD20');
+(1,'50000000', 'SK01', 'HD01'),
+(2,'50000000', 'SK02', 'HD01'),
+(3,'50000000', 'SK03', 'HD01'),
 
+(1, '90000000', 'SK04', 'HD02'),
+(2,'90000000', 'SK05', 'HD02'),
 
--- SỔ BẢO HÀNH
-insert into SoBaoHanh values
-('SBH01', 1),
-('SBH02', 1),
-('SBH03', 1),
-('SBH04', 1),
-('SBH05', 1),
-('SBH06', 1),
-('SBH07', 1),
-('SBH08', 1),
-('SBH09', 1),
-('SBH10', 1),
-('SBH11', 1),
-('SBH12', 1),
-('SBH13', 1),
-('SBH14', 1),
-('SBH15', 1),
-('SBH16', 1),
-('SBH17', 1),
-('SBH18', 1),
-('SBH19', 1),
-('SBH20', 1);
+(1,'90000000', 'SK06', 'HD03'),
+(2,'60000000','SK07', 'HD03'),
 
+(1, '60000000', 'SK08', 'HD04'),
+(2, '60000000', 'SK09', 'HD04'),
+(3, '40000000', 'SK10', 'HD04'),
+(4, '40000000', 'SK11', 'HD04'),
 
--- CHI TIẾT BẢO HÀNH
-insert into ChiTietBaoHanh values
-('2021-01-01', N'Thay nhớt', 'NV01', 'SBH01'),
-('2021-01-01', N'Thay nhớt', 'NV02', 'SBH02'),
-('2021-01-01', N'Thay nhớt', 'NV03', 'SBH03'),
-('2021-01-01', N'Thay nhớt', 'NV04', 'SBH04'),
-('2021-01-01', N'Thay nhớt', 'NV05', 'SBH05'),
-('2021-01-01', N'Thay nhớt', 'NV06', 'SBH06'),
-('2021-01-01', N'Thay nhớt', 'NV07', 'SBH07'),
-('2021-01-01', N'Thay nhớt', 'NV08', 'SBH08'),
-('2021-01-01', N'Thay nhớt', 'NV09', 'SBH09'),
-('2021-01-01', N'Thay nhớt', 'NV10', 'SBH10'),
-('2021-01-01', N'Thay nhớt', 'NV11', 'SBH11'),
-('2021-01-01', N'Thay nhớt', 'NV12', 'SBH12'),
-('2021-01-01', N'Thay nhớt', 'NV13', 'SBH13'),
-('2021-01-01', N'Thay nhớt', 'NV14', 'SBH14'),
-('2021-01-01', N'Thay nhớt', 'NV15', 'SBH15'),
-('2021-01-01', N'Thay nhớt', 'NV16', 'SBH16'),
-('2021-01-01', N'Thay nhớt', 'NV17', 'SBH17'),
-('2021-01-01', N'Thay nhớt', 'NV18', 'SBH18'),
-('2021-01-01', N'Thay nhớt', 'NV19', 'SBH19'),
-('2021-01-01', N'Thay nhớt', 'NV20', 'SBH20');
+(1, '40000000', 'SK12', 'HD05'),
+(2, '70000000', 'SK13', 'HD05'),
 
+(1, '70000000', 'SK14', 'HD06'),
 
--- CHI TIẾT BẢO DƯỠNG
-insert into ChiTietBaoDuong values
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV01', 'SBH01'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV02', 'SBH02'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV03', 'SBH03'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV04', 'SBH04'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV05', 'SBH05'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV06', 'SBH06'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV07', 'SBH07'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV08', 'SBH08'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV09', 'SBH09'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV10', 'SBH10'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV11', 'SBH11'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV12', 'SBH12'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV13', 'SBH13'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV14', 'SBH14'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV15', 'SBH15'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV16', 'SBH16'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV17', 'SBH17'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV18', 'SBH18'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV19', 'SBH19'),
-('2021-01-01', N'Bảo dưỡng toàn bộ, Vệ sinh kim phun', 'NV20', 'SBH20');
+(1, '70000000', 'SK15', 'HD07'),
+(2, '50000000', 'SK16', 'HD07'),
+(3, '50000000', 'SK17', 'HD07'),
 
+(1, '50000000', 'SK18', 'HD08'),
+(2, '20000000', 'SK19', 'HD08'),
+
+(1, '20000000', 'SK20', 'HD09');
 
 -- PHIẾU NHẬP KHO
 insert into PhieuNhapKho values
@@ -391,7 +300,7 @@ insert into PhieuNhapKho values
 
 
 -- CHI TIẾT NHẬP KHO
-insert into ChiTietNhapKho values
+insert into ChiTietNhapKho (id_CTNK, soLuong, giaNhap, SKU, id_PN) values
 ('100', '5000000000','SK01', 'PN01'),
 ('100', '5000000000','SK02', 'PN02'),
 ('100', '5000000000','SK03', 'PN03'),

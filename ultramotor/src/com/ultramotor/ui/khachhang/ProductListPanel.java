@@ -69,13 +69,13 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
     private void sortByGiaTien() {
         Collections.sort(cardList, compGiaTien);
         fillPanel();
-        System.out.println("SortThread: " + Thread.currentThread().getName());
+        System.out.println("Sorted by Giá Tiền");
     }
 
     private void sortBySoLuongBan() {
         Collections.sort(cardList, compSoLuongBan);
         fillPanel();
-        System.out.println("SortThread: " + Thread.currentThread().getName());
+        System.out.println("Sorted By Số Lượng Bán");
     }
 
     private void addShowDetailsListeners(JButton button, ModelSanPham model) {

@@ -5,6 +5,9 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 
 public class KhachHangFrame extends javax.swing.JFrame {
 
@@ -30,6 +33,13 @@ public class KhachHangFrame extends javax.swing.JFrame {
     }
 
     private void addListeners() {
+        this.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowOpened(WindowEvent e) {
+                KhachHangFrame.this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            }
+            
+        });
         btnBack.addActionListener((ActionEvent e) -> {
             ctrl.navigateCard(pnlMain, false);
             updateStatus();

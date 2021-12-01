@@ -3,6 +3,8 @@ package com.ultramotor.ui.khachhang;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class SearchPanel extends javax.swing.JPanel implements Multilang {
@@ -32,6 +34,28 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
             KhachHangController.fillComboLoaiHang(cboLoaiXe, lang);
             }
         });
+        
+        txtSearch.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyReleased(KeyEvent e) {
+                int keycode = e.getExtendedKeyCode();
+                if(keycode==KeyEvent.VK_ENTER){
+                    btnSearch.doClick();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+            }
+        
+        });
+        
     }
 
     @Override

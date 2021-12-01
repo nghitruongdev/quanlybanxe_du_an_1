@@ -17,17 +17,14 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
 
     {
         TABLE_NAME = "SanPham";
-        SELECT_BY_ID_SQL = String.format("select *, dbo.fn_soLuongTonSp(%s) AS N'SoLuongTon' from %s where %s = ?", "SKU", TABLE_NAME, "SKU");
-        SELECT_ALL_SQL = String.format("select *, dbo.fn_soLuongTonSp(%s) AS N'SoLuongTon' from %s", "SKU", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("SELECT * FROM %s where %s = ?",  "view_SanPhamTon", "SKU");
+        SELECT_ALL_SQL = String.format("SELECT * FROM %s", "view_SanPhamTon");
     }
 
     final String INSERT_SQL = String.format("exec usp_insert_%s ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?", TABLE_NAME);
     final String DELETE_SQL = String.format("DELETE FROM %s WHERE %s = ?", TABLE_NAME, "SKU");
     final String CHECK_HANG_TON_SQL = String.format("SELECT SKU, dbo.fn_soLuongTonSp(SKU) FROM SanPham");
-//    String INSERT_SQL = "INSERT INTO SanPham(SKU,tenSP,hinh,mauSac,phanKhoi,doiXe,thoiGianBH,DiaChiSX,giaTien,moTa,tonKho,id_DongSP,id_NV)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-//    String UPDATE_SQL = "UPDATE SanPham SET tenSP=?,hinh=?,mauSac=?,phanKhoi=?,doiXe=?,thoiGianBH=?,DiaChiSX=?,giaTien=?,moTa=?,tonKho=? ,id_DongSP=?,id_NV=? WHERE SKU=?";
-//    String DELETE_SQL = "DELETE FROM SanPham WHERE SKU=?";
-
+    final String SELECT_BY_MODEL = String.format("SELECT * FROM %s WHERE id_DongSP = ? AND DoiXe = ? AND PhanKhoi = ?","view_SanPhamTon");
     @Override
     public int insert(SanPham e) {
         return XJdbc.update(INSERT_SQL,
@@ -64,7 +61,6 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
     public List<SanPham> selectBySQL(String sql, Object... args) {
         List<SanPham> list = new ArrayList<>();
         try (ResultSet rs = XJdbc.query(sql, args)) {
-            System.out.println("Column Count: " + rs.getMetaData().getColumnCount());
             while (rs.next()) {
                 SanPham sp = new SanPham(
                         rs.getString(1),
@@ -89,8 +85,7 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
     }
 
     public List<SanPham> getListSP(ModelSanPham model) {
-        String sql = "SELECT * FROM SanPham WHERE id_DongSP = ? AND DoiXe = ? AND PhanKhoi = ?";
-        return selectBySQL(sql, model.getId_dongSP(), model.getDoiXe(), model.getPhanKhoi());
+        return selectBySQL(SELECT_BY_MODEL, model.getId_dongSP(), model.getDoiXe(), model.getPhanKhoi());
     }
 
     public Set<String> checkHangTonSP(String... skus) {

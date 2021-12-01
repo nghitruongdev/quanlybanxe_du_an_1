@@ -37,6 +37,7 @@ public class Card extends JPanel {
 
         pag = new Pagination();
         pnlSlide = new SlideShowPanel();
+        pnlSlide.setBackground(getBackground());
         addPagnitationEvent(pag, pnlSlide);
         button = new Button();
         button.setText("Xem thêm");

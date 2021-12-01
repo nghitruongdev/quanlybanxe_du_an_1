@@ -119,6 +119,8 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
         jSeparator1 = new javax.swing.JSeparator();
 
         setLayout(new java.awt.GridLayout(1, 0));
+
+        pnlCard.setBackground(new java.awt.Color(255, 255, 255));
         add(pnlCard);
 
         pnlInfo.setBackground(new java.awt.Color(250, 250, 250));

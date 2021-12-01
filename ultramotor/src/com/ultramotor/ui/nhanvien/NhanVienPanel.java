@@ -6,6 +6,7 @@ import com.ultramotor.component.table.ModelAction;
 import com.ultramotor.component.table.ModelEvent;
 import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.entity.NhanVien;
+import com.ultramotor.ui.hoadon.HoaDonPanel;
 import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDate;
@@ -22,8 +23,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 
@@ -421,4 +424,13 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private com.ultramotor.component.table.Table tblNhanVien;
     private com.swingx.SearchTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
+  public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame fr = new JFrame();
+            fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            fr.getContentPane().add(new NhanVienPanel());
+            fr.pack();
+            fr.setVisible(true);
+        });
+    }
 }
