@@ -329,9 +329,6 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="borderSize" type="int" value="2"/>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/ultramotor/img/sp/slide1.jpg"/>
-            </Property>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
           <Constraints>

@@ -412,7 +412,6 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         lblHinh.setForeground(new java.awt.Color(109, 109, 109));
         lblHinh.setToolTipText("");
         lblHinh.setBorderSize(2);
-        lblHinh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/sp/slide1.jpg"))); // NOI18N
         lblHinh.setOpaque(true);
 
         javax.swing.GroupLayout lblHinhLayout = new javax.swing.GroupLayout(lblHinh);
