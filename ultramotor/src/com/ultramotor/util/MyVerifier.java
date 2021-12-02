@@ -59,6 +59,11 @@ public abstract class MyVerifier extends InputVerifier {
         if (!result) {
             field.setErrorText(error);
             field.setToolTipText(error);
+            field.setValidInput(false);
+        }else{
+            field.setErrorText("");
+            field.setToolTipText("");
+            field.setValidInput(true);
         }
         return result;
     }
@@ -78,6 +83,8 @@ public abstract class MyVerifier extends InputVerifier {
             field.setToolTipText(field.getName() + " 8 kí tự trở lên");
             return false;
         }
+        field.setErrorText("");
+        field.setToolTipText("");
         return true;
     }
     

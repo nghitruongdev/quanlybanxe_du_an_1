@@ -147,7 +147,7 @@ public class KhachHangFrame extends javax.swing.JFrame {
 
         getContentPane().add(pnlMain, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(1416, 662));
+        setSize(new java.awt.Dimension(1416, 664));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
