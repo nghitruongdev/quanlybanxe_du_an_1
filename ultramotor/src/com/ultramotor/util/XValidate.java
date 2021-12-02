@@ -1,5 +1,6 @@
 package com.ultramotor.util;
 
+import com.swingx.TextField;
 import java.text.ParseException;
 import javax.swing.JPasswordField;
 import javax.swing.text.JTextComponent;
@@ -7,6 +8,7 @@ import javax.swing.text.JTextComponent;
 public class XValidate {
 //
     //kiểm tra field chưa nhập dữ liệu
+
     public static boolean isEmpty(JTextComponent comp) {
         //kiểm tra password field
         if (comp instanceof JPasswordField) {
@@ -47,12 +49,14 @@ public class XValidate {
 //    public static boolean validatePhoneNumber(JTextComponent comp) {
 //        return matchPattern(comp, MyConstants.PHONE_NUMBER_PATTERN);
 //    }
-    
     //kiểm tra Email
     public static boolean validateEmail(JTextComponent comp) {
         return matchPattern(comp, MyConstants.EMAIL_PATTERN);
     }
-
+    
+    public static boolean validateEmail(String email){
+        return email.trim().matches(MyConstants.EMAIL_PATTERN);
+    }
     //kiểm tra địa chỉ
     public static boolean validateAddress(JTextComponent comp) {
         return matchPattern(comp, MyConstants.ADDRESS_PATTERN);
@@ -114,4 +118,22 @@ public class XValidate {
         return true;
     }
 
+    //kiểm tra mức lương cơ bản
+    public static boolean validateSalary(String salary) {
+        if (!salary.equals("")) {
+            try {
+                double sal = Double.parseDouble(salary);
+                if (sal < 5_000_000) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static boolean validatePhoneNumber(JTextComponent comp) {
+        return matchPattern(comp, MyConstants.PHONE_NUMBER_PATTERN);
+    }
 }

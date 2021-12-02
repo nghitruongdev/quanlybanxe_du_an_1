@@ -37,6 +37,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -254,8 +256,8 @@ public class HoaDonPanel extends javax.swing.JPanel {
         txtPhanKhoi.setText(sp.getPhanKhoi());
         txtBaoHanh.setText(String.format("%s tháng", sp.getThoiGianBH()));
         if (sp.getHinh() != null) {
-            lblHinh.setToolTipText(sp.getHinh());
-            XImage.setIcon(XImage.read(sp.getHinh()), lblHinh);
+            File parent = Paths.get("logos", "sp").toFile();
+            XImage.setIcon(new File(parent, sp.getHinh()), lblHinh, new File(parent, "default.png"));
         }
         currentSP = sp;
     }

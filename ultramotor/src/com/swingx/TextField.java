@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
@@ -24,9 +25,9 @@ public class TextField extends JFormattedTextField {
     public TextField() {
         placeholder = "";
         validInput = true;
-        allowEmpty = true;
+        allowEmpty = false;
         onlyField = false;
-        
+        addListeners();
         setBackground(new Color(255, 255, 255, 0));
         setOpaque(false);
         initBorder();
@@ -347,5 +348,41 @@ public class TextField extends JFormattedTextField {
         this.hintColor = hintColor;
     }
 
+     private void addListeners() {
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent fe) {
+//                repaint();
+                validateField();
+            }
+
+            @Override
+            public void focusGained(FocusEvent fe) {
+                validateField();
+                reset();
+            }
+        });
+
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                validateField();
+            }
+        });
+    }
+
+    private void validateField() {
+        if (getInputVerifier() == null) {
+            return;
+        }
+        this.validInput = getInputVerifier().verify(this);
+        repaint();
+    }
     
+     private void reset() {
+        if (getText().length() == 0) {
+            validInput = true;
+            repaint();
+        }
+    }
 }

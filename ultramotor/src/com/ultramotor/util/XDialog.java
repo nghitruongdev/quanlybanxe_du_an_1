@@ -16,7 +16,7 @@ public class XDialog {
     public static JDialog getDialog(JFrame frame, JPanel panel) {
         JDialog dialog = new JDialog(frame, true);
         dialog.setUndecorated(true);
-        dialog.setBackground(new Color(255, 255, 255, 0));
+//        dialog.setBackground(new Color(255, 255, 255, 0));
         JPanel con = new JPanel() {
             @Override
             public void paint(Graphics grphcs) {
@@ -36,7 +36,7 @@ public class XDialog {
         con.add(panel, "pushy, center, gapright 15");
 //        dialog.setBounds(this.getWidth() / 2, this.getHeight(), this.getWidth() / 4, 0);
 
-        dialog.setSize(frame.getWidth() / 2, frame.getHeight());
+//        dialog.setSize(frame.getWidth() / 2, frame.getHeight());
         dialog.getContentPane().add(con);
         dialog.pack();
 

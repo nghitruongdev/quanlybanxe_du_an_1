@@ -8,7 +8,9 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -94,10 +96,9 @@ public class Header extends JPanel {
         if (user == null) {
             return;
         }
-        String hinh = String.format("nhanvien/%s", user.getHinh());
         Icon icon = null;
         try {
-            icon = new ImageIcon(ImageIO.read(XImage.read(hinh)));
+            icon = new ImageIcon(ImageIO.read(new File(Paths.get("logos", "nhanvien").toFile(), user.getHinh())));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

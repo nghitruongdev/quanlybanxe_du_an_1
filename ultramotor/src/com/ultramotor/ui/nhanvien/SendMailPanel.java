@@ -3,6 +3,7 @@ package com.ultramotor.ui.nhanvien;
 import com.swingx.MyScrollBar;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XMail;
+import com.ultramotor.util.XValidate;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -34,14 +35,16 @@ public class SendMailPanel extends javax.swing.JPanel {
         String email = txtFrom.getText();
         String nguoiNhan = txtTo.getText();
         String subject = txtChuDe.getText();
-
-        //kiểm tra thông tin email
-        if (!validate(email, nguoiNhan.split(","))) {
-            return;
-        }
-
         //soạn nội dung mail cho nhiều người
         String mailContent = txtNoiDung.getText();
+        
+        if (subject.isEmpty() && MsgBox.confirm("Chủ đề trống, bạn có muốn tiếp tục gửi mail?", false) != 0) {
+            return;
+        }
+        
+        if (mailContent.isEmpty() && MsgBox.confirm("Nội dung email trống, bạn có muốn tiếp tục gửi mail?", false) != 0) {
+            return;
+        }
 
         //file đính kèm
         XMail.sendMail(nguoiNhan, mailContent, subject, fileDinhKem);
@@ -70,30 +73,12 @@ public class SendMailPanel extends javax.swing.JPanel {
         lblTepDinhKem.setText("");
     }
 
-    private boolean validate(String from, String[] tos) {
-        if (from.equals("")) {
-            MsgBox.error("Vui lòng nhập địa chỉ email");
-            txtFrom.requestFocus();
-            return false;
-        }
-        if (tos.length == 0) {
-            MsgBox.error("Vui lòng nhập địa chỉ email");
-            txtTo.requestFocus();
-            return false;
-        }
-        return true;
-    }
-
     private void addListeners() {
         btnUpload.addActionListener((ActionEvent e) -> {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    sleepThread(300);
-                    uploadFile();
-                }
-            }
-            ).start();
+            new Thread(() -> {
+                sleepThread(300);
+                uploadFile();
+            }).start();
         });
 
         btnCancel.addActionListener((ActionEvent e) -> {
@@ -103,15 +88,43 @@ public class SendMailPanel extends javax.swing.JPanel {
         });
 
         btnGui.addActionListener((ActionEvent e) -> {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    sleepThread(300);
-                    sendEmail();
+            new Thread(() -> {
+                sleepThread(300);
+                if (!validateField()) {
+                    return;
                 }
-            }
-            ).start();
+                sendEmail();
+            }).start();
         });
+    }
+
+    private boolean validateField() {
+        String from = txtFrom.getText().trim();
+        if (from.isEmpty()) {
+            MsgBox.error("Chưa nhập địa chỉ email người gửi");
+            txtFrom.requestFocus();
+            return false;
+        }
+        if (!validateEmails(from)) {
+            return false;
+        }
+        String to = txtTo.getText().trim();
+        if (to.isEmpty()) {
+            MsgBox.error("Chưa nhập địa chỉ email người nhận");
+            txtTo.requestFocus();
+            return false;
+        }
+        return validateEmails(to.split(","));
+    }
+
+    private boolean validateEmails(String... emails) {
+        for (String m : emails) {
+            if (!XValidate.validateEmail(m)) {
+                MsgBox.error("Địa chỉ email " + m + " không hợp lệ!");
+                return false;
+            }
+        }
+        return true;
     }
 
     private void sleepThread(int mili) {
@@ -258,7 +271,7 @@ public class SendMailPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTitleSendMail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(lblNguoiGui)
                             .addComponent(lblChuDe)
@@ -282,8 +295,9 @@ public class SendMailPanel extends javax.swing.JPanel {
                         .addGap(61, 61, 61))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnGui, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(btnGui, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lblChuDe, lblNguoiGui, lblNguoiNhan, lblNoiDung});
@@ -291,7 +305,7 @@ public class SendMailPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addContainerGap(49, Short.MAX_VALUE)
                 .addComponent(lblTitleSendMail)
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,9 +331,9 @@ public class SendMailPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addComponent(lblNoiDung, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGui, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lblChuDe, lblNguoiGui, lblNguoiNhan, txtTo});

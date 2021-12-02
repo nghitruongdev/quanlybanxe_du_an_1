@@ -5,15 +5,17 @@ import com.ultramotor.entity.SanPham;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.swing.JLabel;
 
 public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang {
-    
+
     private Lang lang = Lang.VN;
-    
+
     public ProductDetailsPanel() {
         initComponents();
         pnlCard.removeButton();
@@ -21,13 +23,13 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
         title.setFont(new Font("Segoe UI", 1, 24));
         title.setForeground(new Color(117, 196, 125));
     }
-    
+
     public void setProductDetails(ModelSanPham model) {
         pnlCard.setModel(model, lang);
         lblProductInfo.setText(getInfo(model));
         repaint();
     }
-    
+
     private String getInfo(ModelSanPham model) {
         List<SanPham> list = model.getSanPhamList();
         String tenSP = model.toString();
@@ -95,20 +97,42 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
                 warranty,
                 giaTien);
     }
-    
+
     private String getColors(List<SanPham> list) {
         Set<String> colors = new HashSet<>();
         list.forEach(sp -> {
-            colors.add(sp.getMauSac());
+            if (lang == Lang.EN) {
+                colors.add(getColorEN(sp.getMauSac()));
+            } else {
+                colors.add(sp.getMauSac());
+            }
         });
         return colors.toString().replaceAll("[\\[\\]]", "");
     }
-    
+
     @Override
     public void setLang(Lang lang) {
         this.lang = lang;
     }
-    
+
+    private String getColorEN(String color) {
+        switch (color) {
+            case "Trắng":
+                return "White";
+            case "Đen":
+                return "Black";
+            case "Xanh":
+                return "Blue";
+            case "Vàng":
+                return "Yellow";
+            case "Đỏ":
+                return "Red";
+            case "Xám":
+                return "Gray";
+        }
+        return "";
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

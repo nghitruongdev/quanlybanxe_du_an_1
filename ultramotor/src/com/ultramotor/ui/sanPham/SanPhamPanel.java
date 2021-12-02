@@ -12,6 +12,8 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
@@ -262,7 +264,8 @@ public class SanPhamPanel extends MyPanel<SanPham> {
     // End of variables declaration//GEN-END:variables
     private List<DongSanPham> listDongSP;
     private List<NhaSanXuat> listNSX;
-
+    private File parent = Paths.get("logos", "sp").toFile();
+    private File defaultFile = new File(parent, "default.png");
     void init() {
         fillComboBox();
         addListeners();
@@ -273,7 +276,7 @@ public class SanPhamPanel extends MyPanel<SanPham> {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    XImage.uploadIcon(lblHinh);
+                    XImage.uploadIcon(getTopLevelAncestor(),lblHinh, defaultFile);
                 }
             }
         });
@@ -343,7 +346,7 @@ public class SanPhamPanel extends MyPanel<SanPham> {
         if (cboDongSP.getItemCount() > 0) {
             cboDongSP.setSelectedIndex(0);
         }
-        XImage.setIcon(XImage.read("default.png"), lblHinh);
+        XImage.setIcon(null, lblHinh, defaultFile);
     }
 
     @Override
@@ -361,7 +364,7 @@ public class SanPhamPanel extends MyPanel<SanPham> {
         txtMoTa.setText(sp.getMoTa());
         cboDoiXe.setSelectedItem(sp.getDoiXe());
         if (sp.getHinh() != null) {
-            XImage.setIcon(XImage.read(sp.getHinh()), lblHinh);
+            XImage.setIcon(new File(parent, sp.getHinh()), lblHinh, defaultFile);
         }
         DongSanPham dsp = findDongSP(sp.getIdDongSP());
         if (dsp != null) {

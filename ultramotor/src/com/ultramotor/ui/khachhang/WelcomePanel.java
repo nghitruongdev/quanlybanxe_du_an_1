@@ -1,36 +1,35 @@
 package com.ultramotor.ui.khachhang;
 
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class WelcomePanel extends javax.swing.JPanel implements Multilang {
-    
+
     final String LANG_SELECT_EN = "Plsease choose a language";
     final String LANG_SELECT_VN = "Vui lòng chọn ngôn ngữ";
     final String CONTINUE_EN = "Continue";
     final String CONTINUE_VN = "Tiếp tục";
     final DefaultComboBoxModel LANG_MODEL_EN = new DefaultComboBoxModel(new String[]{"Vietnamese", "English"});
     final DefaultComboBoxModel LANG_MODEL_VN = new DefaultComboBoxModel(new String[]{"Tiếng Việt", "Tiếng Anh"});
-    
+
     public WelcomePanel() {
         initComponents();
         init();
     }
-    
+
     private void init() {
         pnlSlideshow.addImages(
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide1.jpg")),
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide2.jpeg")),
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide3.jpg")));
         pnlSlideshow.setAuto(2000);
-        
+
         cboLang.setModel(LANG_MODEL_VN);
         addListeners();
     }
-    
+
     @Override
     public void setLang(Lang lang) {
         if (lang.equals(Lang.VN)) {
@@ -46,7 +45,7 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
         }
         ((KhachHangFrame) this.getTopLevelAncestor()).setLang(lang);
     }
-    
+
     private void addListeners() {
         cboLang.addActionListener((ActionEvent e) -> {
             if (cboLang.getSelectedIndex() == 0) {
@@ -55,28 +54,31 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
                 setLang(Lang.EN);
             }
         });
-        
+
         btnContinue.addActionListener((ActionEvent e) -> {
             KhachHangController.navigateCard((JPanel) this.getParent(), true);
         });
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlSlideshow = new com.swingx.SlideShowPanel();
+        bg = new javax.swing.JLayeredPane();
         pnlLang = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         lblLang = new javax.swing.JLabel();
         btnContinue = new com.swingx.Button();
         cboLang = new com.swingx.ComboBoxSuggestion();
+        pnlSlideshow = new com.swingx.SlideShowPanel();
 
-        setBackground(new java.awt.Color(204, 204, 204));
-        setLayout(new java.awt.GridLayout());
-        add(pnlSlideshow);
+        setBackground(new java.awt.Color(250, 250, 250));
+        setOpaque(false);
+
+        bg.setBackground(new java.awt.Color(255, 255, 255));
 
         pnlLang.setBackground(new java.awt.Color(250, 250, 250));
+        pnlLang.setOpaque(false);
 
         jPanel2.setOpaque(false);
 
@@ -136,14 +138,49 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
             .addGroup(pnlLangLayout.createSequentialGroup()
                 .addGap(150, 150, 150)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addContainerGap(217, Short.MAX_VALUE))
         );
 
-        add(pnlLang);
+        bg.setLayer(pnlLang, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        bg.setLayer(pnlSlideshow, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
+        bg.setLayout(bgLayout);
+        bgLayout.setHorizontalGroup(
+            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1200, Short.MAX_VALUE)
+            .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(bgLayout.createSequentialGroup()
+                    .addGap(291, 291, 291)
+                    .addComponent(pnlLang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(291, 291, 291)))
+            .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(pnlSlideshow, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE))
+        );
+        bgLayout.setVerticalGroup(
+            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 614, Short.MAX_VALUE)
+            .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(pnlLang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(pnlSlideshow, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bg)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bg)
+        );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLayeredPane bg;
     private com.swingx.Button btnContinue;
     private com.swingx.ComboBoxSuggestion cboLang;
     private javax.swing.JPanel jPanel2;

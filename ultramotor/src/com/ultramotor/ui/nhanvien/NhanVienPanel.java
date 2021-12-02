@@ -1,7 +1,6 @@
 package com.ultramotor.ui.nhanvien;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
-import com.swingx.CloseButton;
 import com.ultramotor.component.table.ModelAction;
 import com.ultramotor.component.table.ModelEvent;
 import com.ultramotor.dao.NhanVienDAO;
@@ -9,34 +8,35 @@ import com.ultramotor.entity.NhanVien;
 import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDate;
+import com.ultramotor.util.XDialog;
 import com.ultramotor.util.XMail;
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import net.miginfocom.swing.MigLayout;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class NhanVienPanel extends javax.swing.JPanel {
 
     NhanVienDAO dao = new NhanVienDAO();
-    int row = -1; //vị trí hàng được chọn trên table
+//    int row = -1; //vị trí hàng được chọn trên table
     ModelEvent event;
     private NhanVienInfoPanel pnlInfo;
     private SendMailPanel pnlSendMail;
     private DefaultTableModel model;
+    private boolean hasEdit = false;
 
     public NhanVienPanel() {
         initComponents();
@@ -52,22 +52,37 @@ public class NhanVienPanel extends javax.swing.JPanel {
             public void update(NhanVien e) {
                 pnlInfo.setForm(e);
                 showPanel("info");
+                hasEdit = true;
             }
 
             @Override
             public void delete(NhanVien e) {
                 deleteNV(e.getIdNV());
             }
-
         };
-        fillTable();
+        fillTable(dao.selectAll());
         addListeners();
+
     }
 
     private void initTable() {
-        Object[] columns = {"Select", "ID", "Họ Và Tên", "Ngày Sinh", "Giới Tính", "Địa chỉ", "Số ĐT", "Email", "Lương", "Hình", "Vai Trò", "Mật Khẩu", "Ghi Chú", "Actions"};
+        Object[] columns = {"Select", "ID", "Họ Và Tên", "Ngày Sinh", "Giới Tính", "Địa chỉ", "Số ĐT", "Email", "Lương", "Hình", "Vai Trò", "Ghi Chú", "Actions"};
         model = new DefaultTableModel(columns, 0);
         tblNhanVien.setModel(model);
+      
+        TableRowSorter<TableModel> sorter = new TableRowSorter(model);
+        tblNhanVien.setRowSorter(sorter);
+        txtTimKiem.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String text = txtTimKiem.getText().trim();
+                if (text.isEmpty()) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+        });
         tblNhanVien.fixTable(jScrollPane4);
     }
 
@@ -79,6 +94,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
             }
             dao.mergeTable(dataTable);
             MsgBox.inform("Lưu dữ liệu thành công");
+            hasEdit = false;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -95,6 +111,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 if (index != -1) {
                     tblNhanVien.getCellEditor().stopCellEditing();
                     model.removeRow(index);
+                    hasEdit = true;
                 }
             }
         }
@@ -103,9 +120,18 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private void sendMail() {
         List<String> emails = new ArrayList<>();
         List<Integer> list = getSelectedRows();
-        boolean all = list.isEmpty();
+        if(list.isEmpty()){
+           int confirm = MsgBox.confirm("Bạn chưa chọn nhân viên muốn gửi mail. Bạn có muốn gửi mail cho tất cả nhân viên?", true);
+           if(confirm==MsgBox.CANCEL_OPTION){
+               return;
+           }else if(confirm == MsgBox.NO_OPTION){
+               sendMail("");
+               return;
+           }
+        }
+        //nếu người dùng đã chọn nhân viên hoặc chọn gửi cho tất cả nhân viên
         for (int i = 0; i < tblNhanVien.getRowCount(); i++) {
-            if (all || list.contains(i)) {
+            if (list.isEmpty() || list.contains(i)) {
                 emails.add((String) tblNhanVien.getValueAt(i, 7));
             }
         }
@@ -130,18 +156,14 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private Object[] getInfo(NhanVien nv) {
         return new Object[]{
             false, nv.getIdNV(), nv.getHoNV() + " " + nv.getTenNV(),
-            XDate.toString(nv.getNgaySinh(), "dd/MM/yyyy"),
+            XDate.toString(nv.getNgaySinh(), "dd-MM-yyyy"),
             nv.getGioiTinh() ? "Nam" : "Nữ", nv.getDiaChi(),
             nv.getSdt(), nv.getEmail(), nv.getLuong(),
-            nv.getHinh(), nv.getVaiTro(), nv.getMatKhau(),
+            nv.getHinh(), nv.getVaiTro(),
             nv.getGhiChu(), new ModelAction(nv, event)
         };
     }
 
-    void fillTable() {
-        String keyword = txtTimKiem.getText();
-        fillTable(dao.selectByKeyword(keyword)); // đọc dữ liệu từ csdl
-    }
 
     void fillTable(List<NhanVien> list) {
         DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
@@ -170,61 +192,44 @@ public class NhanVienPanel extends javax.swing.JPanel {
         new Thread(() -> {
             try {
                 Thread.sleep(300);
-                JDialog dialog = null;
+                JPanel panel = null;
                 switch (name) {
                     case "info":
-                        dialog = getDialog(pnlInfo);
+                        panel = pnlInfo;
                         break;
                     case "sendMail":
-                        dialog = getDialog(pnlSendMail);
+                        panel = pnlSendMail;
+                        panel.setPreferredSize(new Dimension(600, 600));
                         break;
                 }
-                dialog.setVisible(true);
+                if (panel != null) {
+                    XDialog.getDialog((JFrame) this.getTopLevelAncestor(), panel).setVisible(true);
+                }
             } catch (InterruptedException e) {
             }
         }).start();
     }
 
-    private JDialog getDialog(JPanel panel) {
-        JDialog dialog = new JDialog((Frame) this.getTopLevelAncestor(), true);
-        dialog.setUndecorated(true);
-        dialog.setBackground(new Color(255, 255, 255, 0));
-        JPanel con = new JPanel() {
-            @Override
-            public void paint(Graphics grphcs) {
-                Graphics2D g2 = (Graphics2D) grphcs;
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
-                g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 5, 5);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-                super.paint(grphcs);
-            }
-        };
-
-        con.setOpaque(false);
-        con.setBackground(new Color(250, 250, 250));
-        con.setLayout(new MigLayout("inset 5 20 20 5", "[center]", "[20!][fill, center, grow]"));
-        con.add(new CloseButton(), "al right, wrap");
-        con.add(panel, "pushy, center, gapright 15");
-//        dialog.setBounds(this.getWidth() / 2, this.getHeight(), this.getWidth() / 4, 0);
-
-        dialog.setSize(this.getWidth() / 2, this.getHeight());
-        dialog.getContentPane().add(con);
-        dialog.pack();
-
-        dialog.setLocation(this.getWidth() / 4, (this.getHeight() - dialog.getHeight()) / 2);
-        dialog.setLocationRelativeTo(this);
-        return dialog;
-    }
-
     private void addListeners() {
-        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                //code xử lý keyReleased ở đây.
-                fillTable();
-            }
-        });
+//       this.addComponentListener(new ComponentAdapter(){
+//           @Override
+//           public void componentHidden(ComponentEvent e) {
+//               System.out.println("Hidden");
+//               super.componentHidden(e);
+//           }
+//
+//           @Override
+//           public void componentShown(ComponentEvent e) {
+//               System.out.println("Hidden");
+//           }
+//       });
+//        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+//            @Override
+//            public void keyReleased(java.awt.event.KeyEvent evt) {
+//                //code xử lý keyReleased ở đây.
+//                fillTable();
+//            }
+//        });
 
         btnThemMoi.addActionListener((ActionEvent e) -> {
             pnlInfo.setForm(null);
@@ -252,12 +257,15 @@ public class NhanVienPanel extends javax.swing.JPanel {
             if (index == -1) {
                 model.addRow(getInfo(nv));
                 MsgBox.inform("Thêm mới nhân viên thành công");
-
+                index = tblNhanVien.getRowCount() - 1;
             } else {
                 model.removeRow(index);
                 model.insertRow(index, getInfo(nv));
                 MsgBox.inform("Cập nhật nhân viên thành công");
             }
+            tblNhanVien.setRowSelectionInterval(index, index); //đật hàng chọn trên bảng
+            tblNhanVien.scrollRectToVisible(new java.awt.Rectangle(tblNhanVien.getCellRect(index, 0, true))); //di chuyển thanh lăn tới vị trí hàng chọn
+            hasEdit = true;
         });
 
         pnlInfo.setFieldFocus(new FocusAdapter() {
@@ -265,11 +273,14 @@ public class NhanVienPanel extends javax.swing.JPanel {
             public void focusLost(FocusEvent e) {
                 JTextField field = (JTextField) e.getSource();
                 String maNV = field.getText().trim();
-                int index = getIndexNhanVien(maNV);
-                if (index != -1) {
-                    MsgBox.error("Mã nhân viên đã tồn tại!");
-                    field.setText("");
-                    field.requestFocus();
+                if (pnlInfo.getNhanVien() == null) {
+                    int index = getIndexNhanVien(maNV);
+                    if (index != -1) {
+                        MsgBox.error("Mã nhân viên đã tồn tại!");
+                        field.setText("");
+                        field.requestFocus();
+                    }
+                    field.setText(maNV.toUpperCase());
                 }
             }
         });

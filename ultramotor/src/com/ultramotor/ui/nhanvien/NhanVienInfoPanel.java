@@ -1,13 +1,18 @@
 package com.ultramotor.ui.nhanvien;
 
 import com.swingx.MyScrollBar;
+import com.swingx.PasswordField;
+import com.swingx.TextField;
 import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.entity.NhanVien;
 import com.ultramotor.util.Auth;
+import com.ultramotor.util.MsgBox;
+import com.ultramotor.util.MyVerifier;
 import com.ultramotor.util.XDate;
 import com.ultramotor.util.XImage;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -17,6 +22,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.HashSet;
 import java.util.logging.Level;
@@ -27,35 +33,22 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+import javax.swing.text.JTextComponent;
 
 public class NhanVienInfoPanel extends javax.swing.JPanel {
 
     private NhanVien nv;
+    private final File path = Paths.get("logos", "nhanvien").toFile();
+    private final File defaultFile = new File(path, "default.png");
 
     public NhanVienInfoPanel() {
         initComponents();
         fillComboVaiTro();
         fixTextPane(jScrollPane2);
         fixRadioPanel();
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentHidden(ComponentEvent ce) {
-                System.out.println("Component Hidden");
-            }
-
-            @Override
-            public void componentShown(ComponentEvent ce) {
-                System.out.println("Component Showned");
-            }
-
-            @Override
-            public void componentResized(ComponentEvent ce) {
-                System.out.println("Component Resized");
-                addListeners();
-            }
-
-        });
-
+        setFieldName();
+        addListeners();
     }
 
     private void updateStatus() {
@@ -81,13 +74,12 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         txtEmail.setText(nv.getEmail());
         txtLuong.setText(String.valueOf(nv.getLuong()));
         cboVaiTro.setSelectedItem(nv.getVaiTro());
-        XImage.setIcon(XImage.read(nv.getHinh()), lblHinh);
+        XImage.setIcon(new File(path, nv.getHinh()), lblHinh, defaultFile);
         txtGhiChu.setText(nv.getGhiChu());
-        if (nv.getGioiTinh() == true) {
-            rdoNam.setSelected(true);
-        } else {
-            rdoNu.setSelected(true);
-        }
+        rdoNam.setSelected(nv.getGioiTinh());
+        rdoNu.setSelected(!nv.getGioiTinh());
+        cboVaiTro.setEnabled(Auth.isManager());
+        txtLuong.setEditable(Auth.isManager());
     }
 
     private void reset() {
@@ -101,7 +93,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
             if (cboVaiTro.getItemCount() > 0) {
                 cboVaiTro.setSelectedIndex(0);
             }
-            XImage.setIcon(new File("abc"), lblHinh);
+            XImage.setIcon(null, lblHinh, defaultFile);
             txtMaNV.requestFocus();
         } else {
             setForm();
@@ -109,16 +101,19 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
     }
 
     public NhanVien getForm() {
+        if (!validateField(txtMaNV, txtHoNV, txtTenNV, txtNgaySinh, txtDiaChi, txtSDT, txtEmail, txtLuong)) {
+            return null;
+        }
         try {
             NhanVien nv = new NhanVien();
             nv.setIdNV(txtMaNV.getText());
             nv.setHoNV(txtHoNV.getText());
             nv.setTenNV(txtTenNV.getText());
-            nv.setNgaySinh(XDate.parse(txtNgaySinh.getText(),"dd-MM-yyyy"));
+            nv.setNgaySinh(XDate.parse(txtNgaySinh.getText(), "dd-MM-yyyy"));
             nv.setDiaChi(txtDiaChi.getText());
             nv.setSdt(txtSDT.getText());
             nv.setEmail(txtEmail.getText());
-            nv.setLuong(Float.parseFloat(txtLuong.getText()));
+            nv.setLuong(Double.parseDouble(txtLuong.getText()));
             nv.setVaiTro((String) cboVaiTro.getSelectedItem());
             nv.setHinh(lblHinh.getToolTipText());
             nv.setGhiChu(txtGhiChu.getText());
@@ -149,17 +144,55 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
             reset();
         });
 
-        btnCapNhat.addActionListener((ActionEvent e) -> {
-        });
-
+        if (lblHinh.getMouseListeners().length > 0) {
+            lblHinh.removeMouseListener(lblHinh.getMouseListeners()[0]);
+        }
         lblHinh.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
+                System.out.println("Mouse clicked");
                 if (SwingUtilities.isLeftMouseButton(me) && me.getClickCount() >= 2) {
-                    XImage.uploadIcon(lblHinh);
+                    XImage.uploadIcon((Container) getTopLevelAncestor(), lblHinh, defaultFile);
+//                    if(!uploadTimer.isRunning()){
+//                        uploadTimer.start();
+//                    }
                 }
             }
         });
+    }
+
+    private boolean validateField(JTextField... fields) {
+        for (JTextField field : fields) {
+            if (!MyVerifier.NHAN_VIEN_VERIFIER.verify(field)) {
+                String err = "Vui lòng kiểm tra lại dữ liệu";
+                if (field instanceof TextField) {
+                    err = ((TextField) field).getErrorText();
+                } else if (field instanceof PasswordField) {
+                    err = ((TextField) field).getErrorText();
+                }
+                MsgBox.error(err);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void setFieldName() {
+        txtMaNV.setName("Mã NV");
+        txtHoNV.setName("Họ NV");
+        txtTenNV.setName("Tên NV");
+        txtNgaySinh.setName("Ngày sinh NV");
+        txtDiaChi.setName("Địa chỉ NV");
+        txtEmail.setName("Email NV");
+        txtSDT.setName("Số điện thoại NV");
+        txtLuong.setName("Lương NV");
+        setFieldVerifier(txtMaNV, txtHoNV, txtTenNV, txtNgaySinh, txtDiaChi, txtEmail, txtSDT, txtLuong);
+    }
+
+    private void setFieldVerifier(JTextComponent... comp) {
+        for (JTextComponent field : comp) {
+            field.setInputVerifier(MyVerifier.NHAN_VIEN_VERIFIER);
+        }
     }
 
     private void fixTextPane(JScrollPane scroll) {
@@ -212,15 +245,14 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         btnCapNhat.addActionListener(updateListener);
     }
 
-    public void setFieldFocus(FocusAdapter adapter){
+    public void setFieldFocus(FocusAdapter adapter) {
         txtMaNV.addFocusListener(adapter);
     }
-    
+
     public NhanVien getNhanVien() {
         return nv;
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -242,13 +274,13 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         txtEmail = new com.swingx.TextField();
         txtLuong = new com.swingx.TextField();
         lblHinh = new com.swingx.ImageAvatar();
-        txtSDT = new com.swingx.TextField();
         cboVaiTro = new com.swingx.ComboBoxSuggestion();
         pnlButton = new javax.swing.JPanel();
         btnGuiMail = new com.swingx.Button();
         btnCapNhat = new com.swingx.Button();
         btnReset = new com.swingx.Button();
         lblVaiTro = new javax.swing.JLabel();
+        txtSDT = new com.swingx.TextField();
 
         pnlMain.setBackground(new java.awt.Color(250, 250, 250));
         java.awt.GridBagLayout pnlMainLayout = new java.awt.GridBagLayout();
@@ -256,7 +288,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         pnlMainLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         pnlMain.setLayout(pnlMainLayout);
 
-        pnlGioiTinh.setBackground(new java.awt.Color(250, 250, 250));
+        pnlGioiTinh.setBackground(new java.awt.Color(255, 255, 255));
         pnlGioiTinh.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), "Giới Tính", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 11), new java.awt.Color(109, 109, 109))); // NOI18N
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 25, 5);
         flowLayout1.setAlignOnBaseline(true);
@@ -314,8 +346,8 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         gridBagConstraints.weighty = 1.0;
         pnlMain.add(jScrollPane2, gridBagConstraints);
 
-        txtMaNV.setAnimateLabel(true);
-        txtMaNV.setDrawLine(true);
+        txtMaNV.setAnimateLabel(false);
+        txtMaNV.setDrawLine(false);
         txtMaNV.setLabelText("Mã nhân viên");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -340,6 +372,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         pnlMain.add(txtTenNV, gridBagConstraints);
 
+        txtNgaySinh.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
         txtNgaySinh.setLabelText("Ngày sinh");
         txtNgaySinh.setPlaceholder("dd-MM-YYYY");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -381,6 +414,18 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         lblHinh.setBorderSize(2);
         lblHinh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/sp/slide1.jpg"))); // NOI18N
         lblHinh.setOpaque(true);
+
+        javax.swing.GroupLayout lblHinhLayout = new javax.swing.GroupLayout(lblHinh);
+        lblHinh.setLayout(lblHinhLayout);
+        lblHinhLayout.setHorizontalGroup(
+            lblHinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+        lblHinhLayout.setVerticalGroup(
+            lblHinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
@@ -390,14 +435,6 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         gridBagConstraints.ipady = 150;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 15, 0);
         pnlMain.add(lblHinh, gridBagConstraints);
-
-        txtSDT.setLabelText("Số điện thoại");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 12;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 200;
-        pnlMain.add(txtSDT, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 16;
@@ -451,11 +488,19 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(4, 10, 0, 0);
         pnlMain.add(lblVaiTro, gridBagConstraints);
 
+        txtSDT.setLabelText("Số Điện Thoại");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 250;
+        pnlMain.add(txtSDT, gridBagConstraints);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+            .addComponent(pnlMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

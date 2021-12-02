@@ -23,7 +23,8 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
     private Component compExit;
     private int currentIndex;
     private boolean next;
-
+    private boolean shouldNext = true;
+    
     public SlideShowPanel() {
         setOpaque(false);
         layout = new MigLayout("insets 0");
@@ -41,7 +42,10 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
 
     public void setAuto(int miliseconds) {
         timer = new Timer(miliseconds, (ActionEvent e) -> {
-            next();
+            if(shouldNext){
+                next();
+            }
+            System.out.println("Timer is running");
         });
         timer.start();
     }
@@ -171,24 +175,12 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
         return animator;
     }
 
-    //    private void initPanel() {
-//        panel = new JPanel();
-//        compShow = new PictureBox();
-//        compExit = new PictureBox();
-//        compShow.setVisible(false);
-//        compExit.setVisible(false);
-//        panel.add(compShow, "pos 0 0 0 0");
-//        panel.add(compExit, "pos 0 0 0 0");
-//    }
-    //    public void initSlideShow() {
-//        if (images == null || images.size() <= 0) {
-//            System.out.println("Hello");
-//            throw new RuntimeException("You forget to initialize the list");
-//        }
-//        compShow.setImage(images.get(0));
-//        compShow.setVisible(true);
-//        panel.remove(0);
-//        layout.setComponentConstraints(compShow, "pos 0 0 100% 100%");
-//        currentIndex = 0;
-//    }
+    
+    public boolean isShouldNext() {
+        return shouldNext;
+    }
+
+    public void setShouldNext(boolean shouldNext) {
+        this.shouldNext = shouldNext;
+    }
 }

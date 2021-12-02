@@ -1,5 +1,7 @@
 package com.ultramotor.ui;
 
+import com.swingx.PasswordField;
+import com.swingx.TextField;
 import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.entity.NhanVien;
 import com.ultramotor.util.Auth;
@@ -107,6 +109,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         btnThoat.setBackground(new java.awt.Color(51, 153, 255));
         btnThoat.setText("Thoát");
 
+        txtTenDangNhap.setAllowEmpty(false);
         txtTenDangNhap.setLabelText("Tên đăng nhập");
 
         pwdMatKhau.setLabelText("Mật khẩu");
@@ -513,15 +516,23 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         });
 
         btnDangNhap.addActionListener((ActionEvent e) -> {
-            dangNhap();
+            if (validateField(txtTenDangNhap, pwdMatKhau)) {
+                dangNhap();
+            }
         });
 
         btnSend.addActionListener((ActionEvent e) -> {
-            sendEmail();
+            if (validateField(txtEmail)) {
+                sendEmail();
+            }
         });
+        
         btnDLMK.addActionListener((ActionEvent e) -> {
-            changePW();
+            if (validateField(pwdMatKhau1, pwdMatKhau2)) {
+                changePW();
+            }
         });
+        
         pnlNhapOTP.getBtnConfirm().addActionListener((ActionEvent e) -> {
             checkOTP();
         });
@@ -621,9 +632,25 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         }
     }
 
+    private boolean validateField(JTextField... fields) {
+        for (JTextField field : fields) {
+            if (!MyVerifier.DANG_NHAP_VERIFIER.verify(field)) {
+                String err = "Vui lòng kiểm tra lại dữ liệu";
+                if (field instanceof TextField) {
+                    err = ((TextField) field).getErrorText();
+                } else if (field instanceof PasswordField) {
+                    err = ((TextField) field).getErrorText();
+                }
+                MsgBox.error(err);
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void setFieldName() {
         txtEmail.setName("Email");
-        txtTenDangNhap.setName("id");
+        txtTenDangNhap.setName("Tên đăng nhập");
         pwdMatKhau.setName("Mật Khẩu");
         pwdMatKhau1.setName("Mật Khẩu");
         pwdMatKhau2.setName("Xác nhận mật khẩu");

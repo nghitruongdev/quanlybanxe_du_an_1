@@ -11,17 +11,18 @@ public abstract class MyVerifier extends InputVerifier {
 
     @Override
     public boolean shouldYieldFocus(JComponent input) {
-        if(!verify(input)){
+        if (!verify(input)) {
             input.repaint();
         }
         return true;
     }
- //kiểm lỗi text trên field và xuất thông báo lỗi tương ứng
+    //kiểm lỗi text trên field và xuất thông báo lỗi tương ứng
+
     private static boolean validate(String type, TextField field) {
-       //kiểm tra field rỗng
+        //kiểm tra field rỗng
         if (isEmpty(field) && !field.isAllowEmpty()) {
             field.setValidInput(false);
-            field.setErrorText(field.getName() + " không được để trống");
+            field.setErrorText(field.getName() + " trống");
             return false;
         }
         //kiểm tra định dạng field có hợp lệ theo type
@@ -38,8 +39,7 @@ public abstract class MyVerifier extends InputVerifier {
                 result = XValidate.validateEmail(field);
                 break;
             case "phone number":
-                String value = field.getText().replaceAll("-", "").replaceAll("#", "").trim();
-                result = value.length() == 10;
+                result = XValidate.validatePhoneNumber(field);
                 break;
             case "integer":
                 result = XValidate.validateUnsignedInteger(field);
@@ -55,10 +55,22 @@ public abstract class MyVerifier extends InputVerifier {
                 result = XDate.parse(field.getText()).before(new Date());
                 error = "Ngày không hợp lệ";
                 break;
+            case "address":
+                result = XValidate.validateAddress(field);
+                break;
+            case "salary":
+                result = XValidate.validateSalary(field.getText().trim());
+                error = "Mức lương cơ bản tối thiểu 5,000,000 VNĐ";
+                break;
         }
         if (!result) {
             field.setErrorText(error);
             field.setToolTipText(error);
+            field.setValidInput(false);
+        } else {
+            field.setErrorText("");
+            field.setToolTipText("");
+            field.setValidInput(true);
         }
         return result;
     }
@@ -78,14 +90,16 @@ public abstract class MyVerifier extends InputVerifier {
             field.setToolTipText(field.getName() + " 8 kí tự trở lên");
             return false;
         }
+        field.setErrorText("");
+        field.setToolTipText("");
         return true;
     }
-    
+
     public static final MyVerifier DANG_NHAP_VERIFIER = new MyVerifier() {
         @Override
         public boolean verify(JComponent jc) {
-             String name = jc.getName() != null ? jc.getName() : "";
-            
+            String name = jc.getName() != null ? jc.getName() : "";
+
             if (jc instanceof TextField) {
                 TextField field = (TextField) jc;
                 switch (name) {
@@ -100,5 +114,36 @@ public abstract class MyVerifier extends InputVerifier {
             return true;
         }
     };
-    
+
+    public static final MyVerifier NHAN_VIEN_VERIFIER = new MyVerifier() {
+        @Override
+        public boolean verify(JComponent jc) {
+            String name = jc.getName() != null ? jc.getName() : "";
+
+            if (jc instanceof TextField) {
+                TextField field = (TextField) jc;
+                switch (name) {
+                    case "Mã NV":
+                        return validate("id", field);
+                    case "Họ NV":
+                        return validate("name", field);
+                    case "Tên NV":
+                        return validate("name", field);
+                    case "Ngày sinh NV":
+                        return validate("date", field) && validate("not in future", field);
+                    case "Địa chỉ NV":
+                        return validate("address", field);
+                    case "Email NV":
+                        return validate("email", field);
+                    case "Số điện thoại NV":
+                        return validate("phone number", field);
+                    case "Lương NV":
+                        return validate("double", field) && validate("salary", field);
+                }
+            } else if (jc instanceof PasswordField) {
+                return validate((PasswordField) jc);
+            }
+            return true;
+        }
+    };
 }

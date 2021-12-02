@@ -2,9 +2,17 @@ package com.ultramotor.util;
 
 import com.swingx.ImageAvatar;
 import com.swingx.PictureBox;
+import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -23,17 +31,16 @@ public class XImage {
         return new ImageIcon(url);
     }
 
-    public static File read(String fileName) {
-        return new File("./logos/"+ fileName);
-    }
-
-    public static void uploadIcon(JComponent comp) {
+//    public static File read(String fileName) {
+//        return new File("./logos/"+ fileName);
+//    }
+    public static void uploadIcon(Container parent, JComponent comp,File defaultImage) {
         JFileChooser chooser = new JFileChooser();
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.addChoosableFileFilter(new FileNameExtensionFilter("Images", "jpeg", "jpg", "png", "gif", "bmp", "webmp"));
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        chooser.showOpenDialog(null);
-        setIcon(chooser.getSelectedFile(), comp);
+        chooser.showOpenDialog(parent);
+        setIcon(chooser.getSelectedFile(), comp, defaultImage);
     }
 
     public static Icon resize(ImageIcon icon, int resizedWidth, int resizedHeight) {
@@ -42,38 +49,49 @@ public class XImage {
         return new ImageIcon(resizedImage);
     }
 
-    public static void setIcon(File file, JComponent comp) {
+    public static void setIcon(File file, JComponent comp, File defaultImage) {
+        ImageIcon icon = null;
         try {
             if (file == null || !file.isFile() || !file.exists()) {
                 throw new Exception("Không tìm thấy file");
             }
-            ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+            icon = new ImageIcon(ImageIO.read(file));
             if (icon == null) {
                 throw new Exception("Không load được hình ảnh");
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            if (defaultImage == null) {
+                return;
+            }
+            file = defaultImage;
+            try {
+                icon = new ImageIcon(ImageIO.read(file));
+            } catch (IOException ex) {
+                Logger.getLogger(XImage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } finally {
             if (comp instanceof JLabel) {
                 JLabel label = (JLabel) comp;
                 label.setIcon(XImage.resize(icon, 220, 150));
                 label.setToolTipText(file.getName());
-
             } else if (comp instanceof ImageAvatar) {
                 ImageAvatar avt = (ImageAvatar) comp;
                 avt.setIcon(icon);
                 avt.setToolTipText(file.getName());
-            }else if(comp instanceof PictureBox){
+            } else if (comp instanceof PictureBox) {
                 PictureBox avt = (PictureBox) comp;
                 System.out.println("PictureBox is + " + comp);
                 avt.setImage(icon);
                 avt.setToolTipText(file.getName());
             }
-            XFile.saveTemp(file);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            if (!(comp instanceof JLabel) && !(comp instanceof ImageAvatar)) {
-                return;
+            try {
+                File newFile = new File(defaultImage.getParentFile(), file.getName());
+                Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//                Desktop.getDesktop().open(newFile);
+            } catch (IOException ex) {
+                System.out.println("Không thể copy files");
             }
-            setIcon(XImage.read("default.png"), comp);
-            comp.setToolTipText("default.png");
         }
     }
 }
