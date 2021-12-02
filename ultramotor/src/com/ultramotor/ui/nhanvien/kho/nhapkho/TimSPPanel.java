@@ -116,7 +116,7 @@ public class TimSPPanel extends javax.swing.JPanel {
         String err = "";
         if (maSKU.equals("")) {
             err = "Mã sản phẩm không được để trống";
-        } else if (spSet.contains(maSKU.toUpperCase())) {
+        } else if (!spSet.contains(maSKU.toUpperCase())) {
             err = "Mã sản phẩm không được để trống";
 
         }

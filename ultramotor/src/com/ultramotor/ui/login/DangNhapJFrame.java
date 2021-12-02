@@ -1,9 +1,10 @@
-package com.ultramotor.ui;
+package com.ultramotor.ui.login;
 
 import com.swingx.PasswordField;
 import com.swingx.TextField;
 import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.entity.NhanVien;
+import com.ultramotor.ui.MainFrame;
 import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.MyVerifier;
@@ -109,7 +110,6 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         btnThoat.setBackground(new java.awt.Color(51, 153, 255));
         btnThoat.setText("Thoát");
 
-        txtTenDangNhap.setAllowEmpty(false);
         txtTenDangNhap.setLabelText("Tên đăng nhập");
 
         pwdMatKhau.setLabelText("Mật khẩu");
@@ -503,9 +503,6 @@ public class DangNhapJFrame extends javax.swing.JFrame {
             }
         }).start();
         reset((JComponent) this.getContentPane());
-//        if (!isVisible()) {
-//            setVisible(true);
-//        }
     }
 
     //thêm listeners cho các button
@@ -639,7 +636,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
                 if (field instanceof TextField) {
                     err = ((TextField) field).getErrorText();
                 } else if (field instanceof PasswordField) {
-                    err = ((TextField) field).getErrorText();
+                    err = ((PasswordField) field).getErrorText();
                 }
                 MsgBox.error(err);
                 return false;

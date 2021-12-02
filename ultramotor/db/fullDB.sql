@@ -30,7 +30,8 @@ CREATE TABLE NhanVien(
     Hinh NVARCHAR(50) NOT NULL,
     VaiTro NVARCHAR(20) NOT NULL,
     matKhau NVARCHAR(255) NOT NULL,
-    GhiChu NVARCHAR(255)
+    GhiChu NVARCHAR(255),
+	isDeleted BIT DEFAULT 0
 )
 GO
 
@@ -278,7 +279,8 @@ BEGIN
 		GhiChu = Source.GhiChu
 
 	WHEN NOT MATCHED BY Source
-	THEN DELETE;
+	THEN UPDATE SET
+	isDeleted = 1;
 END
 GO
 
@@ -489,11 +491,22 @@ INSTEAD OF DELETE
 NOT FOR REPLICATION
 AS
 BEGIN
-	DELETE FROM ChiTietHoaDon WHERE idHD IN (SELECT idHD FROM deleted)
+	DELETE FROM ChiTietHoaDon WHERE idHD IN (SELECT idHD FROM deleted);
 
-	DELETE FROM HoaDon WHERE idHD IN (SELECT idHD FROM deleted)
+	DELETE FROM HoaDon WHERE idHD IN (SELECT idHD FROM deleted);
 END
 GO
+
+DROP TRIGGER IF EXISTS trg_delete_nhanVien
+GO
+
+CREATE TRIGGER trg_delete_nhanVien
+ON NhanVien
+INSTEAD OF DELETE
+NOT FOR REPLICATION
+AS UPDATE NhanVien SET isDeleted = 1 WHERE id_NV in (select id_NV from deleted)
+
+
 
 ----------------------------------------------CREATE VIEW---------------------------------------------------------
 DROP VIEW IF EXISTS view_SanPhamTon

@@ -20,18 +20,16 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
 
     public NhanVienDAO() {
         TABLE_NAME = "NhanVien";
-        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id_NV");
-        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("SELECT * FROM %s WHERE %s = ? AND isDeleted = 0", TABLE_NAME, "id_NV");
+        SELECT_ALL_SQL = String.format("SELECT * FROm %s WHERE isDeleted = 0", TABLE_NAME);
     }
-
-    final String SQL_SELECT_BY_EMAIL = "SELECT * FROM NhanVien WHERE Email = ?";
-//    final String SELECT_BY_ID_SQL = "SELECT * FROM NhanVien WHERE id_NV=?";
-//    final String SELECT_ALL_SQL = "SELECT * FROM NhanVien";
+    final String SQL_SELECT_BY_EMAIL = "SELECT * FROM NhanVien WHERE Email = ? AND isDeleted = 0";
     final String INSERT_SQL = "INSERT INTO NhanVien(id_NV,HONV,TENNV,NGAYSINH,GIOITINH,DIACHI,SDT,EMAIL,LUONG,HINH,VAITRO,MATKHAU,GHICHU)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
     final String UPDATE_SQL = "UPDATE NhanVien SET HONV=?,TENNV=?,NGAYSINH=?,GIOITINH=?,DIACHI=?,SDT=?,EMAIL=?,LUONG=?,HINH=?,VAITRO=?,MATKHAU=?,GHICHU=? WHERE id_NV=?";
     final String DELETE_SQL = "DELETE FROM NhanVien WHERE id_NV=?";
     final String MERGE_SQL = "exec usp_updateNhanVien ?";
-
+//    final String SELECT_BY_KEYWORD = "SELECT * FROM NhanVien WHERE HONV LIKE ? OR TENNV LIKE ? OR id_NV like ? OR SDT like ? ";
+   
     @Override
     public int insert(NhanVien e) {
         return XJdbcServer.update(INSERT_SQL,
@@ -105,10 +103,9 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
         return XJdbc.query(SELECT_ALL_SQL);
     }
 
-    public List<NhanVien> selectByKeyword(String keyWord) {
-        String sql = "SELECT * FROM NhanVien WHERE HONV LIKE ? OR TENNV LIKE ? OR id_NV like ? OR SDT like ? ";
-        return this.selectBySQL(sql, "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%");
-    }
+//    public List<NhanVien> selectByKeyword(String keyWord) {
+//        return this.selectBySQL(SELECT_BY_KEYWORD, "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%");
+//    }
 
     public void mergeTable(SQLServerDataTable table) throws SQLException {
         XJdbcServer.update(MERGE_SQL, new String[]{"NhanVienType"}, table);

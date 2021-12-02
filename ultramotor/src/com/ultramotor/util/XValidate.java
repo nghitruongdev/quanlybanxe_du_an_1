@@ -100,7 +100,7 @@ public class XValidate {
 
     //kiểm tra độ dài password
     public static boolean validatePassworđ(JTextComponent comp) {
-        return ((JPasswordField) comp).getPassword().length >= 8;
+        return ((JPasswordField) comp).getPassword().length >= 3; //sửa lại trong database
     }
 
     //kiểm tra điểm

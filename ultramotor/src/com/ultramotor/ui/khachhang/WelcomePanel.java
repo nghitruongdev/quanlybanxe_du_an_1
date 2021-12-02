@@ -64,18 +64,14 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bg = new javax.swing.JLayeredPane();
+        pnlSlideshow = new com.swingx.SlideShowPanel();
         pnlLang = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         lblLang = new javax.swing.JLabel();
         btnContinue = new com.swingx.Button();
         cboLang = new com.swingx.ComboBoxSuggestion();
-        pnlSlideshow = new com.swingx.SlideShowPanel();
 
         setBackground(new java.awt.Color(250, 250, 250));
-        setOpaque(false);
-
-        bg.setBackground(new java.awt.Color(255, 255, 255));
 
         pnlLang.setBackground(new java.awt.Color(250, 250, 250));
         pnlLang.setOpaque(false);
@@ -141,46 +137,26 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
                 .addContainerGap(217, Short.MAX_VALUE))
         );
 
-        bg.setLayer(pnlLang, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        bg.setLayer(pnlSlideshow, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
-        bg.setLayout(bgLayout);
-        bgLayout.setHorizontalGroup(
-            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
-            .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(bgLayout.createSequentialGroup()
-                    .addGap(291, 291, 291)
-                    .addComponent(pnlLang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(291, 291, 291)))
-            .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(pnlSlideshow, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE))
-        );
-        bgLayout.setVerticalGroup(
-            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 614, Short.MAX_VALUE)
-            .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(pnlLang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(pnlSlideshow, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(291, 291, 291)
+                .addComponent(pnlLang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(291, 291, 291))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlLang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLayeredPane bg;
     private com.swingx.Button btnContinue;
     private com.swingx.ComboBoxSuggestion cboLang;
     private javax.swing.JPanel jPanel2;

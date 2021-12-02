@@ -45,7 +45,6 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
             if(shouldNext){
                 next();
             }
-            System.out.println("Timer is running");
         });
         timer.start();
     }
