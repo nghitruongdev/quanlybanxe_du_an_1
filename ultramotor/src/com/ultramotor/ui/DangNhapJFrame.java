@@ -78,7 +78,10 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         pnlAnh.setLayout(pnlAnhLayout);
         pnlAnhLayout.setHorizontalGroup(
             pnlAnhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlAnhLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(171, Short.MAX_VALUE))
         );
         pnlAnhLayout.setVerticalGroup(
             pnlAnhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
