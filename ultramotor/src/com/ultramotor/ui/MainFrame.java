@@ -1,6 +1,7 @@
 package com.ultramotor.ui;
 
 import com.swingx.model.ModelMenu;
+import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.entity.NhanVien;
 import com.ultramotor.entity.NhanVienBanHang;
 import com.ultramotor.entity.NhanVienKho;
@@ -111,18 +112,18 @@ public class MainFrame extends javax.swing.JFrame {
         pnlBarcode = new BarcodePanel();
         pnlHoaDon = new HoaDonPanel();
         setLocationRelativeTo(null);
+        Auth.user = new NhanVienDAO().selectByID("NV01");
         NhanVien user = Auth.user;
-        
         if (user == null) {
 //            return;
+            System.out.println("Auth is null");
         }
-        
+
         pnlMain.setUser(user);
         addMenus(user);
     }
 
     private void addMenus(NhanVien user) {
-        File path = Paths.get("src", "com", "ultramotor", "img", "icon").toFile();
         if (user instanceof NhanVienBanHang) {
             return;
         }
@@ -131,12 +132,12 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
 
-        ModelMenu mnuNhanVien = new ModelMenu("Quản lý nhân viên", new ImageIcon(), getEvent("NhanVien"));
-        ModelMenu mnuHoaDon = new ModelMenu("Quản lý hoá đơn", new ImageIcon(new File(path, "refresh_25px.png").getPath()), getEvent("HoaDon"));
-        ModelMenu mnuKhachHang = new ModelMenu("Quản lý khách hàng", new ImageIcon(new File(path, "refresh_25px.png").getPath()), getEvent("KhachHang"));
-        ModelMenu mnuSanPham = new ModelMenu("Quản lý sản phẩm", new ImageIcon(new File(path, "refresh_25px.png").getPath()), getEvent("SanPham"));
-        ModelMenu mnuNhapKho = new ModelMenu("Quản lý kho", new ImageIcon(new File(path, "refresh_25px.png").getPath()), getEvent("NhapKho"));
-        ModelMenu mnuBarcode = new ModelMenu("In barcode", new ImageIcon(new File(path, "refresh_25px.png").getPath()), getEvent("Barcode"));
+        ModelMenu mnuNhanVien = new ModelMenu("Quản lý nhân viên",createIcon("refresh_25px.png"), getEvent("NhanVien"));
+        ModelMenu mnuHoaDon = new ModelMenu("Quản lý hoá đơn", createIcon("refresh_25px.png"), getEvent("HoaDon"));
+        ModelMenu mnuKhachHang = new ModelMenu("Quản lý khách hàng", createIcon("refresh_25px.png"), getEvent("KhachHang"));
+        ModelMenu mnuSanPham = new ModelMenu("Quản lý sản phẩm", createIcon("refresh_25px.png"), getEvent("SanPham"));
+        ModelMenu mnuNhapKho = new ModelMenu("Quản lý kho", createIcon("refresh_25px.png"), getEvent("NhapKho"));
+        ModelMenu mnuBarcode = new ModelMenu("In barcode", createIcon("refresh_25px.png"), getEvent("Barcode"));
 
         pnlMain.addMenu(mnuNhanVien, mnuHoaDon, mnuKhachHang, mnuSanPham, mnuNhapKho, mnuBarcode);
     }
@@ -173,5 +174,10 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         pnlMain.showForm(panel);
+    }
+
+    private ImageIcon createIcon(String name) {
+        File iconPath = Paths.get("src", "com", "ultramotor", "img", "icon").toFile();
+        return new ImageIcon(new File(iconPath, name).getPath());
     }
 }

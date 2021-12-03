@@ -3,17 +3,24 @@ package com.ultramotor.component;
 import com.swingx.Button;
 import com.swingx.ImageAvatar;
 import com.ultramotor.entity.NhanVien;
-import com.ultramotor.util.XImage;
+import com.ultramotor.ui.login.DangNhapJFrame;
+import com.ultramotor.ui.nhanvien.NhanVienInfoPanel;
+import com.ultramotor.util.MsgBox;
+import com.ultramotor.util.XDialog;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Paths;
-import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -37,18 +44,27 @@ public class Header extends JPanel {
     private JPopupMenu popup;
     private JLabel lblUsername;
     private JLabel lblVaiTro;
-    
+
+    private ActionListener logoutLs;
+    private ActionListener viewProfileLs;
+    private ActionListener changePwLs;
+
+    private NhanVien user;
+    private NhanVienInfoPanel pnlNhanVien;
+
     private void init() {
         layout = new MigLayout("", "10[left]push[]5[]20");
         setLayout(layout);
-
+        initListeners();
         cmdMenu = new Button();
         cmdMenu.setFocusPainted(false);
         cmdMenu.setBackground(getBackground());
-        cmdMenu.setIcon(new ImageIcon(getClass().getResource("/com/raven/icon/menu.png")));
+        cmdMenu.setIcon(createIcon("menu.png"));
 
         lblUsername = new JLabel("Username: ");
         lblVaiTro = new JLabel("Chức vụ: ");
+        lblUsername.setFont(new Font("Segoe UI", 0, 14));
+        lblVaiTro.setFont(new Font("Segoe UI", 0, 14));
         JSeparator sp = new JSeparator(SwingConstants.VERTICAL);
         pnlInfo = new JPanel(new MigLayout("insets 0", "0[al right]0[]0", "0[]0[]0"));
         pnlInfo.add(lblUsername);
@@ -57,15 +73,15 @@ public class Header extends JPanel {
         pnlInfo.setOpaque(false);
 
         avatar = new ImageAvatar();
-//        avatar.setIcon(new ImageIcon(getClass().getResource("/com/raven/icon/profile1.jpg")));
 
         add(cmdMenu, "w 50!, h 50!");
         add(pnlInfo, "h 50!");
-        add(avatar, "w 50!, h 50!");
+        add(avatar, "w 50!, h 50!, gapright 20");
 
         popup = new JPopupMenu();
-        popup.add(new JMenuItem("Đăng Xuất"));
-        popup.add(new JMenuItem("Thoát"));
+        popup.add(new MenuItem("Xem Hồ Sơ", createIcon("profile_25px.png"), createIcon("profile_white_25px.png"), viewProfileLs));
+        popup.add(new MenuItem("Đổi Mật Khẩu", createIcon("change_25px.png"), createIcon("change_white_25px.png"), changePwLs));
+        popup.add(new MenuItem("Đăng Xuất", createIcon("logout_25px.png"), createIcon("logout_white_25px.png"), logoutLs));
 
         avatar.addMouseListener(new MouseAdapter() {
             @Override
@@ -74,18 +90,30 @@ public class Header extends JPanel {
                 if (SwingUtilities.isLeftMouseButton(me)) {
                     System.out.printf("Avatar: X %d, Y %d\n", avatar.getX(), avatar.getY());
                     System.out.println("X: " + me.getX() + ", Y: " + me.getY());
-                    popup.show(me.getComponent(), 0 - avatar.getWidth() / 2, 65);
+                    popup.show(avatar, avatar.getWidth() - 150, 55);
+                    System.out.println("avatar preferredsize: " + avatar.getWidth());
                 }
             }
-
         });
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent me) {
-                System.out.printf("Click at: X %d, Y %d\n", me.getX(), me.getY());
+        pnlNhanVien = new NhanVienInfoPanel();
+        pnlNhanVien.removeMailButton();
+    }
+
+    private void initListeners() {
+        logoutLs = (ActionEvent e) -> {
+            if (MsgBox.confirm("Bạn có muốn đăng xuất khỏi ứng dụng?", false) == 0) {
+                ((JFrame) this.getTopLevelAncestor()).dispose();
+                new DangNhapJFrame().setVisible(true);
             }
-
-        });
+        };
+        viewProfileLs = (ActionEvent e) -> {
+            if (user != null) {
+                pnlNhanVien.setForm(user);
+                XDialog.getDialog((JFrame) this.getTopLevelAncestor(), pnlNhanVien).setVisible(true);
+            }
+        };
+        changePwLs = (ActionEvent e) -> {
+        };
     }
 
     public void addMenuEvent(ActionListener al) {
@@ -96,14 +124,39 @@ public class Header extends JPanel {
         if (user == null) {
             return;
         }
-        Icon icon = null;
-        try {
-            icon = new ImageIcon(ImageIO.read(new File(Paths.get("logos", "nhanvien").toFile(), user.getHinh())));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        this.user = user;
+        Icon icon = new ImageIcon(new File(Paths.get("logos", "nhanvien").toFile(), user.getHinh()).getPath());
         avatar.setIcon(icon);
         lblUsername.setText(user.getHoTenNV());
         lblVaiTro.setText(user.getVaiTro());
     }
+
+    private ImageIcon createIcon(String name) {
+        File iconPath = Paths.get("src", "com", "ultramotor", "img", "icon").toFile();
+        return new ImageIcon(new File(iconPath, name).getPath());
+    }
+}
+
+class MenuItem extends JMenuItem {
+
+    public MenuItem(String text, Icon icon, Icon mouseOverIcon, ActionListener e) {
+        super(text, icon);
+        setBackground(new Color(250, 250, 250));
+        setFont(new Font("Segoe UI", 0, 14));
+        setPreferredSize(new Dimension(150, 50));
+        setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        this.addActionListener(e);
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setIcon(icon);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setIcon(mouseOverIcon);
+            }
+        });
+    }
+
 }

@@ -1,0 +1,1 @@
+select * from nhanvien where id_nv = 'NV01'

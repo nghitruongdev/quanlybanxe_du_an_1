@@ -25,9 +25,9 @@ public class MenuItem extends javax.swing.JPanel {
         this.model = model;
         this.eventSelected = eventSelected;
         this.index = index;
-        Font myfont = new Font("Segoe UI", 0, 14);
+        Font myfont = new Font("Tahoma", 1, 14);
         setOpaque(false);
-        setLayout(new MigLayout("wrap, fillx, insets 0", "[fill]", "[fill, 40!]0[fill, 35!]"));
+        setLayout(new MigLayout("wrap, fillx, insets 0", "[fill]", "[fill, 60!]0[fill, 35!]"));
         MenuButton firstItem = new MenuButton(model.getIcon(), "      " + model.getMenuName());
         firstItem.setFont(myfont);
         firstItem.addActionListener(model.getEvent());
@@ -70,21 +70,24 @@ public class MenuItem extends javax.swing.JPanel {
 
     @Override
     protected void paintComponent(Graphics grphcs) {
-        int width = getWidth();
-        int height = getPreferredSize().height;
+//        int width = getWidth();
+//        int height = getPreferredSize().height;
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(new Color(50, 50, 50));
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-        g2.fillRect(0, 2, width, 38);
+//        g2.fillRect(0, 2, width, 38);
+//        g2.fillRect(0, 2, width, 60);
+
         g2.setComposite(AlphaComposite.SrcOver);
-        g2.fillRect(0, 40, width, height - 40);
+//        g2.fillRect(0, 40, width, height - 40);
         g2.setColor(new Color(100, 100, 100));
-        g2.drawLine(30, 40, 30, height - 17);
+//        g2.drawLine(30, 40, 30, height - 17);
         for (int i = 0; i < model.getSubMenu().length; i++) {
             int y = ((i + 1) * 35 + 40) - 17;
             g2.drawLine(30, y, 38, y);
         }
+        createArrowButton(g2);
         if (model.getSubMenu().length > 0) {
             createArrowButton(g2);
         }
