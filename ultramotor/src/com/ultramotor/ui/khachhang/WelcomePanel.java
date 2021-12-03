@@ -25,7 +25,6 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide2.jpeg")),
                 new ImageIcon(getClass().getResource("/com/raven/icon/slide3.jpg")));
         pnlSlideshow.setAuto(2000);
-
         cboLang.setModel(LANG_MODEL_VN);
         addListeners();
     }
@@ -58,6 +57,10 @@ public class WelcomePanel extends javax.swing.JPanel implements Multilang {
         btnContinue.addActionListener((ActionEvent e) -> {
             KhachHangController.navigateCard((JPanel) this.getParent(), true);
         });
+    }
+
+    public void reset() {
+        setLang(Lang.VN);
     }
 
     @SuppressWarnings("unchecked")

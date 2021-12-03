@@ -108,12 +108,6 @@ public class KhachHangController {
                 .filter(loai -> model.getTenLH().equalsIgnoreCase(loai.getTenLoaiHang()))
                 .findFirst().orElse(null).getIdLH()))
         );
-//        System.out.println("--------Print Result-----------");
-//        for (ModelSanPham model : list) {
-//            System.out.println("Ten NSX: " + model.getTenNSX());
-//            System.out.println("Ten LH: " + model.getTenLH());
-//
-//        }
         return list;
     }
 

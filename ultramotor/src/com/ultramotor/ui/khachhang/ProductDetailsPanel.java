@@ -132,6 +132,9 @@ public class ProductDetailsPanel extends javax.swing.JPanel implements Multilang
         }
         return "";
     }
+    
+    public void reset(){
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

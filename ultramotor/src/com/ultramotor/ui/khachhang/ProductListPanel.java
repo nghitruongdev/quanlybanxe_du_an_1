@@ -170,6 +170,10 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
             return (int) num;
         };
     }
+    
+    public void reset(){
+        pnlList.removeAll();
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

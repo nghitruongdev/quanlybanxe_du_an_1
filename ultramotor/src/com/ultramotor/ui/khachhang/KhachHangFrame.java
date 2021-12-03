@@ -1,10 +1,14 @@
 package com.ultramotor.ui.khachhang;
 
+import com.swingx.SearchTextField;
 import com.swingx.SlideShowPanel;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
@@ -37,18 +41,19 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
         btnNext.setVisible(false);
         addListeners();
     }
+
     private void updateStatus() {
-        btnBack.setVisible(!pnlWelcome.isShowing() );
-//        btnNext.setVisible(!first && !second && !last);
+        btnBack.setVisible(!pnlWelcome.isShowing());
+        reset(pnlWelcome.isShowing());
     }
-    
-     private void addListeners() {
-        this.addWindowListener(new WindowAdapter(){
+
+    private void addListeners() {
+        this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
                 KhachHangFrame.this.setExtendedState(JFrame.MAXIMIZED_BOTH);
             }
-            
+
         });
         btnBack.addActionListener((ActionEvent e) -> {
             ctrl.navigateCard(pnlMain, false);
@@ -59,9 +64,9 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
             ctrl.navigateCard(pnlMain, true);
             updateStatus();
         });
-        
+
         for (Component comp : pnlMain.getComponents()) {
-            comp.addComponentListener(new ComponentAdapter(){
+            comp.addComponentListener(new ComponentAdapter() {
                 @Override
                 public void componentShown(ComponentEvent ce) {
                     updateStatus();
@@ -71,9 +76,7 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
                 public void componentHidden(ComponentEvent ce) {
                     updateStatus();
                 }
-                
-                
-                
+
             });
         }
     }
@@ -132,14 +135,37 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
         animator.setDeceleration(0.5f);
 
         timer = new Timer(3000, (ActionEvent e) -> {
+            System.out.println("Timer is starting");
             showing = false;
             pnl.setBounds(bg.getBounds());
             animator.start();
             timer.stop();
+            KhachHangController.showCard(pnlMain, "Welcome");
         });
-        this.addMouseMotionListener(new MouseMotionListener() {
+        timer.setCoalesce(true);
+        addMouseMotionComponent(this, animator);
+    }
+
+    private void reset(boolean isFirst) {
+        if (isFirst) {
+            pnlWelcome.reset();
+            pnlSearch.reset();
+            pnlProductList.reset();
+            pnlDetails.reset();
+        }
+    }
+
+    private void addMouseMotionComponent(Container con, Animator animator) {
+        for (Component comp : con.getComponents()) {
+            if (comp instanceof Container) {
+                addMouseMotionComponent((Container) comp, animator);
+            }
+        }
+
+        MouseMotionListener ls = new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
+                timer.restart();
             }
 
             @Override
@@ -150,7 +176,17 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
                 }
                 timer.restart();
             }
-        });
+        };
+        if (con instanceof SearchTextField) {
+            con.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    timer.restart();
+                }
+            });
+        }
+        con.addMouseMotionListener(ls);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -211,8 +247,8 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
         pnlMain.setLayout(new java.awt.CardLayout());
 
         pnlWelcome.setName("ProductList"); // NOI18N
-        pnlMain.add(pnlWelcome, "card4");
-        pnlMain.add(pnlSearch, "card4");
+        pnlMain.add(pnlWelcome, "Welcome");
+        pnlMain.add(pnlSearch, "ProductSearch");
         pnlMain.add(pnlProductList, "ProductList");
         pnlMain.add(pnlDetails, "ProductDetails");
 
@@ -259,13 +295,17 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(KhachHangFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KhachHangFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(KhachHangFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KhachHangFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(KhachHangFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KhachHangFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(KhachHangFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KhachHangFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>

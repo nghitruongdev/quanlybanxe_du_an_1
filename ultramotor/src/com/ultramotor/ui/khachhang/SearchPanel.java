@@ -82,7 +82,6 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-//                    KhachHangController.sleepThread(300);
                     KhachHangController.showProductList(getParent(), KhachHangController.search(cboNSX, cboLoaiXe));
                 }
             }).start();
@@ -93,7 +92,6 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("SearchTHread: " + Thread.currentThread().getName());
                     List list = KhachHangController.search(txtSearch);
                     new Thread(() -> {
                         KhachHangController.showProductList(getParent(), list);
@@ -103,6 +101,10 @@ public class SearchPanel extends javax.swing.JPanel implements Multilang {
             }).start();
 
         });
+    }
+
+    public void reset() {
+        txtSearch.setText("");
     }
 
     @SuppressWarnings("unchecked")
