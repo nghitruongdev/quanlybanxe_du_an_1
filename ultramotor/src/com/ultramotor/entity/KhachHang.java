@@ -5,6 +5,7 @@
  */
 package com.ultramotor.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class KhachHang extends Entity {
     private String email;
     private Boolean thanhVien;
     private String ghiChu;
-    private List<HoaDon> hoaDonList;
+    private List<HoaDon> hoaDonList = new ArrayList<>();
     private String maNV;
 
     public KhachHang() {
@@ -134,6 +135,12 @@ public class KhachHang extends Entity {
 
     public void setHoaDonList(List<HoaDon> hoaDonList) {
         this.hoaDonList = hoaDonList;
+    }
+
+    public double getTongTien() {
+        double sum = 0;
+        sum = hoaDonList.stream().map(hoaDon -> hoaDon.getTongTien()).reduce(sum, (accumulator, _item) -> accumulator + _item);
+        return sum;
     }
 
     public String getMaNV() {

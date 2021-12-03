@@ -19,13 +19,14 @@ public class HoaDonDAO extends UltraDAO<HoaDon, String> {
         SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "idHD");
         SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
     }
-    
+
     String INSERT_SQL = "INSERT INTO HoaDon(idHD,thoiGian,loaiThanhToan,trangThai,id_NV,idKH)VALUES(?,?,?,?,?,?)";
     String UPDATE_SQL = "UPDATE HoaDon SET thoiGian=?,loaiThanhToan=?,trangThai=?,id_NV=?,idKH=? WHERE idHD=?";
     String DELETE_SQL = "DELETE FROM HoaDon WHERE idHD=?";
+    String SELECT_BY_KHACH_HANG_SQL = "SELECT * FROM HOADON WHERE idKH = ?";
 
     static ChiTietHoaDonDAO dao = new ChiTietHoaDonDAO();
-    
+
     @Override
     public int insert(HoaDon e) {
         return XJdbcServer.update(INSERT_SQL,
@@ -48,6 +49,10 @@ public class HoaDonDAO extends UltraDAO<HoaDon, String> {
         return this.selectBySQL(SQL, time);
     }
 
+    public List<HoaDon> selectByKhachHang(String idKH) {
+        return selectBySQL(SELECT_BY_KHACH_HANG_SQL, idKH);
+    }
+
     @Override
     public List<HoaDon> selectAll() {
         return selectBySQL(SELECT_ALL_SQL);
@@ -58,13 +63,15 @@ public class HoaDonDAO extends UltraDAO<HoaDon, String> {
         List<HoaDon> list = new ArrayList<>();
         try (ResultSet rs = XJdbc.query(sql, args)) {
             while (rs.next()) {
-                list.add(new HoaDon(
+                HoaDon hd = new HoaDon(
                         rs.getString(1),
                         rs.getDate(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getString(6)));
+                        rs.getString(6));
+                hd.setListCTHD(dao.selectByHoaDon(hd.getIdHD()));
+                list.add(hd);
             }
         } catch (SQLException ex) {
             Logger.getLogger(NhaSanXuatDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,42 +79,40 @@ public class HoaDonDAO extends UltraDAO<HoaDon, String> {
         return list;
     }
 
-     public void insertWithChiTiet(HoaDon hd, SQLServerDataTable chiTiet) throws SQLException {
+    public void insertWithChiTiet(HoaDon hd, SQLServerDataTable chiTiet) throws SQLException {
         insert(hd);
         dao.insert(chiTiet);
     }
 }
 
-class ChiTietHoaDonDAO extends UltraDAO<ChiTietHoaDon, Integer> {
+class ChiTietHoaDonDAO {
 
-    {
-        TABLE_NAME = "ChiTietHoaDon";
-        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id_CTHD");
-        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
-    }
-
+//    String TABLE_NAME = "ChiTietHoaDon";
+//    String SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id_CTHD");
+//    String SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
     String INSERT_SQL = "INSERT INTO ChiTietHoaDon(id_CTHD,donGia,dichVu,SKU,idHD)VALUES(?,?,?,?,?)";
     String UPDATE_SQL = "UPDATE ChiTietHoaDon SET donGia=?,dichVu=?,SKU=?,idHD=? WHERE id_CTHD=?";
     String DELETE_SQL = "DELETE FROM ChiTietHoaDon WHERE id_CTHD=?";
     String INSERT_MULTIPLE_CHITIET = "exec usp_insert_ChiTietHoaDon ?";
-    @Override
-    public int insert(ChiTietHoaDon e) {
-        return XJdbcServer.update(INSERT_SQL,
-                e.getIdHD(), e.getDonGia(), e.getSKU(), e.getIdHD());
+    String SELECT_BY_HOADON_SQL = "SELECT * FROM ChiTietHoaDon WHERE idHD=? ";
+//    public int insert(ChiTietHoaDon e) {
+//        return XJdbcServer.update(INSERT_SQL,
+//                e.getIdHD(), e.getDonGia(), e.getSKU(), e.getIdHD());
+//    }
+//
+//    public int update(ChiTietHoaDon e) {
+//        return XJdbcServer.update(UPDATE_SQL,
+//                e.getDonGia(), e.getSKU(), e.getIdHD(), e.getIdCTHD());
+//    }
+//
+//    public int delete(Integer id) {
+//        return XJdbcServer.update(DELETE_SQL, id);
+//    }
+
+    public List<ChiTietHoaDon> selectByHoaDon(String idHD) {
+        return selectBySQL(SELECT_BY_HOADON_SQL, idHD);
     }
 
-    @Override
-    public int update(ChiTietHoaDon e) {
-        return XJdbcServer.update(UPDATE_SQL,
-                e.getDonGia(), e.getSKU(), e.getIdHD(), e.getIdCTHD());
-    }
-
-    @Override
-    public int delete(Integer id) {
-        return XJdbcServer.update(DELETE_SQL, id);
-    }
-
-    @Override
     public List<ChiTietHoaDon> selectBySQL(String sql, Object... args) {
         List<ChiTietHoaDon> list = new ArrayList<>();
         try (ResultSet rs = XJdbc.query(sql, args)) {
@@ -124,7 +129,7 @@ class ChiTietHoaDonDAO extends UltraDAO<ChiTietHoaDon, Integer> {
         return list;
     }
 
-     public void insert(SQLServerDataTable table) throws SQLException {
+    public void insert(SQLServerDataTable table) throws SQLException {
         XJdbcServer.update(INSERT_MULTIPLE_CHITIET, new String[]{"ChiTietHoaDonType"}, table);
     }
 }

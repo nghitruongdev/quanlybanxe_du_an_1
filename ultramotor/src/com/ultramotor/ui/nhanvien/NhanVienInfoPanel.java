@@ -19,6 +19,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.nio.file.Paths;
 import java.text.ParseException;
@@ -80,19 +81,18 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
     }
 
     private void reset() {
-        if (nv == null) {
-            for (Component c : pnlMain.getComponents()) {
-                if (c instanceof JTextField) {
-                    ((JTextField) c).setText("");
-                }
+        for (Component c : pnlMain.getComponents()) {
+            if (c instanceof JTextField) {
+                ((JTextField) c).setText("");
             }
-            rdoNam.setSelected(true);
-            if (cboVaiTro.getItemCount() > 0) {
-                cboVaiTro.setSelectedIndex(0);
-            }
-            XImage.setIcon(null, lblHinh, defaultFile);
-            txtMaNV.requestFocus();
-        } else {
+        }
+        rdoNam.setSelected(true);
+        if (cboVaiTro.getItemCount() > 0) {
+            cboVaiTro.setSelectedIndex(0);
+        }
+        XImage.setIcon(null, lblHinh, defaultFile);
+        txtMaNV.requestFocus();
+        if (nv != null) {
             setForm();
         }
     }
@@ -137,6 +137,10 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
     }
 
     private void addListeners() {
+        this.addPropertyChangeListener("ancestor", (PropertyChangeEvent e) -> {
+            reset();
+        });
+
         btnReset.addActionListener((ActionEvent e) -> {
             reset();
         });
@@ -150,9 +154,6 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
                 System.out.println("Mouse clicked");
                 if (SwingUtilities.isLeftMouseButton(me) && me.getClickCount() >= 2) {
                     XImage.uploadIcon((Container) getTopLevelAncestor(), lblHinh, defaultFile);
-//                    if(!uploadTimer.isRunning()){
-//                        uploadTimer.start();
-//                    }
                 }
             }
         });
@@ -250,9 +251,10 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         return nv;
     }
 
-    public void removeMailButton(){
+    public void removeMailButton() {
         pnlButton.remove(btnGuiMail);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
