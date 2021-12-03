@@ -3,6 +3,7 @@ package com.ultramotor.dao;
 import com.ultramotor.entity.ChiTietNhapKho;
 import com.ultramotor.entity.PhieuNhapKho;
 import com.ultramotor.util.XJdbc;
+import com.ultramotor.util.XJdbcServer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,6 +32,23 @@ public class NhapKhoDAO extends UltraDAO<PhieuNhapKho, String> {
     @Override
     public void delete(String id) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+        // tìm kiếm năm để thống kê sản phẩm nhập kho theo năm
+            public List<Integer> selectYears() {
+        String sql="SELECT DISTINCT year(ngayNhap) Year FROM PhieuNhapKho ORDER BY Year DESC";
+        List<Integer> list=new ArrayList<>();
+        try {
+           ResultSet rs = XJdbcServer.query(sql);
+           while(rs.next()){
+                 list.add(rs.getInt(1));
+            }
+            rs.getStatement().getConnection().close();
+            return list;
+        } 
+        catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override

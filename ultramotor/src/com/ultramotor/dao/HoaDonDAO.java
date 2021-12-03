@@ -67,10 +67,27 @@ public class HoaDonDAO extends UltraDAO<HoaDon, String> {
         }
         return list;
     }
+    // tìm kiếm năm để thống kê doanh thu theo năm
+            public List<Integer> selectYears() {
+        String sql="SELECT DISTINCT year(thoiGian) Year FROM HoaDon ORDER BY Year DESC";
+        List<Integer> list=new ArrayList<>();
+        try {
+           ResultSet rs = XJdbcServer.query(sql);
+           while(rs.next()){
+                 list.add(rs.getInt(1));
+            }
+            rs.getStatement().getConnection().close();
+            return list;
+        } 
+        catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
 }
 
-class ChiTietHoaDonDAO extends UltraDAO<ChiTietHoaDon, Integer> {
+
+ class ChiTietHoaDonDAO extends UltraDAO<ChiTietHoaDon, Integer> {
 
     {
         TABLE_NAME = "ChiTietHoaDon";
@@ -85,19 +102,21 @@ class ChiTietHoaDonDAO extends UltraDAO<ChiTietHoaDon, Integer> {
     @Override
     public void insert(ChiTietHoaDon e) {
         XJdbcServer.update(INSERT_SQL,
-                e.getIdHD(),e.getDonGia(),e.getDichVu(),e.getSKU(),e.getIdHD());
+                e.getIdHD(),e.getDonGia(),e.getSKU(),e.getIdHD());
     }
 
     @Override
     public void update(ChiTietHoaDon e) {
         XJdbcServer.update(UPDATE_SQL,
-                e.getDonGia(),e.getDichVu(),e.getSKU(),e.getIdHD(),e.getIdCTHD());
+                e.getDonGia(),e.getSKU(),e.getIdHD(),e.getIdCTHD());
     }
 
     @Override
     public void delete(Integer id) {
         XJdbcServer.update(DELETE_SQL, id);
     }
+    
+
 
     @Override
     public List<ChiTietHoaDon> selectBySQL(String sql, Object... args) {
@@ -108,13 +127,12 @@ class ChiTietHoaDonDAO extends UltraDAO<ChiTietHoaDon, Integer> {
                         rs.getInt(1),
                         rs.getDouble(2),
                         rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5)));
+                        rs.getString(4)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(NhaSanXuatDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
-    
 }
+
