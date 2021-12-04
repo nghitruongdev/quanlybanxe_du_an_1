@@ -3,6 +3,7 @@ package com.ultramotor.ui.nhanvien;
 import com.swingx.MyScrollBar;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XMail;
+import com.ultramotor.util.XValidate;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -34,14 +35,16 @@ public class SendMailPanel extends javax.swing.JPanel {
         String email = txtFrom.getText();
         String nguoiNhan = txtTo.getText();
         String subject = txtChuDe.getText();
-
-        //kiểm tra thông tin email
-        if (!validate(email, nguoiNhan.split(","))) {
-            return;
-        }
-
         //soạn nội dung mail cho nhiều người
         String mailContent = txtNoiDung.getText();
+        
+        if (subject.isEmpty() && MsgBox.confirm("Chủ đề trống, bạn có muốn tiếp tục gửi mail?", false) != 0) {
+            return;
+        }
+        
+        if (mailContent.isEmpty() && MsgBox.confirm("Nội dung email trống, bạn có muốn tiếp tục gửi mail?", false) != 0) {
+            return;
+        }
 
         //file đính kèm
         XMail.sendMail(nguoiNhan, mailContent, subject, fileDinhKem);
@@ -70,30 +73,12 @@ public class SendMailPanel extends javax.swing.JPanel {
         lblTepDinhKem.setText("");
     }
 
-    private boolean validate(String from, String[] tos) {
-        if (from.equals("")) {
-            MsgBox.error("Vui lòng nhập địa chỉ email");
-            txtFrom.requestFocus();
-            return false;
-        }
-        if (tos.length == 0) {
-            MsgBox.error("Vui lòng nhập địa chỉ email");
-            txtTo.requestFocus();
-            return false;
-        }
-        return true;
-    }
-
     private void addListeners() {
         btnUpload.addActionListener((ActionEvent e) -> {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    sleepThread(300);
-                    uploadFile();
-                }
-            }
-            ).start();
+            new Thread(() -> {
+                sleepThread(300);
+                uploadFile();
+            }).start();
         });
 
         btnCancel.addActionListener((ActionEvent e) -> {
@@ -103,15 +88,43 @@ public class SendMailPanel extends javax.swing.JPanel {
         });
 
         btnGui.addActionListener((ActionEvent e) -> {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    sleepThread(300);
-                    sendEmail();
+            new Thread(() -> {
+                sleepThread(300);
+                if (!validateField()) {
+                    return;
                 }
-            }
-            ).start();
+                sendEmail();
+            }).start();
         });
+    }
+
+    private boolean validateField() {
+        String from = txtFrom.getText().trim();
+        if (from.isEmpty()) {
+            MsgBox.error("Chưa nhập địa chỉ email người gửi");
+            txtFrom.requestFocus();
+            return false;
+        }
+        if (!validateEmails(from)) {
+            return false;
+        }
+        String to = txtTo.getText().trim();
+        if (to.isEmpty()) {
+            MsgBox.error("Chưa nhập địa chỉ email người nhận");
+            txtTo.requestFocus();
+            return false;
+        }
+        return validateEmails(to.split(","));
+    }
+
+    private boolean validateEmails(String... emails) {
+        for (String m : emails) {
+            if (!XValidate.validateEmail(m)) {
+                MsgBox.error("Địa chỉ email " + m + " không hợp lệ!");
+                return false;
+            }
+        }
+        return true;
     }
 
     private void sleepThread(int mili) {
@@ -123,7 +136,6 @@ public class SendMailPanel extends javax.swing.JPanel {
     }
 
     public void setNguoiNhan(String... emails) {
-//        txtTo.setText(list.toString().replaceAll("[\\[\\]]", ""));
         txtTo.setText(Arrays.toString(emails).replaceAll("[\\[\\]]", ""));
     }
 
@@ -151,7 +163,6 @@ public class SendMailPanel extends javax.swing.JPanel {
             }
 
         });
-
     }
 
     private void setLabelWithAsterisk() {
@@ -188,18 +199,18 @@ public class SendMailPanel extends javax.swing.JPanel {
         lblTepDinhKem = new javax.swing.JLabel();
         btnCancel = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(250, 250, 250));
+        setBackground(new java.awt.Color(255, 255, 255));
 
         txtFrom.setOnlyField(true);
         txtFrom.setPlaceholder("Người gửi");
 
-        btnGui.setBackground(new java.awt.Color(0, 153, 255));
+        btnGui.setBackground(new java.awt.Color(0, 174, 114));
         btnGui.setForeground(new java.awt.Color(255, 255, 255));
         btnGui.setText("Gửi");
         btnGui.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         lblTitleSendMail.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblTitleSendMail.setForeground(new java.awt.Color(102, 102, 255));
+        lblTitleSendMail.setForeground(new java.awt.Color(0, 174, 114));
         lblTitleSendMail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitleSendMail.setText("SEND EMAIL");
 
@@ -207,6 +218,7 @@ public class SendMailPanel extends javax.swing.JPanel {
         txtChuDe.setPlaceholder("Chủ Đề");
 
         lblNguoiNhan.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblNguoiNhan.setForeground(new java.awt.Color(169, 169, 169));
         lblNguoiNhan.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblNguoiNhan.setText("Người nhận*");
 
@@ -226,11 +238,10 @@ public class SendMailPanel extends javax.swing.JPanel {
         lblNguoiGui.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblNguoiGui.setText("Người gửi*");
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        txtNoiDung.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        txtNoiDung.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(169, 169, 169)));
         txtNoiDung.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtNoiDung.setOpaque(false);
         txtNoiDung.setSelectionColor(new java.awt.Color(3, 155, 216));
@@ -260,7 +271,7 @@ public class SendMailPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTitleSendMail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(lblNguoiGui)
                             .addComponent(lblChuDe)
@@ -268,25 +279,26 @@ public class SendMailPanel extends javax.swing.JPanel {
                             .addComponent(lblNoiDung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
-                                .addGap(4, 4, 4))
-                            .addComponent(txtChuDe, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                            .addComponent(txtChuDe, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                             .addComponent(txtFrom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(77, 77, 77)
                                 .addComponent(lblTepDinhKem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(2, 2, 2))
-                            .addComponent(txtTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(61, 61, 61))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnGui, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(txtTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(btnGui, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(4, 4, 4)))
+                        .addGap(61, 61, 61)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lblChuDe, lblNguoiGui, lblNguoiNhan, lblNoiDung});
@@ -294,9 +306,9 @@ public class SendMailPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(lblTitleSendMail)
-                .addGap(27, 27, 27)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTitleSendMail, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblNguoiGui)
@@ -319,10 +331,10 @@ public class SendMailPanel extends javax.swing.JPanel {
                         .addGap(13, 13, 13)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addComponent(lblNoiDung, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
+                    .addComponent(lblNoiDung, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnGui, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lblChuDe, lblNguoiGui, lblNguoiNhan, txtTo});

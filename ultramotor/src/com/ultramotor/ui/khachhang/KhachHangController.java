@@ -1,6 +1,7 @@
 package com.ultramotor.ui.khachhang;
 
 import com.ultramotor.dao.LoaiHangDAO;
+import com.ultramotor.dao.ModelSanPhamDAO;
 import com.ultramotor.dao.NhaSanXuatDAO;
 import com.ultramotor.entity.LoaiHang;
 import com.ultramotor.entity.ModelSanPham;
@@ -17,20 +18,12 @@ import javax.swing.JTextField;
 
 public class KhachHangController {
 
-    private static void sleepThread(int miliseconds) {
-        try {
-            Thread.sleep(miliseconds);
-        } catch (InterruptedException e) {
-
-        }
-    }
+    private static final List<NhaSanXuat> listNSX = new NhaSanXuatDAO().selectAll();
+    private static final List<LoaiHang> listLH = new LoaiHangDAO().selectAll();
+    private static final ModelSanPhamDAO daoModel = new ModelSanPhamDAO();
 
     public static void showCard(JPanel panel, String cardName) {
-        new Thread(() -> {
-            sleepThread(300);
-            ((CardLayout) panel.getLayout()).show(panel, cardName);
-        }).start();
-
+        ((CardLayout) panel.getLayout()).show(panel, cardName);
     }
 
     public static void navigateCard(JPanel panel, boolean isNext) {
@@ -46,71 +39,81 @@ public class KhachHangController {
     }
 
     public static void fillComboNSX(JComboBox cbo, Lang lang) {
-//        List<NhaSanXuat> list = new ArrayList<>();
-//        ///do some database stuff hêre
-//
-//        cbo.setModel(new DefaultComboBoxModel(list.toArray()));
-//        cbo.insertItemAt(new NhaSanXuat(null, lang == Lang.VN ? "Tất cả" : "All"), 0);
-//        cbo.setSelectedIndex(0);
-        NhaSanXuatDAO dao_NSX = new NhaSanXuatDAO();
-        DefaultComboBoxModel model = (DefaultComboBoxModel) cbo.getModel();
-        model.removeAllElements();
-        List<NhaSanXuat> list = dao_NSX.selectAll();    
-        for (NhaSanXuat cd : list) {
-            model.addElement(cd);
-            
-        }
+        cbo.setModel(new DefaultComboBoxModel(listNSX.toArray()));
         cbo.insertItemAt(new NhaSanXuat(null, lang == Lang.EN ? "All" : "Tất cả"), 0);
-       
+        cbo.setSelectedIndex(0);
     }
 
     public static void fillComboLoaiHang(JComboBox cbo, Lang lang) {
-//        List<LoaiHang> list = new ArrayList<>();
-//        ///do some database stuff hêre
-//
-//        cbo.setModel(new DefaultComboBoxModel(list.toArray()));
-//        cbo.insertItemAt(new LoaiHang(null, lang == Lang.VN ? "Tất cả" : "All"), 0);
-//        cbo.setSelectedIndex(0);
-        LoaiHangDAO dao_LH = new LoaiHangDAO();
-        DefaultComboBoxModel model = (DefaultComboBoxModel) cbo.getModel();
-        model.removeAllElements();
-        List<LoaiHang> list = dao_LH.selectAll();    
-        for (LoaiHang cd : list) {
-            model.addElement(cd);
-            
+        if (lang == Lang.EN) {
+            List<LoaiHang> listEN = new ArrayList<>(listLH.size());
+            listLH.forEach(lh -> listEN.add(new LoaiHang(lh.getIdLH(), getNameCategory(lh.getTenLoaiHang()))));
+            cbo.setModel(new DefaultComboBoxModel(listEN.toArray()));
+            cbo.insertItemAt(new LoaiHang(null, "All"), 0);
+            cbo.setSelectedIndex(0);
+            return;
         }
-        cbo.insertItemAt(new NhaSanXuat(null, lang == Lang.EN ? "All" : "Tất cả"), 0);
+        cbo.setModel(new DefaultComboBoxModel(listLH.toArray()));
+        cbo.insertItemAt(new LoaiHang(null, "Tất cả"), 0);
+        cbo.setSelectedIndex(0);
+    }
+
+    private static String getNameCategory(String tenLH) {
+        switch (tenLH) {
+            case "Xe ga":
+                return "Scooter";
+            case "Xe côn":
+                return "Manual Motorcycle";
+            case "Xe số":
+                return "Automatic Motorcycle";
+        }
+        return "";
     }
 
     public static List<ModelSanPham> search(JTextField field) {
-        String text = field.getText();
-        List<ModelSanPham> list = new ArrayList<>();
-        ///do some database stuff hêre
+        List<ModelSanPham> list = daoModel.selectAll();
+        if (field.getText().isEmpty()) {
+            return list;
+        }
 
+        String[] text = field.getText().trim().toLowerCase().split(" ");
+        list.removeIf(model
+                -> !containsWord(model.getInfo().trim().toLowerCase(), text));
         return list;
     }
 
+    private static boolean containsWord(String s, String[] words) {
+        for (String word : words) {
+            if (!s.contains(word)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static List<ModelSanPham> search(JComboBox cboNSX, JComboBox cboLoaiHang) {
-        List<ModelSanPham> list = new ArrayList<>();
-        String idNSX;
-        String idLH;
+        NhaSanXuat nsx = (NhaSanXuat) cboNSX.getSelectedItem();
+        LoaiHang lh = (LoaiHang) cboLoaiHang.getSelectedItem();
 
-        Object o = cboNSX.getSelectedItem();
-        if (!(o instanceof NhaSanXuat)) {
-            throw new UnsupportedOperationException("Không đúng combobox NSX");
-        } else {
-            idNSX = ((NhaSanXuat) o).getIdNSX();
+        String tenNSX = nsx.getIdNSX() != null ? nsx.getTenNSX() : "";
+        String tenLH = lh.getIdLH() != null ? lh.getTenLoaiHang() : "";
+
+        List<ModelSanPham> list = daoModel.selectAll();
+        if (tenNSX.isEmpty() && tenLH.isEmpty()) {
+            return list;
         }
-
-        Object o1 = cboLoaiHang.getSelectedItem();
-        if (!(o1 instanceof LoaiHang)) {
-            throw new UnsupportedOperationException("Không đúng combobox LoaiHang");
-        } else {
-            idLH = ((LoaiHang) o1).getIdLH();
-        }
-
-        //do some database stuff with idNSX va idLH
-        //check null idNSX va idLH
+        list.removeIf(model
+                -> (!tenNSX.isEmpty() && !tenNSX.equalsIgnoreCase(model.getTenNSX()))
+                || (!tenLH.isEmpty() && !lh.getIdLH().equalsIgnoreCase(listLH.stream()
+                .filter(loai -> model.getTenLH().equalsIgnoreCase(loai.getTenLoaiHang()))
+                .findFirst().orElse(null).getIdLH()))
+        );
+//        System.out.println("--------Print Result-----------");
+//        for (ModelSanPham model : list) {
+//            System.out.println("Ten NSX: " + model.getTenNSX());
+//            System.out.println("Ten LH: " + model.getTenLH());
+//
+//        }
         return list;
     }
 
@@ -119,16 +122,27 @@ public class KhachHangController {
             if (com instanceof ProductListPanel) {
                 ((ProductListPanel) com).setList(list);
                 showCard((JPanel) container, "ProductList");
+                return;
             }
         }
     }
-    
-    public static void showDetails(Container container, ModelSanPham model){
+
+    public static void showDetails(Container container, ModelSanPham model) {
         for (Component com : container.getComponents()) {
             if (com instanceof ProductDetailsPanel) {
                 ((ProductDetailsPanel) com).setProductDetails(model);
                 showCard((JPanel) container, "ProductDetails");
+                return;
             }
         }
     }
+
+    private static void sleepThread(int miliseconds) {
+        try {
+            Thread.sleep(miliseconds);
+        } catch (InterruptedException e) {
+
+        }
+    }
+
 }

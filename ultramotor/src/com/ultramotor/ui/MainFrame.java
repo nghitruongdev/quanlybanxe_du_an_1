@@ -1,100 +1,183 @@
 package com.ultramotor.ui;
 
-import com.ultramotor.component.Header;
-import com.ultramotor.component.Menu;
 import com.swingx.model.ModelMenu;
-import java.awt.Color;
+import com.ultramotor.dao.NhanVienDAO;
+import com.ultramotor.entity.NhanVien;
+import com.ultramotor.entity.NhanVienBanHang;
+import com.ultramotor.entity.NhanVienKho;
+import com.ultramotor.ui.hoadon.HoaDonPanel;
+import com.ultramotor.ui.nhanvien.NhanVienPanel;
+import com.ultramotor.ui.nhanvien.kho.nhapkho.BarcodePanel;
+import com.ultramotor.ui.nhanvien.kho.nhapkho.NhapKhoPanel;
+import com.ultramotor.ui.quanlykhachhang.KhachHangPanel;
+import com.ultramotor.ui.sanPham.QuanLySanPhamPanel;
+import com.ultramotor.util.Auth;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.nio.file.Paths;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import net.miginfocom.swing.MigLayout;
-import org.jdesktop.animation.timing.Animator;
-import org.jdesktop.animation.timing.TimingTarget;
-import org.jdesktop.animation.timing.TimingTargetAdapter;
+import javax.swing.JPanel;
 
-public class MainFrame extends JFrame {
-
-    public static void main(String[] args) {
-        JFrame frame = new MainFrame();
-//        frame.pack();
-        frame.setVisible(true);
-    }
-    private ActionListener menuListener;
-    private MigLayout layout;
-    private JLayeredPane bg;
-    private Menu menu;
-    private Header header;
-    private MainPanel body;
-    private Animator animator;
+public class MainFrame extends javax.swing.JFrame {
 
     public MainFrame() {
-        setLocationRelativeTo(null);
-        this.setSize(1200, 800);
-//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        initComponents();
         init();
     }
 
-    private void init() {
-        initListeners();
-        layout = new MigLayout("fill", "0[]0[100%, fill]0", "0[fill, top]0");
-        bg = new JLayeredPane();
-        bg.setLayout(layout);
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-        menu = new Menu();
-        initMenu(menu);
+        bg = new javax.swing.JLayeredPane();
+        pnlMain = new com.ultramotor.component.MainForm();
 
-        header = new Header();
-        header.addMenuListener(menuListener);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        body = new MainPanel();
+        bg.setBackground(new java.awt.Color(245, 245, 245));
+        bg.setOpaque(true);
 
-        bg.add(menu, "w 230!, spany 2");
-        bg.add(header, "h 70!, wrap");
-        bg.add(body, "w 100%, h 100%");
-        add(bg);
-    }
+        bg.setLayer(pnlMain, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-    private void initListeners() {
-        TimingTarget target = new TimingTargetAdapter() {
-            @Override
-            public void end() {
-                menu.setShowing(!menu.isShowing());
-            }
+        javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
+        bg.setLayout(bgLayout);
+        bgLayout.setHorizontalGroup(
+            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bgLayout.createSequentialGroup()
+                .addComponent(pnlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 1054, Short.MAX_VALUE)
+                .addGap(1, 1, 1))
+        );
+        bgLayout.setVerticalGroup(
+            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+        );
 
-            @Override
-            public void timingEvent(float fraction) {
-                double width;
-                if (menu.isShowing()) {
-                    width = 70 + (160 * (1f - fraction)); //giam dan
-                } else {
-                    width = 70 + (160 * fraction); //tang dan
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bg)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bg)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    public static void main(String args[]) {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
                 }
-                layout.setComponentConstraints(menu, String.format("w %f!, spany2", width));
-                menu.revalidate();
-                revalidate();
-
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
 
-        };
-        animator = new Animator(400, target);
-        animator.setResolution(0);
-        animator.setDeceleration(0.5f);
-        animator.setAcceleration(0.5f);
-        menuListener = (ActionEvent ae) -> {
-            if (!animator.isRunning()) {
-                animator.start();
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainFrame().setVisible(true);
             }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLayeredPane bg;
+    private com.ultramotor.component.MainForm pnlMain;
+    // End of variables declaration//GEN-END:variables
+    private NhanVienPanel pnlNhanVien;
+    private KhachHangPanel pnlKhachHang;
+    private QuanLySanPhamPanel pnlSanPham;
+    private NhapKhoPanel pnlNhapKho;
+    private BarcodePanel pnlBarcode;
+    private HoaDonPanel pnlHoaDon;
+
+    private void init() {
+        pnlNhanVien = new NhanVienPanel();
+        pnlKhachHang = new KhachHangPanel();
+        pnlSanPham = new QuanLySanPhamPanel();
+        pnlNhapKho = new NhapKhoPanel();
+        pnlBarcode = new BarcodePanel();
+        pnlHoaDon = new HoaDonPanel();
+        setLocationRelativeTo(null);
+        Auth.user = new NhanVienDAO().selectByID("NV01");
+        NhanVien user = Auth.user;
+        if (user == null) {
+//            return;
+            System.out.println("Auth is null");
+        }
+
+        pnlMain.setUser(user);
+        addMenus(user);
+    }
+
+    private void addMenus(NhanVien user) {
+        if (user instanceof NhanVienBanHang) {
+            return;
+        }
+        if (user instanceof NhanVienKho) {
+
+            return;
+        }
+
+        ModelMenu mnuNhanVien = new ModelMenu("Quản lý nhân viên",createIcon("refresh_25px.png"), getEvent("NhanVien"));
+        ModelMenu mnuHoaDon = new ModelMenu("Quản lý hoá đơn", createIcon("refresh_25px.png"), getEvent("HoaDon"));
+        ModelMenu mnuKhachHang = new ModelMenu("Quản lý khách hàng", createIcon("refresh_25px.png"), getEvent("KhachHang"));
+        ModelMenu mnuSanPham = new ModelMenu("Quản lý sản phẩm", createIcon("refresh_25px.png"), getEvent("SanPham"));
+        ModelMenu mnuNhapKho = new ModelMenu("Quản lý kho", createIcon("refresh_25px.png"), getEvent("NhapKho"));
+        ModelMenu mnuBarcode = new ModelMenu("In barcode", createIcon("refresh_25px.png"), getEvent("Barcode"));
+
+        pnlMain.addMenu(mnuNhanVien, mnuHoaDon, mnuKhachHang, mnuSanPham, mnuNhapKho, mnuBarcode);
+    }
+
+    private ActionListener getEvent(String name) {
+        return (ActionEvent e) -> {
+            showForm(name);
         };
     }
 
-    public void initMenu(Menu menu) {
-        menu.addMenu(new ModelMenu("Profile", new ImageIcon(getClass().getResource("/com/raven/icon/user.png"))));
-        menu.addMenu(new ModelMenu("Message", new ImageIcon(getClass().getResource("/com/raven/icon/message.png"))));
-        menu.addMenu(new ModelMenu("Report", new ImageIcon(getClass().getResource("/com/raven/icon/report.png"))));
-        menu.addMenu(new ModelMenu("Setting", new ImageIcon(getClass().getResource("/com/raven/icon/setting.png"))));
-        menu.addMenu(new ModelMenu("Key", new ImageIcon(getClass().getResource("/com/raven/icon/key.png"))));
+    private void showForm(String name) {
+        JPanel panel = null;
+        switch (name) {
+            case "NhanVien":
+                panel = pnlNhanVien;
+                break;
+            case "KhachHang":
+                panel = pnlKhachHang;
+                break;
+            case "SanPham":
+                panel = pnlSanPham;
+                break;
+            case "NhapKho":
+                panel = pnlNhapKho;
+                break;
+            case "Barcode":
+                panel = pnlBarcode;
+                break;
+            case "HoaDon":
+                panel = pnlHoaDon;
+                break;
+        }
+        if (panel == null) {
+            return;
+        }
+        pnlMain.showForm(panel);
+    }
+
+    private ImageIcon createIcon(String name) {
+        File iconPath = Paths.get("src", "com", "ultramotor", "img", "icon").toFile();
+        return new ImageIcon(new File(iconPath, name).getPath());
     }
 }

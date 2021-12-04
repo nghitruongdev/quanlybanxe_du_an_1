@@ -1,10 +1,7 @@
 package com.ultramotor.dao;
 
-import com.ultramotor.entity.LoaiHang;
 import com.ultramotor.entity.NhaSanXuat;
-import com.ultramotor.entity.NhanVien;
 import com.ultramotor.util.XJdbc;
-import com.ultramotor.util.XJdbcServer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,45 +12,28 @@ import javax.sql.rowset.CachedRowSet;
 
 public class NhaSanXuatDAO extends UltraDAO<NhaSanXuat, String> {
 
-    final String TABLE_NAME = "NhaSanXuat";
-    final String SELECT_BY_ID_SQL = "SELECT * FROM NhaSanXuat where id_NSX =?  ";
-    final String SELECT_ALL_SQL = "SELECT * FROM NhaSanXuat";
-    final String INSERT_SQL = "insert into NhaSanXuat(id_NSX,TenNSX) VALUES (?,?)";
-    final String UPDATE_SQL = "UPDATE NhaSanXuat SET tenNSX = ? WHERE ID_NSX=?";
-    final String DELETE_SQL = "DELETE FROM NhaSanXuat WHERE ID_NSX = ?";
-    final String Select_NSX = "select tenNSX from NhaSanXuat";
-
-    @Override
-    public void insert(NhaSanXuat e) {
-        XJdbcServer.update(INSERT_SQL,
-                e.getIdNSX(), e.getTenNSX());
+    {
+        TABLE_NAME = "NhaSanXuat";
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id_NSX");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
     }
+    final String INSERT_SQL = String.format("exec usp_insert_%s ?, ?", TABLE_NAME);
+    final String DELETE_SQL = String.format("DELETE FROM %s WHERE %s = ?", TABLE_NAME, "id_NSX");
 
     @Override
-    public void update(NhaSanXuat e) {
-        XJdbcServer.update(UPDATE_SQL, e.getTenNSX(), e.getIdNSX());
-
+    public int insert(NhaSanXuat e) {
+        return XJdbc.update(INSERT_SQL, e.getIdNSX(), e.getTenNSX());
     }
 
     @Override
-    public void delete(String id) {
-        XJdbcServer.update(DELETE_SQL, id);
-
+    public int update(NhaSanXuat e) {
+        return insert(e);
     }
 
     @Override
-    public List<NhaSanXuat> selectAll() {
-        return this.selectBySQL(SELECT_ALL_SQL);
+    public int delete(String id) {
+        return XJdbc.update(DELETE_SQL, id);
     }
-    public NhaSanXuat selectByID(String id) {
-        System.out.println(id);
-        List<NhaSanXuat> list = this.selectBySQL(SELECT_BY_ID_SQL,id);
-        if (list.isEmpty()) {
-            return null;
-        }
-        return list.get(0);
-    }
-
 
     @Override
     public List<NhaSanXuat> selectBySQL(String sql, Object... args) {
@@ -68,20 +48,6 @@ public class NhaSanXuatDAO extends UltraDAO<NhaSanXuat, String> {
             Logger.getLogger(NhaSanXuatDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
-    }
-
-//    @Override
-    public CachedRowSet getRowSet() {
-        return XJdbc.getRowSet(SELECT_ALL);
-    }
-
-//    public List<NhaSanXuat> selectByKeyword(String keyWord) {
-//        String sql = "SELECT * FROM NhaSanXuat WHERE tenNSX like ? or ID_NSX like ? ";
-//        return this.selectBySQL(sql, "%"+keyWord+"%","%"+keyWord+"%");
-//    }
-    public List<NhaSanXuat> selectByKeyword(String keyWord){
-        String sql= "SELECT * FROM NhaSanXuat WHERE tenNSX like ? or ID_NSX like ? ";
-        return this.selectBySQL(sql, "%"+keyWord+"%", "%"+keyWord+"%");
     }
 
 }

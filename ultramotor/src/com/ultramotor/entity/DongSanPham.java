@@ -81,7 +81,7 @@ public class DongSanPham extends Entity{
 
     @Override
     public String toString() {
-        return "com.ultramotor.entity.DongSanPham[ idDongSP=" + idDongSP + " ]";
+        return tenDongSP;
     }
     
 }

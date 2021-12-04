@@ -1,0 +1,1222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="bgrTrangThai">
+    </Component>
+  </NonVisualComponents>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="pnlMain" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="pnlMain" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="pnlMain">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jTabbedPane1" min="-2" pref="860" max="-2" attributes="0"/>
+                  <EmptySpace pref="49" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="pnlHoaDon">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="H&#xf3;a &#x111;&#x1a1;n">
+                    <Property name="tabTitle" type="java.lang.String" value="H&#xf3;a &#x111;&#x1a1;n"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+                <Property name="useNullLayout" type="boolean" value="false"/>
+              </Layout>
+              <SubComponents>
+                <Container class="javax.swing.JPanel" name="pnlInfoSanPham">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Th&#xf4;ng tin &#x111;&#x1a1;n h&#xe0;ng">
+                          <Color PropertyName="color" blue="ff" green="99" red="0" type="rgb"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="360" y="10" width="350" height="350"/>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblDiachiSX" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="txtNSX" min="-2" pref="150" max="-2" attributes="0"/>
+                                                  <Component id="lblNSX" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="lblMauSac" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="txtMauSac" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="lblBaoHanh" pref="74" max="32767" attributes="0"/>
+                                                  <Component id="txtBaoHanh" max="32767" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace min="6" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="lblMaSKU" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="lblTenSP" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="txtGiaTien" alignment="0" pref="150" max="32767" attributes="0"/>
+                                                      <Component id="txtTenSP" alignment="0" max="32767" attributes="0"/>
+                                                      <Component id="txtMaSP" alignment="0" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="lblGiaTien" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" attributes="0">
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="lblDoiXe" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="txtDoiXe" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="lblPhanKhoi" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="txtPhanKhoi" alignment="0" max="32767" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                                  <Component id="lblHinh" max="32767" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="txtDiachiSX" min="-2" pref="150" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="btnThemCTHD" min="-2" pref="77" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                              <Component id="lblMaSKU" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="txtMaSP" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                              <Component id="lblTenSP" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="txtTenSP" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="lblGiaTien" min="-2" pref="14" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="txtGiaTien" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="lblHinh" min="-2" pref="110" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" alignment="1" attributes="0">
+                                                      <Component id="lblDoiXe" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="txtDoiXe" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="1" attributes="0">
+                                                      <Component id="lblPhanKhoi" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="txtPhanKhoi" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="lblNSX" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="txtNSX" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="lblBaoHanh" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="txtBaoHanh" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblMauSac" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtMauSac" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblDiachiSX" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="btnThemCTHD" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtDiachiSX" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="24" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="com.swingx.TextField" name="txtMaSP">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="labelText" type="java.lang.String" value="M&#xe3; s&#x1ea3;n ph&#x1ea9;m"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.TextField" name="txtGiaTien">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="labelText" type="java.lang.String" value="Gi&#xe1; b&#xe1;n"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.TextField" name="txtTenSP">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="labelText" type="java.lang.String" value="T&#xea;n s&#x1ea3;n ph&#x1ea9;m"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblMaSKU">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="M&#xe3; SKU"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblTenSP">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="T&#xea;n S&#x1ea3;n Ph&#x1ea9;m"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblGiaTien">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Gi&#xe1; Ti&#x1ec1;n"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblDoiXe">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x110;&#x1edd;i Xe"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.TextField" name="txtDoiXe">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="labelText" type="java.lang.String" value="Gi&#xe1; b&#xe1;n"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblMauSac">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="M&#xe0;u S&#x1eaf;c"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.TextField" name="txtMauSac">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="labelText" type="java.lang.String" value="Gi&#xe1; b&#xe1;n"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblNSX">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="H&#xe3;ng S&#x1ea3;n Xu&#x1ea5;t"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.TextField" name="txtNSX">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="labelText" type="java.lang.String" value="Gi&#xe1; b&#xe1;n"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblDiachiSX">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x110;&#x1ecb;a Ch&#x1ec9; S&#x1ea3;n Xu&#x1ea5;t"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.TextField" name="txtDiachiSX">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="labelText" type="java.lang.String" value="Gi&#xe1; b&#xe1;n"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblBaoHanh">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="B&#x1ea3;o H&#xe0;nh"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.TextField" name="txtBaoHanh">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="labelText" type="java.lang.String" value="Gi&#xe1; b&#xe1;n"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.Button" name="btnThemCTHD">
+                      <Properties>
+                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                          <Image iconType="3" name="/com/ultramotor/img/icon/broom_25px.png"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.TextField" name="txtPhanKhoi">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="labelText" type="java.lang.String" value="Gi&#xe1; b&#xe1;n"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblPhanKhoi">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Ph&#xe2;n Kh&#x1ed1;i"/>
+                      </Properties>
+                    </Component>
+                    <Container class="com.swingx.PictureBox" name="lblHinh">
+                      <Properties>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                            <TitledBorder title="H&#xec;nh"/>
+                          </Border>
+                        </Property>
+                      </Properties>
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+                        <Property name="useNullLayout" type="boolean" value="true"/>
+                      </Layout>
+                    </Container>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="pnlKhachHang">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Th&#xf4;ng tin chung">
+                          <Color PropertyName="color" blue="ff" green="99" red="0" type="rgb"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="10" y="10" width="350" height="350"/>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="cboGioiTinh" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtHoTenKH" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblHoTen" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtNgaySinh" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblNgaySinh" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblGioiTinh" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblMaKH" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="txtMaKH" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btnSearchKH" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="lblDiaChi" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtDiaChi" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="17" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblEmail" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblSoDT" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtSDT" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jPanel1" max="32767" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Component id="btnResetPanelKH" min="-2" max="-2" attributes="0"/>
+                                      <Component id="chkThanhVien" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace pref="20" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="lblMaKH" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="btnSearchKH" max="32767" attributes="0"/>
+                                                  <Component id="txtMaKH" max="32767" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="lblHoTen" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                              <Component id="txtHoTenKH" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="jPanel1" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="lblSoDT" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                              <Component id="txtSDT" linkSize="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="lblNgaySinh" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="txtNgaySinh" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblGioiTinh" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="cboGioiTinh" linkSize="3" min="-2" pref="31" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtEmail" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblDiaChi" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtDiaChi" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                      <Component id="chkThanhVien" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="btnResetPanelKH" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="com.swingx.TextField" name="txtHoTenKH">
+                      <Properties>
+                        <Property name="labelText" type="java.lang.String" value="H&#x1ecd; t&#xea;n kh&#xe1;ch h&#xe0;ng"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.TextField" name="txtDiaChi">
+                      <Properties>
+                        <Property name="toolTipText" type="java.lang.String" value=""/>
+                        <Property name="labelText" type="java.lang.String" value="&#x110;&#x1ecb;a ch&#x1ec9;"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.TextField" name="txtNgaySinh">
+                      <Properties>
+                        <Property name="labelText" type="java.lang.String" value="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                        <Property name="placeholder" type="java.lang.String" value="DD-MM-YYYY"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.TextField" name="txtMaKH">
+                      <Properties>
+                        <Property name="labelText" type="java.lang.String" value="M&#xe3; kh&#xe1;ch h&#xe0;ng"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.TextField" name="txtEmail">
+                      <Properties>
+                        <Property name="labelText" type="java.lang.String" value="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.TextField" name="txtSDT">
+                      <Properties>
+                        <Property name="labelText" type="java.lang.String" value="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i"/>
+                        <Property name="onlyField" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="chkThanhVien">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng k&#xfd; th&#xe0;nh vi&#xea;n"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.ComboBoxSuggestion" name="cboGioiTinh">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="2">
+                            <StringItem index="0" value="Nam"/>
+                            <StringItem index="1" value="N&#x1eef;"/>
+                          </StringArray>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.Button" name="btnSearchKH">
+                      <Properties>
+                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                          <Image iconType="3" name="/com/ultramotor/img/icon/search_client_25px.png"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblMaKH">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="M&#xe3; Kh&#xe1;ch H&#xe0;ng"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblHoTen">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="H&#x1ecd; T&#xea;n "/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblNgaySinh">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Ng&#xe0;y Sinh"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblGioiTinh">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Gi&#x1edb;i T&#xed;nh"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblDiaChi">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x110;&#x1ecb;a ch&#x1ec9;"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblSoDT">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="S&#x1ed1; &#x110;i&#x1ec7;n Tho&#x1ea1;i"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblEmail">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Email"/>
+                      </Properties>
+                    </Component>
+                    <Container class="javax.swing.JPanel" name="jPanel1">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="0" green="cc" red="ff" type="rgb"/>
+                        </Property>
+                      </Properties>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                    </Container>
+                    <Component class="com.swingx.Button" name="btnResetPanelKH">
+                      <Properties>
+                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                          <Image iconType="3" name="/com/ultramotor/img/icon/broom_25px.png"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Xo&#xe1; Form"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="pnlTBLHoaDon">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="H&#xf3;a &#x111;&#x1a1;n">
+                          <Color PropertyName="color" blue="ff" green="99" red="0" type="rgb"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="710" y="370" width="630" height="350"/>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jScrollPane7" alignment="0" pref="606" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace min="0" pref="418" max="32767" attributes="0"/>
+                                      <Component id="txtTimKiemHoaDonTheoNgay" min="-2" pref="168" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="txtTimKiemHoaDonTheoNgay" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jScrollPane7" min="-2" pref="219" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="68" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Container class="javax.swing.JScrollPane" name="jScrollPane7">
+                      <AuxValues>
+                        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                      </AuxValues>
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                      <SubComponents>
+                        <Component class="com.ultramotor.component.table.Table" name="tblHoaDonTheoNgay">
+                          <Properties>
+                            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                              <Table columnCount="7" rowCount="0">
+                                <Column editable="true" title="M&#xe3; h&#xf3;a &#x111;&#x1a1;n" type="java.lang.Object"/>
+                                <Column editable="true" title="T&#xea;n Kh&#xe1;ch H&#xe0;ng" type="java.lang.Object"/>
+                                <Column editable="true" title="T&#x1ed5;ng Ti&#x1ec1;n" type="java.lang.Object"/>
+                                <Column editable="false" title="Th&#x1edd;i Gian" type="java.lang.Object"/>
+                                <Column editable="true" title="Lo&#x1ea1;i Thanh To&#xe1;n" type="java.lang.Object"/>
+                                <Column editable="false" title="T&#xea;n Nh&#xe2;n Vi&#xea;n" type="java.lang.Object"/>
+                                <Column editable="false" title="Tr&#x1ea1;ng Th&#xe1;i" type="java.lang.Object"/>
+                              </Table>
+                            </Property>
+                            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                              <TableColumnModel selectionModel="0">
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                              </TableColumnModel>
+                            </Property>
+                            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Component class="com.swingx.SearchTextField" name="txtTimKiemHoaDonTheoNgay">
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="pnlChiTietHD">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="HO&#xc1; &#x110;&#x1a0;N">
+                          <Color PropertyName="color" blue="ff" green="99" red="0" type="rgb"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="720" y="20" width="620" height="330"/>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="txtMaHD" min="-2" pref="199" max="-2" attributes="0"/>
+                                              <Component id="cboTrangThai" alignment="0" min="-2" pref="199" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="cboLoaiThanhToan" alignment="0" min="-2" pref="199" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jScrollPane6" min="-2" pref="371" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="btnNew" min="-2" pref="119" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btnHuyHD" min="-2" pref="119" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnThanhToan" min="-2" pref="125" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btnLuu" min="-2" pref="125" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="txtMaHD" min="-2" pref="84" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="cboTrangThai" min="-2" pref="37" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="cboLoaiThanhToan" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="36" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="jScrollPane6" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnLuu" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <Component id="btnThanhToan" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <Component id="btnHuyHD" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <Component id="btnNew" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Container class="javax.swing.JScrollPane" name="jScrollPane6">
+                      <AuxValues>
+                        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                      </AuxValues>
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                      <SubComponents>
+                        <Component class="com.ultramotor.component.table.Table" name="tblChiTiet">
+                          <Properties>
+                            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                              <Table columnCount="5" rowCount="0">
+                                <Column editable="true" title="STT" type="java.lang.Object"/>
+                                <Column editable="true" title="M&#xe3; SKU" type="java.lang.Object"/>
+                                <Column editable="true" title="&#x110;&#x1a1;n gi&#xe1;" type="java.lang.Object"/>
+                                <Column editable="true" title="M&#xe3; Ho&#xe1; &#x110;&#x1a1;n" type="java.lang.Object"/>
+                                <Column editable="true" title="Actions" type="java.lang.Object"/>
+                              </Table>
+                            </Property>
+                            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                              <TableColumnModel selectionModel="0">
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
+                              </TableColumnModel>
+                            </Property>
+                            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Component class="com.swingx.TextField" name="txtMaHD">
+                      <Properties>
+                        <Property name="labelText" type="java.lang.String" value="M&#xe3; h&#xf3;a &#x111;&#x1a1;n"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="cboLoaiThanhToan">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="2">
+                            <StringItem index="0" value="Ti&#x1ec1;n m&#x1eb7;t"/>
+                            <StringItem index="1" value="Tr&#x1ea3; g&#xf3;p"/>
+                          </StringArray>
+                        </Property>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                            <TitledBorder title="Lo&#x1ea1;i thanh to&#xe1;n">
+                              <Color PropertyName="color" blue="66" green="66" red="66" type="rgb"/>
+                            </TitledBorder>
+                          </Border>
+                        </Property>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="com.swingx.Button" name="btnHuyHD">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="91" green="76" red="71" type="rgb"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Hu&#x1ef7; &#x110;&#x1a1;n H&#xe0;ng"/>
+                        <Property name="borderPainted" type="boolean" value="false"/>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Segoe UI" size="14" style="0"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.Button" name="btnLuu">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="91" green="76" red="71" type="rgb"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="L&#x1b0;u"/>
+                        <Property name="borderPainted" type="boolean" value="false"/>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Segoe UI" size="14" style="0"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.Button" name="btnThanhToan">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="91" green="76" red="71" type="rgb"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Thanh to&#xe1;n"/>
+                        <Property name="borderPainted" type="boolean" value="false"/>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Segoe UI" size="14" style="0"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.ComboBoxSuggestion" name="cboTrangThai">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="3">
+                            <StringItem index="0" value="CH&#x1af;A THANH TO&#xc1;N"/>
+                            <StringItem index="1" value="HO&#xc0;N T&#x1ea4;T"/>
+                            <StringItem index="2" value=" "/>
+                          </StringArray>
+                        </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[20, 34]"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.Button" name="btnNew">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="91" green="76" red="71" type="rgb"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="T&#x1ea1;o m&#x1edb;i"/>
+                        <Property name="borderPainted" type="boolean" value="false"/>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Segoe UI" size="14" style="0"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="pnlSanPham">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="S&#x1ea3;n ph&#x1ea9;m">
+                          <Color PropertyName="color" blue="ff" green="99" red="0" type="rgb"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                  </Properties>
+                  <AccessibilityProperties>
+                    <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+                  </AccessibilityProperties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="0" y="360" width="710" height="350"/>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="chkTatCa" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="chkConHang" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="chkHetHang" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="txtTimKiemSP" min="-2" pref="242" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jScrollPane4" alignment="0" pref="688" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtTimKiemSP" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="chkTatCa" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="chkConHang" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="chkHetHang" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="jScrollPane4" min="-2" pref="186" max="-2" attributes="0"/>
+                              <EmptySpace pref="74" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+                      <AuxValues>
+                        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                      </AuxValues>
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                      <SubComponents>
+                        <Component class="com.ultramotor.component.table.Table" name="tblSanPham">
+                          <Properties>
+                            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                              <Table columnCount="7" rowCount="4">
+                                <Column editable="true" title="SKU" type="java.lang.Object"/>
+                                <Column editable="true" title="T&#xea;n SP" type="java.lang.Object"/>
+                                <Column editable="true" title="Gi&#xe1; ti&#x1ec1;n" type="java.lang.Object"/>
+                                <Column editable="true" title="M&#xe0;u s&#x1eaf;c" type="java.lang.Object"/>
+                                <Column editable="true" title="Ph&#xe2;n kh&#x1ed1;i" type="java.lang.Object"/>
+                                <Column editable="true" title="H&#xec;nh" type="java.lang.Object"/>
+                                <Column editable="true" title="T&#x1ed3;n kho" type="java.lang.Object"/>
+                              </Table>
+                            </Property>
+                            <Property name="rowHeight" type="int" value="20"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Component class="com.swingx.SearchTextField" name="txtTimKiemSP">
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="chkTatCa">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="T&#x1ea5;t C&#x1ea3;"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="chkConHang">
+                      <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
+                        <Property name="text" type="java.lang.String" value="C&#xf2;n H&#xe0;ng"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="chkHetHang">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="H&#x1ebf;t H&#xe0;ng"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="pnlLDanhSach">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="Danh s&#xe1;ch">
+                    <Property name="tabTitle" type="java.lang.String" value="Danh s&#xe1;ch"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="pnlButton1" min="-2" pref="178" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="1257" max="-2" attributes="0"/>
+                                  <Component id="txtTimKiemHoaDon" min="-2" pref="168" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="271" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane5" min="-2" pref="1415" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                          <Component id="txtTimKiemHoaDon" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane5" min="-2" pref="622" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="pnlButton1" min="-2" pref="50" max="-2" attributes="0"/>
+                          <EmptySpace pref="97" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane5">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="com.ultramotor.component.table.Table" name="tblHoaDon">
+                      <Properties>
+                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                          <Table columnCount="7" rowCount="4">
+                            <Column editable="true" title="M&#xe3; Ho&#xe1; &#x110;&#x1a1;n" type="java.lang.Object"/>
+                            <Column editable="true" title="T&#xea;n Kh&#xe1;ch H&#xe0;ng" type="java.lang.Object"/>
+                            <Column editable="true" title="T&#x1ed5;ng Ti&#x1ec1;n" type="java.lang.Object"/>
+                            <Column editable="true" title="Th&#x1edd;i Gian" type="java.lang.Object"/>
+                            <Column editable="true" title="Lo&#x1ea1;i Thanh To&#xe1;n" type="java.lang.Object"/>
+                            <Column editable="true" title="T&#xea;n Nh&#xe2;n Vi&#xea;n" type="java.lang.Object"/>
+                            <Column editable="true" title="Tr&#x1ea1;ng Th&#xe1;i" type="java.lang.Object"/>
+                          </Table>
+                        </Property>
+                        <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                          <TableColumnModel selectionModel="0">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                          </TableColumnModel>
+                        </Property>
+                        <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                          <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="pnlButton1">
+                  <Properties>
+                    <Property name="opaque" type="boolean" value="false"/>
+                  </Properties>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                    <Property name="columns" type="int" value="0"/>
+                    <Property name="horizontalGap" type="int" value="10"/>
+                    <Property name="rows" type="int" value="1"/>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="com.swingx.Button" name="btnCapNhat1">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="91" green="76" red="71" type="rgb"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Delete"/>
+                        <Property name="borderPainted" type="boolean" value="false"/>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Segoe UI" size="14" style="0"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="com.swingx.Button" name="btnReset1">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="91" green="76" red="71" type="rgb"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Export"/>
+                        <Property name="borderPainted" type="boolean" value="false"/>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Segoe UI" size="14" style="0"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="com.swingx.SearchTextField" name="txtTimKiemHoaDon">
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>

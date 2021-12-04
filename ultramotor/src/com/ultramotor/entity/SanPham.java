@@ -1,18 +1,20 @@
-
 package com.ultramotor.entity;
 
-public class SanPham extends Entity{
+import java.util.Objects;
+
+public class SanPham extends Entity {
 
     private String sku;
     private String tenSP;
     private String hinh;
     private String mauSac;
     private String phanKhoi;
-    private Integer doiXe;
-    private Integer thoiGianBH;
+    private int doiXe;
+    private int thoiGianBH;
     private String diaChiSX;
     private double giaTien;
     private String moTa;
+    private Integer tonKho;
     private String idDongSP;
     private String idNV;
 
@@ -23,7 +25,7 @@ public class SanPham extends Entity{
         this.sku = sku;
     }
 
-    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi, Integer doiXe, Integer thoiGianBH, String diaChiSX, double giaTien, String moTa, String idDongSP, String idNV) {
+    public SanPham(String sku, String tenSP, String hinh, String mauSac, String phanKhoi, int doiXe, int thoiGianBH, String diaChiSX, double giaTien, String moTa, String idDongSP, String idNV) {
         this.sku = sku;
         this.tenSP = tenSP;
         this.hinh = hinh;
@@ -37,9 +39,14 @@ public class SanPham extends Entity{
         this.idDongSP = idDongSP;
         this.idNV = idNV;
     }
-    
 
-    
+    public int gettonKho() {
+        return tonKho;
+    }
+
+    public void settonKho(int TonKho) {
+        this.tonKho = TonKho;
+    }
 
     public String getSku() {
         return sku;
@@ -81,11 +88,11 @@ public class SanPham extends Entity{
         this.phanKhoi = phanKhoi;
     }
 
-    public Integer getThoiGianBH() {
+    public int getThoiGianBH() {
         return thoiGianBH;
     }
 
-    public void setThoiGianBH(Integer thoiGianBH) {
+    public void setThoiGianBH(int thoiGianBH) {
         this.thoiGianBH = thoiGianBH;
     }
 
@@ -113,16 +120,6 @@ public class SanPham extends Entity{
         this.moTa = moTa;
     }
 
-    public Integer getDoiXe() {
-        return doiXe;
-    }
-
-    public void setDoiXe(Integer doiXe) {
-        this.doiXe = doiXe;
-    }
-
-   
-
     public String getIdDongSP() {
         return idDongSP;
     }
@@ -138,30 +135,45 @@ public class SanPham extends Entity{
     public void setIdNV(String idNV) {
         this.idNV = idNV;
     }
-    
+
+    public int getDoiXe() {
+        return doiXe;
+    }
+
+    public void setDoiXe(int doiXe) {
+        this.doiXe = doiXe;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (sku != null ? sku.hashCode() : 0);
+        int hash = 5;
+        hash = 73 * hash + Objects.hashCode(this.sku);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SanPham)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        SanPham other = (SanPham) object;
-        if ((this.sku == null && other.sku != null) || (this.sku != null && !this.sku.equals(other.sku))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SanPham other = (SanPham) obj;
+        if (!Objects.equals(this.sku, other.sku)) {
             return false;
         }
         return true;
     }
 
+ 
+
     @Override
     public String toString() {
         return "com.ultramotor.entity.SanPham[ sku=" + sku + " ]";
     }
-    
+
 }

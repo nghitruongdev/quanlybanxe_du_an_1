@@ -1,75 +1,126 @@
 package com.ultramotor.ui.khachhang;
 
-import com.swingx.Card;
 import com.swingx.MyScrollBar;
-import com.ultramotor.entity.DongSanPham;
 import com.ultramotor.entity.ModelSanPham;
 import com.ultramotor.entity.SanPham;
-import java.awt.Color;
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import javax.swing.JButton;
+import javax.swing.Timer;
 import net.miginfocom.swing.MigLayout;
 
 public class ProductListPanel extends javax.swing.JPanel implements Multilang {
-    
+
     final String SAP_XEP_VN = "Sắp xếp";
     final String SAP_XEP_EN = "Sort";
     final String GIA_TIEN_VN = "Giá tiền";
     final String GIA_TIEN_EN = "Price";
     final String THINH_HANH_VN = "Thịnh hành";
     final String THINH_HANH_EN = "Popularity";
-    
+    private Comparator<ProductCard> compGiaTien;
+    private Comparator<ProductCard> compSoLuongBan;
+    private Lang lang = Lang.VN;
     public ProductListPanel() {
         initComponents();
         init();
     }
-    private MigLayout layout;
-    private List<ModelSanPham> list;
-    
-    private void init() {
-//        double width = 0;
-//        System.out.println(width);
-        layout = new MigLayout("insets 20, wrap 4, fillx", "", "[]30[]");
-        panel.setLayout(layout);
-        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
-        jScrollPane1.setViewportView(panel);
-//        panel.revalidate();
-//        panel.setBackground(Color.red);
-        panel.repaint();
+    private List<ProductCard> cardList;
+    private Timer timer;
+    int count = 0;
 
-//        list = getListExample();
-//        fillPanel();
-//        setLang(((KhachHangFrame) this.getTopLevelAncestor()).getLang());
+    private void init() {
+        cardList = new ArrayList<>();
+        MigLayout layout = new MigLayout("insets 20, fillx, wrap 4", "[center][center][center][center]", "[]30[]");
+        pnlList.setLayout(layout);
+        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
+        jScrollPane1.setViewportView(pnlBackground);
+        initComparator();
+
+        btnAsc.setVisible(false);
+        btnDesc.setVisible(false);
+
+        timer = new Timer(500, (ActionEvent e) -> {
+            System.out.println("Timer Thread: " + Thread.currentThread().getName());
+            fillPanel();
+            timer.stop();
+        });
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                timer.setCoalesce(true);
+                timer.restart();
+            }
+        });
+
+        rdoGiaTien.addActionListener(event -> {
+            sortByGiaTien();
+        });
+        rdoThinhHanh.addActionListener(event -> {
+            sortBySoLuongBan();
+        });
     }
-    
+
+    private void sortByGiaTien() {
+        Collections.sort(cardList, compGiaTien);
+        fillPanel();
+        System.out.println("Sorted by Giá Tiền");
+    }
+
+    private void sortBySoLuongBan() {
+        Collections.sort(cardList, compSoLuongBan);
+        fillPanel();
+        System.out.println("Sorted By Số Lượng Bán");
+    }
+
+    private void addShowDetailsListeners(JButton button, ModelSanPham model) {
+        button.addActionListener((ActionEvent e) -> {
+            new Thread(() -> {
+                KhachHangController.showDetails(this.getParent(), model);
+            }).start();
+        });
+    }
+
     public void setList(List<ModelSanPham> list) {
-        this.list = list;
-        if (list.isEmpty()) {
-            this.list = getListExample();
-        }
+        cardList.clear();
+        list.forEach((model) -> {
+            ProductCard card = new ProductCard(model, lang);
+            addShowDetailsListeners(card.getButton(), model);
+            this.cardList.add(card);
+        });
+        cardList.sort(compSoLuongBan);
         fillPanel();
     }
-    
-    private void fillPanel() {
-        panel.removeAll();
-        list.stream().map(model -> {
-            Card card = new ProductCard(model);
-            card.getButton().addActionListener((ActionEvent e)->{
-                KhachHangController.showDetails(this.getParent(), model);
-            });
-            return card;
-        }).forEachOrdered(card -> {
-            int width = (int) (panel.getWidth()*0.2);
-            panel.add(card, "w "+ width +", h " + (width*3/2 - 15));
+
+    private synchronized void fillPanel() {
+        pnlList.removeAll();
+        showPanel("List");
+        if (cardList == null) {
+            return;
+        }
+        if (cardList.isEmpty()) {
+            showPanel("Empty");
+            return;
+        }
+        final int width = (int) ((getWidth()) * 0.2d);
+        cardList.forEach(card -> {
+            pnlList.add(card, "w " + width + ", h " + (width * 3 / 2));
         });
-//        panel.revalidate();
-//        panel.repaint();
-//        System.out.println("Panel finish repainted");
     }
-    
+
+    private void showPanel(String name) {
+        CardLayout layout = (CardLayout) pnlBackground.getLayout();
+        layout.show(pnlBackground, name);
+    }
+
     @Override
     public void setLang(Lang lang) {
+        this.lang = lang;
         if (lang.equals(Lang.VN)) {
             lblSapxep.setText(SAP_XEP_VN);
             rdoGiaTien.setText(GIA_TIEN_VN);
@@ -80,16 +131,14 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
             rdoThinhHanh.setText(THINH_HANH_EN);
         }
     }
-    
-    List<SanPham> getListExample() {
-        String[] colors = {"Đỏ", "Trắng", "Đen", "Vàng", "Xanh"};
 
-        List<SanPham> list = new ArrayList<>();
-        for (int i = 2010; i < 2022; i++) {
-            SanPham model = new SanPham();
-            model.getHinh();
-            model.getMauSac();
-            model.getTenSP();
+//    List<ModelSanPham> getListExample() {
+//        String[] colors = {"Đỏ", "Trắng", "Đen", "Vàng", "Xanh"};
+//
+//        List<ModelSanPham> list = new ArrayList<>();
+//        for (int i = 2010; i < 2022; i++) {
+//            ModelSanPham model = new ModelSanPham();
+//            model.setDoiXe(i);
 //            List<SanPham> spList = new ArrayList<>();
 //            for (int j = 0; j < 3; j++) {
 //                spList.add(new SanPham("SP0000" + i + "" + j,
@@ -103,13 +152,25 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
 //                ));
 //                model.setSanPhamList(spList);
 //            }
-            list.add(model);
-        }
-        return list;
+//            list.add(model);
+//        }
+//        return list;
+//    }
+
+    void initComparator() {
+        compGiaTien = (ProductCard o1, ProductCard o2) -> {
+            double num = o2.getModel().getGiaTien() - o1.getModel().getGiaTien();
+            num = num != 0 ? num : o2.getModel().getSoLuongBan() - o1.getModel().getSoLuongBan();
+            return (int) num;
+        };
+
+        compSoLuongBan = (ProductCard o1, ProductCard o2) -> {
+            double num = o2.getModel().getSoLuongBan() - o1.getModel().getSoLuongBan();
+            num = num != 0 ? num : o2.getModel().getGiaTien() - o1.getModel().getGiaTien();
+            return (int) num;
+        };
     }
-        
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -122,7 +183,9 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
         btnAsc = new com.swingx.Button();
         btnDesc = new com.swingx.Button();
         jScrollPane1 = new javax.swing.JScrollPane();
-        panel = new javax.swing.JPanel();
+        pnlBackground = new javax.swing.JPanel();
+        pnlList = new javax.swing.JPanel();
+        pnlEmpty = new com.swingx.PictureBox();
 
         setBackground(new java.awt.Color(242, 242, 242));
         setLayout(new java.awt.BorderLayout());
@@ -142,6 +205,7 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
 
         bgrSort.add(rdoThinhHanh);
         rdoThinhHanh.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        rdoThinhHanh.setSelected(true);
         rdoThinhHanh.setText("Thịnh Hành");
         rdoThinhHanh.setOpaque(false);
 
@@ -191,18 +255,27 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setOpaque(false);
 
-        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
-        panel.setLayout(panelLayout);
-        panelLayout.setHorizontalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlBackground.setLayout(new java.awt.CardLayout());
+
+        javax.swing.GroupLayout pnlListLayout = new javax.swing.GroupLayout(pnlList);
+        pnlList.setLayout(pnlListLayout);
+        pnlListLayout.setHorizontalGroup(
+            pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 897, Short.MAX_VALUE)
         );
-        panelLayout.setVerticalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlListLayout.setVerticalGroup(
+            pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 495, Short.MAX_VALUE)
         );
 
-        jScrollPane1.setViewportView(panel);
+        pnlBackground.add(pnlList, "List");
+
+        pnlEmpty.setBackground(new java.awt.Color(255, 255, 255));
+        pnlEmpty.setImage(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/no-result-found.png"))); // NOI18N
+        pnlEmpty.setOpaque(true);
+        pnlBackground.add(pnlEmpty, "Empty");
+
+        jScrollPane1.setViewportView(pnlBackground);
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -214,7 +287,9 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
     private com.swingx.Button btnDesc;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblSapxep;
-    private javax.swing.JPanel panel;
+    private javax.swing.JPanel pnlBackground;
+    private com.swingx.PictureBox pnlEmpty;
+    private javax.swing.JPanel pnlList;
     private javax.swing.JPanel pnlSearch;
     private javax.swing.JRadioButton rdoGiaTien;
     private javax.swing.JRadioButton rdoThinhHanh;

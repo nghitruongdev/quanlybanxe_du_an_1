@@ -1,14 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ultramotor.ui;
 
+import com.swingx.PasswordField;
+import com.swingx.TextField;
 import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.entity.NhanVien;
 import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
+import com.ultramotor.util.MyVerifier;
 import com.ultramotor.util.XMail;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -16,10 +14,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
 public class DangNhapJFrame extends javax.swing.JFrame {
 
-    //
     public DangNhapJFrame() {
         initComponents();
         init();
@@ -69,6 +67,8 @@ public class DangNhapJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UltraMotor - Đăng Nhập");
+        setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        setUndecorated(true);
 
         pnlBackground.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -109,6 +109,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         btnThoat.setBackground(new java.awt.Color(51, 153, 255));
         btnThoat.setText("Thoát");
 
+        txtTenDangNhap.setAllowEmpty(false);
         txtTenDangNhap.setLabelText("Tên đăng nhập");
 
         pwdMatKhau.setLabelText("Mật khẩu");
@@ -451,6 +452,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         addLabelListeners();
         addBtnListeners();
+        setFieldName();
     }
 
     void dangNhap() {
@@ -514,15 +516,23 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         });
 
         btnDangNhap.addActionListener((ActionEvent e) -> {
-            dangNhap();
+            if (validateField(txtTenDangNhap, pwdMatKhau)) {
+                dangNhap();
+            }
         });
 
         btnSend.addActionListener((ActionEvent e) -> {
-            sendEmail();
+            if (validateField(txtEmail)) {
+                sendEmail();
+            }
         });
+        
         btnDLMK.addActionListener((ActionEvent e) -> {
-            changePW();
+            if (validateField(pwdMatKhau1, pwdMatKhau2)) {
+                changePW();
+            }
         });
+        
         pnlNhapOTP.getBtnConfirm().addActionListener((ActionEvent e) -> {
             checkOTP();
         });
@@ -568,21 +578,21 @@ public class DangNhapJFrame extends javax.swing.JFrame {
             MsgBox.error("Không tìm thấy địa chỉ Email");
         } else {
             Auth.user = nv; //lưu thông tin user
-        Auth.forgotPW = true; //đánh dấu là user quên pass
-        //soạn nội dung mail với mã OTP
-        String mailContent = "<div><p>Xin chào,</p>"
-                + "<p>Bạn nhận được email này vì bạn hoặc ai đó đã yêu cầu "
-                + "thay đổi mật khẩu cho tài khoản của bạn trong LapTrinhCity.</p>"
-                + "<p>Email này hoàn toàn có thể bỏ qua nếu bạn không yêu cầu thay đổi mật khẩu.</p>"
-                + "<p>Mã OTP của bạn là: " + String.format("<span style =\"color: red\">%s</span>", Auth.getNewOTP()) + "</p>"
-                + "<p>Vui lòng không chia sẻ mã OTP cho bất cứ ai.</p>"
-                + "<p>UltraMotor System Team.</p></div>";
+            Auth.forgotPW = true; //đánh dấu là user quên pass
+            //soạn nội dung mail với mã OTP
+            String mailContent = "<div><p>Xin chào,</p>"
+                    + "<p>Bạn nhận được email này vì bạn hoặc ai đó đã yêu cầu "
+                    + "thay đổi mật khẩu cho tài khoản của bạn trong LapTrinhCity.</p>"
+                    + "<p>Email này hoàn toàn có thể bỏ qua nếu bạn không yêu cầu thay đổi mật khẩu.</p>"
+                    + "<p>Mã OTP của bạn là: " + String.format("<span style =\"color: red\">%s</span>", Auth.getNewOTP()) + "</p>"
+                    + "<p>Vui lòng không chia sẻ mã OTP cho bất cứ ai.</p>"
+                    + "<p>UltraMotor System Team.</p></div>";
 
-        pnlNhapOTP.getBtnResend().addActionListener((ActionEvent e) -> {
-            XMail.sendMail(email, mailContent, "[UltraMotor] KHÔI PHỤC MẬT KHẨU"); //gửi mail
-        });
-        showCard("NhapOTP");
-        pnlNhapOTP.getBtnResend().doClick();
+            pnlNhapOTP.getBtnResend().addActionListener((ActionEvent e) -> {
+                XMail.sendMail(email, mailContent, "[UltraMotor] KHÔI PHỤC MẬT KHẨU"); //gửi mail
+            });
+            showCard("NhapOTP");
+            pnlNhapOTP.getBtnResend().doClick();
         }
     }
 
@@ -622,4 +632,34 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         }
     }
 
+    private boolean validateField(JTextField... fields) {
+        for (JTextField field : fields) {
+            if (!MyVerifier.DANG_NHAP_VERIFIER.verify(field)) {
+                String err = "Vui lòng kiểm tra lại dữ liệu";
+                if (field instanceof TextField) {
+                    err = ((TextField) field).getErrorText();
+                } else if (field instanceof PasswordField) {
+                    err = ((TextField) field).getErrorText();
+                }
+                MsgBox.error(err);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void setFieldName() {
+        txtEmail.setName("Email");
+        txtTenDangNhap.setName("Tên đăng nhập");
+        pwdMatKhau.setName("Mật Khẩu");
+        pwdMatKhau1.setName("Mật Khẩu");
+        pwdMatKhau2.setName("Xác nhận mật khẩu");
+        setFieldVerifier(txtEmail, txtTenDangNhap, pwdMatKhau, pwdMatKhau1, pwdMatKhau2);
+    }
+
+    private void setFieldVerifier(JTextComponent... comp) {
+        for (JTextComponent field : comp) {
+            field.setInputVerifier(MyVerifier.DANG_NHAP_VERIFIER);
+        }
+    }
 }

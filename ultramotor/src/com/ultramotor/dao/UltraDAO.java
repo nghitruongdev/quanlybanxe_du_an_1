@@ -7,19 +7,19 @@ public abstract class UltraDAO<Entity, ID> {
 
     public ResultSetMetaData meta;
     protected String TABLE_NAME;
-    protected String SELECT_BY_ID;
-    protected String SELECT_ALL;
+    protected String SELECT_BY_ID_SQL;
+    protected String SELECT_ALL_SQL;
 
-    public abstract void insert(Entity e);
+    public abstract int insert(Entity e);
 
-    public abstract void update(Entity e);
+    public abstract int update(Entity e);
 
-    public abstract void delete(ID id);
+    public abstract int delete(ID id);
 
     public abstract List<Entity> selectBySQL(String sql, Object... args);
 
     public Entity selectByID(ID id) {
-        List<Entity> list = selectBySQL(SELECT_BY_ID, id);
+        List<Entity> list = selectBySQL(SELECT_BY_ID_SQL, id);
         if (list.isEmpty()) {
             return null;
         }
@@ -27,7 +27,7 @@ public abstract class UltraDAO<Entity, ID> {
     }
 
     public List<Entity> selectAll() {
-        return selectBySQL(SELECT_ALL);
+        return selectBySQL(SELECT_ALL_SQL);
     }
 
 }

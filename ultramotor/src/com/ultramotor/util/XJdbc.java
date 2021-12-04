@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.rowset.CachedRowSet;
@@ -17,9 +19,8 @@ import javax.sql.rowset.RowSetProvider;
  */
 public class XJdbc {
 
-    private static Connection con;
     private static RowSetFactory factory;
-    private static final String URL = "jdbc:sqlserver://localhost;databaseName=HONDA;username=sa;password=An0836604972";
+    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=HONDA;username=sa;password=An0836604972";
 
     static {
         try {
@@ -29,8 +30,7 @@ public class XJdbc {
         }
     }
 
-    protected static PreparedStatement getStmt(String sql, Object... args) throws SQLException {
-        con = getCon();
+    protected static PreparedStatement getStmt(Connection con, String sql, Object... args) throws SQLException {
         PreparedStatement pstmt;
         if (sql.trim().startsWith("{")) {
             pstmt = con.prepareCall(sql);
@@ -43,73 +43,48 @@ public class XJdbc {
         return pstmt;
     }
 
-    public static ResultSet query(String sql, Object... args) {
-         ResultSet rs = null;
-        try {
-            PreparedStatement pstmt = getStmt(sql, args);
-            rs = pstmt.executeQuery();
-        } catch (SQLException ex) {
-            Logger.getLogger(XJdbc.class.getName()).log(Level.SEVERE, null, ex);
+    public static CachedRowSet query(String sql, Object... args) throws SQLException {
+        CachedRowSet cRs = factory.createCachedRowSet();
+        try (Connection con = getCon()) {
+            try (PreparedStatement pstmt = getStmt(con, sql, args)) {
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    cRs.populate(rs);
+                }
+            }
         }
-        return rs;
+        return cRs;
     }
 
     public static Object value(String sql, Object... args) {
-        Object value = null;
-        try (ResultSet rs = query(sql, args)) {
-            if (rs.next()) {
-                value = rs.getObject(1);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            closeCon();
-        }
-        return value;
+        List<Object> list = valueList(sql, args);
+        return list.isEmpty() ? null : list.get(0);
     }
 
-    public static CachedRowSet getRowSet(String sql, Object... args) {
-        CachedRowSet crs = null;
+    public static List<Object> valueList(String sql, Object... args) {
+        List<Object> list = new ArrayList<>();
         try (ResultSet rs = query(sql, args)) {
-            crs = factory.createCachedRowSet();
-            crs.populate(rs);
+            while (rs.next()) {
+                list.add(rs.getObject(1));
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(XJdbc.class.getName()).log(Level.SEVERE, null, ex);
+
         }
-        return crs;
+        return list;
     }
 
     public static int update(String sql, Object... args) {
-        int count = 0;
-        try (PreparedStatement pstmt = getStmt(sql, args)) {
-            count = pstmt.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            closeCon();
-        }
-        return count;
-    }
-
-    public static Connection getCon() {
-        try {
-            if (con == null || con.isClosed()) {
-                con = DriverManager.getConnection(URL);
+        try (Connection con = getCon()) {
+            try (PreparedStatement pstmt = getStmt(con, sql, args)) {
+                return pstmt.executeUpdate();
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(XJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return con;
+        return -1;
     }
 
-    public static void closeCon() {
-        try {
-            if (con != null) {
-                con.close();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+    public static Connection getCon() throws SQLException {
+        return DriverManager.getConnection(URL);
     }
 
     public static RowSetFactory getFactory() {

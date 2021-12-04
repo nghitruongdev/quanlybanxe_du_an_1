@@ -23,8 +23,10 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
     private Component compExit;
     private int currentIndex;
     private boolean next;
-
+    private boolean shouldNext = true;
+    
     public SlideShowPanel() {
+        setOpaque(false);
         layout = new MigLayout("insets 0");
         panel = new JPanel();
         panel.setLayout(layout);
@@ -40,7 +42,10 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
 
     public void setAuto(int miliseconds) {
         timer = new Timer(miliseconds, (ActionEvent e) -> {
-            next();
+            if(shouldNext){
+                next();
+            }
+            System.out.println("Timer is running");
         });
         timer.start();
     }
@@ -62,7 +67,9 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
     public void addImages(Icon... images) {
         coms.clear();
         for (Icon image : images) {
-            this.coms.add(new PictureBox(image));
+            PictureBox box = new PictureBox(image);
+            box.setOpaque(false);
+            this.coms.add(box);
         }
         initSlideShow();
     }
@@ -145,11 +152,11 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
                 int location = (int) (width * fraction);
                 int locationShow = (int) (width * (1f - fraction));
                 if (next) {
-                    layout.setComponentConstraints(compShow, String.format("pos %d 0 100%% 100%%, w 100%%", locationShow));
-                    layout.setComponentConstraints(compExit, String.format("pos -%d 0 %f 100%%", Math.abs(location), width - location));
+                    layout.setComponentConstraints(compShow, "pos " + locationShow + " 0 100% 100%, w 100%");
+                    layout.setComponentConstraints(compExit, "pos -" + location + " 0 " + (width - location) + " 100%");
                 } else {
-                    layout.setComponentConstraints(compShow, String.format("pos -%d 0 %f 100%%", locationShow, width - locationShow));
-                    layout.setComponentConstraints(compExit, String.format("pos %d 0 100%% 100%%, w 100%%", Math.abs(location)));
+                    layout.setComponentConstraints(compShow, "pos -" + locationShow + " 0 " + (width - locationShow) + " 100%");
+                    layout.setComponentConstraints(compExit, "pos " + location + " 0 100% 100%, w 100%");
                 }
                 panel.revalidate();
             }
@@ -168,24 +175,12 @@ public class SlideShowPanel extends javax.swing.JLayeredPane {
         return animator;
     }
 
-    //    private void initPanel() {
-//        panel = new JPanel();
-//        compShow = new PictureBox();
-//        compExit = new PictureBox();
-//        compShow.setVisible(false);
-//        compExit.setVisible(false);
-//        panel.add(compShow, "pos 0 0 0 0");
-//        panel.add(compExit, "pos 0 0 0 0");
-//    }
-    //    public void initSlideShow() {
-//        if (images == null || images.size() <= 0) {
-//            System.out.println("Hello");
-//            throw new RuntimeException("You forget to initialize the list");
-//        }
-//        compShow.setImage(images.get(0));
-//        compShow.setVisible(true);
-//        panel.remove(0);
-//        layout.setComponentConstraints(compShow, "pos 0 0 100% 100%");
-//        currentIndex = 0;
-//    }
+    
+    public boolean isShouldNext() {
+        return shouldNext;
+    }
+
+    public void setShouldNext(boolean shouldNext) {
+        this.shouldNext = shouldNext;
+    }
 }

@@ -1,27 +1,44 @@
-
 package com.ultramotor.entity;
 
-public class ChiTietNhapKho {
+import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.sql.Types;
+
+public class ChiTietNhapKho extends Entity {
 
     private int idCTNK;
+    private String SKU;
     private int soLuong;
     private double giaNhap;
     private String idPN;
-    private String SKU;
-
-    public ChiTietNhapKho() {
-    }
 
     public ChiTietNhapKho(int idCTNK) {
         this.idCTNK = idCTNK;
     }
 
-    public ChiTietNhapKho(int idCTNK, int soLuong, double giaNhap, String idPN, String SKU) {
-        this.idCTNK = idCTNK;
+    public ChiTietNhapKho(int soLuong, double giaNhap, String idPN, String SKU) {
         this.soLuong = soLuong;
         this.giaNhap = giaNhap;
         this.idPN = idPN;
         this.SKU = SKU;
+    }
+
+    public ChiTietNhapKho(int idCTNK, String SKU, int soLuong, double giaNhap, String idPN) {
+        this.idCTNK = idCTNK;
+        this.SKU = SKU;
+        this.soLuong = soLuong;
+        this.giaNhap = giaNhap;
+        this.idPN = idPN;
+    }
+
+  public static SQLServerDataTable getDataServerTable() throws SQLServerException {
+        SQLServerDataTable dataTable = new SQLServerDataTable();
+        dataTable.addColumnMetadata("id_CTNK", Types.INTEGER);
+        dataTable.addColumnMetadata("SKU", Types.NVARCHAR);
+        dataTable.addColumnMetadata("soLuong", Types.INTEGER);
+        dataTable.addColumnMetadata("giaNhap", Types.FLOAT);
+        dataTable.addColumnMetadata("id_PN", Types.NVARCHAR);
+        return dataTable;
     }
 
     public int getIdCTNK() {

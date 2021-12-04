@@ -1,12 +1,13 @@
-
 package com.ultramotor.entity;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.sql.Types;
 
-public class ChiTietHoaDon {
+public class ChiTietHoaDon extends Entity {
 
     private Integer idCTHD;
     private double donGia;
-    private String idDV;
     private String idHD;
     private String SKU;
 
@@ -17,16 +18,24 @@ public class ChiTietHoaDon {
         this.idCTHD = idCTHD;
     }
 
-    public ChiTietHoaDon(double donGia, String idDV, String idHD, String SKU) {
-        this(null, donGia, idDV, idHD, SKU);
+    public ChiTietHoaDon(double donGia, String idHD, String SKU) {
+        this(null, donGia, idHD, SKU);
     }
 
-    public ChiTietHoaDon(Integer idCTHD, double donGia, String idDV, String idHD, String SKU) {
+    public ChiTietHoaDon(Integer idCTHD, double donGia, String idHD, String SKU) {
         this.idCTHD = idCTHD;
         this.donGia = donGia;
-        this.idDV = idDV;
         this.idHD = idHD;
         this.SKU = SKU;
+    }
+
+    public static SQLServerDataTable getDataServerTable() throws SQLServerException {
+        SQLServerDataTable dataTable = new SQLServerDataTable();
+        dataTable.addColumnMetadata("id_CTHD", Types.INTEGER);
+        dataTable.addColumnMetadata("donGia", Types.FLOAT);
+        dataTable.addColumnMetadata("SKU", Types.VARCHAR);
+        dataTable.addColumnMetadata("idHD", Types.VARCHAR);
+        return dataTable;
     }
 
     public Integer getIdCTHD() {
@@ -43,14 +52,6 @@ public class ChiTietHoaDon {
 
     public void setDonGia(double donGia) {
         this.donGia = donGia;
-    }
-
-    public String getIdDV() {
-        return idDV;
-    }
-
-    public void setIdDV(String idDV) {
-        this.idDV = idDV;
     }
 
     public String getIdHD() {

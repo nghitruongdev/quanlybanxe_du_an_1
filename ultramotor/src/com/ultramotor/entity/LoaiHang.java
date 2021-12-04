@@ -5,8 +5,6 @@
  */
 package com.ultramotor.entity;
 
-import java.util.List;
-
 public class LoaiHang extends Entity{
 
     private String idLH;
@@ -54,10 +52,7 @@ public class LoaiHang extends Entity{
             return false;
         }
         LoaiHang other = (LoaiHang) object;
-        if ((this.idLH == null && other.idLH != null) || (this.idLH != null && !this.idLH.equals(other.idLH))) {
-            return false;
-        }
-        return true;
+        return !((this.idLH == null && other.idLH != null) || (this.idLH != null && !this.idLH.equals(other.idLH)));
     }
 
     @Override

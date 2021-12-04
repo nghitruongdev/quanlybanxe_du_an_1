@@ -8,7 +8,7 @@ package com.ultramotor.entity;
 import java.util.Date;
 import java.util.List;
 
-public class KhachHang {
+public class KhachHang extends Entity {
 
     private String idKH;
     private String hoKH;
@@ -66,6 +66,10 @@ public class KhachHang {
 
     public void setTenKH(String tenKH) {
         this.tenKH = tenKH;
+    }
+
+    public String getHoTenKH() {
+        return String.format("%s %s", hoKH, tenKH);
     }
 
     public boolean getGioiTinh() {
@@ -140,8 +144,6 @@ public class KhachHang {
         this.maNV = maNV;
     }
 
-    
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -164,7 +166,7 @@ public class KhachHang {
 
     @Override
     public String toString() {
-        return "com.ultramotor.entity.KhachHang[ idKH=" + idKH + " ]";
+        return idKH;
     }
 
 }

@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
@@ -24,10 +25,10 @@ public class TextField extends JFormattedTextField {
     public TextField() {
         placeholder = "";
         validInput = true;
-        allowEmpty = true;
+        allowEmpty = false;
         onlyField = false;
+        addListeners();
         setBackground(new Color(255, 255, 255, 0));
-//        setBackground(Color.yellow);
         setOpaque(false);
         initBorder();
         setSelectionColor(new Color(76, 204, 255));
@@ -166,7 +167,7 @@ public class TextField extends JFormattedTextField {
 
     private void createHintText(Graphics2D g2) {
         Insets in = getInsets();
-        g2.setColor(new Color(150, 150, 150));
+        g2.setColor(hintColor);
         FontMetrics ft = g2.getFontMetrics();
         int fieldSize = (getHeight() - extra);
         double size = extra_top / 2 + fieldSize / 2;
@@ -219,7 +220,7 @@ public class TextField extends JFormattedTextField {
     private String placeholder = "";
     private boolean onlyField;
     private Color lineColor = new Color(3, 155, 216);
-
+    private Color hintColor = new Color(150, 150, 150);
     private boolean roundBorder;
     private boolean drawLine;
     private boolean animateLabel;
@@ -236,8 +237,8 @@ public class TextField extends JFormattedTextField {
     @Override
     public void setText(String string) {
         if (!getText().equals(string)) {
-            showing(string.equals(""));
-            if (string.equals("")) {
+            showing(string == null || string.equals(""));
+            if ("".equals(string)) {
                 setValidInput(true);
             }
         }
@@ -308,9 +309,6 @@ public class TextField extends JFormattedTextField {
         this.error = errorText;
     }
 
-//    public String getPlaceholder() {
-//        return placeholder;
-//    }
     public void setPlaceholder(String placeholder) {
         this.placeholder = placeholder;
     }
@@ -342,4 +340,49 @@ public class TextField extends JFormattedTextField {
         initBorder();
     }
 
+    public Color getHintColor() {
+        return hintColor;
+    }
+
+    public void setHintColor(Color hintColor) {
+        this.hintColor = hintColor;
+    }
+
+     private void addListeners() {
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent fe) {
+//                repaint();
+                validateField();
+            }
+
+            @Override
+            public void focusGained(FocusEvent fe) {
+                validateField();
+                reset();
+            }
+        });
+
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                validateField();
+            }
+        });
+    }
+
+    private void validateField() {
+        if (getInputVerifier() == null) {
+            return;
+        }
+        this.validInput = getInputVerifier().verify(this);
+        repaint();
+    }
+    
+     private void reset() {
+        if (getText().length() == 0) {
+            validInput = true;
+            repaint();
+        }
+    }
 }

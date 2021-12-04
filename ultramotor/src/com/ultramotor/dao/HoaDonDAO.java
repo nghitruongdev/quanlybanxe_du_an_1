@@ -1,8 +1,10 @@
 package com.ultramotor.dao;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
 import com.ultramotor.entity.ChiTietHoaDon;
 import com.ultramotor.entity.HoaDon;
 import com.ultramotor.util.XJdbc;
+import com.ultramotor.util.XJdbcServer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,23 +16,41 @@ public class HoaDonDAO extends UltraDAO<HoaDon, String> {
 
     {
         TABLE_NAME = "HoaDon";
-        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "idHD");
-        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "idHD");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
+    }
+    
+    String INSERT_SQL = "INSERT INTO HoaDon(idHD,thoiGian,loaiThanhToan,trangThai,id_NV,idKH)VALUES(?,?,?,?,?,?)";
+    String UPDATE_SQL = "UPDATE HoaDon SET thoiGian=?,loaiThanhToan=?,trangThai=?,id_NV=?,idKH=? WHERE idHD=?";
+    String DELETE_SQL = "DELETE FROM HoaDon WHERE idHD=?";
+
+    static ChiTietHoaDonDAO dao = new ChiTietHoaDonDAO();
+    
+    @Override
+    public int insert(HoaDon e) {
+        return XJdbcServer.update(INSERT_SQL,
+                e.getIdHD(), e.getThoiGian(), e.getLoaiThanhToan(), e.getTrangThai(), e.getIdNV(), e.getIdKH());
     }
 
     @Override
-    public void insert(HoaDon e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int update(HoaDon e) {
+        return XJdbcServer.update(UPDATE_SQL,
+                e.getThoiGian(), e.getLoaiThanhToan(), e.getTrangThai(), e.getIdNV(), e.getIdKH(), e.getIdHD());
     }
 
     @Override
-    public void update(HoaDon e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int delete(String id) {
+        return XJdbcServer.update(DELETE_SQL, id);
+    }
+
+    public List<HoaDon> selectByTime(String time) {
+        String SQL = "SELECT * FROM HoaDon WHERE thoiGian=?";
+        return this.selectBySQL(SQL, time);
     }
 
     @Override
-    public void delete(String id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<HoaDon> selectAll() {
+        return selectBySQL(SELECT_ALL_SQL);
     }
 
     @Override
@@ -52,29 +72,39 @@ public class HoaDonDAO extends UltraDAO<HoaDon, String> {
         return list;
     }
 
+     public void insertWithChiTiet(HoaDon hd, SQLServerDataTable chiTiet) throws SQLException {
+        insert(hd);
+        dao.insert(chiTiet);
+    }
 }
 
 class ChiTietHoaDonDAO extends UltraDAO<ChiTietHoaDon, Integer> {
 
     {
         TABLE_NAME = "ChiTietHoaDon";
-        SELECT_BY_ID = String.format("select * from %s where %s = ?", TABLE_NAME, "id_CTHD");
-        SELECT_ALL = String.format("select * from %s", TABLE_NAME);
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id_CTHD");
+        SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
+    }
+
+    String INSERT_SQL = "INSERT INTO ChiTietHoaDon(id_CTHD,donGia,dichVu,SKU,idHD)VALUES(?,?,?,?,?)";
+    String UPDATE_SQL = "UPDATE ChiTietHoaDon SET donGia=?,dichVu=?,SKU=?,idHD=? WHERE id_CTHD=?";
+    String DELETE_SQL = "DELETE FROM ChiTietHoaDon WHERE id_CTHD=?";
+    String INSERT_MULTIPLE_CHITIET = "exec usp_insert_ChiTietHoaDon ?";
+    @Override
+    public int insert(ChiTietHoaDon e) {
+        return XJdbcServer.update(INSERT_SQL,
+                e.getIdHD(), e.getDonGia(), e.getSKU(), e.getIdHD());
     }
 
     @Override
-    public void insert(ChiTietHoaDon e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int update(ChiTietHoaDon e) {
+        return XJdbcServer.update(UPDATE_SQL,
+                e.getDonGia(), e.getSKU(), e.getIdHD(), e.getIdCTHD());
     }
 
     @Override
-    public void update(ChiTietHoaDon e) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void delete(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int delete(Integer id) {
+        return XJdbcServer.update(DELETE_SQL, id);
     }
 
     @Override
@@ -86,12 +116,15 @@ class ChiTietHoaDonDAO extends UltraDAO<ChiTietHoaDon, Integer> {
                         rs.getInt(1),
                         rs.getDouble(2),
                         rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5)));
+                        rs.getString(4)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(NhaSanXuatDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+     public void insert(SQLServerDataTable table) throws SQLException {
+        XJdbcServer.update(INSERT_MULTIPLE_CHITIET, new String[]{"ChiTietHoaDonType"}, table);
     }
 }
