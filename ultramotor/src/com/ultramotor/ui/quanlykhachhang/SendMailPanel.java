@@ -201,6 +201,7 @@ public class SendMailPanel extends javax.swing.JPanel {
 
         btnGui.setBackground(new java.awt.Color(0, 174, 114));
         btnGui.setForeground(new java.awt.Color(255, 255, 255));
+        btnGui.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/icons8-sent.png"))); // NOI18N
         btnGui.setText("Gửi Mail");
         btnGui.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -242,8 +243,9 @@ public class SendMailPanel extends javax.swing.JPanel {
         txtNoiDung.setSelectionColor(new java.awt.Color(3, 155, 216));
         jScrollPane1.setViewportView(txtNoiDung);
 
-        btnUpload.setBackground(new java.awt.Color(21, 127, 73));
+        btnUpload.setBackground(new java.awt.Color(0, 174, 114));
         btnUpload.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/icons8-file.png"))); // NOI18N
         btnUpload.setText("Tải file đính kèm");
         btnUpload.setToolTipText("");
 
@@ -277,9 +279,9 @@ public class SendMailPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblTepDinhKem, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                .addComponent(lblTepDinhKem, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()

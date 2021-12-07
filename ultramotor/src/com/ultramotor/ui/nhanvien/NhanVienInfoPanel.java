@@ -448,6 +448,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
 
         btnGuiMail.setBackground(new java.awt.Color(0, 174, 114));
         btnGuiMail.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuiMail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/icons8-sent.png"))); // NOI18N
         btnGuiMail.setText("Gửi mail");
         btnGuiMail.setBorderPainted(false);
         btnGuiMail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -455,6 +456,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
 
         btnCapNhat.setBackground(new java.awt.Color(0, 174, 114));
         btnCapNhat.setForeground(new java.awt.Color(255, 255, 255));
+        btnCapNhat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/icons8-save.png"))); // NOI18N
         btnCapNhat.setText("Cập nhật");
         btnCapNhat.setBorderPainted(false);
         btnCapNhat.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -462,6 +464,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
 
         btnReset.setBackground(new java.awt.Color(0, 174, 114));
         btnReset.setForeground(new java.awt.Color(255, 255, 255));
+        btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/refresh_25px.png"))); // NOI18N
         btnReset.setText("Đặt lại");
         btnReset.setBorderPainted(false);
         btnReset.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N

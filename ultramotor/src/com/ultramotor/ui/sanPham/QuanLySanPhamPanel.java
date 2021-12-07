@@ -634,7 +634,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/refresh_25px.png"))); // NOI18N
 
         panelBorder4.setBackground(new java.awt.Color(255, 255, 255));
-        panelBorder4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Sản Phẩm", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Papyrus", 1, 20), new java.awt.Color(0, 174, 114))); // NOI18N
+        panelBorder4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Sản Phẩm", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Times New Roman", 0, 20), new java.awt.Color(0, 174, 114))); // NOI18N
         panelBorder4.setMinimumSize(new java.awt.Dimension(100, 100));
         panelBorder4.setName(""); // NOI18N
         panelBorder4.setPreferredSize(new java.awt.Dimension(382, 314));
@@ -678,7 +678,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
                     .addComponent(txtSearchSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
@@ -691,7 +691,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         pnlThongKe_SPLayout.setHorizontalGroup(
             pnlThongKe_SPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlThongKe_SPLayout.createSequentialGroup()
-                .addGap(605, 605, 605)
+                .addContainerGap(605, Short.MAX_VALUE)
                 .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(650, Short.MAX_VALUE))
             .addGroup(pnlThongKe_SPLayout.createSequentialGroup()

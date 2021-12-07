@@ -325,7 +325,7 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
         txtGhiChu.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jScrollPane2.setViewportView(txtGhiChu);
 
-        pnlMain.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 290, 124));
+        pnlMain.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 290, 140));
 
         txtMaKH.setAnimateLabel(false);
         txtMaKH.setDragEnabled(false);
@@ -365,6 +365,7 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
 
         btnGuiMail.setBackground(new java.awt.Color(0, 174, 114));
         btnGuiMail.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuiMail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/icons8-sent.png"))); // NOI18N
         btnGuiMail.setText("Gửi mail");
         btnGuiMail.setBorderPainted(false);
         btnGuiMail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -377,6 +378,7 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
 
         btnCapNhat.setBackground(new java.awt.Color(0, 174, 114));
         btnCapNhat.setForeground(new java.awt.Color(255, 255, 255));
+        btnCapNhat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/icons8-save.png"))); // NOI18N
         btnCapNhat.setText("Cập nhật");
         btnCapNhat.setBorderPainted(false);
         btnCapNhat.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -389,6 +391,7 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
 
         btnReset.setBackground(new java.awt.Color(0, 174, 114));
         btnReset.setForeground(new java.awt.Color(255, 255, 255));
+        btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/refresh_25px.png"))); // NOI18N
         btnReset.setText("Đặt lại");
         btnReset.setBorderPainted(false);
         btnReset.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -399,7 +402,7 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
         });
         pnlButton.add(btnReset);
 
-        pnlMain.add(pnlButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 260, 35));
+        pnlMain.add(pnlButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, 340, 35));
 
         txtHoKH.setLabelText("Họ khách hàng");
         pnlMain.add(txtHoKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 105, -1));

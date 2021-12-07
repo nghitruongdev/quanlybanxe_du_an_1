@@ -62,6 +62,7 @@ public class DanhSachHoaDonPanel extends javax.swing.JPanel {
         jScrollPane7.setViewportView(tblHoaDonTheoNgay);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 174, 114));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DANH SÁCH HOÁ ĐƠN");
 

@@ -335,6 +335,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
         btnThemMoi.setBackground(new java.awt.Color(0, 174, 114));
         btnThemMoi.setForeground(new java.awt.Color(255, 255, 255));
+        btnThemMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/icons8-save.png"))); // NOI18N
         btnThemMoi.setText("Thêm mới");
         btnThemMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -353,11 +354,13 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
         btnExport.setBackground(new java.awt.Color(0, 174, 114));
         btnExport.setForeground(new java.awt.Color(255, 255, 255));
+        btnExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/print_25px.png"))); // NOI18N
         btnExport.setText("Export");
         btnExport.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         btnGuiMail.setBackground(new java.awt.Color(0, 174, 114));
         btnGuiMail.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuiMail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/icons8-sent.png"))); // NOI18N
         btnGuiMail.setText("Gửi Mail");
         btnGuiMail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -371,12 +374,12 @@ public class NhanVienPanel extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlQuanLyNVLayout.createSequentialGroup()
                         .addComponent(lblQLNV)
                         .addGap(18, 18, 18)
-                        .addComponent(btnThemMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnThemMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnGuiMail, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGuiMail, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(257, 257, 257)
+                        .addGap(245, 245, 245)
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
