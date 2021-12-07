@@ -109,7 +109,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n T&#x1ea5;t C&#x1ea3;"/>
             <Property name="focusPainted" type="boolean" value="false"/>
-            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -117,7 +116,7 @@
         <Component class="com.swingx.Button" name="btnDeleteAll">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="52" green="8" red="f6" type="rgb"/>
+              <Color blue="72" green="ae" red="0" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -132,7 +131,7 @@
         <Component class="com.swingx.Button" name="btnDeleteAll1">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="52" green="8" red="f6" type="rgb"/>
+              <Color blue="72" green="ae" red="0" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -148,7 +147,7 @@
         <Component class="com.swingx.Button" name="btnDeleteAll2">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="52" green="8" red="f6" type="rgb"/>
+              <Color blue="72" green="ae" red="0" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>

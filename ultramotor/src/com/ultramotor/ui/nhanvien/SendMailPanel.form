@@ -49,10 +49,10 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jScrollPane1" pref="345" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="btnGui" min="-2" pref="119" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="btnGui" min="-2" pref="119" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="4" pref="4" max="-2" attributes="0"/>

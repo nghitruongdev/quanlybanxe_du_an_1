@@ -203,7 +203,7 @@ public class PanelOTP extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
         add(txt6, gridBagConstraints);
 
-        btnConfirm.setBackground(new java.awt.Color(102, 102, 255));
+        btnConfirm.setBackground(new java.awt.Color(46, 211, 151));
         btnConfirm.setForeground(new java.awt.Color(255, 255, 255));
         btnConfirm.setText("Xác nhận");
         btnConfirm.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N

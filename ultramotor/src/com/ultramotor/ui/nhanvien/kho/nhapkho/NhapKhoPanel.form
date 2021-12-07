@@ -2,27 +2,13 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
-          <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
-                <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                <Column editable="true" title="Title 4" type="java.lang.Object"/>
-              </Table>
-            </Property>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
+    <Component class="com.raven.datechooser.DateChooser" name="Date">
+      <Properties>
+        <Property name="textRefernce" type="javax.swing.JTextField" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="txtDate"/>
+        </Property>
+      </Properties>
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -47,15 +33,20 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="pnlChiTiet" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="450" max="32767" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="404" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="447" max="32767" attributes="0"/>
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="401" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-                  <Component id="pnlChiTiet" alignment="1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,9 +57,11 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="pnlChiTiet" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+              <Component id="pnlChiTiet" min="-2" pref="357" max="-2" attributes="0"/>
+              <EmptySpace pref="18" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -96,41 +89,36 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
-                  <Component id="lblTime" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="470" max="32767" attributes="0"/>
-                  <Component id="btnGuiEmail" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="btnInDanhSach" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="cboMaNhap" min="-2" pref="169" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="scrollPhieuNhap" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblTime" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="txtDate" min="-2" pref="150" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnGuiEmail" min="-2" pref="84" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnInDanhSach" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="cboMaNhap" min="-2" pref="169" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="scrollPhieuNhap" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace pref="15" max="32767" attributes="0"/>
-                          <Component id="lblTime" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btnGuiEmail" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnInDanhSach" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cboMaNhap" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="cboMaNhap" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnGuiEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnInDanhSach" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblTime" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="scrollPhieuNhap" min="-2" pref="193" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -138,19 +126,9 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="btnGuiEmail">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="G&#x1eed;i mail"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="lblTime">
           <Properties>
-            <Property name="text" type="java.lang.String" value="T&#x1eeb;"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnInDanhSach">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="In danh s&#xe1;ch"/>
+            <Property name="text" type="java.lang.String" value="Ng&#xe0;y Nh&#x1ead;p"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cboMaNhap">
@@ -189,9 +167,43 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="com.swingx.Button" name="btnGuiEmail">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="72" green="ae" red="0" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="G&#x1eed;i Mail"/>
+          </Properties>
+        </Component>
+        <Component class="com.swingx.Button" name="btnInDanhSach">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="72" green="ae" red="0" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="In danh s&#xe1;ch"/>
+          </Properties>
+        </Component>
+        <Component class="com.swingx.TextField" name="txtDate">
+          <Properties>
+            <Property name="animateLabel" type="boolean" value="false"/>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
+            <Property name="dragEnabled" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="labelText" type="java.lang.String" value="Ng&#xe0;y"/>
+            <Property name="onlyField" type="boolean" value="true"/>
+            <Property name="roundBorder" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtDateMouseClicked"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Component class="com.ultramotor.ui.nhanvien.kho.nhapkho.ChiTietNhapKhoPanel" name="pnlChiTiet">
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
   </SubComponents>
 </Form>

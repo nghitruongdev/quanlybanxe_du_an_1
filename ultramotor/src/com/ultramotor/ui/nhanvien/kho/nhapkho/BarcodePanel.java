@@ -157,22 +157,21 @@ public class BarcodePanel extends javax.swing.JPanel {
 
         chkAll.setText("Chọn Tất Cả");
         chkAll.setFocusPainted(false);
-        chkAll.setOpaque(false);
 
-        btnDeleteAll.setBackground(new java.awt.Color(246, 8, 82));
+        btnDeleteAll.setBackground(new java.awt.Color(0, 174, 114));
         btnDeleteAll.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/waste_25px.png"))); // NOI18N
         btnDeleteAll.setText("Xoá Tất Cả");
         btnDeleteAll.setRadius(10);
 
-        btnDeleteAll1.setBackground(new java.awt.Color(246, 8, 82));
+        btnDeleteAll1.setBackground(new java.awt.Color(0, 174, 114));
         btnDeleteAll1.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteAll1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/print_25px.png"))); // NOI18N
         btnDeleteAll1.setText("In Ấn");
         btnDeleteAll1.setIconTextGap(10);
         btnDeleteAll1.setRadius(10);
 
-        btnDeleteAll2.setBackground(new java.awt.Color(246, 8, 82));
+        btnDeleteAll2.setBackground(new java.awt.Color(0, 174, 114));
         btnDeleteAll2.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteAll2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ultramotor/img/icon/pdf_25px.png"))); // NOI18N
         btnDeleteAll2.setText("Xuất PDF");
