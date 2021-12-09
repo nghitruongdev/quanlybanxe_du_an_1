@@ -1,11 +1,15 @@
 package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
+import com.swingx.table.ModelAction;
+import com.swingx.table.ModelEvent;
 import com.ultramotor.dao.NhapKhoDAO;
 import com.ultramotor.entity.ChiTietNhapKho;
 import com.ultramotor.entity.PhieuNhapKho;
+import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDate;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
@@ -29,6 +33,7 @@ public class NhapKhoPanel extends javax.swing.JPanel {
     List<PhieuNhapKho> nhapKhoList = new ArrayList<>();
     private DecimalFormat numberFormat;
     private Date currentDate = new Date();
+    private ModelEvent nhapKhoEvent;
 
     public NhapKhoPanel() {
         initComponents();
@@ -39,17 +44,68 @@ public class NhapKhoPanel extends javax.swing.JPanel {
         dao = new NhapKhoDAO();
         nhapKhoList = dao.selectAll();
         numberFormat = new DecimalFormat("#,###.##");
+        nhapKhoEvent = new ModelEvent() {
+            @Override
+            public void update(Object e) {
+                new Thread(() -> {
+                    sleepThread();
+                    updatePhieuNhap((PhieuNhapKho) e);
+                }).start();
+            }
+
+            @Override
+            public void delete(Object e) {
+                new Thread(() -> {
+                    sleepThread();
+                    deletePhieuNhap((PhieuNhapKho) e);
+                }).start();
+            }
+        };
         initTablePhieuNhap();
         fillTablePhieuNhap();
         addListeners();
         dateChooser.setTextRefernce(txtDate);
     }
 
+    private void updatePhieuNhap(PhieuNhapKho pnk) {
+        tblPhieuNhap.stopCellEditor();
+        if (pnk == null) {
+            return;
+        }
+        pnlChiTiet.setPhieuNhapKho(pnk);
+        pnlChiTiet.setList(nhapKhoList);
+    }
+
+    private void deletePhieuNhap(PhieuNhapKho pnk) {
+        tblPhieuNhap.stopCellEditor();
+        if (!pnk.isCanEdit()) {
+            MsgBox.error("Đã có sản phẩm bán, không thể xoá phiếu nhập kho");
+            return;
+        }
+        if (!Auth.isManager()) {
+            MsgBox.error("Bạn cần quyền trưởng phòng để có thể xoá phiếu nhập kho");
+            return;
+        }
+        if (MsgBox.confirm("Bạn có muốn xoá phiếu nhập kho này?", false) == 0) {
+            if (dao.delete(pnk.getIdPN()) > 0) {
+                nhapKhoList.remove(pnk);
+                fillTablePhieuNhap();
+                if (pnk.equals(pnlChiTiet.getPhieuNhapKho())) {
+                    pnlChiTiet.reset();
+                }
+                MsgBox.inform("Xoá phiếu nhập thành công");
+            } else {
+                MsgBox.error("Xoá phiếu nhập thất bại");
+            }
+        }
+    }
+
     private void initTablePhieuNhap() {
-        String[] columns = {"STT", "Mã Phiếu", "Ngày Nhập", "Nhân Viên Nhập", "Tổng tiền"};
+        String[] columns = {"STT", "Mã Phiếu", "Ngày Nhập", "Nhân Viên Nhập", "Tổng tiền", "Actions"};
         modelNhapKho = new DefaultTableModel(columns, 5);
         tblPhieuNhap.setModel(modelNhapKho);
         tblPhieuNhap.fixTable(scrollPhieuNhap);
+        tblPhieuNhap.getColumnModel().getColumn(tblPhieuNhap.getColumnCount() - 1).setMaxWidth(100);
     }
 
     private List<PhieuNhapKho> getCurrentList() {
@@ -74,7 +130,8 @@ public class NhapKhoPanel extends javax.swing.JPanel {
             pnk,
             XDate.toString(pnk.getNgayNhap(), "dd-MM-yyyy"),
             pnk.getIdNV(),
-            numberFormat.format(pnk.getTongTien())
+            numberFormat.format(pnk.getTongTien()),
+            new ModelAction(pnk, nhapKhoEvent)
         };
     }
 
@@ -95,6 +152,7 @@ public class NhapKhoPanel extends javax.swing.JPanel {
         if (nhapKhoList.contains(pnk)) {
             return;
         }
+        pnk.setNgayNhap(new Date());
         try {
             SQLServerDataTable chiTietTable = ChiTietNhapKho.getDataServerTable();
             for (ChiTietNhapKho ct : pnk.getChiTietNhapKhoList()) {
@@ -103,7 +161,13 @@ public class NhapKhoPanel extends javax.swing.JPanel {
             //tiến hành thêm vào cơ sở dữ liệu
             dao.insertWithChiTiet(pnk, chiTietTable);
             nhapKhoList.add(pnk);
+            MsgBox.inform("Thêm phiếu nhập kho thành công!");
             fillTablePhieuNhap();
+            int index = findIndexPhieuNhap(pnk);
+            if (index != -1) {
+                tblPhieuNhap.setRowSelectionInterval(index, index); //đật hàng chọn trên bảng
+                tblPhieuNhap.scrollRectToVisible(new java.awt.Rectangle(tblPhieuNhap.getCellRect(index, 0, true))); //di chuyển thanh lăn tới vị trí hàng chọn
+            }
             pnlChiTiet.reset();
         } catch (SQLException ex) {
             dao.delete(pnk.getIdPN());
@@ -143,6 +207,23 @@ public class NhapKhoPanel extends javax.swing.JPanel {
         });
     }
 
+    private int findIndexPhieuNhap(PhieuNhapKho pnk) {
+        for (int i = 0; i < tblPhieuNhap.getRowCount(); i++) {
+            if (pnk.equals(tblPhieuNhap.getValueAt(i, 1))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void sleepThread() {
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -166,11 +247,15 @@ public class NhapKhoPanel extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 174, 114));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DANH SÁCH PHIẾU NHẬP");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         lblTime.setText("Ngày Nhập");
+
+        scrollPhieuNhap.setViewportBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        scrollPhieuNhap.setOpaque(false);
 
         tblPhieuNhap.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -183,6 +268,7 @@ public class NhapKhoPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblPhieuNhap.setOpaque(false);
         scrollPhieuNhap.setViewportView(tblPhieuNhap);
 
         btnGuiEmail.setBackground(new java.awt.Color(0, 174, 114));
@@ -224,12 +310,12 @@ public class NhapKhoPanel extends javax.swing.JPanel {
                         .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(chkAll, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(184, 184, 184)
-                        .addComponent(btnGuiEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuiEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnInDanhSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(scrollPhieuNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 1179, Short.MAX_VALUE))
+                    .addComponent(scrollPhieuNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -241,8 +327,8 @@ public class NhapKhoPanel extends javax.swing.JPanel {
                     .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTime)
                     .addComponent(chkAll))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(scrollPhieuNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrollPhieuNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -253,14 +339,11 @@ public class NhapKhoPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlChiTiet, javax.swing.GroupLayout.DEFAULT_SIZE, 1209, Short.MAX_VALUE)
+                    .addComponent(pnlChiTiet, javax.swing.GroupLayout.DEFAULT_SIZE, 995, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
         );
@@ -270,11 +353,12 @@ public class NhapKhoPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(4, 4, 4)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(pnlChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 375, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -474,7 +474,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         resetCTHD();
         resetSP();
         resetKH();
-        
+
     }
 
     private void printHD(HoaDon hd) {
@@ -487,13 +487,13 @@ public class HoaDonPanel extends javax.swing.JPanel {
             System.out.println(ex.getMessage());
             MsgBox.error("Không thể xuất hoá đơn! Vui lòng kiểm tra lại hệ thống.");
         } catch (PrinterException ex) {
-             if(MsgBox.confirm("Không thể in hoá đơn! Mở hoá đơn bằng ứng dụng thứ ba?", false)==0){
-                 try {
-                     Desktop.getDesktop().open(file);
-                 } catch (IOException ex1) {
-                     Logger.getLogger(HoaDonPanel.class.getName()).log(Level.SEVERE, null, ex1);
-                 }
-             }
+            if (MsgBox.confirm("Không thể in hoá đơn! Mở hoá đơn bằng ứng dụng thứ ba?", false) == 0) {
+                try {
+                    Desktop.getDesktop().open(file);
+                } catch (IOException ex1) {
+                    Logger.getLogger(HoaDonPanel.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
         }
     }
 
@@ -555,8 +555,8 @@ public class HoaDonPanel extends javax.swing.JPanel {
     private boolean checkSoLuongChiTietHD(List<ChiTietHoaDon> list) {
         List<String> skus = new ArrayList<>(list.size());
         list.forEach(ct -> skus.add(ct.getSKU()));
-        Set<String> set = spDAO.checkHangTonSP(skus.toArray(new String[skus.size()]));
-        return !skus.stream().anyMatch(set::contains);
+        Map<String, Integer> map = spDAO.checkHangTonSP(skus.toArray(new String[skus.size()]));
+        return !map.keySet().stream().anyMatch(key -> map.get(key) <= 0);
     }
 
     private void initTable() {

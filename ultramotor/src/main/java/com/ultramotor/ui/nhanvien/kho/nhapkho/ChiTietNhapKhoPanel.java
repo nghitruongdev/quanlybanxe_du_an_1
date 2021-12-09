@@ -9,6 +9,8 @@ import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -34,6 +36,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
     public List<PhieuNhapKho> list = new ArrayList<>();
     private boolean viewOnly = false;
     private DecimalFormat numberFormat;
+
     public ChiTietNhapKhoPanel() {
         initComponents();
         init();
@@ -129,7 +132,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         tblChiTiet.setModel(model);
         tblChiTiet.setShowVerticalLines(true);
         tblChiTiet.getColumnModel().getColumn(0).setMaxWidth(50);
-        tblChiTiet.getColumnModel().getColumn(tblChiTiet.getColumnCount() - 1).setMaxWidth(200);
+        tblChiTiet.getColumnModel().getColumn(tblChiTiet.getColumnCount() - 1).setMaxWidth(100);
         tblChiTiet.fixTable(scrollChiTiet);
     }
 
@@ -153,13 +156,14 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
     public void reset() {
         model.setRowCount(0);
         tblChiTiet.createDefaultColumnsFromModel();
+        tblChiTiet.getColumnModel().getColumn(tblChiTiet.getColumnCount() - 1).setMaxWidth(100);
         resetForm();
         pnk = null;
         viewOnly = false;
     }
 
     private void resetForm() {
-        txtMaSKU.setText("");
+//        txtMaSKU.setText("");
         txtTenSP.setText("");
         txtGiaNhap.setText("");
         spnSoLuong.setValue(0);
@@ -170,7 +174,6 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         if (e == null) {
             return;
         }
-        txtMaSKU.setText(e.getSKU());
         txtTenSP.setText(timTenSP(e.getSKU()));
         spnSoLuong.setValue(e.getSoLuong());
         txtGiaNhap.setText(String.format("%.2f", e.getGiaNhap()));
@@ -188,9 +191,9 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
             pnk = new PhieuNhapKho(getAutoID(), null, Auth.user == null ? "NV01" : Auth.user.getIdNV());
         }
 
-        String maSku = txtMaSKU.getText();
+        String maSku = (String) cboMaSP.getSelectedItem();
         int soLuong = (int) spnSoLuong.getValue();
-        double giaNhap = ((Number) txtGiaNhap.getValue()).doubleValue();
+        double giaNhap = Double.parseDouble(txtGiaNhap.getText());
         ChiTietNhapKho ct = new ChiTietNhapKho(model.getRowCount() + 1, maSku, soLuong, giaNhap, pnk.getIdPN());
         pnk.getChiTietNhapKhoList().add(ct);
 
@@ -198,7 +201,6 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         int index = model.getRowCount() - 1;
         tblChiTiet.setRowSelectionInterval(index, index); //đật hàng chọn trên bảng
         tblChiTiet.scrollRectToVisible(new java.awt.Rectangle(tblChiTiet.getCellRect(index, 0, true))); //di chuyển thanh lăn tới vị trí hàng chọn
-
         resetForm();
     }
 
@@ -213,7 +215,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
             MsgBox.error("Nhập số lượng sản phẩm!");
             return false;
         }
-        if (((Number) txtGiaNhap.getValue()).doubleValue() <= 0) {
+        if (Double.parseDouble(txtGiaNhap.getText()) <= 0) {
             txtGiaNhap.requestFocus();
             MsgBox.error("Nhập giá sản phẩm!");
             return false;
@@ -279,8 +281,6 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtMaPhieuNhap = new com.swingx.TextField();
-        txtMaSKU = new com.swingx.TextField();
         btnXoa = new com.swingx.Button();
         scrollChiTiet = new javax.swing.JScrollPane();
         tblChiTiet = new com.swingx.table.Table();
@@ -298,11 +298,6 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         lblSoluong = new javax.swing.JLabel();
 
-        txtMaPhieuNhap.setLabelText("Mã Phiếu Nhập");
-
-        txtMaSKU.setLabelText("Mã SKU");
-        txtMaSKU.setOnlyField(true);
-
         btnXoa.setBackground(new java.awt.Color(0, 174, 114));
         btnXoa.setForeground(new java.awt.Color(255, 255, 255));
         btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/waste_25px.png"))); // NOI18N
@@ -310,6 +305,10 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         btnXoa.setRadius(5);
 
         setBackground(new java.awt.Color(255, 255, 255));
+
+        scrollChiTiet.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        scrollChiTiet.setViewportBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        scrollChiTiet.setOpaque(false);
 
         tblChiTiet.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -322,12 +321,13 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblChiTiet.setOpaque(false);
         scrollChiTiet.setViewportView(tblChiTiet);
 
         btnReset.setBackground(new java.awt.Color(0, 174, 114));
         btnReset.setForeground(new java.awt.Color(255, 255, 255));
         btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/refresh_25px.png"))); // NOI18N
-        btnReset.setText("Đặt lại");
+        btnReset.setText("Tạo Mới");
         btnReset.setRadius(5);
 
         btnSave.setBackground(new java.awt.Color(0, 174, 114));
@@ -366,6 +366,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         jLabel3.setText("Giá Nhập");
         jLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
 
+        txtTenSP.setEditable(false);
         txtTenSP.setLabelText("Tên Sản Phẩm");
         txtTenSP.setOnlyField(true);
 
@@ -400,7 +401,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(txtGiaNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -427,7 +428,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(spnSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                .addGap(6, 6, 6))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cboMaSP, spnSoLuong, txtGiaNhap});
@@ -440,12 +441,15 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrollChiTiet)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
-                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)))
                 .addContainerGap())
         );
 
@@ -454,10 +458,10 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(scrollChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollChiTiet, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -483,8 +487,6 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
     private javax.swing.JSpinner spnSoLuong;
     private com.swingx.table.Table tblChiTiet;
     private com.swingx.TextField txtGiaNhap;
-    private com.swingx.TextField txtMaPhieuNhap;
-    private com.swingx.TextField txtMaSKU;
     private com.swingx.TextField txtTenSP;
     // End of variables declaration//GEN-END:variables
 }

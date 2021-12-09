@@ -85,7 +85,7 @@ public class Item extends javax.swing.JPanel {
         return file;
     }
 
-    public void setDeleteListener(ActionListener deleteListener) {
+    public void addDeleteListener(ActionListener deleteListener) {
         btnDelete.addActionListener(deleteListener);
     }
 

@@ -117,8 +117,7 @@ public class TimSPPanel extends javax.swing.JPanel {
         if (maSKU.equals("")) {
             err = "Mã sản phẩm không được để trống";
         } else if (!spSet.contains(maSKU.toUpperCase())) {
-            err = "Mã sản phẩm không được để trống";
-
+            err = "Không tìm thấy mã sản phẩm";
         }
         if (!err.equals("")) {
             MsgBox.error(err);
@@ -168,20 +167,6 @@ public class TimSPPanel extends javax.swing.JPanel {
         }
     }
 
-//    private void printResultSet() {
-//        try {
-//            rs.beforeFirst();
-//            int count = rs.getMetaData().getColumnCount();
-//            while (rs.next()) {
-//                for (int i = 1; i < count + 1; i++) {
-//                    System.out.println(rs.getObject(i));
-//
-//                }
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(TimSPPanel.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
     public void setDoneListener(ActionListener ls) {
         btnDone.addActionListener(ls);
     }

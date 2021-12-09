@@ -5,15 +5,14 @@
  */
 package com.ultramotor.entity;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import java.sql.Types;
+import com.ultramotor.dao.SanPhamDAO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-public class PhieuNhapKho extends Entity{
+public class PhieuNhapKho extends Entity {
 
     private String idPN;
     private Date ngayNhap;
@@ -91,7 +90,13 @@ public class PhieuNhapKho extends Entity{
         return true;
     }
 
-    
+    public boolean isCanEdit() {
+        SanPhamDAO dao = new SanPhamDAO();
+        List<String> skus = new ArrayList<>();
+        chiTietNhapKhoList.forEach(ct -> skus.add(ct.getSKU()));
+        Map<String, Integer> map = dao.checkHangTonSP(skus.toArray(new String[skus.size()]));
+        return !chiTietNhapKhoList.stream().anyMatch(ct -> map.get(ct.getSKU()) < ct.getSoLuong());
+    }
 
     @Override
     public String toString() {

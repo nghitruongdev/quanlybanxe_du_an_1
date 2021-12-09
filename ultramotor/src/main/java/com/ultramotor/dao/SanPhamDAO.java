@@ -17,40 +17,40 @@ import java.util.logging.Logger;
 import javax.sql.rowset.CachedRowSet;
 
 public class SanPhamDAO extends UltraDAO<SanPham, String> {
-
+    
     {
         TABLE_NAME = "SanPham";
         SELECT_BY_ID_SQL = String.format("SELECT * FROM %s where %s = ?", "view_SanPhamTon", "SKU");
         SELECT_ALL_SQL = String.format("SELECT * FROM %s", "view_SanPhamTon");
     }
-
+    
     final String INSERT_SQL = String.format("exec usp_insert_%s ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?", TABLE_NAME);
     final String DELETE_SQL = String.format("DELETE FROM %s WHERE %s = ?", TABLE_NAME, "SKU");
     final String CHECK_HANG_TON_SQL = String.format("SELECT SKU, dbo.fn_soLuongTonSp(SKU) FROM SanPham");
     final String SELECT_BY_MODEL = String.format("SELECT * FROM %s WHERE id_DongSP = ? AND DoiXe = ? AND PhanKhoi = ?", "view_SanPhamTon");
-
+    
     @Override
     public int insert(SanPham e) {
         return XJdbc.update(INSERT_SQL,
                 e.getSku(), e.getTenSP(), e.getHinh(), e.getMauSac(), e.getPhanKhoi(), e.getDoiXe(), e.getThoiGianBH(),
                 e.getDiaChiSX(), e.getGiaTien(), e.getMoTa(), e.getIdDongSP(), e.getIdNV());
     }
-
+    
     @Override
     public int update(SanPham e) {
         return insert(e);
     }
-
+    
     @Override
     public int delete(String id) {
         return XJdbc.update(DELETE_SQL, id);
     }
-
+    
     @Override
     public List<SanPham> selectAll() {
         return selectBySQL(SELECT_ALL_SQL);
     }
-
+    
     @Override
     public SanPham selectByID(String key) {
         List<SanPham> list = this.selectBySQL(SELECT_BY_ID_SQL, key);
@@ -60,7 +60,7 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
         return list.get(0);
     }
     int error = 0;
-
+    
     @Override
     public List<SanPham> selectBySQL(String sql, Object... args) {
         List<SanPham> list = new ArrayList<>();
@@ -87,13 +87,13 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
         }
         return list;
     }
-
+    
     public List<SanPham> getListSP(ModelSanPham model) {
         return selectBySQL(SELECT_BY_MODEL, model.getId_dongSP(), model.getDoiXe(), model.getPhanKhoi());
     }
-
-    public Set<String> checkHangTonSP(String... skus) {
-        Set<String> set = new HashSet<>();
+    
+    public Map<String, Integer> checkHangTonSP(String... skus) {
+        Map<String, Integer> map = new HashMap<>();
         StringBuilder sb = new StringBuilder(CHECK_HANG_TON_SQL).append(" WHERE SKU IN (");
         for (int i = 0; i < skus.length; i++) {
             if (i == skus.length - 1) {
@@ -104,15 +104,14 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
         }
         try (ResultSet rs = XJdbc.query(sb.toString())) {
             while (rs.next()) {
-                if (rs.getInt(2) <= 0) {
-                    set.add(rs.getString(1));
-                }
+                map.put(rs.getString(1), rs.getInt(2));
             }
         } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return set;
+        return map;
     }
-
+    
     public Map<String, String> getMaVaTenSP() {
         Map<String, String> map = new HashMap<>();
         try (CachedRowSet rs = XJdbc.query("SELECT SKU, TenSP FROM SanPham WHERE isDeleted = 0")) {

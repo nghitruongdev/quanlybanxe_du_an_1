@@ -2,6 +2,7 @@ package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
 import com.swingx.CloseButton;
 import com.swingx.MyScrollBar;
+import com.ultramotor.util.XDialog;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
@@ -11,8 +12,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -22,45 +21,46 @@ import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 
 public class BarcodePanel extends javax.swing.JPanel {
-    
+
     public BarcodePanel() {
         initComponents();
         init();
     }
     ActionListener deleteListener;
-    
+
     private void init() {
         addListeners();
         fixScroll();
         initPnlMain();
         pnlFooter.setBackground(new Color(255, 255, 255, 0));
     }
-    
+
     private void initPnlMain() {
         MigLayout layout = new MigLayout("insets 10 10 10 10, fillx, wrap 1", "[center, fill]");
         pnlMain.setLayout(layout);
     }
-    
+
     private void addItem(String sku) {
         Item item = new Item(deleteListener);
         item.setMaSKU(sku);
         pnlMain.add(item, "gapbottom 10");
         pnlMain.revalidate();
     }
-    
+
     private void removeItem(Container con) {
         pnlMain.remove(con);
+        pnlMain.revalidate();
+        pnlMain.repaint();
     }
-    
+
     private void addListeners() {
-        btnAdd.addActionListener((ActionEvent e) -> {
-            openSearchDialog();
-        });
-        
         deleteListener = (ActionEvent e) -> {
             removeItem(((Container) e.getSource()).getParent());
         };
-        
+
+        btnAdd.addActionListener((ActionEvent e) -> {
+            openSearchDialog();
+        });
         chkAll.addActionListener((ActionEvent e) -> {
             boolean boo = chkAll.isSelected();
             for (Component component : pnlMain.getComponents()) {
@@ -69,7 +69,7 @@ public class BarcodePanel extends javax.swing.JPanel {
             chkAll.setText(boo ? "Bỏ chọn tất cả" : "Chọn tất cả");
         });
     }
-    
+
     private void fixScroll() {
         scroll.getViewport().setBackground(Color.WHITE);
         scroll.setVerticalScrollBar(new MyScrollBar());
@@ -80,7 +80,7 @@ public class BarcodePanel extends javax.swing.JPanel {
         scroll.setBorder(new EmptyBorder(5, 10, 5, 10));
         scroll.setViewportView(pnlMain);
     }
-    
+
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,12 +88,11 @@ public class BarcodePanel extends javax.swing.JPanel {
         frame.setSize(1000, 500);
         frame.pack();
         frame.setVisible(true);
-        
     }
 
     private void openSearchDialog() {
         TimSPPanel panel = new TimSPPanel();
-        panel.setDoneListener((ActionEvent e)->{
+        panel.setDoneListener((ActionEvent e) -> {
             try {
                 addItem(panel.getMaSP());
             } catch (Exception ex) {
@@ -102,41 +101,10 @@ public class BarcodePanel extends javax.swing.JPanel {
             panel.reset();
         });
         new Thread(() -> {
-            getDialog(panel).setVisible(true);
+            XDialog.getDialog((JFrame) this.getTopLevelAncestor(), panel).setVisible(true);
         }).start();
     }
-    
-    private JDialog getDialog(JPanel panel) {
-        JDialog dialog = new JDialog((Frame) this.getTopLevelAncestor(), true);
-        dialog.setUndecorated(true);
-        dialog.setBackground(new Color(255, 255, 255, 0));
-        JPanel con = new JPanel() {
-            @Override
-            public void paint(Graphics grphcs) {
-                Graphics2D g2 = (Graphics2D) grphcs;
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
-                g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 5, 5);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-                super.paint(grphcs);
-            }
-        };
-        
-        con.setOpaque(false);
-        con.setBorder(BorderFactory.createLineBorder(new Color(209, 209, 209)));
-        con.setBackground(new Color(250, 250, 250));
-        con.setLayout(new MigLayout("inset 5 20 20 5", "[center]", "[20!][fill, center, grow]"));
-        con.add(new CloseButton(), "al right, wrap");
-        con.add(panel, "pushy, center, gapright 15");
 
-        dialog.setSize(this.getWidth() / 2, this.getHeight());
-        dialog.getContentPane().add(con);
-        dialog.pack();
-        
-        dialog.setLocation(this.getWidth() / 4, (this.getHeight() - dialog.getHeight()) / 2);
-        dialog.setLocationRelativeTo(this.getParent());
-        return dialog;
-    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -261,7 +229,6 @@ public class BarcodePanel extends javax.swing.JPanel {
                 .addComponent(pnlFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnAdd;
