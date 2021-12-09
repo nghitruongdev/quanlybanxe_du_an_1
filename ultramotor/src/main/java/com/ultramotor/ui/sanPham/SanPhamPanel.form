@@ -295,17 +295,34 @@
                           <Component id="lblNSX" min="-2" max="-2" attributes="0"/>
                           <Component id="cboNSX" linkSize="7" pref="190" max="32767" attributes="0"/>
                           <Component id="lblLH" min="-2" max="-2" attributes="0"/>
-                          <Component id="cboDongSP" linkSize="7" min="-2" pref="189" max="-2" attributes="0"/>
+                          <Component id="cboLH" linkSize="7" min="-2" pref="189" max="-2" attributes="0"/>
                           <Component id="lblVaiTro" min="-2" max="-2" attributes="0"/>
-                          <Component id="cboLH" linkSize="7" max="32767" attributes="0"/>
+                          <Component id="cboDongSP" linkSize="7" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnEditDongSP1" min="-2" pref="26" max="-2" attributes="0"/>
-                          <Component id="btnEditDongSP3" min="-2" pref="26" max="-2" attributes="0"/>
-                          <Component id="btnEditDongSP4" min="-2" pref="26" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="btnAddNSX" min="-2" pref="26" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btnDeleteNSX" min="-2" pref="26" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="btnAddDongSP" min="-2" pref="26" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btnDeleteDongSP" min="-2" pref="26" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="btnAddLH" min="-2" pref="26" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="btnDeleteLH" min="-2" pref="26" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace pref="20" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -316,22 +333,36 @@
                       <Component id="lblNSX" min="-2" pref="20" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cboNSX" linkSize="8" min="-2" pref="32" max="-2" attributes="0"/>
-                          <Component id="btnEditDongSP4" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="cboNSX" linkSize="8" min="-2" pref="32" max="-2" attributes="0"/>
+                                  <Component id="btnAddNSX" min="-2" pref="24" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="lblLH" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="btnDeleteNSX" min="-2" pref="24" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="lblLH" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cboDongSP" linkSize="8" min="-2" pref="34" max="-2" attributes="0"/>
-                          <Component id="btnEditDongSP3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="cboLH" linkSize="8" min="-2" pref="34" max="-2" attributes="0"/>
+                                  <Component id="btnAddLH" min="-2" pref="24" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                              <Component id="lblVaiTro" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="btnDeleteLH" min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                      <Component id="lblVaiTro" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cboLH" linkSize="8" pref="34" max="32767" attributes="0"/>
-                          <Component id="btnEditDongSP1" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="cboDongSP" linkSize="8" pref="34" max="32767" attributes="0"/>
+                          <Component id="btnAddDongSP" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="btnDeleteDongSP" min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
                   </Group>
@@ -343,14 +374,9 @@
               <Properties>
                 <Property name="editable" type="boolean" value="true"/>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
-                    <StringItem index="0" value="50cc"/>
-                    <StringItem index="1" value="75cc"/>
-                    <StringItem index="2" value="100cc"/>
-                    <StringItem index="3" value="125cc"/>
-                    <StringItem index="4" value="150cc"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
+                <Property name="name" type="java.lang.String" value="NhaSanXuat" noResource="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblVaiTro">
@@ -379,9 +405,10 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="com.swingx.ComboBoxSuggestion" name="cboDongSP">
+            <Component class="com.swingx.ComboBoxSuggestion" name="cboLH">
               <Properties>
                 <Property name="editable" type="boolean" value="true"/>
+                <Property name="name" type="java.lang.String" value="LoaiHang" noResource="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblNSX">
@@ -397,57 +424,80 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="com.swingx.ComboBoxSuggestion" name="cboLH">
+            <Component class="com.swingx.ComboBoxSuggestion" name="cboDongSP">
               <Properties>
                 <Property name="editable" type="boolean" value="true"/>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
-                    <StringItem index="0" value="50cc"/>
-                    <StringItem index="1" value="75cc"/>
-                    <StringItem index="2" value="100cc"/>
-                    <StringItem index="3" value="125cc"/>
-                    <StringItem index="4" value="150cc"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
+                <Property name="name" type="java.lang.String" value="DongSanPham" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="com.swingx.Button" name="btnEditDongSP1">
+            <Component class="com.swingx.Button" name="btnAddDongSP">
               <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="fa" green="fa" red="fa" type="rgb"/>
-                </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/ultramotor/icon/edit.png"/>
                 </Property>
+                <Property name="actionCommand" type="java.lang.String" value="DongSanPham"/>
+                <Property name="name" type="java.lang.String" value="" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="com.swingx.Button" name="btnEditDongSP3">
+            <Component class="com.swingx.Button" name="btnAddLH">
               <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="fa" green="fa" red="fa" type="rgb"/>
-                </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/ultramotor/icon/edit.png"/>
                 </Property>
+                <Property name="actionCommand" type="java.lang.String" value="LoaiHang"/>
               </Properties>
             </Component>
-            <Component class="com.swingx.Button" name="btnEditDongSP4">
+            <Component class="com.swingx.Button" name="btnAddNSX">
               <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="fa" green="fa" red="fa" type="rgb"/>
-                </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/ultramotor/icon/edit.png"/>
                 </Property>
+                <Property name="actionCommand" type="java.lang.String" value="NhaSanXuat"/>
+              </Properties>
+            </Component>
+            <Component class="com.swingx.Button" name="btnDeleteNSX">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="null"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/ultramotor/icon/delete.png"/>
+                </Property>
+                <Property name="actionCommand" type="java.lang.String" value="NhaSanXuat"/>
+              </Properties>
+            </Component>
+            <Component class="com.swingx.Button" name="btnDeleteLH">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="null"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/ultramotor/icon/delete.png"/>
+                </Property>
+                <Property name="actionCommand" type="java.lang.String" value="LoaiHang"/>
+              </Properties>
+            </Component>
+            <Component class="com.swingx.Button" name="btnDeleteDongSP">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="null"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/ultramotor/icon/delete.png"/>
+                </Property>
+                <Property name="actionCommand" type="java.lang.String" value="DongSanPham"/>
               </Properties>
             </Component>
           </SubComponents>

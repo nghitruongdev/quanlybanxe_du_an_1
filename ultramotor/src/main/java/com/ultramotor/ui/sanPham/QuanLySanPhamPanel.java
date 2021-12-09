@@ -1,25 +1,13 @@
 package com.ultramotor.ui.sanPham;
 
-import com.swingx.Button;
-import com.swingx.ComboBoxSuggestion;
-import com.swingx.TextField;
 import com.swingx.table.ModelAction;
 import com.swingx.table.ModelEvent;
 import com.swingx.table.Table;
-import com.ultramotor.dao.DongSanPhamDAO;
-import com.ultramotor.dao.LoaiHangDAO;
-import com.ultramotor.dao.NhaSanXuatDAO;
 import com.ultramotor.dao.SanPhamDAO;
-import com.ultramotor.entity.DongSanPham;
 import com.ultramotor.entity.Entity;
-import com.ultramotor.entity.LoaiHang;
-import com.ultramotor.entity.NhaSanXuat;
 import com.ultramotor.entity.SanPham;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDialog;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -27,12 +15,9 @@ import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.CellEditor;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
@@ -40,19 +25,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import net.miginfocom.swing.MigLayout;
 
 public class QuanLySanPhamPanel extends javax.swing.JPanel {
 
-    private LoaiHangDAO daoLH;
-    private DongSanPhamDAO daoDongSP;
-    private NhaSanXuatDAO daoNSX;
     private SanPhamDAO daoSP;
-
-    private List<LoaiHang> listLH;
-    private List<NhaSanXuat> listNSX;
-    private List<DongSanPham> listDongSP;
-    private List<SanPham> listSP;
 
     private ModelEvent modelEvent;
     private MyPanel panel = null;
@@ -63,14 +39,10 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
     }
 
     void init() {
-        daoLH = new LoaiHangDAO();
-        daoDongSP = new DongSanPhamDAO();
-        daoNSX = new NhaSanXuatDAO();
         daoSP = new SanPhamDAO();
-
-        initTable();
         addListeners();
-        refresh(false);
+        initTable();
+        fillTable(tblSP, daoSP.selectAll());
 
     }
 
@@ -87,13 +59,11 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
             }
 
         };
-//        addBtnAddListener(btnAddLH, tblLoaiHang, new LoaiHang());
-//        addBtnAddListener(btnAddNSX, tblNSX, new NhaSanXuat());
-//        addBtnAddListener(btnAddDongSP, tblDongSP, new DongSanPham());
+
         addBtnAddListener(btnAddSP, tblSP, new SanPham());
 
         btnRefresh.addActionListener(event -> {
-            refresh(true);
+//            refresh(true);
         });
     }
 
@@ -105,9 +75,6 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
     }
 
     private void initTable() {
-//        String[] colsLH = {"id_LH", "Tên Loại Hàng", "Actions"};
-//        String[] colsNSX = {"id_NSX", "Tên Nhà Sản Xuất", "Actions"};
-//        String[] colsDongSP = {"id_DongSP", "Tên Dòng Sản Phẩm", "Tên NSX", "Tên Loại Hàng", "Actions"};
         String[] colsSP = {"Mã SKU", "Tên Sản Phẩm", "Màu Sắc", "Phân Khối", "Thời Gian BH", "Địa chỉ SX", "Giá Tiền", "Đời Xe", "Hình", "id_DongSP", "id_NV", "Actions"};
         initTable(colsSP, tblSP);
         addRowSorter(tblSP, txtSearchSP);
@@ -134,6 +101,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
             }
         });
     }
+
     private void addRowSorter(Table table, JTextField field) {
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
         table.setRowSorter(sorter);
@@ -161,16 +129,12 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         });
     }
 
-    private void refresh(boolean notify) {
-        listLH = daoLH.selectAll();
-        listNSX = daoNSX.selectAll();
-        listDongSP = daoDongSP.selectAll();
-        listSP = daoSP.selectAll();
-        fillTable(tblSP, listSP);
-        txtSearchSP.setText("");
-        if (notify) {
-            MsgBox.inform("Đã cập nhật lại toàn bộ dữ liệu");
+    private boolean insert(SanPham sp) {
+        if (daoSP.insert(sp) > 0) {
+            insertRow(tblSP, sp);
+            return true;
         }
+        return false;
     }
 
     private void insertRow(Table table, Entity e) {
@@ -192,25 +156,9 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
             return;
         }
         switch (e.getClass().getSimpleName()) {
-            case "LoaiHang":
-                daoLH.delete(((LoaiHang) e).getIdLH());
-//                deleteRow(tblLoaiHang);
-                listLH.remove((LoaiHang) e);
-                break;
-            case "NhaSanXuat":
-                daoNSX.delete(((NhaSanXuat) e).getIdNSX());
-//                deleteRow(tblNSX);
-                listNSX.remove((NhaSanXuat) e);
-                break;
-            case "DongSanPham":
-                daoDongSP.delete(((DongSanPham) e).getIdDongSP());
-//                deleteRow(tblDongSP);
-                listDongSP.remove((DongSanPham) e);
-                break;
             case "SanPham":
                 daoSP.delete(((SanPham) e).getSku());
                 deleteRow(tblSP);
-                listSP.remove((SanPham) e);
                 break;
         }
         MsgBox.inform("Xoá thành công");
@@ -230,55 +178,17 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
 
     private void showPanel(Entity e) {
         switch (e.getClass().getSimpleName()) {
-            case "LoaiHang":
-                panel = new PanelLoaiHang(listLH);
-                panel.setDoneListener(event -> {
-                    Entity entity = (Entity) panel.getForm();
-                    if (entity != null) {
-                        int count = daoLH.insert((LoaiHang) entity);
-                        if (count < 0) {
-                            MsgBox.error("Cập nhật dữ liệu thất bại");
-                            return;
-                        }
-//                        insertRow(tblLoaiHang, entity);
-                        listLH.add((LoaiHang) e);
-                        ((JDialog) panel.getTopLevelAncestor()).dispose();
-                    }
-                });
-                break;
-            case "NhaSanXuat":
-                panel = new PanelNhaSanXuat(listNSX);
-                panel.setDoneListener(event -> {
-                    Entity entity = (Entity) panel.getForm();
-                    if (entity != null) {
-                        int count = daoNSX.insert((NhaSanXuat) entity);
-                        if (count < 0) {
-                            MsgBox.error("Cập nhật dữ liệu thất bại");
-                            return;
-                        }
-//                        insertRow(tblNSX, entity);
-                        listNSX.add((NhaSanXuat) e);
-                        ((JDialog) panel.getTopLevelAncestor()).dispose();
-                    }
-                });
-                break;
-            case "DongSanPham":
-                panel = new PanelDongSanPham(listDongSP, listNSX, listLH);
-                panel.setDoneListener(event -> {
-                    Entity entity = (Entity) panel.getForm();
-                    if (entity != null) {
-                        int count = daoDongSP.insert((DongSanPham) entity);
-                        if (count < 0) {
-                            MsgBox.error("Cập nhật dữ liệu thất bại");
-                            return;
-                        }
-//                        insertRow(tblDongSP, entity);
-                        ((JDialog) panel.getTopLevelAncestor()).dispose();
-                    }
-                });
-                break;
             case "SanPham":
-                panel = new SanPhamPanel(listSP,listNSX, listDongSP);
+                panel = new SanPhamPanel();
+                panel.setDoneListener(event -> {
+                    SanPham sp = (SanPham) panel.getForm();
+                    if (sp == null) {
+                        return;
+                    }
+                    if (insert(sp)) {
+                        ((JDialog) panel.getTopLevelAncestor()).dispose();
+                    }
+                });
                 panel.setSize(800, getHeight());
                 break;
         }
@@ -308,18 +218,6 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
             };
         }
         return null;
-    }
-
-    private NhaSanXuat findNSX(String idNSX) {
-        return listNSX.stream()
-                .filter(nsx -> nsx.getIdNSX().equals(idNSX))
-                .findFirst().orElse(null);
-    }
-
-    private LoaiHang findLH(String idLH) {
-        return listLH.stream()
-                .filter(lh -> lh.getIdLH().equals(idLH))
-                .findFirst().orElse(null);
     }
 
     @SuppressWarnings("unchecked")
