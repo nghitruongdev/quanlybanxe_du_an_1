@@ -101,6 +101,7 @@ CREATE TABLE SanPham(
     moTa NVARCHAR(255),
     id_DongSP VARCHAR(20) NOT NULL,
     id_NV NVARCHAR(10) NOT NULL,
+	isDeleted BIT DEFAULT 0 
     CONSTRAINT FK_SanPham_NhanVien FOREIGN KEY (id_NV) REFERENCES NhanVien(id_NV),
     CONSTRAINT FK_SanPham_Model FOREIGN KEY (id_DongSP) REFERENCES DongSanPham(id_DongSP)
 )
@@ -336,7 +337,7 @@ CREATE PROC usp_insert_SanPham
 AS
 BEGIN
 	IF NOT EXISTS (SELECT 0 FROM SanPham WHERE SKU = @SKU)
-			INSERT INTO SanPham VALUES (@SKU, @tenSP, @hinh, @mauSac, @phanKhoi, @doiXe , @thoiGianBH, @DiaChiSX, @giaTien, @moTa, @id_DongSP, @id_NV)
+			INSERT INTO SanPham (SKU, tenSP, hinh, mauSac, phanKhoi, doiXe , thoiGianBH, DiaChiSX, giaTien, moTa, id_DongSP, id_NV) VALUES (@SKU, @tenSP, @hinh, @mauSac, @phanKhoi, @doiXe , @thoiGianBH, @DiaChiSX, @giaTien, @moTa, @id_DongSP, @id_NV)
 	ELSE
 		UPDATE SanPham 
 		SET 
@@ -456,7 +457,7 @@ BEGIN
         join DongSanPham dsp on sp.id_DongSP = dsp.id_DongSP
         join NhaSanXuat nsx on dsp.id_NSX = nsx.id_NSX
         join LoaiHang lh on lh.id_LH = dsp.id_LH
-	WHERE dsp.id_DongSP like @id_DongSP --AND dbo.fn_soLuongTonSp(SKU)>0
+	WHERE dsp.id_DongSP like @id_DongSP AND sp.isDeleted = 0 --AND dbo.fn_soLuongTonSp(SKU)>0
 	GROUP BY dsp.id_DongSP, TenLoaiHang, TenNSX, DiaChiSX, TenDongSP, doiXe, phanKhoi, thoiGianBH, giaTien
 END
 GO
@@ -569,7 +570,7 @@ as begin
 		nv.NgaySinh NgaySinh,
 		nv.GioiTinh GioiTinh,
 		count(distinct hd.idHD) SoLuong
-	from NhanVien nv
+	from NhanVien nv 
 	join HoaDon hd on hd.id_NV = nv.id_NV
 	join ChiTietHoaDon cthd on cthd.idHD = cthd.idHD
 	where Year(hd.thoiGian) = @Year
@@ -643,7 +644,7 @@ GO
 
 CREATE VIEW view_SanPhamTon
 AS
-SELECT *, dbo.fn_soLuongTonSp(SKU) AS N'SoLuongTon' FROM SanPham
+SELECT *, dbo.fn_soLuongTonSp(SKU) AS N'SoLuongTon' FROM SanPham WHERE isDeleted = 0
 GO
 
 

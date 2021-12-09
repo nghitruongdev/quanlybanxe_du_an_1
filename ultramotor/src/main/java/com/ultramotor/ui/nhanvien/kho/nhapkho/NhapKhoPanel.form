@@ -98,8 +98,7 @@
                           <Component id="btnGuiEmail" min="-2" pref="96" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnInDanhSach" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="cboMaNhap" min="-2" pref="169" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Component id="scrollPhieuNhap" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -111,7 +110,6 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="cboMaNhap" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnGuiEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnInDanhSach" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtDate" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -129,21 +127,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Ng&#xe0;y Nh&#x1ead;p"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="cboMaNhap">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="M&#xe3; nh&#x1ead;p"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
         </Component>
         <Container class="javax.swing.JScrollPane" name="scrollPhieuNhap">
           <AuxValues>
@@ -208,6 +191,9 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtDateMouseClicked"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="NhapKhoPanel_txtDate"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

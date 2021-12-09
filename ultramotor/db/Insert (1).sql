@@ -147,7 +147,7 @@ insert into DongSanPham values
 
 
 -- SẢN PHẨM
-insert into SanPham values
+insert into SanPham (SKU, tenSP, hinh, mauSac, phanKhoi, doiXe , thoiGianBH, DiaChiSX, giaTien, moTa, id_DongSP, id_NV) values
 -- HONDA
 ('SK01', 'Honda Air Blade 2021', 'abden.png', N'Đen', '150cc', '2021', '36', 'TPHCM', '5000000000', N'Honda Air Blade 150cc 2021 mang phong cách mạnh mẽ', 'DSP01', 'NV01'),
 ('SK02', 'Honda Air Blade 2021', 'abdo.png', N'Đỏ', '150cc', '2021', '36', 'TPHCM', '5000000000', N'Honda Air Blade 150cc 2021 mang phong cách mạnh mẽ', 'DSP01', 'NV01'),

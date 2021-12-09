@@ -71,7 +71,6 @@ public class XImage {
                 avt.setToolTipText(file.getName());
             } else if (comp instanceof PictureBox) {
                 PictureBox avt = (PictureBox) comp;
-                System.out.println("PictureBox is + " + comp);
                 avt.setImage(icon);
                 avt.setToolTipText(file.getName());
             }
@@ -80,7 +79,7 @@ public class XImage {
                 Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 //                Desktop.getDesktop().open(newFile);
             } catch (IOException ex) {
-                System.out.println("Không thể copy files");
+//                System.out.println("Không thể copy files");
             }
         }
     }

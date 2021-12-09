@@ -62,7 +62,7 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
     }
 
     public KhachHang getForm() {
-        if (!validateField(txtMaKH, txtHoKH, txtTenKH, txtNgaySinh, txtDiaChi, txtEmail, txtSDT)) {
+        if (!validateField(txtMaKH, txtHoKH, txtTenKH, txtNgaySinh, txtEmail, txtSDT)) {
             return null;
         }
         try {
@@ -134,11 +134,11 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
         txtMaKH.setName("Mã KH");
         txtHoKH.setName("Họ KH");
         txtTenKH.setName("Tên KH");
-        txtNgaySinh.setName("Ngày sinh KH");
-        txtDiaChi.setName("Địa chỉ KH");
-        txtEmail.setName("Email KH");
-        txtSDT.setName("Số điện thoại KH");
-        setFieldVerifier(txtMaKH, txtHoKH, txtTenKH, txtNgaySinh, txtDiaChi, txtEmail, txtSDT);
+        txtNgaySinh.setName("Ngày sinh");
+        txtDiaChi.setName("Địa chỉ");
+        txtEmail.setName("Email");
+        txtSDT.setName("Số điện thoại");
+        setFieldVerifier(txtMaKH, txtHoKH, txtTenKH, txtNgaySinh, txtEmail, txtSDT);
     }
 
     private void setFieldVerifier(JTextComponent... comp) {

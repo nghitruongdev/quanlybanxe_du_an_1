@@ -177,13 +177,15 @@ public abstract class MyVerifier extends InputVerifier {
                         return validate("name", field);
                     case "Tên KH":
                         return validate("name", field);
-                    case "Ngày sinh KH":
+                    case "Họ tên khách hàng":
+                        return validate("name", field);
+                    case "Ngày sinh":
                         return validate("date", field) && validate("not in future", field);
-                    case "Địa chỉ KH":
-                        return validate("address", field);
-                    case "Email KH":
+//                    case "Địa chỉ":
+//                        return validate("address", field);
+                    case "Email":
                         return validate("email", field);
-                    case "Số điện thoại KH":
+                    case "Số điện thoại":
                         return validate("phone number", field);
                 }
             } else if (jc instanceof PasswordField) {

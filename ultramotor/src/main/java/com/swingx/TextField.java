@@ -190,7 +190,7 @@ public class TextField extends JFormattedTextField {
             }
         }
         if (!validInput) {
-            g2.setColor(Color.red);
+            g2.setColor(errorColor);
             g2.drawString(error, in.left, (getHeight() - extra_bottom / 2 + ft.getMaxAscent() / 2));
         }
 
@@ -229,7 +229,7 @@ public class TextField extends JFormattedTextField {
     private Color fieldBackground = new Color(255, 255, 255);
     private Icon prefixIcon;
     private Icon suffixIcon;
-
+    private Color errorColor = Color.red;
     private int extra_top = 0;
     private int extra_bottom = 0;
     private int extra = extra_top + extra_bottom;
@@ -348,6 +348,15 @@ public class TextField extends JFormattedTextField {
         this.hintColor = hintColor;
     }
 
+    public Color getErrorColor() {
+        return errorColor;
+    }
+
+    public void setErrorColor(Color errorColor) {
+        this.errorColor = errorColor;
+    }
+
+    
      private void addListeners() {
         addFocusListener(new java.awt.event.FocusAdapter() {
             @Override

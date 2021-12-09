@@ -3,6 +3,7 @@ package com.ultramotor.ui.nhanvien.kho.nhapkho;
 import com.swingx.CloseButton;
 import com.ultramotor.dao.SanPhamDAO;
 import com.ultramotor.util.XCodeHelper;
+import com.ultramotor.util.XDialog;
 import com.ultramotor.util.XFile;
 import com.ultramotor.util.XJdbc;
 import java.awt.AlphaComposite;
@@ -24,6 +25,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
@@ -65,7 +67,7 @@ public class Item extends javax.swing.JPanel {
         });
 
         new Thread(() -> {
-            getDialog(panel).setVisible(true);
+            XDialog.getDialog((JFrame) this.getTopLevelAncestor(),panel).setVisible(true);
         }).start();
     }
 
@@ -89,38 +91,6 @@ public class Item extends javax.swing.JPanel {
 
     public void setSelected(boolean isSelected) {
         chk.setSelected(isSelected);
-    }
-
-    private JDialog getDialog(JPanel panel) {
-        JDialog dialog = new JDialog((Frame) this.getTopLevelAncestor(), true);
-        dialog.setUndecorated(true);
-        dialog.setBackground(new Color(255, 255, 255, 0));
-        JPanel con = new JPanel() {
-            @Override
-            public void paint(Graphics grphcs) {
-                Graphics2D g2 = (Graphics2D) grphcs;
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
-                g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 5, 5);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-                super.paint(grphcs);
-            }
-        };
-
-        con.setOpaque(false);
-        con.setBackground(new Color(250, 250, 250));
-        con.setLayout(new MigLayout("inset 5 20 20 5", "[center]", "[20!][fill, center, grow]"));
-        con.add(new CloseButton(), "al right, wrap");
-        con.add(panel, "pushy, center, gapright 15");
-//        dialog.setBounds(this.getWidth() / 2, this.getHeight(), this.getWidth() / 4, 0);
-
-        dialog.setSize(this.getWidth() / 2, this.getHeight());
-        dialog.getContentPane().add(con);
-        dialog.pack();
-
-        dialog.setLocation(this.getWidth() / 4, (this.getHeight() - dialog.getHeight()) / 2);
-        dialog.setLocationRelativeTo(this.getParent());
-        return dialog;
     }
 
     @Override
