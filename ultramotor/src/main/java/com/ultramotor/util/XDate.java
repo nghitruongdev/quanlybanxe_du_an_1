@@ -66,6 +66,9 @@ public class XDate {
     }
 
     public static boolean isTheSameDay(Date date1, Date date2) {
+        if (date1 == null || date2 == null) {
+            return false;
+        }
         return toString(date1, "ddMMyyyy").equals(toString(date2, "ddMMyyyy"));
     }
 
@@ -76,9 +79,5 @@ public class XDate {
 
     public static Date now() {
         return new Date();
-    }
-
-    public static void main(String[] args) {
-       
     }
 }

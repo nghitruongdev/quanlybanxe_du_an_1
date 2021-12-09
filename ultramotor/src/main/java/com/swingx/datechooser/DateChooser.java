@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -45,9 +46,11 @@ public final class DateChooser extends javax.swing.JPanel {
         this.textRefernce.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                if (textRefernce.isEnabled()) {
-                    showPopup();
-                }
+                showPopup();
+//                System.out.println("Mouse clicked");
+//                if (textRefernce.isEnabled()) {
+//                    showPopup();
+//                }
             }
         });
         setText();
@@ -58,7 +61,11 @@ public final class DateChooser extends javax.swing.JPanel {
             try {
                 SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                 Date date = df.parse(DAY + "-" + MONTH + "-" + YEAR);
-                textRefernce.setText(new SimpleDateFormat(dateFormat).format(date));
+                if (textRefernce instanceof JFormattedTextField) {
+                    ((JFormattedTextField) textRefernce).setValue(new SimpleDateFormat(dateFormat).format(date));
+                } else {
+                    textRefernce.setText(new SimpleDateFormat(dateFormat).format(date));
+                }
             } catch (ParseException e) {
                 System.err.println(e);
             }

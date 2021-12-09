@@ -1,27 +1,34 @@
 package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
-import com.swingx.table.ModelView;
 import com.ultramotor.dao.NhapKhoDAO;
 import com.ultramotor.entity.ChiTietNhapKho;
 import com.ultramotor.entity.PhieuNhapKho;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDate;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 public class NhapKhoPanel extends javax.swing.JPanel {
 
     private static NhapKhoDAO dao;
     private DefaultTableModel modelNhapKho;
-    private ActionListener viewLs;
-    static List<PhieuNhapKho> nhapKhoList = new ArrayList<>();
+    List<PhieuNhapKho> nhapKhoList = new ArrayList<>();
+    private DecimalFormat numberFormat;
+    private Date currentDate = new Date();
 
     public NhapKhoPanel() {
         initComponents();
@@ -31,39 +38,43 @@ public class NhapKhoPanel extends javax.swing.JPanel {
     private void init() {
         dao = new NhapKhoDAO();
         nhapKhoList = dao.selectAll();
-        viewLs = ((ActionEvent e) -> {
-            int row = tblPhieuNhap.getSelectedRow();
-            int column = tblPhieuNhap.getColumnCount() - 1;
-            PhieuNhapKho pnk = (PhieuNhapKho) ((ModelView) tblPhieuNhap.getValueAt(row, column)).getEntity();
-            pnlChiTiet.setPhieuNhapKho(pnk);
-        });
+        numberFormat = new DecimalFormat("#,###.##");
         initTablePhieuNhap();
         fillTablePhieuNhap();
         addListeners();
+        dateChooser.setTextRefernce(txtDate);
     }
 
     private void initTablePhieuNhap() {
-        String[] columns = {"STT", "Mã Phiếu", "Ngày Nhập", "Nhân Viên Nhập", "Tổng tiền", "Actions"};
+        String[] columns = {"STT", "Mã Phiếu", "Ngày Nhập", "Nhân Viên Nhập", "Tổng tiền"};
         modelNhapKho = new DefaultTableModel(columns, 5);
         tblPhieuNhap.setModel(modelNhapKho);
         tblPhieuNhap.fixTable(scrollPhieuNhap);
     }
 
+    private List<PhieuNhapKho> getCurrentList() {
+        boolean all = chkAll.isSelected();
+        try {
+            currentDate = XDate.parse((String) txtDate.getValue(), "dd-MM-yyyy");
+        } catch (ParseException ex) {
+        }
+        return nhapKhoList.stream().filter(pnk -> all || XDate.isTheSameDay(pnk.getNgayNhap(), currentDate)).collect(Collectors.toList());
+    }
+
     private void fillTablePhieuNhap() {
         modelNhapKho.setRowCount(0);
-        for (PhieuNhapKho pnk : nhapKhoList) {
+        getCurrentList().forEach(pnk -> {
             modelNhapKho.addRow(getInfo(pnk));
-        }
+        });
     }
 
     Object[] getInfo(PhieuNhapKho pnk) {
         return new Object[]{
             tblPhieuNhap.getRowCount() + 1,
-            pnk.getIdPN(),
+            pnk,
             XDate.toString(pnk.getNgayNhap(), "dd-MM-yyyy"),
             pnk.getIdNV(),
-            pnk.getTongTien(),
-            new ModelView(pnk, viewLs)
+            numberFormat.format(pnk.getTongTien())
         };
     }
 
@@ -81,62 +92,75 @@ public class NhapKhoPanel extends javax.swing.JPanel {
         if (pnk == null) {
             return;
         }
+        if (nhapKhoList.contains(pnk)) {
+            return;
+        }
         try {
             SQLServerDataTable chiTietTable = ChiTietNhapKho.getDataServerTable();
             for (ChiTietNhapKho ct : pnk.getChiTietNhapKhoList()) {
                 chiTietTable.addRow(getInfo(ct));
             }
-
             //tiến hành thêm vào cơ sở dữ liệu
             dao.insertWithChiTiet(pnk, chiTietTable);
             nhapKhoList.add(pnk);
-            modelNhapKho.addRow(getInfo(pnk));
+            fillTablePhieuNhap();
             pnlChiTiet.reset();
-
         } catch (SQLException ex) {
             dao.delete(pnk.getIdPN());
-            MsgBox.error(ex.getMessage());
+            MsgBox.error("Thêm phiếu nhập kho thất bại");
             Logger.getLogger(NhapKhoPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void addListeners() {
-        pnlChiTiet.setSaveListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                PhieuNhapKho pnk = pnlChiTiet.getPhieuNhapKho();
-                insert(pnk);
+        pnlChiTiet.addSaveListener(event -> {
+            PhieuNhapKho pnk = pnlChiTiet.getPhieuNhapKho();
+            insert(pnk);
+        });
 
+        tblPhieuNhap.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2) {
+                    if (tblPhieuNhap.getRowCount() == 0) {
+                        return;
+                    }
+
+                    int index = tblPhieuNhap.getSelectedRow();
+                    PhieuNhapKho pnk = (PhieuNhapKho) tblPhieuNhap.getValueAt(index, 1);
+                    pnlChiTiet.setPhieuNhapKho(pnk);
+                    pnlChiTiet.setList(nhapKhoList);
+                }
             }
         });
-    }
 
-    private void sleepThread(int milisec) {
-        try {
-            Thread.sleep(milisec);
-        } catch (InterruptedException e) {
+        txtDate.addPropertyChangeListener("value", (PropertyChangeEvent e) -> {
+            fillTablePhieuNhap();
+        });
 
-        }
+        chkAll.addActionListener(event -> {
+            fillTablePhieuNhap();
+        });
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Date = new com.swingx.datechooser.DateChooser();
+        dateChooser = new com.swingx.datechooser.DateChooser();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblTime = new javax.swing.JLabel();
-        cboMaNhap = new javax.swing.JComboBox<>();
         scrollPhieuNhap = new javax.swing.JScrollPane();
         tblPhieuNhap = new com.swingx.table.Table();
         btnGuiEmail = new com.swingx.Button();
         btnInDanhSach = new com.swingx.Button();
         txtDate = new com.swingx.TextField();
+        chkAll = new javax.swing.JCheckBox();
         pnlChiTiet = new com.ultramotor.ui.nhanvien.kho.nhapkho.ChiTietNhapKhoPanel();
         jSeparator1 = new javax.swing.JSeparator();
 
-        Date.setTextRefernce(txtDate);
+        dateChooser.setTextRefernce(txtDate);
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -147,8 +171,6 @@ public class NhapKhoPanel extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         lblTime.setText("Ngày Nhập");
-
-        cboMaNhap.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã nhập", "Item 2", "Item 3", "Item 4" }));
 
         tblPhieuNhap.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -185,6 +207,10 @@ public class NhapKhoPanel extends javax.swing.JPanel {
             }
         });
 
+        chkAll.setSelected(true);
+        chkAll.setText("Tất Cả");
+        chkAll.setOpaque(false);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -196,24 +222,25 @@ public class NhapKhoPanel extends javax.swing.JPanel {
                         .addComponent(lblTime)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(254, 254, 254)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(chkAll, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(184, 184, 184)
                         .addComponent(btnGuiEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnInDanhSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cboMaNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(scrollPhieuNhap))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(scrollPhieuNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 1179, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboMaNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuiEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnInDanhSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTime))
+                    .addComponent(lblTime)
+                    .addComponent(chkAll))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(scrollPhieuNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -253,15 +280,14 @@ public class NhapKhoPanel extends javax.swing.JPanel {
 
     private void txtDateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDateMouseClicked
         // TODO add your handling code here:
-        Date.showPopup();
     }//GEN-LAST:event_txtDateMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.swingx.datechooser.DateChooser Date;
     private com.swingx.Button btnGuiEmail;
     private com.swingx.Button btnInDanhSach;
-    private javax.swing.JComboBox<String> cboMaNhap;
+    private javax.swing.JCheckBox chkAll;
+    private com.swingx.datechooser.DateChooser dateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
@@ -271,4 +297,14 @@ public class NhapKhoPanel extends javax.swing.JPanel {
     private com.swingx.table.Table tblPhieuNhap;
     private com.swingx.TextField txtDate;
     // End of variables declaration//GEN-END:variables
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame fr = new JFrame();
+            fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            fr.getContentPane().add(new NhapKhoPanel());
+            fr.pack();
+            fr.setVisible(true);
+        });
+    }
 }

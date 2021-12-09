@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.CellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -86,6 +87,13 @@ public class Table extends JTable {
                 }
             }
         });
+    }
+
+    public void stopCellEditor() {
+        CellEditor editor = this.getCellEditor();
+        if (editor != null) {
+            editor.stopCellEditing();
+        }
     }
 
     public void fixTable(JScrollPane scroll) {
