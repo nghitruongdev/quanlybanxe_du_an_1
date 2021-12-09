@@ -62,6 +62,22 @@ public abstract class MyVerifier extends InputVerifier {
                 result = XValidate.validateSalary(field.getText().trim());
                 error = "Mức lương cơ bản tối thiểu 5,000,000 VNĐ";
                 break;
+            case "color":
+//                result = MyConstants.colorMap.containsKey(field.getText().trim());
+                error = "Không tìm thấy bảng màu trong hệ thống";
+                break;
+            case "nam san xuat":
+                if (!validate("integer", field)) {
+                    return false;
+                }
+                int nam = Integer.parseInt(field.getText().trim());
+                if (nam < 2000) {
+                    error = "Chỉ bán xe sau năm 2000";
+                    result = false;
+                } else if (nam > Integer.parseInt(XDate.toString(new Date(), "yyyy"))) {
+                    error = "Đời xe lớn hơn năm hiện tại";
+                    result = false;
+                }
         }
         if (!result) {
             field.setErrorText(error);
@@ -146,7 +162,7 @@ public abstract class MyVerifier extends InputVerifier {
             return true;
         }
     };
-     
+
     public static final MyVerifier KHACH_HANG_VERIFIER = new MyVerifier() {
         @Override
         public boolean verify(JComponent jc) {
@@ -175,5 +191,32 @@ public abstract class MyVerifier extends InputVerifier {
             }
             return true;
         }
+    };
+
+    public static final MyVerifier SAN_PHAM_VERIFIER = new MyVerifier() {
+        @Override
+        public boolean verify(JComponent jc) {
+            String name = jc.getName() != null ? jc.getName() : "";
+
+            if (jc instanceof TextField) {
+                TextField field = (TextField) jc;
+                switch (name) {
+                    case "Mã sản phẩm":
+                        return validate("id", field);
+                    case "Tên xe":
+                        return validate("", field);
+                    case "Địa chỉ sản xuất":
+                        return validate("address", field);
+                    case "Đời xe":
+                        return validate("nam san xuat", field);
+                    case "Đơn giá xe":
+                        return validate("double", field);
+                    case "Màu sắc xe":
+                        return validate("color", field);
+                }
+            }
+            return true;
+        }
+
     };
 }

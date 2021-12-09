@@ -110,7 +110,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
             nv.setDiaChi(txtDiaChi.getText());
             nv.setSdt(txtSDT.getText());
             nv.setEmail(txtEmail.getText());
-            nv.setLuong(Double.parseDouble(txtLuong.getText()));
+            nv.setLuong(((Number)txtLuong.getValue()).doubleValue());
             nv.setVaiTro((String) cboVaiTro.getSelectedItem());
             nv.setHinh(lblHinh.getToolTipText());
             nv.setGhiChu(txtGhiChu.getText());

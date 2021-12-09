@@ -66,7 +66,7 @@ public class XValidate {
     public static boolean validateUnsignedDouble(JTextComponent comp) {
         try {
             if (!comp.getText().equals("")) {
-                if (Double.parseDouble(comp.getText()) < 0) {
+                if (Double.parseDouble(comp.getText().replaceAll(",", "")) < 0) {
                     throw new NumberFormatException();
                 }
             }
@@ -80,7 +80,7 @@ public class XValidate {
     public static boolean validateUnsignedInteger(JTextComponent comp) {
         try {
             if (!comp.getText().equals("")) {
-                Integer.parseUnsignedInt(comp.getText());
+                Integer.parseUnsignedInt(comp.getText().trim().replaceAll(",", ""));
             }
         } catch (NumberFormatException e) {
             return false;
@@ -122,7 +122,7 @@ public class XValidate {
     public static boolean validateSalary(String salary) {
         if (!salary.equals("")) {
             try {
-                double sal = Double.parseDouble(salary);
+                double sal = Double.parseDouble(salary.replaceAll(",", ""));
                 if (sal < 5_000_000) {
                     throw new NumberFormatException();
                 }

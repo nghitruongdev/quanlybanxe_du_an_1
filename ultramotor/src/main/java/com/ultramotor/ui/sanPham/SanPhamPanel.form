@@ -157,6 +157,7 @@
         </Container>
         <Component class="com.swingx.TextField" name="txtMaSKU">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="labelText" type="java.lang.String" value="M&#xe3; S&#x1ea3;n Ph&#x1ea9;m"/>
           </Properties>
         </Component>

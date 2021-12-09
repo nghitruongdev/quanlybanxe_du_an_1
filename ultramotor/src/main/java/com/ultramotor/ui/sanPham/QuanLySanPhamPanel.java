@@ -31,7 +31,6 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
     private SanPhamDAO daoSP;
 
     private ModelEvent modelEvent;
-    private MyPanel panel = null;
 
     public QuanLySanPhamPanel() {
         initComponents();
@@ -50,7 +49,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         modelEvent = new ModelEvent() {
             @Override
             public void update(Object e) {
-                showPanel((Entity) e);
+                showPanel((SanPham) e);
             }
 
             @Override
@@ -67,7 +66,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         });
     }
 
-    private void addBtnAddListener(JButton btn, Table table, Entity e) {
+    private void addBtnAddListener(JButton btn, Table table, SanPham e) {
         btn.addActionListener(event -> {
             table.clearSelection();
             showPanel(e);
@@ -176,26 +175,23 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         }
     }
 
-    private void showPanel(Entity e) {
-        switch (e.getClass().getSimpleName()) {
-            case "SanPham":
-                panel = new SanPhamPanel();
-                panel.setDoneListener(event -> {
-                    SanPham sp = (SanPham) panel.getForm();
-                    if (sp == null) {
-                        return;
-                    }
-                    if (insert(sp)) {
-                        ((JDialog) panel.getTopLevelAncestor()).dispose();
-                    }
-                });
-                panel.setSize(800, getHeight());
-                break;
-        }
-        if (panel != null) {
-            panel.setEntity(e);
-            XDialog.getDialog((JFrame) this.getTopLevelAncestor(), panel).setVisible(true);
-        }
+    private void showPanel(SanPham e) {
+        SanPhamPanel panel = new SanPhamPanel();
+        panel.setDoneListener(event -> {
+            SanPham sp = panel.getForm();
+            if (sp == null) {
+                return;
+            }
+            if (insert(sp)) {
+                int index = getIndexSP(sp);
+                index = index == -1 ? 0 : index;
+                tblSP.setRowSelectionInterval(index, index); //đật hàng chọn trên bảng
+                tblSP.scrollRectToVisible(new java.awt.Rectangle(tblSP.getCellRect(index, 0, true))); //di chuyển thanh lăn tới vị trí hàng chọn
+                ((JDialog) panel.getTopLevelAncestor()).dispose();
+            }
+        });
+        panel.setSanPham(e);
+        XDialog.getDialog((JFrame) this.getTopLevelAncestor(), panel).setVisible(true);
     }
 
     private Object[] getInfo(Entity e) {
@@ -203,7 +199,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
             DecimalFormat format = new DecimalFormat("#,##0.00 VND");
             SanPham sp = (SanPham) e;
             return new Object[]{
-                sp.getSku(),
+                sp,
                 sp.getTenSP(),
                 sp.getMauSac(),
                 sp.getPhanKhoi(),
@@ -220,23 +216,36 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         return null;
     }
 
+    private int getIndexSP(SanPham sp) {
+        for (int i = 0; i < tblSP.getRowCount(); i++) {
+            if (tblSP.getValueAt(i, 0).equals(sp)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         btnRefresh = new com.swingx.Button();
         pnlMain = new javax.swing.JPanel();
-        txtSearchSP = new com.swingx.SearchTextField();
         btnAddSP = new com.swingx.Button();
+        txtSearchSP = new com.swingx.SearchTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblSP = new com.swingx.table.Table();
         jLabel1 = new javax.swing.JLabel();
+        btnThemMoi = new com.swingx.Button();
 
         btnRefresh.setBackground(new java.awt.Color(51, 204, 0));
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/refresh_25px.png"))); // NOI18N
 
+        btnAddSP.setBackground(new java.awt.Color(0, 174, 114));
         btnAddSP.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddSP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/edit.png"))); // NOI18N
+        btnAddSP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/icons8-save.png"))); // NOI18N
+        btnAddSP.setText("Thêm mới");
+        btnAddSP.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         tblSP.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -251,10 +260,16 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         ));
         jScrollPane4.setViewportView(tblSP);
 
-        jLabel1.setFont(new java.awt.Font("Serif", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 174, 114));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Quản Lý Sản Phẩm");
+        jLabel1.setText("QUẢN LÝ SẢN PHẨM");
+
+        btnThemMoi.setBackground(new java.awt.Color(0, 174, 114));
+        btnThemMoi.setForeground(new java.awt.Color(255, 255, 255));
+        btnThemMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/icons8-save.png"))); // NOI18N
+        btnThemMoi.setText("Thêm mới");
+        btnThemMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
         pnlMain.setLayout(pnlMainLayout);
@@ -265,12 +280,17 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMainLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAddSP, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 501, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAddSP, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 382, Short.MAX_VALUE)
                         .addComponent(txtSearchSP, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane4))
                 .addContainerGap())
+            .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlMainLayout.createSequentialGroup()
+                    .addGap(463, 463, 463)
+                    .addComponent(btnThemMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(464, Short.MAX_VALUE)))
         );
         pnlMainLayout.setVerticalGroup(
             pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,11 +298,17 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddSP, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSearchSP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtSearchSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAddSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlMainLayout.createSequentialGroup()
+                    .addGap(314, 314, 314)
+                    .addComponent(btnThemMoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(315, 315, 315)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -305,6 +331,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnAddSP;
     private com.swingx.Button btnRefresh;
+    private com.swingx.Button btnThemMoi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel pnlMain;
@@ -322,33 +349,3 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         });
     }
 }
-
-//  if (e instanceof LoaiHang) {
-//            LoaiHang lh = (LoaiHang) e;
-//            return new Object[]{
-//                lh.getIdLH(),
-//                lh.getTenLoaiHang(),
-//                new ModelAction(lh, modelEvent)
-//            };
-//        }
-//        if (e instanceof NhaSanXuat) {
-//            NhaSanXuat nsx = (NhaSanXuat) e;
-//            return new Object[]{
-//                nsx.getIdNSX(),
-//                nsx.getTenNSX(),
-//                new ModelAction(nsx, modelEvent)
-//            };
-//        }
-//        if (e instanceof DongSanPham) {
-//            DongSanPham dsp = (DongSanPham) e;
-//            NhaSanXuat nsx = findNSX(dsp.getIdNSX());
-//            LoaiHang lh = findLH(dsp.getIdLH());
-//            return new Object[]{
-//                dsp.getIdDongSP(),
-//                dsp.getTenDongSP(),
-//                nsx == null ? "" : nsx.getTenNSX(),
-//                lh == null ? "" : lh.getTenLoaiHang(),
-//                new ModelAction(dsp, modelEvent)
-//            };
-//        }
-

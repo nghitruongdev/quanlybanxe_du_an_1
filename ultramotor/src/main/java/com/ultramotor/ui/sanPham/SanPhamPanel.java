@@ -1,7 +1,7 @@
 package com.ultramotor.ui.sanPham;
 
 import com.swingx.Button;
-import com.swingx.ComboBoxSuggestion;
+import com.swingx.PasswordField;
 import com.swingx.TextField;
 import com.ultramotor.dao.DongSanPhamDAO;
 import com.ultramotor.dao.LoaiHangDAO;
@@ -15,15 +15,11 @@ import com.ultramotor.entity.NhaSanXuat;
 import com.ultramotor.entity.SanPham;
 import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
-import com.ultramotor.util.XDialog;
+import com.ultramotor.util.MyVerifier;
 import com.ultramotor.util.XImage;
 import com.ultramotor.util.XValidate;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -33,16 +29,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
-import net.miginfocom.swing.MigLayout;
 
-public class SanPhamPanel extends MyPanel<SanPham> {
+public class SanPhamPanel extends JPanel {
 
+    protected SanPham sp;
     private LoaiHangDAO daoLH;
     private NhaSanXuatDAO daoNSX;
     private DongSanPhamDAO daoDongSP;
@@ -103,6 +96,7 @@ public class SanPhamPanel extends MyPanel<SanPham> {
         txtMoTa.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jScrollPane1.setViewportView(txtMoTa);
 
+        txtMaSKU.setEditable(false);
         txtMaSKU.setLabelText("Mã Sản Phẩm");
 
         txtTenSP.setLabelText("Tên SP");
@@ -424,12 +418,17 @@ public class SanPhamPanel extends MyPanel<SanPham> {
         daoNSX = new NhaSanXuatDAO();
         daoDongSP = new DongSanPhamDAO();
         daoSP = new SanPhamDAO();
+        refreshList();
+        addListeners();
+        setFieldName();
+        fillComboBox();
+    }
+
+    private void refreshList() {
         this.listNSX = daoNSX.selectAll();
         this.listLH = daoLH.selectAll();
         this.listDongSP = daoDongSP.selectAll();
         this.listSP = daoSP.selectAll();
-        addListeners();
-        fillComboBox();
     }
 
     private void addListeners() {
@@ -452,13 +451,6 @@ public class SanPhamPanel extends MyPanel<SanPham> {
 
         cboLH.addActionListener(event -> {
             fillComboBoxDongSP();
-        });
-
-        cboNSX.getEditor().getEditorComponent().addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-
-            }
         });
 
         ActionListener insertLs = (event) -> {
@@ -571,15 +563,15 @@ public class SanPhamPanel extends MyPanel<SanPham> {
         UltraDAO dao = null;
         switch (name) {
             case "NhaSanXuat":
-                e = !validateNSX("insert") ? null : new NhaSanXuat(getAutoNSX(), (String) cbo.getSelectedItem());
+                e = !validateNSX("insert") ? null : new NhaSanXuat(getAutoID("NSX"), (String) cbo.getSelectedItem());
                 dao = daoNSX;
                 break;
             case "LoaiHang":
-                e = !validateLH("insert") ? null : new LoaiHang(getAutoLH(), (String) cbo.getSelectedItem());
+                e = !validateLH("insert") ? null : new LoaiHang(getAutoID("LH"), (String) cbo.getSelectedItem());
                 dao = daoLH;
                 break;
             case "DongSanPham":
-                e = !validateDongSP("insert") ? null : new DongSanPham(getAutoDongSP(), (String) cbo.getSelectedItem(), ((LoaiHang) cboLH.getSelectedItem()).getIdLH(), ((NhaSanXuat) cboNSX.getSelectedItem()).getIdNSX());
+                e = !validateDongSP("insert") ? null : new DongSanPham(getAutoID("DSP"), (String) cbo.getSelectedItem(), ((LoaiHang) cboLH.getSelectedItem()).getIdLH(), ((NhaSanXuat) cboNSX.getSelectedItem()).getIdNSX());
                 dao = daoDongSP;
                 break;
         }
@@ -588,6 +580,7 @@ public class SanPhamPanel extends MyPanel<SanPham> {
         }
         if (dao.insert(e) > 0) {
             cbo.addItem(e);
+            refreshList();
             MsgBox.inform("Thêm mới thành công");
         }
     }
@@ -622,20 +615,23 @@ public class SanPhamPanel extends MyPanel<SanPham> {
             if (result) {
                 cbo.removeItem(o);
                 MsgBox.inform("Xoá thành công!");
+                refreshList();
             }
         }
     }
 
-    private String getAutoNSX() {
-        return "NSX" + listNSX.size();
-    }
-
-    private String getAutoLH() {
-        return "LH" + listLH.size();
-    }
-
-    private String getAutoDongSP() {
-        return "DSP" + listDongSP.size();
+    private String getAutoID(String name) {
+        switch (name) {
+            case "NSX":
+                return "NSX" + listNSX.size();
+            case "LH":
+                return "LH" + listLH.size();
+            case "DSP":
+                return "DSP" + listDongSP.size();
+            case "SP":
+                return "SP" + listSP.size();
+        }
+        return "";
     }
 
     private JComboBox getComboBox(String name) {
@@ -691,19 +687,7 @@ public class SanPhamPanel extends MyPanel<SanPham> {
         }
     }
 
-    private void validateLH() {
-
-    }
-
-    private void validateDongSP() {
-
-    }
-
     private void reset() {
-        if (entity != null) {
-            setForm(entity);
-            return;
-        }
         for (Component comp : this.getComponents()) {
             if (comp instanceof JTextComponent) {
                 ((JTextComponent) comp).setText("");
@@ -712,12 +696,20 @@ public class SanPhamPanel extends MyPanel<SanPham> {
         if (cboLH.getItemCount() > 0) {
             cboLH.setSelectedIndex(0);
         }
+        txtMaSKU.setText(getAutoID("SP"));
         XImage.setIcon(null, lblHinh, defaultFile);
+        if (sp != null) {
+            setForm(sp);
+        }
     }
 
-    @Override
+    public void setSanPham(SanPham sp) {
+        this.sp = sp;
+        reset();
+    }
+
     public void setForm(SanPham sp) {
-        if (sp == null || sp.getIdDongSP() == null) {
+        if (sp == null || sp.getSku() == null) {
             return;
         }
         txtMaSKU.setText(sp.getSku());
@@ -726,7 +718,7 @@ public class SanPhamPanel extends MyPanel<SanPham> {
         cboPhanKhoi.setSelectedItem(sp.getPhanKhoi());
         cboBaoHanh.setSelectedItem(String.format("%d tháng", sp.getThoiGianBH()));
         txtDiaChiSX.setText(sp.getDiaChiSX());
-        txtGiaTien.setText(new DecimalFormat("#,##0.00").format(sp.getGiaTien()));
+        txtGiaTien.setValue(sp.getGiaTien());
         txtMoTa.setText(sp.getMoTa());
         txtDoiXe.setText(String.valueOf(sp.getDoiXe()));
         if (sp.getHinh() != null) {
@@ -735,50 +727,82 @@ public class SanPhamPanel extends MyPanel<SanPham> {
         DongSanPham dsp = findDongSP(sp.getIdDongSP());
         if (dsp != null) {
             cboNSX.setSelectedItem(findNSX(dsp.getIdNSX()));
-            cboLH.setSelectedItem(dsp);
+            cboLH.setSelectedItem(findLH(dsp.getIdLH()));
+            cboDongSP.setSelectedItem(dsp);
         }
-        cboDongSP.setSelectedItem(sp.getIdDongSP());
-        txtMaSKU.setEditable(sp.getSku() == null);
+//        txtMaSKU.setEditable(sp.getSku() == null);
     }
 
-    @Override
     public SanPham getForm() {
         if (validateForm()) {
-            SanPham sp = new SanPham();
-            sp.setSku(txtMaSKU.getText());
-            sp.setTenSP(txtTenSP.getText());
-            sp.setMauSac(txtMauSac.getText());
-            sp.setPhanKhoi((String) cboPhanKhoi.getSelectedItem());
-            sp.setThoiGianBH(Integer.parseInt(((String) cboBaoHanh.getSelectedItem()).replaceAll("[^0-9]", "")));
-            sp.setDiaChiSX(txtDiaChiSX.getText());
-            sp.setGiaTien(Double.valueOf(txtGiaTien.getText()));
-            sp.setMoTa(txtMoTa.getText());
-            sp.setDoiXe(Integer.parseInt(txtDoiXe.getText()));
-            sp.setHinh(lblHinh.getToolTipText());
-            sp.setIdDongSP(((DongSanPham) cboDongSP.getSelectedItem()).getIdDongSP());
-            sp.setIdNV(Auth.user == null ? "NV01" : Auth.user.getIdNV());
-            return sp;
+            SanPham sanpham=  new SanPham();
+            sanpham.setSku(txtMaSKU.getText());
+            sanpham.setTenSP(txtTenSP.getText());
+            sanpham.setMauSac(txtMauSac.getText());
+            sanpham.setPhanKhoi((String) cboPhanKhoi.getSelectedItem());
+            sanpham.setThoiGianBH(Integer.parseInt(((String) cboBaoHanh.getSelectedItem()).replaceAll("[^0-9]", "")));
+            sanpham.setDiaChiSX(txtDiaChiSX.getText());
+            sanpham.setGiaTien(((Number)txtGiaTien.getValue()).doubleValue());
+            sanpham.setMoTa(txtMoTa.getText());
+            sanpham.setDoiXe(Integer.parseInt(txtDoiXe.getText()));
+            sanpham.setHinh(lblHinh.getToolTipText());
+            sanpham.setIdDongSP(((DongSanPham) cboDongSP.getSelectedItem()).getIdDongSP());
+            sanpham.setIdNV(Auth.user == null ? "NV01" : Auth.user.getIdNV());
+            return sanpham;
         }
         return null;
     }
 
-    @Override
     public void setDoneListener(ActionListener doneListener) {
         btnSave.addActionListener(doneListener);
     }
 
     public boolean validateForm() {
-        if (validate(txtMaSKU, txtTenSP, txtGiaTien, txtDiaChiSX)) {
-            if (entity == null) {
-//                boolean exists = list.stream().anyMatch(sp -> sp.getSku().equals(txtMaSKU.getText()));
-//                if (exists) {
-//                    MsgBox.error("Đã tồn tại mã sản phẩm");
-//                    return false;
-//                }
-            }
-            return true;
+        if (!validateField(txtMaSKU, txtTenSP, txtDiaChiSX, txtDoiXe, txtGiaTien, txtMauSac)) {
+            return false;
         }
-        return false;
+        Object o = cboDongSP.getSelectedItem();
+        if (o == null || !(o instanceof DongSanPham)) {
+            MsgBox.error("Vui lòng kiểm tra lại dòng xe");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateField(JTextField... fields) {
+        for (JTextField field : fields) {
+            if (!MyVerifier.SAN_PHAM_VERIFIER.verify(field)) {
+                String err = "Vui lòng kiểm tra lại dữ liệu";
+                if (field instanceof TextField) {
+                    err = ((TextField) field).getErrorText();
+                } else if (field instanceof PasswordField) {
+                    err = ((TextField) field).getErrorText();
+                }
+                MsgBox.error(err);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void setFieldName() {
+        txtMaSKU.setName("Mã sản phẩm");
+        txtTenSP.setName("Tên xe");
+        txtDiaChiSX.setName("Địa chỉ sản xuất");
+        txtDoiXe.setName("Đời xe");
+        txtGiaTien.setName("Đơn giá xe");
+        txtMauSac.setName("Màu sắc xe");
+        setFieldVerifier(txtMaSKU, txtTenSP, txtDiaChiSX, txtDoiXe, txtGiaTien, txtMauSac);
+    }
+
+    private void setFieldVerifier(JTextComponent... comp) {
+        for (JTextComponent field : comp) {
+            field.setInputVerifier(MyVerifier.SAN_PHAM_VERIFIER);
+        }
+    }
+
+    public Entity getSanPham() {
+        return sp;
     }
 
     private NhaSanXuat findNSX(String name) {
@@ -805,466 +829,3 @@ public class SanPhamPanel extends MyPanel<SanPham> {
         return listSP.stream().anyMatch(sp -> sp.getIdDongSP().equalsIgnoreCase(dsp.getIdDongSP()));
     }
 }
-
-abstract class MyPanel<Entity> extends JPanel {
-
-    protected Entity entity;
-
-//    protected List<? extends Entity> list;
-//    public MyPanel(List<? extends Entity> list) {
-//        this.list = list;
-//    }
-    public abstract void setForm(Entity e);
-
-    public abstract Entity getForm();
-
-    public abstract void setDoneListener(ActionListener doneListener);
-
-    public Entity getEntity() {
-        return entity;
-    }
-
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-        if (entity != null) {
-            setForm(entity);
-        }
-    }
-
-    protected boolean validate(JTextField... fields) {
-        for (JTextField field : fields) {
-            if (field.getText().isEmpty()) {
-                MsgBox.error(String.format("Không được để trống %s", field.getName()));
-                field.requestFocus();
-                return false;
-            }
-        }
-        return true;
-    }
-}
-
-class PanelLoaiHang extends MyPanel<LoaiHang> {
-
-    private final JLabel lblTitle;
-    private final JLabel lblMaLH;
-    private final JLabel lblTenLH;
-
-    private final TextField txtMaLH;
-    private final TextField txtTenLH;
-
-    private final Button btn;
-
-    public PanelLoaiHang(List<LoaiHang> list) {
-//        super(list);
-        setLayout(new MigLayout("insets 40 60 40 60, fillx, wrap 1", "[center, fill]", "10[center]10[center]10"));
-        lblTitle = new JLabel("LOẠI HÀNG");
-        lblTitle.setFont(new Font("Segoe UI", 0, 24));
-
-        lblMaLH = new JLabel("Mã Loại Hàng");
-        lblTenLH = new JLabel("Tên Loại Hàng");
-
-        txtMaLH = new TextField();
-        txtTenLH = new TextField();
-
-        txtMaLH.setOnlyField(true);
-        txtTenLH.setOnlyField(true);
-
-        txtMaLH.setName("mã loại hàng");
-        txtTenLH.setName("tên loại hàng");
-
-        btn = new Button();
-        btn.setText("Xong");
-        btn.setRadius(15);
-        btn.setBackground(new Color(200, 200, 200));
-        this.add(lblTitle, " w 200!, gapbottom 10");
-        this.add(lblMaLH, "w 200!");
-        this.add(txtMaLH, "w 200!");
-        this.add(lblTenLH, "w 200!");
-        this.add(txtTenLH, "w 200!");
-        this.add(btn, "w 100!, h 40!, gaptop 20, gapbottom 20");
-        this.setBackground(new Color(250, 250, 250));
-        this.setSize(200, 200);
-    }
-
-    @Override
-    public void setForm(LoaiHang e) {
-        txtMaLH.setText(e.getIdLH());
-        txtTenLH.setText(e.getTenLoaiHang());
-        txtMaLH.setEditable(e.getIdLH() == null);
-    }
-
-    @Override
-    public LoaiHang getForm() {
-        if (validateForm()) {
-            return new LoaiHang(txtMaLH.getText(), txtTenLH.getText());
-        }
-        return null;
-    }
-
-    public boolean validateForm() {
-        if (validate(txtMaLH, txtTenLH)) {
-            if (entity.getIdLH() == null) {
-//                boolean exists = list.stream().anyMatch(lh -> lh.getIdLH().equals(txtMaLH.getText()));
-//                if (exists) {
-//                    MsgBox.error("Mã loại hàng đã tồn tại!");
-//                    return false;
-//                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void setDoneListener(ActionListener doneListener) {
-        btn.addActionListener(doneListener);
-    }
-}
-
-class PanelNhaSanXuat extends MyPanel<NhaSanXuat> {
-
-    private final JLabel lblTitle;
-    private final JLabel lblMaNSX;
-    private final JLabel lblTenNSX;
-
-    private final TextField txtMaNSX;
-    private final TextField txtTenNSX;
-
-    private final Button btn;
-
-    public PanelNhaSanXuat(List<NhaSanXuat> list) {
-//        super(list);
-        setLayout(new MigLayout("insets 40 60 40 60, fillx, wrap 1", "[center, fill]", "10[center]10[center]10"));
-        lblTitle = new JLabel("NHÀ SẢN XUẤT");
-        lblTitle.setFont(new Font("Segoe UI", 0, 24));
-
-        lblMaNSX = new JLabel("Mã Nhà Sản Xuất");
-        lblTenNSX = new JLabel("Tên Nhà Sản Xuất");
-
-        txtMaNSX = new TextField();
-        txtTenNSX = new TextField();
-
-        txtMaNSX.setOnlyField(true);
-        txtTenNSX.setOnlyField(true);
-
-        btn = new Button();
-        btn.setText("Xong");
-        btn.setRadius(15);
-        btn.setBackground(new Color(200, 200, 200));
-        this.add(lblTitle, " w 200!, gapbottom 10");
-        this.add(lblMaNSX, "w 200!");
-        this.add(txtMaNSX, "w 200!");
-        this.add(lblTenNSX, "w 200!");
-        this.add(txtTenNSX, "w 200!");
-        this.add(btn, "w 100!, h 40!, gaptop 20, gapbottom 20");
-        this.setBackground(new Color(250, 250, 250));
-        this.setSize(200, 200);
-    }
-
-    @Override
-    public void setForm(NhaSanXuat e) {
-        txtMaNSX.setText(e.getIdNSX());
-        txtTenNSX.setText(e.getTenNSX());
-        txtMaNSX.setEditable(e.getIdNSX() == null);
-    }
-
-    @Override
-    public NhaSanXuat getForm() {
-        if (validateForm()) {
-            return new NhaSanXuat(txtMaNSX.getText(), txtTenNSX.getText());
-        }
-        return null;
-    }
-
-    public boolean validateForm() {
-        if (validate(txtMaNSX, txtTenNSX)) {
-            if (entity.getIdNSX() == null) {
-//                boolean exists = list.stream().anyMatch(nsx -> nsx.getIdNSX().equals(txtMaNSX.getText()));
-//                if (exists) {
-//                    MsgBox.error("Mã nhà sản xuất đã tồn tại!");
-//                    return false;
-//                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void setDoneListener(ActionListener doneListener) {
-        btn.addActionListener(doneListener);
-    }
-}
-
-class PanelDongSanPham extends MyPanel<DongSanPham> {
-
-    private final JLabel lblTitle;
-    private final JLabel lblMaDongSP;
-    private final JLabel lblTenDongSP;
-    private final JLabel lblNSX;
-    private final JLabel lblLH;
-    private final TextField txtMaDongSP;
-    private final TextField txtTenDongSP;
-    private final ComboBoxSuggestion cboNSX;
-    private final ComboBoxSuggestion cboLH;
-    private List<NhaSanXuat> listNSX;
-    private List<LoaiHang> listLH;
-    private final Button btn;
-
-    public PanelDongSanPham(List<DongSanPham> list) {
-//        super(list);
-        setLayout(new MigLayout("insets 40 60 40 60, fillx, wrap 2", "[center, fill]30[center, fill]", "10[center]10[center]10"));
-        lblTitle = new JLabel("DÒNG SẢN PHẨM");
-        lblTitle.setFont(new Font("Segoe UI", 0, 24));
-
-        lblMaDongSP = new JLabel("Mã Dòng Sản Phẩm");
-        lblTenDongSP = new JLabel("Tên Dòng Sản Phẩm");
-
-        txtMaDongSP = new TextField();
-        txtTenDongSP = new TextField();
-
-        txtMaDongSP.setOnlyField(true);
-        txtTenDongSP.setOnlyField(true);
-
-        lblNSX = new JLabel("Nhà Sản Xuất");
-        lblLH = new JLabel("Loại Hàng");
-
-        cboNSX = new ComboBoxSuggestion();
-        cboLH = new ComboBoxSuggestion();
-
-        cboNSX.setSize(txtMaDongSP.getSize());
-        cboLH.setSize(txtMaDongSP.getSize());
-
-        btn = new Button();
-        btn.setText("Xong");
-        btn.setRadius(15);
-        btn.setBackground(new Color(200, 200, 200));
-        this.add(lblTitle, " w 200!, gapbottom 10, spanx 2");
-
-        this.add(lblMaDongSP, "w 200!");
-        this.add(lblNSX, "w 200!");
-        this.add(txtMaDongSP, "w 200!");
-        this.add(cboNSX, "w 200!, h " + txtMaDongSP.getPreferredSize().height);
-
-        this.add(lblTenDongSP, "w 200!");
-        this.add(lblLH, "w 200!");
-        this.add(txtTenDongSP, "w 200!");
-        this.add(cboLH, "w 200!, h " + txtMaDongSP.getPreferredSize().height);
-
-        this.add(btn, "w 100!, h 40!, gaptop 20, gapbottom 20, spanx 2");
-        this.setBackground(new Color(250, 250, 250));
-        this.setSize(200, 200);
-    }
-
-    public PanelDongSanPham(List<DongSanPham> list, List<NhaSanXuat> listNSX, List<LoaiHang> listLH) {
-        this(list);
-        this.listNSX = listNSX;
-        this.listLH = listLH;
-        fillComboBox();
-
-    }
-
-    private void fillComboBox() {
-        cboNSX.setModel(new DefaultComboBoxModel(listNSX.toArray()));
-        cboLH.setModel(new DefaultComboBoxModel(listLH.toArray()));
-    }
-
-    @Override
-    public void setForm(DongSanPham e) {
-        txtMaDongSP.setText(e.getIdNSX());
-        txtTenDongSP.setText(e.getTenDongSP());
-        txtMaDongSP.setEditable(e.getIdNSX() == null);
-        if (listNSX != null) {
-            cboNSX.setSelectedItem(
-                    listNSX
-                            .stream()
-                            .filter(nsx -> nsx.getIdNSX().equals(e.getIdNSX()))
-                            .findFirst()
-                            .orElse(listNSX.get(0)));
-        }
-        if (listLH != null) {
-            cboLH.setSelectedItem(
-                    listLH
-                            .stream()
-                            .filter(lh -> lh.getIdLH().equals(e.getIdLH()))
-                            .findFirst()
-                            .orElse(listLH.get(0)));
-        }
-    }
-
-    @Override
-    public DongSanPham getForm() {
-        if (validateForm()) {
-            return new DongSanPham(
-                    txtMaDongSP.getText(),
-                    txtTenDongSP.getText(),
-                    ((NhaSanXuat) cboNSX.getSelectedItem()).getIdNSX(),
-                    ((LoaiHang) cboLH.getSelectedItem()).getIdLH());
-        }
-        return null;
-    }
-
-    public boolean validateForm() {
-        if (validate(txtMaDongSP, txtTenDongSP)) {
-//            if (entity.getIdDongSP() == null) {
-//                boolean exists = list.stream().anyMatch(dsp -> dsp.getIdDongSP().equals(txtMaDongSP.getText()));
-//                if (exists) {
-//                    MsgBox.error("Mã dòng sản phẩm đã tồn tại!");
-//                    return false;
-//                }
-//            }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void setDoneListener(ActionListener doneListener) {
-        btn.addActionListener(doneListener);
-    }
-}
-//    private void showPanel(Entity e) {
-//        switch (e.getClass().getSimpleName()) {
-////            case "LoaiHang":
-////                panel = new PanelLoaiHang(listLH);
-////                panel.setDoneListener(event -> {
-////                    Entity entity = (Entity) panel.getForm();
-////                    if (entity != null) {
-////                        int count = daoLH.insert((LoaiHang) entity);
-////                        if (count < 0) {
-////                            MsgBox.error("Cập nhật dữ liệu thất bại");
-////                            return;
-////                        }
-//////                        insertRow(tblLoaiHang, entity);
-////                        listLH.add((LoaiHang) e);
-////                        ((JDialog) panel.getTopLevelAncestor()).dispose();
-////                    }
-////                });
-////                break;
-////            case "NhaSanXuat":
-////                panel = new PanelNhaSanXuat(listNSX);
-////                panel.setDoneListener(event -> {
-////                    Entity entity = (Entity) panel.getForm();
-////                    if (entity != null) {
-////                        int count = daoNSX.insert((NhaSanXuat) entity);
-////                        if (count < 0) {
-////                            MsgBox.error("Cập nhật dữ liệu thất bại");
-////                            return;
-////                        }
-//////                        insertRow(tblNSX, entity);
-////                        listNSX.add((NhaSanXuat) e);
-////                        ((JDialog) panel.getTopLevelAncestor()).dispose();
-////                    }
-////                });
-////                break;
-////            case "DongSanPham":
-////                panel = new PanelDongSanPham(listDongSP, listNSX, listLH);
-////                panel.setDoneListener(event -> {
-////                    Entity entity = (Entity) panel.getForm();
-////                    if (entity != null) {
-////                        int count = daoDongSP.insert((DongSanPham) entity);
-////                        if (count < 0) {
-////                            MsgBox.error("Cập nhật dữ liệu thất bại");
-////                            return;
-////                        }
-//////                        insertRow(tblDongSP, entity);
-////                        ((JDialog) panel.getTopLevelAncestor()).dispose();
-////                    }
-////                });
-////                break;
-//            case "SanPham":
-//                panel = new SanPhamPanel(listSP,listNSX, listDongSP);
-//                panel.setSize(800, getHeight());
-//                break;
-//        }
-//        if (panel != null) {
-//            panel.setEntity(e);
-//            XDialog.getDialog((JFrame) this.getTopLevelAncestor(), panel).setVisible(true);
-//        }
-//    }
-
-//    private void deleteRow(Entity e) {
-//        int confirm = MsgBox.confirm("Bạn có thực sự muốn xoá?", false);
-//        if (confirm != 0) {
-//            return;
-//        }
-//        switch (e.getClass().getSimpleName()) {
-//            case "LoaiHang":
-//                daoLH.delete(((LoaiHang) e).getIdLH());
-////                deleteRow(tblLoaiHang);
-//                listLH.remove((LoaiHang) e);
-//                break;
-//            case "NhaSanXuat":
-//                daoNSX.delete(((NhaSanXuat) e).getIdNSX());
-////                deleteRow(tblNSX);
-//                listNSX.remove((NhaSanXuat) e);
-//                break;
-//            case "DongSanPham":
-//                daoDongSP.delete(((DongSanPham) e).getIdDongSP());
-////                deleteRow(tblDongSP);
-//                listDongSP.remove((DongSanPham) e);
-//                break;
-//            case "SanPham":
-//                daoSP.delete(((SanPham) e).getSku());
-//                deleteRow(tblSP);
-//                listSP.remove((SanPham) e);
-//                break;
-//        }
-//        MsgBox.inform("Xoá thành công");
-//    }
-//  private void showPanel(String name) {
-//        panel = null;
-//        switch (name) {
-//            case "LoaiHang":
-//                panel = new PanelLoaiHang(listLH);
-//                panel.setDoneListener(event -> {
-//                    Entity entity = (Entity) panel.getForm();
-//                    if (entity != null) {
-//                        int count = daoLH.insert((LoaiHang) entity);
-//                        if (count < 0) {
-//                            MsgBox.error("Cập nhật dữ liệu thất bại");
-//                            return;
-//                        }
-////                        insertRow(tblLoaiHang, entity);
-////                        listLH.add((LoaiHang) e);
-//                        ((JDialog) panel.getTopLevelAncestor()).dispose();
-//                    }
-//                });
-//                break;
-//            case "NhaSanXuat":
-//                panel = new PanelNhaSanXuat(listNSX);
-//                panel.setDoneListener(event -> {
-//                    Entity entity = (Entity) panel.getForm();
-//                    if (entity != null) {
-//                        int count = daoNSX.insert((NhaSanXuat) entity);
-//                        if (count < 0) {
-//                            MsgBox.error("Cập nhật dữ liệu thất bại");
-//                            return;
-//                        }
-////                        insertRow(tblNSX, entity);
-////                        listNSX.add((NhaSanXuat) e);
-//                        ((JDialog) panel.getTopLevelAncestor()).dispose();
-//                    }
-//                });
-//                break;
-//            case "DongSanPham":
-//                panel = new PanelDongSanPham(listDongSP, listNSX, listLH);
-//                panel.setDoneListener(event -> {
-//                    Entity entity = (Entity) panel.getForm();
-//                    if (entity != null) {
-//                        int count = daoDongSP.insert((DongSanPham) entity);
-//                        if (count < 0) {
-//                            MsgBox.error("Cập nhật dữ liệu thất bại");
-//                            return;
-//                        }
-////                        insertRow(tblDongSP, entity);
-//                        ((JDialog) panel.getTopLevelAncestor()).dispose();
-//                    }
-//                });
-//                break;
-//        }
-//        if (panel != null) {
-////            panel.setEntity(e);
-//            XDialog.getDialog((JFrame) this.getTopLevelAncestor(), panel).setVisible(true);
-//        }
-//    }
