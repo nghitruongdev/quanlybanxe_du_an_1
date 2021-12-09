@@ -143,7 +143,7 @@ public class MainFrame extends javax.swing.JFrame {
         ModelMenu mnuNhapKho = new ModelMenu("Quản lý kho", createIcon("refresh_25px.png"), getEvent("NhapKho"));
         ModelMenu mnuBarcode = new ModelMenu("In barcode", createIcon("refresh_25px.png"), getEvent("Barcode"));
 
-        pnlMain.addMenu(mnuThongKe,mnuNhanVien, mnuHoaDon, mnuKhachHang, mnuSanPham, mnuNhapKho, mnuBarcode);
+        pnlMain.addMenu(mnuNhanVien, mnuHoaDon, mnuKhachHang, mnuSanPham, mnuNhapKho, mnuBarcode, mnuThongKe);
     }
 
     private ActionListener getEvent(String name) {

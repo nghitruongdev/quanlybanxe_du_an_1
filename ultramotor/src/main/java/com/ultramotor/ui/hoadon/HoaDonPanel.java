@@ -272,7 +272,6 @@ public class HoaDonPanel extends javax.swing.JPanel {
         }
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
-        System.out.println("Filling Table");
         list.forEach(e -> {
             model.addRow(getInfo(e));
         });
@@ -731,7 +730,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
 
         chkHetHang.setText("Hết Hàng");
 
-        pnlKhachHang.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin chung", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 153, 255))); // NOI18N
+        pnlKhachHang.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "THÔNG TIN KHÁCH HÀNG", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 153, 255))); // NOI18N
 
         txtHoTenKH.setLabelText("Họ tên khách hàng");
         txtHoTenKH.setOnlyField(true);
@@ -1100,7 +1099,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        pnlInfoSanPham.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin đơn hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 153, 255))); // NOI18N
+        pnlInfoSanPham.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "THÔNG TIN SẢN PHẨM", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 153, 255))); // NOI18N
 
         txtMaSP.setToolTipText("");
         txtMaSP.setLabelText("Mã sản phẩm");

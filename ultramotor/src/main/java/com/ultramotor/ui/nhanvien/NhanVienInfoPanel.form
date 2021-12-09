@@ -248,6 +248,7 @@
         </Container>
         <Component class="com.swingx.TextField" name="txtMaNV">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="animateLabel" type="boolean" value="false"/>
             <Property name="drawLine" type="boolean" value="false"/>
             <Property name="labelText" type="java.lang.String" value="M&#xe3; nh&#xe2;n vi&#xea;n"/>

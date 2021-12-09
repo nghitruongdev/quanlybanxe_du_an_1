@@ -46,7 +46,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="txtHoKH" min="-2" pref="105" max="-2" attributes="0"/>
                       <Component id="pnlThanhVien" min="-2" pref="290" max="-2" attributes="0"/>
@@ -64,13 +64,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                       <Component id="txtSDT" alignment="0" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="pnlGioiTinh1" min="-2" pref="285" max="-2" attributes="0"/>
-                          <Component id="lblGhiChu" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="pnlGioiTinh1" min="-2" pref="285" max="-2" attributes="0"/>
+                      <Component id="lblGhiChu" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
@@ -192,9 +190,6 @@
                 </Property>
                 <Property name="focusPainted" type="boolean" value="false"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdoChuaTVActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
           <LayoutCode>
@@ -331,6 +326,7 @@
         </Container>
         <Component class="com.swingx.TextField" name="txtMaKH">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="animateLabel" type="boolean" value="false"/>
             <Property name="drawLine" type="boolean" value="false"/>
             <Property name="focusCycleRoot" type="boolean" value="true"/>
@@ -341,12 +337,12 @@
           <Properties>
             <Property name="labelText" type="java.lang.String" value="T&#xea;n kh&#xe1;ch h&#xe0;ng"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTenKHActionPerformed"/>
-          </Events>
         </Component>
         <Component class="com.swingx.TextField" name="txtNgaySinh">
           <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+              <Format format="dd-MM-yyyy" subtype="-1" type="1"/>
+            </Property>
             <Property name="labelText" type="java.lang.String" value="Ng&#xe0;y sinh"/>
             <Property name="placeholder" type="java.lang.String" value="dd-MM-YYYY"/>
           </Properties>
@@ -355,9 +351,6 @@
           <Properties>
             <Property name="labelText" type="java.lang.String" value="&#x110;&#x1ecb;a ch&#x1ec9;"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDiaChiActionPerformed"/>
-          </Events>
         </Component>
         <Component class="com.swingx.TextField" name="txtEmail">
           <Properties>
@@ -397,9 +390,6 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuiMailActionPerformed"/>
-              </Events>
             </Component>
             <Component class="com.swingx.Button" name="btnCapNhat">
               <Properties>
@@ -418,9 +408,6 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCapNhatActionPerformed"/>
-              </Events>
             </Component>
             <Component class="com.swingx.Button" name="btnReset">
               <Properties>
@@ -439,9 +426,6 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnResetActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>

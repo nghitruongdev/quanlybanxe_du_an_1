@@ -9,20 +9,22 @@ import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDate;
 import com.ultramotor.util.XDialog;
+import com.ultramotor.util.XJdbc;
 import com.ultramotor.util.XMail;
+import com.ultramotor.util.XValidate;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import javax.swing.CellEditor;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -38,6 +40,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private SendMailPanel pnlSendMail;
     private DefaultTableModel model;
     private boolean hasEdit = false;
+    private static int sizeNV;
 
     public NhanVienPanel() {
         initComponents();
@@ -46,6 +49,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
     private void init() {
         initTable();
+        sizeNV = ((Number) XJdbc.value("SELECT COUNT(*) FROM NhanVien")).intValue();
         pnlInfo = new NhanVienInfoPanel();
         pnlSendMail = new SendMailPanel();
         event = new ModelEvent<NhanVien>() {
@@ -67,10 +71,10 @@ public class NhanVienPanel extends javax.swing.JPanel {
     }
 
     private void initTable() {
-        Object[] columns = {"Select", "ID", "Họ Và Tên", "Ngày Sinh", "Giới Tính", "Địa chỉ", "Số ĐT", "Email", "Lương", "Hình", "Vai Trò", "Ghi Chú", "Actions"};
+        Object[] columns = {"Select", "ID", "Họ Và Tên", "Ngày Sinh", "Giới Tính", "Địa chỉ", "Số ĐT", "Email", "Lương", "Hình", "Vai Trò", "Actions"};
         model = new DefaultTableModel(columns, 0);
         tblNhanVien.setModel(model);
-      
+
         TableRowSorter<TableModel> sorter = new TableRowSorter(model);
         tblNhanVien.setRowSorter(sorter);
         txtTimKiem.addKeyListener(new KeyAdapter() {
@@ -80,7 +84,10 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 if (text.isEmpty()) {
                     sorter.setRowFilter(null);
                 } else {
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                    List<RowFilter<Object, Object>> filters = new ArrayList<>();
+                    filters.add(RowFilter.regexFilter("(?i)" + text.toUpperCase()));
+                    filters.add(RowFilter.regexFilter("(?i)" + text));
+                    sorter.setRowFilter(RowFilter.orFilter(filters));
                 }
             }
         });
@@ -110,7 +117,10 @@ public class NhanVienPanel extends javax.swing.JPanel {
             } else if (MsgBox.confirm("Bạn thực sự muốn xóa nhân viên này?", false) == 0) {
                 int index = getIndexNhanVien(maNV);
                 if (index != -1) {
-                    tblNhanVien.getCellEditor().stopCellEditing();
+                    CellEditor editor = tblNhanVien.getCellEditor();
+                    if (editor != null) {
+                        editor.stopCellEditing();
+                    }
                     model.removeRow(index);
                     hasEdit = true;
                 }
@@ -119,23 +129,25 @@ public class NhanVienPanel extends javax.swing.JPanel {
     }
 
     private void sendMail() {
-        List<String> emails = new ArrayList<>();
+        Set<String> emails = new HashSet<>();
         List<Integer> list = getSelectedRows();
-        if(list.isEmpty()){
-           int confirm = MsgBox.confirm("Bạn chưa chọn nhân viên muốn gửi mail. Bạn có muốn gửi mail cho tất cả nhân viên?", true);
-           if(confirm==MsgBox.CANCEL_OPTION){
-               return;
-           }else if(confirm == MsgBox.NO_OPTION){
-               sendMail("");
-               return;
-           }
+        if (list.isEmpty()) {
+            int confirm = MsgBox.confirm("Bạn chưa chọn nhân viên muốn gửi mail. Bạn có muốn gửi mail cho tất cả nhân viên?", true);
+            if (confirm == MsgBox.CANCEL_OPTION) {
+                return;
+            } else if (confirm == MsgBox.NO_OPTION) {
+                sendMail("");
+                return;
+            }
         }
         //nếu người dùng đã chọn nhân viên hoặc chọn gửi cho tất cả nhân viên
         for (int i = 0; i < tblNhanVien.getRowCount(); i++) {
             if (list.isEmpty() || list.contains(i)) {
-                emails.add((String) tblNhanVien.getValueAt(i, 7));
+                String email = (String) tblNhanVien.getValueAt(i, 7);
+                emails.add(XValidate.validateEmail(email) ? email : "");
             }
         }
+        emails.remove("");
         sendMail(emails.toArray(new String[emails.size()]));
     }
 
@@ -156,26 +168,20 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
     private Object[] getInfo(NhanVien nv) {
         return new Object[]{
-            false, nv.getIdNV(), nv.getHoNV() + " " + nv.getTenNV(),
+            false, nv, nv.getHoNV() + " " + nv.getTenNV(),
             XDate.toString(nv.getNgaySinh(), "dd-MM-yyyy"),
             nv.getGioiTinh() ? "Nam" : "Nữ", nv.getDiaChi(),
             nv.getSdt(), nv.getEmail(), nv.getLuong(),
             nv.getHinh(), nv.getVaiTro(),
-            nv.getGhiChu(), new ModelAction(nv, event)
+            new ModelAction(nv, event)
         };
     }
 
-
     void fillTable(List<NhanVien> list) {
-        DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
         model.setRowCount(0); // xóa tất cả các hàng trên jtable
-        try {
-            for (NhanVien nv : list) {
-                model.addRow(getInfo(nv));
-            }
-        } catch (Exception e) {
-            MsgBox.error("Lỗi truy vấn dữ liệu");
-        }
+        list.forEach(nv -> {
+            model.addRow(getInfo(nv));
+        });
     }
 
     private List<Integer> getSelectedRows() {
@@ -193,45 +199,25 @@ public class NhanVienPanel extends javax.swing.JPanel {
         new Thread(() -> {
             try {
                 Thread.sleep(300);
-                JPanel panel = null;
-                switch (name) {
-                    case "info":
-                        panel = pnlInfo;
-                        break;
-                    case "sendMail":
-                        panel = pnlSendMail;
-                        panel.setPreferredSize(new Dimension(600, 600));
-                        break;
-                }
-                if (panel != null) {
-                    XDialog.getDialog((JFrame) this.getTopLevelAncestor(), panel).setVisible(true);
-                }
             } catch (InterruptedException e) {
+            }
+            JPanel panel = null;
+            switch (name) {
+                case "info":
+                    panel = pnlInfo;
+                    break;
+                case "sendMail":
+                    panel = pnlSendMail;
+                    panel.setPreferredSize(new Dimension(600, 600));
+                    break;
+            }
+            if (panel != null) {
+                XDialog.getDialog((JFrame) this.getTopLevelAncestor(), panel).setVisible(true);
             }
         }).start();
     }
 
     private void addListeners() {
-//       this.addComponentListener(new ComponentAdapter(){
-//           @Override
-//           public void componentHidden(ComponentEvent e) {
-//               System.out.println("Hidden");
-//               super.componentHidden(e);
-//           }
-//
-//           @Override
-//           public void componentShown(ComponentEvent e) {
-//               System.out.println("Hidden");
-//           }
-//       });
-//        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
-//            @Override
-//            public void keyReleased(java.awt.event.KeyEvent evt) {
-//                //code xử lý keyReleased ở đây.
-//                fillTable();
-//            }
-//        });
-
         btnThemMoi.addActionListener((ActionEvent e) -> {
             pnlInfo.setForm(null);
             showPanel("info");
@@ -253,12 +239,14 @@ public class NhanVienPanel extends javax.swing.JPanel {
             if (nv == null) {
                 return;
             }
+
             pnlInfo.setForm(nv);
             int index = getIndexNhanVien(nv.getIdNV());
             if (index == -1) {
                 model.addRow(getInfo(nv));
                 MsgBox.inform("Thêm mới nhân viên thành công");
                 index = tblNhanVien.getRowCount() - 1;
+                addNV();
             } else {
                 model.removeRow(index);
                 model.insertRow(index, getInfo(nv));
@@ -269,22 +257,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
             hasEdit = true;
         });
 
-        pnlInfo.setFieldFocus(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                JTextField field = (JTextField) e.getSource();
-                String maNV = field.getText().trim();
-                if (pnlInfo.getNhanVien() == null) {
-                    int index = getIndexNhanVien(maNV);
-                    if (index != -1) {
-                        MsgBox.error("Mã nhân viên đã tồn tại!");
-                        field.setText("");
-                        field.requestFocus();
-                    }
-                    field.setText(maNV.toUpperCase());
-                }
-            }
-        });
     }
 
     private int getIndexNhanVien(String maNV) {
@@ -294,6 +266,14 @@ public class NhanVienPanel extends javax.swing.JPanel {
             }
         }
         return -1;
+    }
+
+    public static int getSizeNV() {
+        return sizeNV;
+    }
+
+    public static void addNV() {
+        sizeNV++;
     }
 
     private static String getRandomPassword(NhanVien nv) {
@@ -396,7 +376,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(lblQLNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE))
         );
 
         btnSave.setBackground(new java.awt.Color(0, 174, 114));
@@ -440,7 +420,8 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private com.swingx.table.Table tblNhanVien;
     private com.swingx.SearchTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
-  public static void main(String[] args) {
+
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame fr = new JFrame();
             fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,29 +1,21 @@
 package com.ultramotor.ui.quanlykhachhang;
 
-import com.ultramotor.ui.nhanvien.*;
 import com.swingx.MyScrollBar;
 import com.swingx.PasswordField;
 import com.swingx.TextField;
 import com.ultramotor.entity.KhachHang;
-import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.MyVerifier;
 import com.ultramotor.util.XDate;
-import com.ultramotor.util.XImage;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -33,45 +25,25 @@ import javax.swing.text.JTextComponent;
 public class KhachHangInfoPanel extends javax.swing.JPanel {
 
     private KhachHang kh;
+    private int count;
 
     public KhachHangInfoPanel() {
         initComponents();
-//        fillComboVaiTro();
         fixTextPane(jScrollPane2);
         fixRadioPanel();
         setFieldName();
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentHidden(ComponentEvent ce) {
-                System.out.println("Component Hidden");
-            }
-
-            @Override
-            public void componentShown(ComponentEvent ce) {
-                System.out.println("Component Showned");
-            }
-
-            @Override
-            public void componentResized(ComponentEvent ce) {
-                System.out.println("Component Resized");
-                addListeners();
-            }
-
-        });
-
+        addListeners();
     }
 
     private void updateStatus() {
         boolean isNew = kh == null;
-        boolean manager = Auth.isManager();
         btnGuiMail.setVisible(!isNew);
         btnCapNhat.setText(isNew ? "Thêm mới" : "Cập nhật");
-        txtMaKH.setEditable(isNew);
+//        txtMaKH.setEditable(isNew);
     }
 
     void setForm() {
         if (kh == null) {
-            reset();
             return;
         }
         txtMaKH.setText(kh.getIdKH());
@@ -90,81 +62,56 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
     }
 
     public KhachHang getForm() {
-        if (!validateField(txtMaKH, txtHoKH, txtTenKH, txtNgaySinh, txtDiaChi, txtEmail, txtSDT )) {
+        if (!validateField(txtMaKH, txtHoKH, txtTenKH, txtNgaySinh, txtDiaChi, txtEmail, txtSDT)) {
             return null;
         }
         try {
-           KhachHang kh = new KhachHang();
+            KhachHang kh = new KhachHang();
             kh.setIdKH(txtMaKH.getText());
             kh.setHoKH(txtHoKH.getText());
             kh.setTenKH(txtTenKH.getText());
-            kh.setNgaySinh(XDate.parse(txtNgaySinh.getText(),"dd--MM--yyyy"));
+            kh.setNgaySinh(XDate.parse(txtNgaySinh.getText(), "dd-MM-yyyy"));
             kh.setDiaChi(txtDiaChi.getText());
             kh.setSdt(txtSDT.getText());
             kh.setEmail(txtEmail.getText());
             kh.setGhiChu(txtGhiChu.getText());
-            kh.setGioiTinh(rdoDaTV.isSelected());
+            kh.setGioiTinh(rdoNam.isSelected());
+            kh.setThanhVien(rdoDaTV.isSelected());
             return kh;
         } catch (ParseException ex) {
-            Logger.getLogger(NhanVienInfoPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
     private void reset() {
-       for (Component c : pnlMain.getComponents()) {
+        for (Component c : pnlMain.getComponents()) {
             if (c instanceof JTextField) {
                 ((JTextField) c).setText("");
             }
         }
         rdoNam.setSelected(true);
         rdoChuaTV.setSelected(true);
-        txtMaKH.requestFocus();
+        txtMaKH.setText(getAutoID());
+        txtTenKH.requestFocus();
         if (kh != null) {
             setForm();
         }
     }
 
+    private String getAutoID() {
+        return String.format("KH%06d", count + 1);
+    }
+
     public void setForm(KhachHang kh) {
         this.kh = kh;
-        setForm();
+        reset();
         updateStatus();
     }
 
     private void addListeners() {
-        this.addPropertyChangeListener("ancestor", (PropertyChangeEvent e) -> {
-            reset();
-        });
         btnReset.addActionListener((ActionEvent e) -> {
-            System.out.println("reseting");
             reset();
         });
-
-        btnReset.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
-                System.out.println("I'm clicking reset button");
-            }
-
-        });
-        btnCapNhat.addActionListener((ActionEvent e) -> {
-            System.out.println("reseting");
-        });
-
-        System.out.println("Button udpate has " + btnCapNhat.getAncestorListeners().length);
-//        for (Component c : pnlMain.getComponents()) {
-//            if (c instanceof JTextField) {
-//                ((JTextField) c).addFocusListener(new FocusAdapter(){
-//                    @Override
-//                    public void focusGained(FocusEvent fe) {
-//                        System.out.println(c.getSize().width);
-//                    }
-//                    
-//                    
-//                });
-//            }
-//        }
-
     }
 
     private boolean validateField(JTextField... fields) {
@@ -182,7 +129,7 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
         }
         return true;
     }
-    
+
     private void setFieldName() {
         txtMaKH.setName("Mã KH");
         txtHoKH.setName("Họ KH");
@@ -254,6 +201,10 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
         return kh;
     }
 
+    public void setSoLuong(int count) {
+        this.count = count;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -303,11 +254,6 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
         rdoChuaTV.setText("Chưa thành viên");
         rdoChuaTV.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         rdoChuaTV.setFocusPainted(false);
-        rdoChuaTV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdoChuaTVActionPerformed(evt);
-            }
-        });
         pnlThanhVien.add(rdoChuaTV);
 
         lblGhiChu.setForeground(new java.awt.Color(102, 102, 102));
@@ -321,27 +267,19 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
         txtGhiChu.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jScrollPane2.setViewportView(txtGhiChu);
 
+        txtMaKH.setEditable(false);
         txtMaKH.setAnimateLabel(false);
         txtMaKH.setDrawLine(false);
         txtMaKH.setFocusCycleRoot(true);
         txtMaKH.setLabelText("Mã khách hàng");
 
         txtTenKH.setLabelText("Tên khách hàng");
-        txtTenKH.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTenKHActionPerformed(evt);
-            }
-        });
 
+        txtNgaySinh.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
         txtNgaySinh.setLabelText("Ngày sinh");
         txtNgaySinh.setPlaceholder("dd-MM-YYYY");
 
         txtDiaChi.setLabelText("Địa chỉ");
-        txtDiaChi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDiaChiActionPerformed(evt);
-            }
-        });
 
         txtEmail.setLabelText("Email");
 
@@ -356,11 +294,6 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
         btnGuiMail.setText("Gửi mail");
         btnGuiMail.setBorderPainted(false);
         btnGuiMail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnGuiMail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuiMailActionPerformed(evt);
-            }
-        });
         pnlButton.add(btnGuiMail);
 
         btnCapNhat.setBackground(new java.awt.Color(0, 174, 114));
@@ -369,11 +302,6 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
         btnCapNhat.setText("Cập nhật");
         btnCapNhat.setBorderPainted(false);
         btnCapNhat.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCapNhatActionPerformed(evt);
-            }
-        });
         pnlButton.add(btnCapNhat);
 
         btnReset.setBackground(new java.awt.Color(0, 174, 114));
@@ -382,11 +310,6 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
         btnReset.setText("Đặt lại");
         btnReset.setBorderPainted(false);
         btnReset.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnReset.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResetActionPerformed(evt);
-            }
-        });
         pnlButton.add(btnReset);
 
         txtHoKH.setLabelText("Họ khách hàng");
@@ -417,7 +340,7 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
         pnlMainLayout.setHorizontalGroup(
             pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(20, 20, 20)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtHoKH, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlThanhVien, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -432,11 +355,10 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addComponent(txtSDT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(pnlGioiTinh1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblGhiChu)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(5, 5, 5))
+                    .addComponent(pnlGioiTinh1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblGhiChu)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlButton, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -499,30 +421,6 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
             .addComponent(pnlMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtDiaChiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiaChiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDiaChiActionPerformed
-
-    private void txtTenKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenKHActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTenKHActionPerformed
-
-    private void btnGuiMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiMailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuiMailActionPerformed
-
-    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCapNhatActionPerformed
-
-    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnResetActionPerformed
-
-    private void rdoChuaTVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoChuaTVActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rdoChuaTVActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

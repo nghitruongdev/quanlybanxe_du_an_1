@@ -43,8 +43,7 @@ public class MainForm extends javax.swing.JPanel {
         bg.add(header, "h 60!, wrap");
         bg.add(pnlMain, "w 100%, h 100%");
         menu.addEvent((int menuIndex, int subMenuIndex) -> {
-            
-            System.out.println("Hello world" + menuIndex + ", subMenu: " + subMenuIndex);
+//            System.out.println("Hello world" + menuIndex + ", subMenu: " + subMenuIndex);
         });
         TimingTarget target = new TimingTargetAdapter() {
             @Override

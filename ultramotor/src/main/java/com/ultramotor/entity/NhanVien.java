@@ -193,7 +193,7 @@ public class NhanVien extends Entity {
 
     @Override
     public String toString() {
-        return "com.ultramotor.entity.NhanVien[ idNV=" + idNV + " ]";
+        return idNV;
     }
 
 }

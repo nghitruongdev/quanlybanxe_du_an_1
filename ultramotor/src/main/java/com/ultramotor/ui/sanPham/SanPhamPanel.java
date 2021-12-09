@@ -24,7 +24,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.nio.file.Paths;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
@@ -623,13 +622,13 @@ public class SanPhamPanel extends JPanel {
     private String getAutoID(String name) {
         switch (name) {
             case "NSX":
-                return "NSX" + listNSX.size();
+                return "NSX" + String.format("%02d", listNSX.size()+1);
             case "LH":
-                return "LH" + listLH.size();
+                return "LH" + String.format("%02d", listLH.size()+1);
             case "DSP":
-                return "DSP" + listDongSP.size();
+                return "DSP" + String.format("%02d", listDongSP.size()+1);
             case "SP":
-                return "SP" + listSP.size();
+                return "SP" + String.format("%04d", listSP.size()+1);
         }
         return "";
     }

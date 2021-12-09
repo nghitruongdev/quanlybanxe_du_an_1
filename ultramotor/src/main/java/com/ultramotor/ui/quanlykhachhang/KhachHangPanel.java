@@ -1,43 +1,41 @@
 package com.ultramotor.ui.quanlykhachhang;
 
-import com.swingx.CloseButton;
 import com.swingx.table.ModelAction;
 import com.swingx.table.ModelEvent;
-
+import com.ultramotor.dao.HoaDonDAO;
 import com.ultramotor.dao.KhachHangDAO;
 import com.ultramotor.entity.KhachHang;
 import com.ultramotor.ui.nhanvien.SendMailPanel;
 import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDate;
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import com.ultramotor.util.XDialog;
+import com.ultramotor.util.XValidate;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import javax.swing.CellEditor;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.RowFilter;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import net.miginfocom.swing.MigLayout;
 
 public class KhachHangPanel extends javax.swing.JPanel {
 
     KhachHangDAO dao = new KhachHangDAO();
-    int row = -1; //vị trí hàng được chọn trên table
     ModelEvent event;
     private KhachHangInfoPanel pnlInfo;
     private SendMailPanel pnlSendMail;
     private DefaultTableModel model;
-    private boolean hasEdit = false;
 
     public KhachHangPanel() {
         initComponents();
@@ -51,23 +49,24 @@ public class KhachHangPanel extends javax.swing.JPanel {
         event = new ModelEvent<KhachHang>() {
             @Override
             public void update(KhachHang e) {
+                pnlInfo.setSoLuong(tblKhachHang.getRowCount());
                 pnlInfo.setForm(e);
                 showPanel("info");
-                hasEdit = true;
             }
 
             @Override
             public void delete(KhachHang e) {
-                deleteNV(e.getIdKH());
+                if (MsgBox.confirm("Bạn có muốn xoá khách hàng " + e.getHoTenKH() + "?", false) != 0) {
+                    deleteKH(e);
+                }
             }
-
         };
         this.fillTable(dao.selectAll());
         addListeners();
     }
 
     private void initTable() {
-        Object[] columns = {"Select", "ID", "Họ Và Tên", "Giới Tính", "Ngày Sinh", "Địa chỉ", "Số ĐT", "Email", "Thành viên", "Ghi Chú", "Actions"};
+        Object[] columns = {"Select", "ID", "Họ Và Tên", "Giới Tính", "Ngày Sinh", "Địa chỉ", "Số ĐT", "Email", "Thành viên", "Actions"};
         model = new DefaultTableModel(columns, 0);
         tblKhachHang.setModel(model);
 
@@ -77,77 +76,94 @@ public class KhachHangPanel extends javax.swing.JPanel {
             @Override
             public void keyReleased(KeyEvent e) {
                 String text = txtTimKiem.getText().trim();
-//              
-                dao.selectByKeyword(text);
-                fillTable();
+                if (text.isEmpty()) {
+                    sorter.setRowFilter(null);
+                } else {
+                    List<RowFilter<Object, Object>> filters = new ArrayList<>();
+                    filters.add(RowFilter.regexFilter("(?i)" + text.toUpperCase()));
+                    filters.add(RowFilter.regexFilter("(?i)" + text));
+                    sorter.setRowFilter(RowFilter.orFilter(filters));
+                }
             }
         });
         tblKhachHang.fixTable((JScrollPane) tblKhachHang.getParent().getParent());
     }
 
-    void insert() throws ParseException {
-//        if (!Auth.isManager()) {
-//            MsgBox.inform("Bạn không có quyền thêm nhân viên!");
-//        } else {
-//        NhanVien nv = getForm();
-        KhachHang kh = pnlInfo.getForm();
-//        if (nv.getMatKhau().length() < 3 || nv.getMatKhau().length() > 16) {
-//            MsgBox.inform("Vui lòng nhập kí tự mật khẩu từ 3 - 16 kí tự!");
-//            return;
-//        }
-        try {
-            dao.insert(kh);
-            this.fillTable();
-//            this.clearForm();
+    private void insert(KhachHang kh) {
+        if (kh == null) {
+            return;
+        }
+        if (dao.insert(kh) > 0) {
+            model.addRow(getInfo(kh));
+            int index = tblKhachHang.getRowCount() - 1;
+            tblKhachHang.setRowSelectionInterval(index, index); //đật hàng chọn trên bảng
+            tblKhachHang.scrollRectToVisible(new java.awt.Rectangle(tblKhachHang.getCellRect(index, 0, true))); //di chuyển thanh lăn tới vị trí hàng chọn
             MsgBox.inform("Thêm mới thành công!");
-        } catch (Exception e) {
+        } else {
             MsgBox.inform("Thêm mới thất bại!");
         }
-//    }
     }
 
-    void update() {
-        KhachHang kh = pnlInfo.getForm();
-        try {
-            dao.update(kh);
-            this.fillTable();
-//            this.clearForm();
-            MsgBox.inform("Cập nhật thành công!");
-        } catch (Exception e) {
-            MsgBox.inform("Cập nhật thất bại!");
+    private void update(KhachHang kh) {
+        if (kh == null) {
+            return;
+        }
+        if (dao.insert(kh) > 0) {
+            int index = tblKhachHang.getSelectedRow();
+            CellEditor editor = tblKhachHang.getCellEditor();
+            if(editor!=null){
+                editor.stopCellEditing();
+            }
+            model.removeRow(index);
+            model.insertRow(index, getInfo(kh));
+            tblKhachHang.scrollRectToVisible(new java.awt.Rectangle(tblKhachHang.getCellRect(index, 0, true))); //di chuyển thanh lăn tới vị trí hàng chọn
+            MsgBox.inform("Cập nhật khách hàng thành công!");
+        } else {
+            MsgBox.inform("Cập nhật khách hàng thất bại!");
         }
     }
 
-    private void deleteNV(String maNV) {
-        if (!Auth.isManager()) {
-            MsgBox.inform("Bạn không có quyền xóa nhân viên!");
-        } else {
-//            String manv = nv.getIdNV();
-            if (maNV.equals(Auth.user.getIdNV())) {
-                MsgBox.inform("Bạn không được xóa chính bạn!");
-            } else if (MsgBox.confirm("Bạn thực sự muốn xóa nhân viên này?", false) == 0) {
-                try {
-                    dao.delete(maNV);
-                    this.fillTable();
-                    MsgBox.inform("Xóa thành công!");
-                } catch (Exception e) {
-                    MsgBox.inform("Xóa thất bại!");
-                }
+    private void deleteKH(KhachHang kh) {
+        if (kh == null) {
+            return;
+        }
+        if (hasHoaDon(kh) && MsgBox.confirm("Khách hàng vẫn còn hoá đơn trong hệ thống. Bạn có muốn xoá?", false) != 0) {
+            return;
+        }
+        if (dao.delete(kh.getIdKH()) > 0) {
+            MsgBox.inform("Xoá khách hàng thành công!");
+            int row = tblKhachHang.getSelectedRow();
+            CellEditor editor = tblKhachHang.getCellEditor();
+            if(editor!=null){
+                editor.stopCellEditing();
             }
+            model.removeRow(row);
+        } else {
+            MsgBox.inform("Xoá khách hàng thất bại!");
         }
     }
 
     private void sendMail() {
-        List<String> emails = new ArrayList<>();
+        Set<String> emails = new HashSet<>();
         List<Integer> list = getSelectedRows();
-        boolean all = list.isEmpty();
-        for (int i = 0; i < tblKhachHang.getRowCount(); i++) {
-            if (all || list.contains(i)) {
-                emails.add((String) tblKhachHang.getValueAt(i, 7));
+        if (list.isEmpty()) {
+            int confirm = MsgBox.confirm("Bạn chưa chọn khách hàng muốn gửi mail. Bạn có muốn gửi mail cho tất cả khách hàng?", true);
+            if (confirm == MsgBox.CANCEL_OPTION) {
+                return;
+            } else if (confirm == MsgBox.NO_OPTION) {
+                sendMail("");
+                return;
             }
         }
+        //nếu người dùng đã chọn khách hàng hoặc chọn gửi cho tất cả khách hàng
+        for (int i = 0; i < tblKhachHang.getRowCount(); i++) {
+            if (list.isEmpty() || list.contains(i)) {
+                String email = (String) tblKhachHang.getValueAt(i, 7);
+                emails.add(XValidate.validateEmail(email) ? email : "");
+            }
+        }
+        emails.remove("");
         sendMail(emails.toArray(new String[emails.size()]));
-
     }
 
     private void sendMail(String... emails) {
@@ -161,26 +177,16 @@ public class KhachHangPanel extends javax.swing.JPanel {
             false, kh.getIdKH(), kh.getHoKH() + " " + kh.getTenKH(),
             kh.getGioiTinh() ? "Nam" : "Nữ", XDate.toString(kh.getNgaySinh(), "dd/MM/yyyy"),
             kh.getDiaChi(),
-            kh.getSdt(), kh.getEmail(), kh.getThanhVien(),
-            kh.getGhiChu(), new ModelAction(kh, event)
+            kh.getSdt(), kh.getEmail(), kh.getThanhVien() ? "Thành Viên" : "",
+            new ModelAction(kh, event)
         };
     }
 
-    void fillTable() {
-        String keyword = txtTimKiem.getText();
-        fillTable(dao.selectByKeyword(keyword)); // đọc dữ liệu từ csdl
-    }
-
     void fillTable(List<KhachHang> list) {
-        DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
         model.setRowCount(0); // xóa tất cả các hàng trên jtable
-        try {
-            for (KhachHang kh : list) {
-                model.addRow(getInfo(kh));
-            }
-        } catch (Exception e) {
-            MsgBox.error("Lỗi truy vấn dữ liệu");
-        }
+        list.forEach(kh -> {
+            model.addRow(getInfo(kh));
+        });
     }
 
     private List<Integer> getSelectedRows() {
@@ -198,64 +204,26 @@ public class KhachHangPanel extends javax.swing.JPanel {
         new Thread(() -> {
             try {
                 Thread.sleep(300);
-                JDialog dialog = null;
-                switch (name) {
-                    case "info":
-                        dialog = getDialog(pnlInfo);
-                        break;
-                    case "sendMail":
-                        dialog = getDialog(pnlSendMail);
-                        break;
-                }
-                dialog.setVisible(true);
             } catch (InterruptedException e) {
+            }
+            JPanel panel = null;
+            switch (name) {
+                case "info":
+                    panel = pnlInfo;
+                    break;
+                case "sendMail":
+                    panel = pnlSendMail;
+                    break;
+            }
+            if (panel != null) {
+                XDialog.getDialog((JFrame) this.getTopLevelAncestor(), panel).setVisible(true);
             }
         }).start();
     }
 
-    private JDialog getDialog(JPanel panel) {
-        JDialog dialog = new JDialog((Frame) this.getTopLevelAncestor(), true);
-        dialog.setUndecorated(true);
-        dialog.setBackground(new Color(255, 255, 255, 0));
-        JPanel con = new JPanel() {
-            @Override
-            public void paint(Graphics grphcs) {
-                Graphics2D g2 = (Graphics2D) grphcs;
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
-                g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 5, 5);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-                super.paint(grphcs);
-            }
-        };
-
-        con.setOpaque(false);
-        con.setBackground(new Color(250, 250, 250));
-        con.setLayout(new MigLayout("inset 5 20 20 5", "[center]", "[20!][fill, center, grow]"));
-        con.add(new CloseButton(), "al right, wrap");
-        con.add(panel, "pushy, center, gapright 15");
-//        dialog.setBounds(this.getWidth() / 2, this.getHeight(), this.getWidth() / 4, 0);
-
-        dialog.setSize(this.getWidth() / 2, this.getHeight());
-        dialog.getContentPane().add(con);
-        dialog.pack();
-
-        dialog.setLocation(this.getWidth() / 4, (this.getHeight() - dialog.getHeight()) / 2);
-        dialog.setLocationRelativeTo(this);
-        return dialog;
-    }
-
     private void addListeners() {
-//        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
-//            @Override
-//        public void keyReleased(java.awt.event.KeyEvent evt) {
-//                //code xử lý keyReleased ở đây.
-////                fillTable();
-//                fillTable(dao.selectByKeyword(txtTimKiem.getText()));
-//            }
-//        });
-
         btnThemMoi.addActionListener((ActionEvent e) -> {
+            pnlInfo.setSoLuong(tblKhachHang.getRowCount());
             pnlInfo.setForm(null);
             showPanel("info");
         });
@@ -267,18 +235,40 @@ public class KhachHangPanel extends javax.swing.JPanel {
         pnlInfo.setMailListener((ActionEvent e) -> {
             sendMail(pnlInfo.getKhachHang().getEmail());
         });
+
         pnlInfo.setUpdateListener((ActionEvent e) -> {
-             
+            KhachHang kh = pnlInfo.getForm();
+            if (kh == null) {
+                return;
+            }
+            int index = findIndexKhachHang(kh);
+            if (index == -1) {
+                insert(kh);
+            } else {
+                update(kh);
+            }
+//            ((JDialog) pnlInfo.getTopLevelAncestor()).dispose();
         });
     }
-//    private int getIndexKhachHang(String IdKH) {
-//        for (int i = 0; i < tblKhachHang.getRowCount(); i++) {
-//            if (tblKhachHang.getValueAt(i, 1).toString().equalsIgnoreCase(IdKH)) {
-//                return i;
-//            }
-//        }
-//        return -1;
-//    }
+
+    private int findIndexKhachHang(KhachHang kh) {
+        if (kh == null) {
+            return -1;
+        }
+        for (int i = 0; i < tblKhachHang.getRowCount(); i++) {
+            if (kh.getIdKH().equalsIgnoreCase((String) tblKhachHang.getValueAt(i, 1))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private boolean hasHoaDon(KhachHang kh) {
+        if (kh == null) {
+            return false;
+        }
+        return new HoaDonDAO().selectByKhachHang(kh.getIdKH()).size() > 0;
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -306,11 +296,6 @@ public class KhachHangPanel extends javax.swing.JPanel {
         btnThemMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/icons8-save.png"))); // NOI18N
         btnThemMoi.setText("Thêm mới");
         btnThemMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnThemMoi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemMoiActionPerformed(evt);
-            }
-        });
 
         btnExport.setBackground(new java.awt.Color(0, 174, 114));
         btnExport.setForeground(new java.awt.Color(255, 255, 255));
@@ -370,7 +355,7 @@ public class KhachHangPanel extends javax.swing.JPanel {
                         .addComponent(btnGuiMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblQLKH))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -386,11 +371,6 @@ public class KhachHangPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnThemMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemMoiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnThemMoiActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnExport;
     private com.swingx.Button btnGuiMail;
@@ -402,4 +382,13 @@ public class KhachHangPanel extends javax.swing.JPanel {
     private com.swingx.SearchTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame fr = new JFrame();
+            fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            fr.getContentPane().add(new KhachHangPanel());
+            fr.pack();
+            fr.setVisible(true);
+        });
+    }
 }

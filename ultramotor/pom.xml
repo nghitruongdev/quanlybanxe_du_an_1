@@ -34,7 +34,7 @@
             <version>3.7.4</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.kenai.nbpwr/org-jdesktop-animation-timing -->
+        <!-- org-jdesktop-animation-timing -->
         <dependency>
             <groupId>com.kenai.nbpwr</groupId>
             <artifactId>org-jdesktop-animation-timing</artifactId>
@@ -50,12 +50,13 @@
         </dependency>
 
         
-        <!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+        <!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
         <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>javax.mail-api</artifactId>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
         </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
         <dependency>

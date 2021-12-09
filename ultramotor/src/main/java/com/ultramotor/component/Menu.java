@@ -46,7 +46,7 @@ public class Menu extends javax.swing.JPanel {
                         new MenuAnimation(layout, comp).openMenu(open);
                         return true;
                     } else {
-                        System.out.println("Show pop up menu: menu closed");
+//                        System.out.println("Show pop up menu: menu closed");
                     }
                 }
                 return true;

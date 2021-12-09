@@ -98,7 +98,7 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Th&#xf4;ng tin chung">
+                <TitledBorder title="TH&#xd4;NG TIN KH&#xc1;CH H&#xc0;NG">
                   <Color PropertyName="color" blue="ff" green="99" red="0" type="rgb"/>
                 </TitledBorder>
               </Border>
@@ -1657,7 +1657,7 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Th&#xf4;ng tin &#x111;&#x1a1;n h&#xe0;ng">
+                <TitledBorder title="TH&#xd4;NG TIN S&#x1ea2;N PH&#x1ea8;M">
                   <Color PropertyName="color" blue="ff" green="99" red="0" type="rgb"/>
                 </TitledBorder>
               </Border>

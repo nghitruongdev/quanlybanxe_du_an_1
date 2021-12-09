@@ -623,7 +623,19 @@ INSTEAD OF DELETE
 NOT FOR REPLICATION
 AS UPDATE NhanVien SET isDeleted = 1 WHERE id_NV in (select id_NV from deleted)
 
+DROP TRIGGER IF EXISTS trg_delete_KhachHang
+GO
 
+CREATE TRIGGER trg_delete_KhachHang
+ON KhachHang
+INSTEAD OF DELETE
+NOT FOR REPLICATION
+AS 
+BEGIN
+	UPDATE HoaDon SET idKH = NULL WHERE idKH IN (SELECT idKH FROM deleted)
+	DELETE FROM KhachHang WHERE idKH IN (SELECT idKH FROM deleted)
+END
+GO
 
 ----------------------------------------------CREATE VIEW---------------------------------------------------------
 DROP VIEW IF EXISTS view_SanPhamTon

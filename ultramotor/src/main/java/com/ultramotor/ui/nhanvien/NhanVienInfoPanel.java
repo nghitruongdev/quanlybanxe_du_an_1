@@ -24,6 +24,7 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -35,32 +36,31 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.JTextComponent;
 
 public class NhanVienInfoPanel extends javax.swing.JPanel {
-
+    
     private NhanVien nv;
     private final File path = Paths.get("logos", "nhanvien").toFile();
     private final File defaultFile = new File(path, "default.png");
-
+    
     public NhanVienInfoPanel() {
         initComponents();
-
+        
         fixTextPane(jScrollPane2);
         fixRadioPanel();
         setFieldName();
         addListeners();
     }
-
+    
     private void updateStatus() {
         boolean isNew = nv == null;
         boolean manager = Auth.isManager();
         btnGuiMail.setVisible(!isNew);
         btnCapNhat.setText(isNew ? "Thêm mới" : "Cập nhật");
         cboVaiTro.setEditable(manager);
-        txtMaNV.setEditable(isNew);
+//        txtMaNV.setEditable(isNew);
     }
-
+    
     void setForm() {
         if (nv == null) {
-            reset();
             return;
         }
         txtMaNV.setText(nv.getIdNV());
@@ -70,7 +70,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         txtDiaChi.setText(nv.getDiaChi());
         txtSDT.setText(nv.getSdt());
         txtEmail.setText(nv.getEmail());
-        txtLuong.setText(String.valueOf(nv.getLuong()));
+        txtLuong.setValue(nv.getLuong());
         cboVaiTro.setSelectedItem(nv.getVaiTro());
         XImage.setIcon(new File(path, nv.getHinh()), lblHinh, defaultFile);
         txtGhiChu.setText(nv.getGhiChu());
@@ -79,7 +79,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         cboVaiTro.setEnabled(Auth.isManager());
         txtLuong.setEditable(Auth.isManager());
     }
-
+    
     private void reset() {
         for (Component c : pnlMain.getComponents()) {
             if (c instanceof JTextField) {
@@ -91,12 +91,12 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
             cboVaiTro.setSelectedIndex(0);
         }
         XImage.setIcon(null, lblHinh, defaultFile);
-        txtMaNV.requestFocus();
+        txtMaNV.setText(getAutoID());
         if (nv != null) {
             setForm();
         }
     }
-
+    
     public NhanVien getForm() {
         if (!validateField(txtMaNV, txtHoNV, txtTenNV, txtNgaySinh, txtDiaChi, txtSDT, txtEmail, txtLuong)) {
             return null;
@@ -110,7 +110,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
             nv.setDiaChi(txtDiaChi.getText());
             nv.setSdt(txtSDT.getText());
             nv.setEmail(txtEmail.getText());
-            nv.setLuong(((Number)txtLuong.getValue()).doubleValue());
+            nv.setLuong(((Number) txtLuong.getValue()).doubleValue());
             nv.setVaiTro((String) cboVaiTro.getSelectedItem());
             nv.setHinh(lblHinh.getToolTipText());
             nv.setGhiChu(txtGhiChu.getText());
@@ -121,13 +121,13 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         }
         return null;
     }
-
+    
     public void setForm(NhanVien nv) {
         this.nv = nv;
-        setForm();
+        reset();
         updateStatus();
     }
-
+    
     private void fillComboVaiTro() {
         HashSet<String> set = new HashSet();
         new NhanVienDAO().selectAll().forEach((nv) -> {
@@ -135,17 +135,17 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         });
         cboVaiTro.setModel(new DefaultComboBoxModel(set.toArray()));
     }
-
+    
     private void addListeners() {
         this.addPropertyChangeListener("ancestor", (PropertyChangeEvent e) -> {
             reset();
             fillComboVaiTro();
         });
-
+        
         btnReset.addActionListener((ActionEvent e) -> {
             reset();
         });
-
+        
         if (lblHinh.getMouseListeners().length > 0) {
             lblHinh.removeMouseListener(lblHinh.getMouseListeners()[0]);
         }
@@ -158,7 +158,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
             }
         });
     }
-
+    
     private boolean validateField(JTextField... fields) {
         for (JTextField field : fields) {
             if (!MyVerifier.NHAN_VIEN_VERIFIER.verify(field)) {
@@ -174,7 +174,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         }
         return true;
     }
-
+    
     private void setFieldName() {
         txtMaNV.setName("Mã NV");
         txtHoNV.setName("Họ NV");
@@ -186,13 +186,13 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         txtLuong.setName("Lương NV");
         setFieldVerifier(txtMaNV, txtHoNV, txtTenNV, txtNgaySinh, txtDiaChi, txtEmail, txtSDT, txtLuong);
     }
-
+    
     private void setFieldVerifier(JTextComponent... comp) {
         for (JTextComponent field : comp) {
             field.setInputVerifier(MyVerifier.NHAN_VIEN_VERIFIER);
         }
     }
-
+    
     private void fixTextPane(JScrollPane scroll) {
         scroll.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204), 1));
         scroll.getViewport().setBackground(Color.WHITE);
@@ -206,53 +206,57 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
             public void focusLost(FocusEvent fe) {
                 scroll.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204), 1));
             }
-
+            
             @Override
             public void focusGained(FocusEvent fe) {
                 scroll.setBorder(BorderFactory.createLineBorder(txtMaNV.getLineColor(), 1));
             }
-
+            
         });
     }
-
+    
     private void fixRadioPanel() {
         MouseAdapter adt = new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent me) {
                 pnlGioiTinh.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), "Giới Tính", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 11), new java.awt.Color(109, 109, 109))); // NOI18N
             }
-
+            
             @Override
             public void mouseEntered(MouseEvent me) {
                 pnlGioiTinh.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(3, 155, 216)), "Giới Tính", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 11), new java.awt.Color(109, 109, 109))); // NOI18N
             }
         };
-
+        
         for (Component component : pnlGioiTinh.getComponents()) {
             component.addMouseListener(adt);
         }
-
+        
         pnlGioiTinh.addMouseListener(adt);
     }
-
+    
     public void setMailListener(ActionListener mailListener) {
         btnGuiMail.addActionListener(mailListener);
     }
-
+    
     public void setUpdateListener(ActionListener updateListener) {
         btnCapNhat.addActionListener(updateListener);
     }
-
+    
     public void setFieldFocus(FocusAdapter adapter) {
         txtMaNV.addFocusListener(adapter);
     }
-
+    
     public NhanVien getNhanVien() {
         return nv;
     }
-
+    
     public void removeMailButton() {
         pnlButton.remove(btnGuiMail);
+    }
+    
+    private String getAutoID() {
+        return "NV" + String.format("%05d", NhanVienPanel.getSizeNV()+1);
     }
 
     @SuppressWarnings("unchecked")
@@ -348,6 +352,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         gridBagConstraints.weighty = 1.0;
         pnlMain.add(jScrollPane2, gridBagConstraints);
 
+        txtMaNV.setEditable(false);
         txtMaNV.setAnimateLabel(false);
         txtMaNV.setDrawLine(false);
         txtMaNV.setLabelText("Mã nhân viên");
