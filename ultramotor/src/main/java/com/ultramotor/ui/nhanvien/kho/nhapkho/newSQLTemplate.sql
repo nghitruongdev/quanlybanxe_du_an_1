@@ -1,2 +1,2 @@
 
-select * from sanpham
+select * from hoadon

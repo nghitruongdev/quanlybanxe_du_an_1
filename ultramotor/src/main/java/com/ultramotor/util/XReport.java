@@ -22,7 +22,7 @@ public class XReport {
 
     static File path = Paths.get("resources").toFile();
 
-    public static void createHoaDon(String idHD, File file) throws JRException, FileNotFoundException {
+    public static void createHoaDonReport(String idHD, File file) throws JRException, FileNotFoundException {
         String invoice = new File(path, "invoice.jrxml").getPath();
         try (Connection con = XJdbc.getCon()) {
             Map<String, Object> paras = new HashMap<>();

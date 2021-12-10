@@ -9,10 +9,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author nghipc
- */
 public class XFile {
 
     static Path logos;
