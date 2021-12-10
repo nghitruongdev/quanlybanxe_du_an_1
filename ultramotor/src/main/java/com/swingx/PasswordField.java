@@ -388,7 +388,7 @@ public class PasswordField extends JPasswordField {
         repaint();
     }
 
-    private void reset() {
+    public void reset() {
         if (getPassword().length== 0) {
             validInput = true;
             repaint();

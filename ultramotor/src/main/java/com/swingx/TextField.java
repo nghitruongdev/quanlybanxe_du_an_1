@@ -388,7 +388,7 @@ public class TextField extends JFormattedTextField {
         repaint();
     }
     
-     private void reset() {
+     public void reset() {
         if (getText().length() == 0) {
             validInput = true;
             repaint();

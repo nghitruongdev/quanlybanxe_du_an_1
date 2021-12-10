@@ -1,6 +1,7 @@
 package com.ultramotor.ui.login;
 
 import com.swingx.Button;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +44,7 @@ public class PanelOTP extends javax.swing.JPanel {
             if (comp instanceof JTextField) {
                 JTextField field = (JTextField) comp;
                 field.setHorizontalAlignment(JTextField.CENTER);
+                field.setSelectionColor(new Color(46,211,151));
                 field.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyTyped(KeyEvent ke) {
@@ -132,9 +134,11 @@ public class PanelOTP extends javax.swing.JPanel {
         txt1.setDrawLine(true);
         txt1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txt1.setLabelText("");
+        txt1.setLineColor(new java.awt.Color(46, 211, 151));
         txt1.setName("first"); // NOI18N
         txt1.setOnlyField(true);
         txt1.setPlaceholder("");
+        txt1.setSelectionColor(new java.awt.Color(46, 211, 151));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -145,8 +149,10 @@ public class PanelOTP extends javax.swing.JPanel {
         txt2.setDrawLine(true);
         txt2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txt2.setLabelText("");
+        txt2.setLineColor(new java.awt.Color(46, 211, 151));
         txt2.setOnlyField(true);
         txt2.setPlaceholder("");
+        txt2.setSelectionColor(new java.awt.Color(46, 211, 151));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
@@ -157,8 +163,10 @@ public class PanelOTP extends javax.swing.JPanel {
         txt3.setDrawLine(true);
         txt3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txt3.setLabelText("");
+        txt3.setLineColor(new java.awt.Color(46, 211, 151));
         txt3.setOnlyField(true);
         txt3.setPlaceholder("");
+        txt3.setSelectionColor(new java.awt.Color(46, 211, 151));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 0;
@@ -169,8 +177,10 @@ public class PanelOTP extends javax.swing.JPanel {
         txt4.setDrawLine(true);
         txt4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txt4.setLabelText("");
+        txt4.setLineColor(new java.awt.Color(46, 211, 151));
         txt4.setOnlyField(true);
         txt4.setPlaceholder("");
+        txt4.setSelectionColor(new java.awt.Color(46, 211, 151));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 12;
         gridBagConstraints.gridy = 0;
@@ -181,8 +191,10 @@ public class PanelOTP extends javax.swing.JPanel {
         txt5.setDrawLine(true);
         txt5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txt5.setLabelText("");
+        txt5.setLineColor(new java.awt.Color(46, 211, 151));
         txt5.setOnlyField(true);
         txt5.setPlaceholder("");
+        txt5.setSelectionColor(new java.awt.Color(46, 211, 151));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 16;
         gridBagConstraints.gridy = 0;
@@ -193,9 +205,11 @@ public class PanelOTP extends javax.swing.JPanel {
         txt6.setDrawLine(true);
         txt6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txt6.setLabelText("");
+        txt6.setLineColor(new java.awt.Color(46, 211, 151));
         txt6.setName("last"); // NOI18N
         txt6.setOnlyField(true);
         txt6.setPlaceholder("");
+        txt6.setSelectionColor(new java.awt.Color(46, 211, 151));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 20;
         gridBagConstraints.gridy = 0;

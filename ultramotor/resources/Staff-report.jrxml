@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Staff-report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ebe41c1a-cc1a-42bb-afb7-91c8ecbb55ad">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sql Server"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString>
+		<![CDATA[select * from NhanVien WHERE isDeleted = 0]]>
+	</queryString>
+	<field name="id_NV" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_NV"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_NV"/>
+	</field>
+	<field name="HoNV" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="HoNV"/>
+		<property name="com.jaspersoft.studio.field.label" value="HoNV"/>
+	</field>
+	<field name="TenNV" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TenNV"/>
+		<property name="com.jaspersoft.studio.field.label" value="TenNV"/>
+	</field>
+	<field name="NgaySinh" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NgaySinh"/>
+		<property name="com.jaspersoft.studio.field.label" value="NgaySinh"/>
+	</field>
+	<field name="GioiTinh" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="GioiTinh"/>
+		<property name="com.jaspersoft.studio.field.label" value="GioiTinh"/>
+	</field>
+	<field name="DiaChi" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DiaChi"/>
+		<property name="com.jaspersoft.studio.field.label" value="DiaChi"/>
+	</field>
+	<field name="SDT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SDT"/>
+		<property name="com.jaspersoft.studio.field.label" value="SDT"/>
+	</field>
+	<field name="Email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Email"/>
+		<property name="com.jaspersoft.studio.field.label" value="Email"/>
+	</field>
+	<field name="Luong" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="Luong"/>
+		<property name="com.jaspersoft.studio.field.label" value="Luong"/>
+	</field>
+	<field name="Hinh" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Hinh"/>
+		<property name="com.jaspersoft.studio.field.label" value="Hinh"/>
+	</field>
+	<field name="VaiTro" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="VaiTro"/>
+		<property name="com.jaspersoft.studio.field.label" value="VaiTro"/>
+	</field>
+	<field name="matKhau" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="matKhau"/>
+		<property name="com.jaspersoft.studio.field.label" value="matKhau"/>
+	</field>
+	<field name="GhiChu" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="GhiChu"/>
+		<property name="com.jaspersoft.studio.field.label" value="GhiChu"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="550" height="90" backcolor="#208BE3" uuid="b7c49d6d-3130-47c6-b2d9-265c1bbd547e"/>
+				<image onErrorType="Icon">
+					<reportElement x="10" y="5" width="160" height="80" uuid="562d52e3-8a51-4fe3-a237-2fe1271042b5"/>
+					<imageExpression><![CDATA["C:/Users/nghipc/qlbx/ultramotor/resources/img/logo.png"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="180" y="65" width="90" height="20" forecolor="#FFFFFF" uuid="a14b61e7-43c3-40d0-9b3d-0c920c8b9b6e"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Số Điện Thoại:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="180" y="45" width="50" height="20" forecolor="#FFFFFF" uuid="0f80f419-eefe-454c-befd-70ca3638fa07"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Địa chỉ: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="180" y="10" width="352" height="30" forecolor="#FFFFFF" uuid="14afef73-26ea-4bda-967a-a94d0d412e2d"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CỬA HÀNG BÁN XE ULTRAMOTOR
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="230" y="45" width="314" height="20" forecolor="#FFFFFF" uuid="e11ec59c-92bb-4601-9a00-3ba9f18fd38b"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" isBold="false"/>
+					</textElement>
+					<text><![CDATA[772 Kha Vạn Cân, phường Linh Đông, TP. Thủ Đức, TP. HCM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="270" y="65" width="274" height="20" forecolor="#FFFFFF" uuid="bd6e282f-4506-4afd-b855-4a28d828af83"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" isBold="false"/>
+					</textElement>
+					<text><![CDATA[058965874520]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="1" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="171" splitType="Stretch">
+			<textField>
+				<reportElement x="121" y="50" width="160" height="30" uuid="35f2b66a-509c-4c88-b66f-1c964b54b811">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5eaef53a-47dc-4493-bae8-3bbbe456d9c4"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_NV}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="121" y="80" width="160" height="30" uuid="f1a151b3-d01c-408e-9bc7-9cf4f3955b68">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="99b39e14-ab29-45da-a7e9-814f4e3004db"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NgaySinh}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="121" y="110" width="160" height="30" uuid="e70b1888-90c3-484e-8805-81103ca1f85b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3d8077ca-0e23-4c25-9b00-ebd8dbcb9932"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GioiTinh}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="121" y="140" width="160" height="30" uuid="6154349f-fbe8-42ed-bd68-8b03fb3a6e68">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4b258634-123b-4177-b99e-db9bbdd0ad45"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DiaChi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="50" width="121" height="30" uuid="4e433bd2-3118-4992-ba5d-aee15879a1e6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9d2c4936-d04b-45ed-966e-b7b6b0350e8b"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SDT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="80" width="122" height="30" uuid="2d4657b9-d13d-4b85-84cc-eaf982906682">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c95aa51-35b3-4fcb-bb50-4f247b70151d"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="110" width="122" height="30" uuid="834a0582-ec01-4f6c-b656-cda115e32ccd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="45c9e712-da8f-44ae-af77-291007e01d04"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Luong}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="140" width="122" height="30" uuid="f4df4ab1-845e-44cc-a4ee-23b657a07ee8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f33db1d6-8b84-4593-a30d-288bde95e2d4"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VaiTro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="50" width="88" height="30" uuid="7666791d-407c-407f-8e68-01f9a7fd27f0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5eaef53a-47dc-4493-bae8-3bbbe456d9c4"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<text><![CDATA[Mã NV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="80" width="86" height="30" uuid="0ea3a40a-3ca5-40a2-ba15-840937e8c4e1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="99b39e14-ab29-45da-a7e9-814f4e3004db"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<text><![CDATA[Ngày Sinh]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="49" width="63" height="30" uuid="529de0b6-b837-4fb7-8863-7ea83b436b6e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9d2c4936-d04b-45ed-966e-b7b6b0350e8b"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<text><![CDATA[SĐT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="110" width="86" height="30" uuid="96d9d43c-46ad-4e73-a69a-d111feef76c2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3d8077ca-0e23-4c25-9b00-ebd8dbcb9932"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<text><![CDATA[Giới Tính]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="140" width="86" height="30" uuid="6030fe88-c82d-4c4d-a42d-fc301006633f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4b258634-123b-4177-b99e-db9bbdd0ad45"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<text><![CDATA[Địa Chỉ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="79" width="62" height="30" uuid="900f04eb-09b9-4bbb-9b54-0097e59414eb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c95aa51-35b3-4fcb-bb50-4f247b70151d"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="110" width="62" height="30" uuid="1d825950-8dda-4f99-9fcb-ae103fb092ff">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="45c9e712-da8f-44ae-af77-291007e01d04"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<text><![CDATA[Lương]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="140" width="61" height="30" uuid="f6b57cd0-8314-4624-9064-bf0eadd88314">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f33db1d6-8b84-4593-a30d-288bde95e2d4"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Helvetica" size="12"/>
+				</textElement>
+				<text><![CDATA[Vai Trò]]></text>
+			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="2" y="19" width="550" height="30" backcolor="#208BE3" uuid="2314e321-0f68-4ee0-a352-13a88d09b83e"/>
+				<staticText>
+					<reportElement mode="Transparent" x="20" y="0" width="99" height="30" forecolor="#FFFFFF" uuid="6ef77829-4cc9-4cf5-85cd-476fb35fe1fe">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fd24eecd-fe7d-4868-b671-346d84336884"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Helvetica" size="12"/>
+					</textElement>
+					<text><![CDATA[Họ Và Tên]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Transparent" x="120" y="0" width="158" height="30" forecolor="#FFFFFF" uuid="6a07022d-9be5-452c-af82-0c0318ada671">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fd24eecd-fe7d-4868-b671-346d84336884"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Helvetica" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{HoNV} + " " + $F{TenNV}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="39" splitType="Stretch">
+			<textField evaluationTime="Page">
+				<reportElement x="430" y="10" width="40" height="19" uuid="c93098a4-a77b-4480-9d45-560fb5d52d8b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Page: " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="471" y="9" width="63" height="21" uuid="2f95bf3b-d10e-4465-a93e-31d6b0178100"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" of  " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

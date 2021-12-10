@@ -4,6 +4,10 @@ import com.swingx.scrollbar.ScrollBarCustom;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,11 +17,16 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class Table extends JTable {
 
@@ -84,6 +93,47 @@ public class Table extends JTable {
                         com.setBackground(Color.WHITE);
                     }
                     return com;
+                }
+            }
+        });
+    }
+    
+    public void initTable(String[] cols, Integer... columnEditable) {
+        DefaultTableModel model = new DefaultTableModel(cols, 0);
+        setModel(model);
+        setShowVerticalLines(true);
+//        getColumnModel().getColumn(0).setMaxWidth(200);
+//        getColumnModel().getColumn(getColumnCount() - 1).setMaxWidth(200);
+        JScrollPane pane = (JScrollPane) getParent().getParent();
+        fixTable(pane);
+        pane.setBorder(null);
+        addColumnEditable(columnEditable);
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                CellEditor editor = getCellEditor();
+                if (editor != null) {
+                    getCellEditor().stopCellEditing();
+                }
+            }
+        });
+    }
+    
+    public void addRowSorter(JTextField field) {
+        DefaultTableModel model = (DefaultTableModel) this.getModel();
+        TableRowSorter<TableModel> sorter = new TableRowSorter(model);
+        this.setRowSorter(sorter);
+        field.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String text = field.getText().trim();
+                if (text.isEmpty()) {
+                    sorter.setRowFilter(null);
+                } else {
+                    List<RowFilter<Object, Object>> filters = new ArrayList<>();
+                    filters.add(RowFilter.regexFilter("(?i)" + text));
+                    filters.add(RowFilter.regexFilter("(?i)" + text.toUpperCase()));
+                    sorter.setRowFilter(RowFilter.orFilter(filters));
                 }
             }
         });
@@ -184,4 +234,6 @@ class ViewCellEditor extends DefaultCellEditor {
     public Object getCellEditorValue() {
         return data;
     }
+    
+     
 }

@@ -22,17 +22,21 @@ public class XReport {
 
     static File path = Paths.get("resources").toFile();
 
-    public static void createHoaDon(String idHD, File file) throws JRException, FileNotFoundException {
+    public static void createHoaDonReport(String idHD, File file) throws JRException, FileNotFoundException {
         String invoice = new File(path, "invoice.jrxml").getPath();
         try (Connection con = XJdbc.getCon()) {
             Map<String, Object> paras = new HashMap<>();
-            paras.put("idHD", "HD01");
-            JasperDesign design = JRXmlLoader.load(invoice);
-            JasperReport report = JasperCompileManager.compileReport(design);
-            JasperPrint print = JasperFillManager.fillReport(report, paras, con);
-            JasperExportManager.exportReportToPdfFile(print, file.getPath());
+            paras.put("idHD", idHD);
+            fillReport(invoice, paras, con, file);
         } catch (SQLException ex) {
-            Logger.getLogger(XReport.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    private static void fillReport(String jrFile, Map paras, Connection con, File file) throws JRException {
+        JasperDesign design = JRXmlLoader.load(jrFile);
+        JasperReport report = JasperCompileManager.compileReport(design);
+        JasperPrint print = JasperFillManager.fillReport(report, paras, con);
+        JasperExportManager.exportReportToPdfFile(print, file.getPath());
+    }
+
 }

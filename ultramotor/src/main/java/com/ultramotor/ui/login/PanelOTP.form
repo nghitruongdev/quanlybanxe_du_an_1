@@ -29,9 +29,15 @@
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
         <Property name="labelText" type="java.lang.String" value=""/>
+        <Property name="lineColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="97" green="d3" red="2e" type="rgb"/>
+        </Property>
         <Property name="name" type="java.lang.String" value="first" noResource="true"/>
         <Property name="onlyField" type="boolean" value="true"/>
         <Property name="placeholder" type="java.lang.String" value=""/>
+        <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="97" green="d3" red="2e" type="rgb"/>
+        </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -46,8 +52,14 @@
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
         <Property name="labelText" type="java.lang.String" value=""/>
+        <Property name="lineColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="97" green="d3" red="2e" type="rgb"/>
+        </Property>
         <Property name="onlyField" type="boolean" value="true"/>
         <Property name="placeholder" type="java.lang.String" value=""/>
+        <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="97" green="d3" red="2e" type="rgb"/>
+        </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -62,8 +74,14 @@
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
         <Property name="labelText" type="java.lang.String" value=""/>
+        <Property name="lineColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="97" green="d3" red="2e" type="rgb"/>
+        </Property>
         <Property name="onlyField" type="boolean" value="true"/>
         <Property name="placeholder" type="java.lang.String" value=""/>
+        <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="97" green="d3" red="2e" type="rgb"/>
+        </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -78,8 +96,14 @@
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
         <Property name="labelText" type="java.lang.String" value=""/>
+        <Property name="lineColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="97" green="d3" red="2e" type="rgb"/>
+        </Property>
         <Property name="onlyField" type="boolean" value="true"/>
         <Property name="placeholder" type="java.lang.String" value=""/>
+        <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="97" green="d3" red="2e" type="rgb"/>
+        </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -94,8 +118,14 @@
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
         <Property name="labelText" type="java.lang.String" value=""/>
+        <Property name="lineColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="97" green="d3" red="2e" type="rgb"/>
+        </Property>
         <Property name="onlyField" type="boolean" value="true"/>
         <Property name="placeholder" type="java.lang.String" value=""/>
+        <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="97" green="d3" red="2e" type="rgb"/>
+        </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -110,9 +140,15 @@
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
         <Property name="labelText" type="java.lang.String" value=""/>
+        <Property name="lineColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="97" green="d3" red="2e" type="rgb"/>
+        </Property>
         <Property name="name" type="java.lang.String" value="last" noResource="true"/>
         <Property name="onlyField" type="boolean" value="true"/>
         <Property name="placeholder" type="java.lang.String" value=""/>
+        <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="97" green="d3" red="2e" type="rgb"/>
+        </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">

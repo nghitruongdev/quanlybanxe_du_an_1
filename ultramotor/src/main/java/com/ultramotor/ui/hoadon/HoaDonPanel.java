@@ -481,7 +481,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         File file = XFile.getTempFile(null, ".pdf");
         try {
             System.out.println("Printing HoaDon");
-            XReport.createHoaDon(hd.getIdHD(), file);
+            XReport.createHoaDonReport(hd.getIdHD(), file);
             XPdf.printPDF(file);
         } catch (JRException | IOException ex) {
             System.out.println(ex.getMessage());

@@ -49,7 +49,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
     private void init() {
         initTable();
-        sizeNV = ((Number) XJdbc.value("SELECT COUNT(*) FROM NhanVien")).intValue();
         pnlInfo = new NhanVienInfoPanel();
         pnlSendMail = new SendMailPanel();
         event = new ModelEvent<NhanVien>() {
@@ -66,6 +65,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
             }
         };
         fillTable(dao.selectAll());
+        sizeNV = model.getRowCount();
         addListeners();
 
     }
@@ -129,6 +129,10 @@ public class NhanVienPanel extends javax.swing.JPanel {
     }
 
     private void sendMail() {
+        if (sizeNV == 0) {
+            sendMail("");
+            return;
+        }
         Set<String> emails = new HashSet<>();
         List<Integer> list = getSelectedRows();
         if (list.isEmpty()) {
@@ -257,8 +261,19 @@ public class NhanVienPanel extends javax.swing.JPanel {
             hasEdit = true;
         });
 
+        btnExport.addActionListener(event->{
+        
+        });
     }
 
+    private void export(){
+        if(sizeNV == 0){
+            MsgBox.error("Danh sách nhân viên trống");
+            
+        }
+    }
+    
+    
     private int getIndexNhanVien(String maNV) {
         for (int i = 0; i < tblNhanVien.getRowCount(); i++) {
             if (tblNhanVien.getValueAt(i, 1).toString().equalsIgnoreCase(maNV)) {
