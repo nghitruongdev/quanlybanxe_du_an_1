@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner.NumberEditor;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.JTextComponent;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -154,16 +155,18 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
     }
 
     public void reset() {
-        model.setRowCount(0);
-        tblChiTiet.createDefaultColumnsFromModel();
-        tblChiTiet.getColumnModel().getColumn(tblChiTiet.getColumnCount() - 1).setMaxWidth(100);
+        SwingUtilities.invokeLater(() -> {
+            tblChiTiet.stopCellEditor();
+            model.setRowCount(0);
+            tblChiTiet.createDefaultColumnsFromModel();
+            tblChiTiet.getColumnModel().getColumn(tblChiTiet.getColumnCount() - 1).setMaxWidth(100);
+        });
         resetForm();
         pnk = null;
         viewOnly = false;
     }
 
     private void resetForm() {
-//        txtMaSKU.setText("");
         txtTenSP.setText("");
         txtGiaNhap.setText("");
         spnSoLuong.setValue(0);
@@ -215,7 +218,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
             MsgBox.error("Nhập số lượng sản phẩm!");
             return false;
         }
-        if (Double.parseDouble(txtGiaNhap.getText()) <= 0) {
+        if (txtGiaNhap.getText().isEmpty() || Double.parseDouble(txtGiaNhap.getText()) <= 0) {
             txtGiaNhap.requestFocus();
             MsgBox.error("Nhập giá sản phẩm!");
             return false;
@@ -227,7 +230,11 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         int row = tblChiTiet.getSelectedRow();
         tblChiTiet.stopCellEditor();
         pnk.getChiTietNhapKhoList().remove(row);
-        model.removeRow(row);
+        if (model.getRowCount() == 1) {
+            reset();
+        } else {
+            model.removeRow(row);
+        }
     }
 
     private Object[] getInfo(ChiTietNhapKho ct) {

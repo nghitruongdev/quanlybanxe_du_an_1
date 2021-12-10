@@ -2,6 +2,7 @@ package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
 import com.swingx.CloseButton;
 import com.swingx.MyScrollBar;
+import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDialog;
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -12,6 +13,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -63,11 +68,36 @@ public class BarcodePanel extends javax.swing.JPanel {
         });
         chkAll.addActionListener((ActionEvent e) -> {
             boolean boo = chkAll.isSelected();
-            for (Component component : pnlMain.getComponents()) {
-                ((Item) component).setSelected(boo);
+            for (Component comp : pnlMain.getComponents()) {
+                if (comp instanceof Item) {
+                    ((Item) comp).setSelected(boo);
+                }
             }
             chkAll.setText(boo ? "Bỏ chọn tất cả" : "Chọn tất cả");
         });
+
+        btnDelete.addActionListener(event -> {
+            for (Component comp : pnlMain.getComponents()) {
+                if (comp instanceof Item && ((Item) comp).isSelected()) {
+                    ((Item) comp).deleteItem();
+                }
+            }
+            MsgBox.inform("Đã xoá những mục đã chọn");
+        });
+    }
+
+    private void export() {
+        List<ItemBean> list = new ArrayList<>();
+        for (Component comp : pnlMain.getComponents()) {
+            if (comp instanceof Item) {
+                Item item = (Item) comp;
+                if (item.getSoLuong() == 0 || item.getMaSKU().isEmpty()) {
+                    return;
+                }
+                ItemBean bean = new ItemBean(item.getMaSKU(), item.getSoLuong());
+                list.add(bean);
+            }
+        }
     }
 
     private void fixScroll() {
@@ -95,17 +125,16 @@ public class BarcodePanel extends javax.swing.JPanel {
         panel.setDoneListener((ActionEvent e) -> {
             try {
                 addItem(panel.getMaSP());
+                panel.reset();
             } catch (Exception ex) {
-                return;
             }
-            panel.reset();
         });
+        
         new Thread(() -> {
             XDialog.getDialog((JFrame) this.getTopLevelAncestor(), panel).setVisible(true);
         }).start();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -114,7 +143,7 @@ public class BarcodePanel extends javax.swing.JPanel {
         btnAdd = new com.swingx.Button();
         chkAll = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
-        btnDeleteAll = new com.swingx.Button();
+        btnDelete = new com.swingx.Button();
         btnDeleteAll1 = new com.swingx.Button();
         btnDeleteAll2 = new com.swingx.Button();
         scroll = new javax.swing.JScrollPane();
@@ -133,11 +162,11 @@ public class BarcodePanel extends javax.swing.JPanel {
         chkAll.setFocusPainted(false);
         chkAll.setOpaque(false);
 
-        btnDeleteAll.setBackground(new java.awt.Color(0, 174, 114));
-        btnDeleteAll.setForeground(new java.awt.Color(255, 255, 255));
-        btnDeleteAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/waste_25px.png"))); // NOI18N
-        btnDeleteAll.setText("Xoá Tất Cả");
-        btnDeleteAll.setRadius(10);
+        btnDelete.setBackground(new java.awt.Color(0, 174, 114));
+        btnDelete.setForeground(new java.awt.Color(255, 255, 255));
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/waste_25px.png"))); // NOI18N
+        btnDelete.setText("Xoá");
+        btnDelete.setRadius(10);
 
         btnDeleteAll1.setBackground(new java.awt.Color(0, 174, 114));
         btnDeleteAll1.setForeground(new java.awt.Color(255, 255, 255));
@@ -162,7 +191,7 @@ public class BarcodePanel extends javax.swing.JPanel {
                 .addGap(33, 33, 33)
                 .addComponent(chkAll)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnDeleteAll, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDeleteAll1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -187,7 +216,7 @@ public class BarcodePanel extends javax.swing.JPanel {
                         .addGap(43, 43, 43)
                         .addGroup(pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnDeleteAll, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnDeleteAll1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnDeleteAll2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(chkAll))
@@ -232,7 +261,7 @@ public class BarcodePanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnAdd;
-    private com.swingx.Button btnDeleteAll;
+    private com.swingx.Button btnDelete;
     private com.swingx.Button btnDeleteAll1;
     private com.swingx.Button btnDeleteAll2;
     private javax.swing.JCheckBox chkAll;

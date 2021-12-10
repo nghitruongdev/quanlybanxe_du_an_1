@@ -9,12 +9,11 @@ public class ItemBean {
     private String maSP;
     private List<String> list;
 
-    public ItemBean(String maSP, int soLuong, String filePath) {
+    public ItemBean(String maSP, int soLuong) {
         this.maSP = maSP;
         list = new ArrayList<>(soLuong);
         for (int i = 0; i < soLuong; i++) {
-            list.add(filePath);
-            
+            list.add(maSP);
         }
     }
 

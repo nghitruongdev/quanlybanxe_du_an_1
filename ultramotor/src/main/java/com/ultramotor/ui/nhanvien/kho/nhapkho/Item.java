@@ -1,14 +1,11 @@
 package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
-import com.swingx.CloseButton;
 import com.ultramotor.dao.SanPhamDAO;
+import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XCodeHelper;
 import com.ultramotor.util.XDialog;
 import com.ultramotor.util.XFile;
-import com.ultramotor.util.XJdbc;
-import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -19,42 +16,54 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import net.miginfocom.swing.MigLayout;
 
 public class Item extends javax.swing.JPanel {
 
     private File file;
-    private SanPhamDAO dao;
-
+    private Map<String, String> map;
     public Item() {
         this(null);
     }
 
     public Item(ActionListener deleteListener) {
         initComponents();
-        dao = new SanPhamDAO();
+        
+        map = new SanPhamDAO().getMaVaTenSP();
         file = XFile.getTempFile("bc", ".png");
         btnDelete.addActionListener(deleteListener);
         txtMaSKU.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                createBarcode();
+                String ma = txtMaSKU.getText();
+                if(!map.containsKey(ma)){
+                    MsgBox.error("Không tìm thấy mã sản phẩm");
+                    reset();
+                }else{
+                    setMaSKU(ma);
+                }
             }
         });
 
         btnTim.addActionListener((ActionEvent e) -> {
             openSearchDialog();
         });
+        
     }
 
+    private void reset(){
+        txtTenSP.setText("");
+        lblBarcode.setIcon(null);
+        spnSoLuong.setValue(0);
+        txtMaSKU.setText("");
+        txtMaSKU.requestFocus();
+    }
+    
     private void openSearchDialog() {
         TimSPPanel panel = new TimSPPanel();
         panel.setDoneListener((ActionEvent e) -> {
@@ -77,7 +86,6 @@ public class Item extends javax.swing.JPanel {
         try {
             lblBarcode.setIcon(new ImageIcon(ImageIO.read(file).getScaledInstance(lblBarcode.getWidth(), lblBarcode.getHeight(), Image.SCALE_SMOOTH)));
         } catch (IOException ex) {
-            Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -93,6 +101,14 @@ public class Item extends javax.swing.JPanel {
         chk.setSelected(isSelected);
     }
 
+    public boolean isSelected() {
+        return chk.isSelected();
+    }
+    
+    public void deleteItem(){
+        btnDelete.doClick();
+    }
+    
     @Override
     protected void paintComponent(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
@@ -106,17 +122,23 @@ public class Item extends javax.swing.JPanel {
     }
 
     public void setMaSKU(String ma) {
-        Object ten = XJdbc.value("SELECT TenSP FROM SanPham WHERE SKU = ?", ma);
-        txtMaSKU.setText(ma);
-        txtTenSP.setText(ten == null ? "" : String.valueOf(ten));
+        txtMaSKU.setText(ma.toUpperCase());
+        txtTenSP.setText(map.getOrDefault(ma, ""));
         new Thread(() -> {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
             }
             createBarcode();
         }).start();
+    }
+    
+    public int getSoLuong(){
+        return (int) spnSoLuong.getValue();
+    }
+    
+    public String getMaSKU(){
+        return txtMaSKU.getText();
     }
 
     @SuppressWarnings("unchecked")
