@@ -65,15 +65,6 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
                     case "Trưởng Phòng":
                         nv = new TruongPhong();
                         break;
-                    case "Nhân Viên Bán Hàng":
-                        nv = new NhanVienBanHang();
-                        break;
-                    case "Nhân Viên Kho":
-                        nv = new NhanVienKho();
-                        break;
-                    case "Nhân Viên Kỹ Thuật":
-                        nv = new NhanVienKyThuat();
-                        break;
                     default:
                         nv = new NhanVien();
                 }

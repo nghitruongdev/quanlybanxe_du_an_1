@@ -6,6 +6,7 @@
 package com.ultramotor.ui.hoadon;
 
 import com.swingx.PictureBox;
+import com.swingx.PopupMenuItem;
 import com.ultramotor.dao.HoaDonDAO;
 import com.ultramotor.dao.KhachHangDAO;
 import com.ultramotor.dao.NhanVienDAO;
@@ -24,6 +25,8 @@ import com.ultramotor.util.XValidate;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.beans.PropertyChangeEvent;
@@ -47,6 +50,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
@@ -57,7 +62,6 @@ public class HoaDonListPanel extends javax.swing.JPanel {
     private List<HoaDon> list;
     private List<NhanVien> listNV;
     private List<KhachHang> listKH;
-
     public HoaDonListPanel() {
         initComponents();
         init();
@@ -70,6 +74,7 @@ public class HoaDonListPanel extends javax.swing.JPanel {
         listKH = new KhachHangDAO().selectAll();
         dateFrom.setTextRefernce(txtTo);
         dateTo.setTextRefernce(txtFrom);
+        
         initTable();
         fillTable();
         addListener();
@@ -133,14 +138,14 @@ public class HoaDonListPanel extends javax.swing.JPanel {
         btnExport.addActionListener(exportEvent);
     }
 
-//    public static void main(String[] args) {
-//        JFrame frame = new JFrame();
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.getContentPane().add(new HoaDonListPanel());
-//        frame.setSize(1000, 500);
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
+    public static void main(String[] args) {
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(new HoaDonListPanel());
+        frame.setSize(1000, 500);
+        frame.pack();
+        frame.setVisible(true);
+    }
 
     private String getSelectedHD() {
         int index = tblHoaDon.getSelectedRow();
@@ -219,33 +224,26 @@ public class HoaDonListPanel extends javax.swing.JPanel {
             }
             break;
             case "export":
-                JFileChooser fc = getFileChooser();
-                fc.setSelectedFile(new File(idHD + ".pdf"));
-                if (fc.showSaveDialog(this.getTopLevelAncestor()) == JFileChooser.APPROVE_OPTION) {
-                    try {
-                        File selected = fc.getSelectedFile();
-                        if (selected.exists() && MsgBox.confirm("File đã tồn tại, bạn có muốn ghi đè lên file cũ?", false) != 0) {
-                            return;
-                        }
-                        Files.copy(file.toPath(), selected.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                        if (MsgBox.confirm("Xuất file thành công, bạn có muốn mở file?", false) == 0) {
-                            Desktop.getDesktop().open(file);
-                        }
-                    } catch (IOException ex) {
-                        MsgBox.error("Không thể xuất hoá đơn!");
-                    }
-                }
+                saveAs(file, idHD);
                 break;
         }
     }
 
-    private JFileChooser getFileChooser() {
-        JFileChooser fc = new JFileChooser();
-        fc.setAcceptAllFileFilterUsed(false);
-        fc.addChoosableFileFilter(new FileNameExtensionFilter("PDF", "pdf"));
-
-        return fc;
+    private void saveAs(File file, String idHD) {
+        File selected = XPdf.showSaveDialog((JFrame) this.getTopLevelAncestor(), idHD + ".pdf");
+        if (selected == null) {
+            return;
+        }
+        try {
+            Files.copy(file.toPath(), selected.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            if (MsgBox.confirm("Xuất file thành công, bạn có muốn mở file?", false) == 0) {
+                Desktop.getDesktop().open(selected);
+            }
+        } catch (IOException ex) {
+            MsgBox.error("Không thể xuất hoá đơn!");
+        }
     }
+ 
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

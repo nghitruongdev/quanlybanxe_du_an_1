@@ -1,35 +1,49 @@
 package com.ultramotor.ui.nhanvien;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
+import com.swingx.PopupMenuItem;
 import com.swingx.table.ModelAction;
 import com.swingx.table.ModelEvent;
 import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.entity.NhanVien;
 import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
+import com.ultramotor.util.UltraExporter;
 import com.ultramotor.util.XDate;
 import com.ultramotor.util.XDialog;
-import com.ultramotor.util.XJdbc;
+import com.ultramotor.util.XExcel;
 import com.ultramotor.util.XMail;
+import com.ultramotor.util.XPdf;
+import com.ultramotor.util.XReport;
 import com.ultramotor.util.XValidate;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.swing.CellEditor;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import net.sf.jasperreports.engine.JRException;
 
 public class NhanVienPanel extends javax.swing.JPanel {
 
@@ -38,9 +52,11 @@ public class NhanVienPanel extends javax.swing.JPanel {
     ModelEvent event;
     private NhanVienInfoPanel pnlInfo;
     private SendMailPanel pnlSendMail;
+    private JPopupMenu popup;
     private DefaultTableModel model;
     private boolean hasEdit = false;
     private static int sizeNV;
+    private ActionListener exportEvent;
 
     public NhanVienPanel() {
         initComponents();
@@ -67,6 +83,9 @@ public class NhanVienPanel extends javax.swing.JPanel {
         fillTable(dao.selectAll());
         sizeNV = model.getRowCount();
         addListeners();
+        popup = new JPopupMenu();
+        popup.add(new PopupMenuItem("Xuất PDF", createIcon("profile_25px.png"), createIcon("profile_white_25px.png"), exportEvent));
+        popup.add(new PopupMenuItem("Xuất Excel", createIcon("change_25px.png"), createIcon("change_white_25px.png"), exportEvent));
 
     }
 
@@ -74,7 +93,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         Object[] columns = {"Select", "ID", "Họ Và Tên", "Ngày Sinh", "Giới Tính", "Địa chỉ", "Số ĐT", "Email", "Lương", "Hình", "Vai Trò", "Actions"};
         model = new DefaultTableModel(columns, 0);
         tblNhanVien.setModel(model);
-
+        tblNhanVien.getColumnModel().getColumn(tblNhanVien.getColumnCount() - 1).setMaxWidth(100);
         TableRowSorter<TableModel> sorter = new TableRowSorter(model);
         tblNhanVien.setRowSorter(sorter);
         txtTimKiem.addKeyListener(new KeyAdapter() {
@@ -92,6 +111,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
             }
         });
         tblNhanVien.fixTable((JScrollPane) tblNhanVien.getParent().getParent());
+
     }
 
     private void save() {
@@ -212,7 +232,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
                     break;
                 case "sendMail":
                     panel = pnlSendMail;
-                    panel.setPreferredSize(new Dimension(600, 600));
                     break;
             }
             if (panel != null) {
@@ -255,25 +274,65 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 model.removeRow(index);
                 model.insertRow(index, getInfo(nv));
                 MsgBox.inform("Cập nhật nhân viên thành công");
+                ((JDialog)pnlInfo.getTopLevelAncestor()).dispose();
             }
             tblNhanVien.setRowSelectionInterval(index, index); //đật hàng chọn trên bảng
             tblNhanVien.scrollRectToVisible(new java.awt.Rectangle(tblNhanVien.getCellRect(index, 0, true))); //di chuyển thanh lăn tới vị trí hàng chọn
             hasEdit = true;
         });
 
-        btnExport.addActionListener(event->{
-        
+        btnExport.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent me) {
+                if (SwingUtilities.isLeftMouseButton(me)) {
+                    popup.show(btnExport, btnExport.getWidth() - 150, 40);
+                }
+            }
         });
+
+        exportEvent = (event) -> {
+            export(event.getActionCommand());
+        };
     }
 
-    private void export(){
-        if(sizeNV == 0){
+    private void export(String name) {
+        if (sizeNV == 0) {
             MsgBox.error("Danh sách nhân viên trống");
-            
+            return;
+        }
+        File file;
+        if (name.contains("PDF")) {
+            file = XPdf.showSaveDialog((JFrame) this.getTopLevelAncestor(), "DSNV" + ((int) (Math.random() * 1000)) + ".pdf");
+            if (file == null) {
+                return;
+            }
+            try {
+                XReport.createNhanVienReport(file);
+            } catch (JRException ex) {
+                MsgBox.error("Xuất danh sách thất bại");
+                return;
+            }
+        } else {
+            file = XExcel.showSaveDialog((JFrame) this.getTopLevelAncestor(), "DSNV" + ((int) (Math.random() * 1000)) + ".xlsx");
+            if (file == null) {
+                return;
+            }
+            try {
+                UltraExporter.exportNhanVien(file);
+            } catch (IOException ex) {
+                MsgBox.error("Xuất danh sách thất bại");
+                return;
+            }
+
+        }
+        if (MsgBox.confirm("Xuất danh sách thành công! Bạn có muốn mở file?", false) == 0) {
+            try {
+                Desktop.getDesktop().open(file);
+            } catch (IOException ex) {
+            }
         }
     }
-    
-    
+
     private int getIndexNhanVien(String maNV) {
         for (int i = 0; i < tblNhanVien.getRowCount(); i++) {
             if (tblNhanVien.getValueAt(i, 1).toString().equalsIgnoreCase(maNV)) {
@@ -305,6 +364,10 @@ public class NhanVienPanel extends javax.swing.JPanel {
         return sb.toString();
     }
 
+    private ImageIcon createIcon(String name) {
+        return new ImageIcon(getClass().getResource("/ultramotor/icon/" + name));
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -332,7 +395,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         btnThemMoi.setBackground(new java.awt.Color(0, 174, 114));
         btnThemMoi.setForeground(new java.awt.Color(255, 255, 255));
         btnThemMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/icons8-save.png"))); // NOI18N
-        btnThemMoi.setText("Thêm mới");
+        btnThemMoi.setText("New");
         btnThemMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         btnExport.setBackground(new java.awt.Color(0, 174, 114));
@@ -344,7 +407,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         btnGuiMail.setBackground(new java.awt.Color(0, 174, 114));
         btnGuiMail.setForeground(new java.awt.Color(255, 255, 255));
         btnGuiMail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/icons8-sent.png"))); // NOI18N
-        btnGuiMail.setText("Gửi Mail");
+        btnGuiMail.setText("Send Mail");
         btnGuiMail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
@@ -369,29 +432,30 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnThemMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnGuiMail, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnGuiMail, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 374, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 334, Short.MAX_VALUE)
                 .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addComponent(jScrollPane1)
         );
+
+        pnlQuanLyNVLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnExport, btnGuiMail, btnThemMoi});
+
         pnlQuanLyNVLayout.setVerticalGroup(
             pnlQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlQuanLyNVLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnThemMoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnGuiMail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlQuanLyNVLayout.createSequentialGroup()
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(lblQLNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE))
+                        .addComponent(btnThemMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGuiMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblQLNV, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE))
         );
 
         btnSave.setBackground(new java.awt.Color(0, 174, 114));

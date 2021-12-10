@@ -41,7 +41,7 @@ public class SanPham extends Entity {
     }
 
     public int gettonKho() {
-        return tonKho;
+        return tonKho==null?0: tonKho;
     }
 
     public void settonKho(int TonKho) {

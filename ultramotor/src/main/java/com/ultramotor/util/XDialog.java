@@ -3,7 +3,6 @@ package com.ultramotor.util;
 import com.swingx.CloseButton;
 import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JDialog;
@@ -44,4 +43,5 @@ public class XDialog {
         dialog.setLocationRelativeTo(frame);
         return dialog;
     }
+
 }

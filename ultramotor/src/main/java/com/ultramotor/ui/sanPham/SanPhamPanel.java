@@ -20,6 +20,8 @@ import com.ultramotor.util.XImage;
 import com.ultramotor.util.XValidate;
 import java.awt.Component;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -31,6 +33,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class SanPhamPanel extends JPanel {
 
@@ -47,7 +50,6 @@ public class SanPhamPanel extends JPanel {
     private final File defaultFile = new File(parent, "default.png");
 
     public SanPhamPanel() {
-//        super(list);
         initComponents();
         init();
     }
@@ -459,8 +461,13 @@ public class SanPhamPanel extends JPanel {
             deleteItem(event.getActionCommand());
         };
 
+        
         addComboBtnListener(insertLs, btnAddNSX, btnAddLH, btnAddDongSP);
         addComboBtnListener(deleteLs, btnDeleteNSX, btnDeleteLH, btnDeleteDongSP);
+        AutoCompleteDecorator.decorate(cboNSX);
+                AutoCompleteDecorator.decorate(cboLH);
+        AutoCompleteDecorator.decorate(cboDongSP);
+
     }
 
     private void addComboBtnListener(ActionListener ls, Button... btns) {
@@ -579,6 +586,7 @@ public class SanPhamPanel extends JPanel {
         }
         if (dao.insert(e) > 0) {
             cbo.addItem(e);
+            cbo.setSelectedItem(e);
             refreshList();
             MsgBox.inform("Thêm mới thành công");
         }
@@ -680,20 +688,15 @@ public class SanPhamPanel extends JPanel {
 
     private void fillComboBox(JComboBox cbo, Object[] os) {
         cbo.setModel(new DefaultComboBoxModel(os));
-        System.out.println(os.length);
         if (os.length > 0) {
             cbo.setSelectedIndex(0);
         }
     }
 
     private void reset() {
-        for (Component comp : this.getComponents()) {
-            if (comp instanceof JTextComponent) {
-                ((JTextComponent) comp).setText("");
-            }
-        }
-        if (cboLH.getItemCount() > 0) {
-            cboLH.setSelectedIndex(0);
+      JTextComponent[] fields = {txtMaSKU, txtTenSP, txtGiaTien, txtDoiXe, txtDiaChiSX, txtMauSac, txtMoTa};
+        for (JTextComponent  field: fields) {
+            field.setText("");
         }
         txtMaSKU.setText(getAutoID("SP"));
         XImage.setIcon(null, lblHinh, defaultFile);

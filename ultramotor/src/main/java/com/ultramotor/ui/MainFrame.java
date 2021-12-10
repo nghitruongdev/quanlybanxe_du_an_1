@@ -5,7 +5,9 @@ import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.entity.NhanVien;
 import com.ultramotor.entity.NhanVienBanHang;
 import com.ultramotor.entity.NhanVienKho;
+import com.ultramotor.ui.hoadon.HoaDonListPanel;
 import com.ultramotor.ui.hoadon.HoaDonPanel;
+import com.ultramotor.ui.login.DangNhapJFrame;
 import com.ultramotor.ui.nhanvien.NhanVienPanel;
 import com.ultramotor.ui.nhanvien.kho.nhapkho.BarcodePanel;
 import com.ultramotor.ui.nhanvien.kho.nhapkho.NhapKhoPanel;
@@ -13,20 +15,17 @@ import com.ultramotor.ui.quanlykhachhang.KhachHangPanel;
 import com.ultramotor.ui.sanPham.QuanLySanPhamPanel;
 import com.ultramotor.ui.thongke.ThongKePanel;
 import com.ultramotor.util.Auth;
+import com.ultramotor.util.MsgBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.nio.file.Paths;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class MainFrame extends javax.swing.JFrame {
-
-    public MainFrame() {
-        initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/ultramotor/icon/logo_50px.png")).getImage());
-        init();
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -68,33 +67,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainFrame().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane bg;
     private com.ultramotor.component.MainForm pnlMain;
@@ -106,7 +78,20 @@ public class MainFrame extends javax.swing.JFrame {
     private BarcodePanel pnlBarcode;
     private HoaDonPanel pnlHoaDon;
     private ThongKePanel pnlThongKe;
-    
+    private DangNhapJFrame dangNhap;
+    private HoaDonListPanel pnlListHoaDon;
+    private MainFrame() {
+        initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/ultramotor/icon/logo_50px.png")).getImage());
+        init();
+    }
+
+    private static MainFrame mainFrame = new MainFrame();
+
+    public static MainFrame getFrame() {
+        return mainFrame;
+    }
+
     private void init() {
         pnlNhanVien = new NhanVienPanel();
         pnlKhachHang = new KhachHangPanel();
@@ -115,16 +100,29 @@ public class MainFrame extends javax.swing.JFrame {
         pnlBarcode = new BarcodePanel();
         pnlHoaDon = new HoaDonPanel();
         pnlThongKe = new ThongKePanel();
+        dangNhap = DangNhapJFrame.getLoginFrame();
+        pnlListHoaDon = new HoaDonListPanel();
         setLocationRelativeTo(null);
-        Auth.user = new NhanVienDAO().selectByID("NV01");
-        NhanVien user = Auth.user;
-        if (user == null) {
-//            return;
-            System.out.println("Auth is null");
-        }
+        addListener();
+    }
 
-        pnlMain.setUser(user);
-        addMenus(user);
+    private void addListener() {
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {
+                NhanVien user = Auth.user;
+                if (user == null) {
+                    MsgBox.error("Vui lòng đăng nhập để sử dụng ứng dụng");
+                    MainFrame.this.dispose();
+                    dangNhap.setVisible(true);
+                    return;
+                }
+
+                pnlMain.setUser(user);
+                addMenus(user);
+            }
+
+        });
     }
 
     private void addMenus(NhanVien user) {
@@ -135,56 +133,30 @@ public class MainFrame extends javax.swing.JFrame {
 
             return;
         }
-        ModelMenu mnuThongKe = new ModelMenu("Thống kê",createIcon("refresh_25px.png"), getEvent("ThongKe"));
-        ModelMenu mnuNhanVien = new ModelMenu("Quản lý nhân viên",createIcon("refresh_25px.png"), getEvent("NhanVien"));
-        ModelMenu mnuHoaDon = new ModelMenu("Quản lý hoá đơn", createIcon("refresh_25px.png"), getEvent("HoaDon"));
-        ModelMenu mnuKhachHang = new ModelMenu("Quản lý khách hàng", createIcon("refresh_25px.png"), getEvent("KhachHang"));
-        ModelMenu mnuSanPham = new ModelMenu("Quản lý sản phẩm", createIcon("refresh_25px.png"), getEvent("SanPham"));
-        ModelMenu mnuNhapKho = new ModelMenu("Quản lý kho", createIcon("refresh_25px.png"), getEvent("NhapKho"));
-        ModelMenu mnuBarcode = new ModelMenu("In barcode", createIcon("refresh_25px.png"), getEvent("Barcode"));
+        ModelMenu mnuThongKe = new ModelMenu("Thống kê", createIcon("refresh_25px.png"), getEvent(pnlThongKe));
+        ModelMenu mnuNhanVien = new ModelMenu("Quản lý nhân viên", createIcon("refresh_25px.png"), getEvent(pnlNhanVien));
+        ModelMenu mnuHoaDon = new ModelMenu("Tạo đơn hàng", createIcon("refresh_25px.png"), getEvent(pnlHoaDon));
+        ModelMenu mnuListHoaDon = new ModelMenu("Quản lý hoá đơn", createIcon("refresh_25px.png"), getEvent(pnlListHoaDon));
+        ModelMenu mnuKhachHang = new ModelMenu("Quản lý khách hàng", createIcon("refresh_25px.png"), getEvent(pnlKhachHang));
+        ModelMenu mnuSanPham = new ModelMenu("Quản lý sản phẩm", createIcon("refresh_25px.png"), getEvent(pnlSanPham));
+        ModelMenu mnuNhapKho = new ModelMenu("Quản lý kho", createIcon("refresh_25px.png"), getEvent(pnlNhapKho));
+        ModelMenu mnuBarcode = new ModelMenu("In barcode", createIcon("refresh_25px.png"), getEvent(pnlBarcode));
 
-        pnlMain.addMenu(mnuNhanVien, mnuHoaDon, mnuKhachHang, mnuSanPham, mnuNhapKho, mnuBarcode, mnuThongKe);
+        pnlMain.addMenu(mnuNhanVien, mnuHoaDon, mnuListHoaDon,mnuKhachHang, mnuSanPham, mnuNhapKho, mnuBarcode, mnuThongKe);
     }
 
-    private ActionListener getEvent(String name) {
+    private ActionListener getEvent(JPanel panel) {
         return (ActionEvent e) -> {
-            showForm(name);
+            showForm(panel);
         };
     }
 
-    private void showForm(String name) {
-        JPanel panel = null;
-        switch (name) {
-            case "NhanVien":
-                panel = pnlNhanVien;
-                break;
-            case "KhachHang":
-                panel = pnlKhachHang;
-                break;
-            case "SanPham":
-                panel = pnlSanPham;
-                break;
-            case "NhapKho":
-                panel = pnlNhapKho;
-                break;
-            case "Barcode":
-                panel = pnlBarcode;
-                break;
-            case "HoaDon":
-                panel = pnlHoaDon;
-                break;
-            case "ThongKe":
-                panel = pnlThongKe;
-                break;
-        }
-        if (panel == null) {
-            return;
-        }
+    private void showForm(JPanel panel) {
         pnlMain.showForm(panel);
     }
 
     private ImageIcon createIcon(String name) {
-        File iconPath = Paths.get("src", "main", "resources","ultramotor", "icon").toFile();
+        File iconPath = Paths.get("src", "main", "resources", "ultramotor", "icon").toFile();
         return new ImageIcon(new File(iconPath, name).getPath());
     }
 }

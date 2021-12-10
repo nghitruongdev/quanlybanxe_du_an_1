@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Staff-report" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ebe41c1a-cc1a-42bb-afb7-91c8ecbb55ad">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sql Server"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[select YEAR(thoigian)  from hoadon]]>
+	</queryString>
+	<field name="year" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="year"/>
+		<property name="com.jaspersoft.studio.field.label" value="year"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<frame>
+				<reportElement mode="Transparent" x="130" y="0" width="550" height="90" forecolor="#208BE3" backcolor="#208BE3" uuid="b7c49d6d-3130-47c6-b2d9-265c1bbd547e"/>
+				<image onErrorType="Icon">
+					<reportElement mode="Transparent" x="10" y="5" width="160" height="80" forecolor="#140403" uuid="562d52e3-8a51-4fe3-a237-2fe1271042b5"/>
+					<imageExpression><![CDATA["C:/Users/nghipc/qlbx/ultramotor/resources/img/logo.png"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement mode="Transparent" x="180" y="65" width="90" height="20" forecolor="#208BE3" backcolor="#208BE3" uuid="a14b61e7-43c3-40d0-9b3d-0c920c8b9b6e"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Số Điện Thoại:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="180" y="45" width="50" height="20" forecolor="#208BE3" backcolor="#208BE3" uuid="0f80f419-eefe-454c-befd-70ca3638fa07"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Địa chỉ: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="180" y="10" width="352" height="30" forecolor="#208BE3" backcolor="#208BE3" uuid="14afef73-26ea-4bda-967a-a94d0d412e2d"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CỬA HÀNG BÁN XE ULTRAMOTOR
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="230" y="45" width="314" height="20" forecolor="#208BE3" backcolor="#208BE3" uuid="e11ec59c-92bb-4601-9a00-3ba9f18fd38b"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" isBold="false"/>
+					</textElement>
+					<text><![CDATA[772 Kha Vạn Cân, phường Linh Đông, TP. Thủ Đức, TP. HCM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="270" y="65" width="274" height="20" forecolor="#208BE3" backcolor="#208BE3" uuid="bd6e282f-4506-4afd-b855-4a28d828af83"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" isBold="false"/>
+					</textElement>
+					<text><![CDATA[058965874520]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="1" splitType="Stretch">
+			<staticText>
+				<reportElement x="174" y="0" width="100" height="1" uuid="0f282626-4ddf-4821-9bb2-5b93f53a9611">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="794a73e0-318c-4a73-9165-1ee33b12bd14"/>
+				</reportElement>
+				<text><![CDATA[year]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="171" splitType="Stretch">
+			<textField>
+				<reportElement x="70" y="0" width="100" height="30" uuid="c8d9f9d9-30fd-41b3-a87f-6ac2ccfc0c28">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="794a73e0-318c-4a73-9165-1ee33b12bd14"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{year}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="39" splitType="Stretch">
+			<textField evaluationTime="Page">
+				<reportElement x="690" y="10" width="40" height="19" uuid="c93098a4-a77b-4480-9d45-560fb5d52d8b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page: " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="731" y="9" width="63" height="21" uuid="2f95bf3b-d10e-4465-a93e-31d6b0178100"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" of  " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

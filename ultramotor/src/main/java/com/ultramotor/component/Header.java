@@ -21,7 +21,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
+import com.swingx.PopupMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
@@ -78,19 +78,15 @@ public class Header extends JPanel {
         add(avatar, "w 50!, h 50!, gapright 20");
 
         popup = new JPopupMenu();
-        popup.add(new MenuItem("Xem Hồ Sơ", createIcon("profile_25px.png"), createIcon("profile_white_25px.png"), viewProfileLs));
-        popup.add(new MenuItem("Đổi Mật Khẩu", createIcon("change_25px.png"), createIcon("change_white_25px.png"), changePwLs));
-        popup.add(new MenuItem("Đăng Xuất", createIcon("logout_25px.png"), createIcon("logout_white_25px.png"), logoutLs));
+        popup.add(new PopupMenuItem("Xem Hồ Sơ", createIcon("profile_25px.png"), createIcon("profile_white_25px.png"), viewProfileLs));
+//        popup.add(new PopupMenuItem("Đổi Mật Khẩu", createIcon("change_25px.png"), createIcon("change_white_25px.png"), changePwLs));
+        popup.add(new PopupMenuItem("Đăng Xuất", createIcon("logout_25px.png"), createIcon("logout_white_25px.png"), logoutLs));
 
         avatar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent me) {
-                System.out.println("Hello");
                 if (SwingUtilities.isLeftMouseButton(me)) {
-                    System.out.printf("Avatar: X %d, Y %d\n", avatar.getX(), avatar.getY());
-                    System.out.println("X: " + me.getX() + ", Y: " + me.getY());
                     popup.show(avatar, avatar.getWidth() - 150, 55);
-                    System.out.println("avatar preferredsize: " + avatar.getWidth());
                 }
             }
         });
@@ -102,7 +98,8 @@ public class Header extends JPanel {
         logoutLs = (ActionEvent e) -> {
             if (MsgBox.confirm("Bạn có muốn đăng xuất khỏi ứng dụng?", false) == 0) {
                 ((JFrame) this.getTopLevelAncestor()).dispose();
-                new DangNhapJFrame().setVisible(true);
+//                new DangNhapJFrame().setVisible(true);
+                    DangNhapJFrame.getLoginFrame().setVisible(true);
             }
         };
         viewProfileLs = (ActionEvent e) -> {
@@ -111,8 +108,8 @@ public class Header extends JPanel {
                 XDialog.getDialog((JFrame) this.getTopLevelAncestor(), pnlNhanVien).setVisible(true);
             }
         };
-        changePwLs = (ActionEvent e) -> {
-        };
+//        changePwLs = (ActionEvent e) -> {
+//        };
     }
 
     public void addMenuEvent(ActionListener al) {
@@ -139,26 +136,4 @@ public class Header extends JPanel {
     }
 }
 
-class MenuItem extends JMenuItem {
 
-    public MenuItem(String text, Icon icon, Icon mouseOverIcon, ActionListener e) {
-        super(text, icon);
-        setBackground(new Color(250, 250, 250));
-        setFont(new Font("Segoe UI", 0, 14));
-        setPreferredSize(new Dimension(150, 50));
-        setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-        this.addActionListener(e);
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseExited(MouseEvent e) {
-                setIcon(icon);
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                setIcon(mouseOverIcon);
-            }
-        });
-    }
-
-}

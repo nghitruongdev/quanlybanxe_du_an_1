@@ -199,7 +199,7 @@ WHERE
 			<staticText>
 				<reportElement x="162" y="0" width="288" height="30" uuid="345059da-c372-4a83-bf7b-9420584887ad"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Helvetica" size="18" isBold="true"/>
+					<font fontName="DejaVu Sans" size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[HOÁ ĐƠN GIÁ TRỊ GIA TĂNG]]></text>
 			</staticText>
@@ -214,14 +214,14 @@ WHERE
 			<staticText>
 				<reportElement x="199" y="30" width="205" height="19" uuid="0282a163-84f6-497a-83f1-33e98e7c18ac"/>
 				<textElement textAlignment="Center">
-					<font fontName="Helvetica" size="10" isBold="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Bản thể hiện của hoá đơn điện tử]]></text>
 			</staticText>
 			<textField pattern="Ngày dd, tháng MM, năm yyyy" isBlankWhenNull="true">
 				<reportElement x="170" y="49" width="259" height="16" uuid="6011729e-0b86-443a-895e-44bbb55a8cdd"/>
 				<textElement textAlignment="Center">
-					<font fontName="Helvetica"/>
+					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[java.lang.String.format("Ngày %02d, tháng %02d, năm %d", DAY($F{thoiGian}),MONTH($F{thoiGian}), YEAR($F{thoiGian} ) )]]></textFieldExpression>
 			</textField>
@@ -234,42 +234,42 @@ WHERE
 				<textField>
 					<reportElement x="130" y="0" width="280" height="20" uuid="934ff448-3b6b-4539-b76e-02ac1b1e6187"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Helvetica" size="12"/>
+						<font fontName="DejaVu Sans" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{HoKH} + " " + $F{TenKH}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="132" y="40" width="278" height="20" uuid="14c59f9b-3bd1-42ac-a480-9e96f474dbc6"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Helvetica" size="12"/>
+						<font fontName="DejaVu Sans" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{DiaChi}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="132" y="20" width="278" height="20" uuid="c9593da8-ba0d-4973-995b-19df3d7cb979"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Helvetica" size="12"/>
+						<font fontName="DejaVu Sans" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{SDT}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="0" width="130" height="20" uuid="63b58c77-a103-41f3-97be-0c60b987e9c2"/>
+					<reportElement x="-21" y="0" width="151" height="20" uuid="63b58c77-a103-41f3-97be-0c60b987e9c2"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Helvetica" size="12" isBold="true"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Họ Tên Khách Hàng: ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="1" y="20" width="129" height="20" uuid="44ca646f-d1db-482b-b2bb-e63a78b3671a"/>
+					<reportElement x="-20" y="20" width="150" height="20" uuid="44ca646f-d1db-482b-b2bb-e63a78b3671a"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Helvetica" size="12" isBold="true"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Số Điện Thoại:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="1" y="40" width="129" height="20" uuid="9454656f-f818-43d9-9787-2ad1986a57f3"/>
+					<reportElement x="-20" y="40" width="150" height="20" uuid="9454656f-f818-43d9-9787-2ad1986a57f3"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Helvetica" size="12" isBold="true"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Địa chỉ:]]></text>
 				</staticText>
@@ -300,7 +300,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="71" height="40" uuid="abd5d4ab-bb5e-4e03-ac9b-1c3d0a510b25"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica" size="12" isBold="true"/>
+									<font fontName="DejaVu Sans" size="10" isBold="true"/>
 								</textElement>
 								<text><![CDATA[STT
 (No)]]></text>
@@ -310,7 +310,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="71" height="20" uuid="d551f29f-a915-4b40-a3ef-79b9012b1547"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica"/>
+									<font fontName="DejaVu Sans"/>
 								</textElement>
 								<text><![CDATA[1]]></text>
 							</staticText>
@@ -319,7 +319,7 @@ WHERE
 							<textField>
 								<reportElement x="0" y="0" width="71" height="30" uuid="9af07ec6-60a1-4c05-9f55-05f3e969236c"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica" size="11"/>
+									<font fontName="DejaVu Sans" size="11"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{id_CTHD}]]></textFieldExpression>
 							</textField>
@@ -331,7 +331,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="128" height="40" uuid="515f3b3f-a98c-48a5-947b-5cfde85f3a74"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica" size="12" isBold="true"/>
+									<font fontName="DejaVu Sans" size="10" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Tên Sản Phẩm
 (Product Name)]]></text>
@@ -341,7 +341,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="128" height="20" uuid="85e31999-7872-4c20-8cfd-a1fa82aa20af"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica"/>
+									<font fontName="DejaVu Sans"/>
 								</textElement>
 								<text><![CDATA[2]]></text>
 							</staticText>
@@ -351,7 +351,7 @@ WHERE
 								<reportElement x="0" y="0" width="128" height="30" uuid="ae0e98bd-344d-4c55-9935-03f13e7826f3"/>
 								<box padding="5"/>
 								<textElement verticalAlignment="Middle">
-									<font fontName="Helvetica" size="11"/>
+									<font fontName="DejaVu Sans" size="11"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{tenSP}]]></textFieldExpression>
 							</textField>
@@ -363,7 +363,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="63" height="40" uuid="2268167a-1b49-4063-aae4-a36763e3cadf"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica" size="12" isBold="true"/>
+									<font fontName="DejaVu Sans" size="10" isBold="true"/>
 								</textElement>
 								<text><![CDATA[ĐVT
 (Unit)]]></text>
@@ -373,7 +373,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="63" height="20" uuid="5db2f9e3-7f1f-41e2-a275-58ed9ab70a6a"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica"/>
+									<font fontName="DejaVu Sans"/>
 								</textElement>
 								<text><![CDATA[3]]></text>
 							</staticText>
@@ -382,7 +382,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="63" height="30" uuid="affbe6b8-4009-4f2e-852d-7090504b5570"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica" size="11"/>
+									<font fontName="DejaVu Sans" size="11"/>
 								</textElement>
 								<text><![CDATA[Chiếc]]></text>
 							</staticText>
@@ -394,7 +394,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="65" height="40" uuid="40fd46c9-b097-44b2-a4eb-8d7396515663"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica" size="12" isBold="true"/>
+									<font fontName="DejaVu Sans" size="10" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Số Lượng
 (Quantity)]]></text>
@@ -404,7 +404,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="65" height="20" uuid="d9a4ceee-0d77-4ddf-8e53-7f41d50d5848"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica"/>
+									<font fontName="DejaVu Sans"/>
 								</textElement>
 								<text><![CDATA[4]]></text>
 							</staticText>
@@ -413,7 +413,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="65" height="30" uuid="38c6cea3-6e3d-4116-a943-458c06e7cf8c"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica" size="11"/>
+									<font fontName="DejaVu Sans" size="11"/>
 								</textElement>
 								<text><![CDATA[1]]></text>
 							</staticText>
@@ -425,7 +425,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="80" height="40" uuid="ce37abca-aca6-42df-941a-49e8a6b109ab"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica" size="12" isBold="true"/>
+									<font fontName="DejaVu Sans" size="10" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Đơn Giá
 (Unit Price)]]></text>
@@ -435,7 +435,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="80" height="20" uuid="3c27e91d-8d84-48d5-9e79-4ca9c9647cab"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica"/>
+									<font fontName="DejaVu Sans"/>
 								</textElement>
 								<text><![CDATA[5]]></text>
 							</staticText>
@@ -444,7 +444,7 @@ WHERE
 							<textField pattern="#0,000.###;(#0,000.###-)">
 								<reportElement x="0" y="0" width="80" height="30" uuid="31ebb22a-c906-4adb-8177-44bc8c027593"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica" size="11"/>
+									<font fontName="DejaVu Sans" size="11"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{giaTien}]]></textFieldExpression>
 							</textField>
@@ -456,7 +456,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="88" height="40" uuid="ca2cf3ba-f2f1-4b1d-a44c-95c46872f424"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica" size="12" isBold="true"/>
+									<font fontName="DejaVu Sans" size="10" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Thành Tiền
 (Total)]]></text>
@@ -466,7 +466,7 @@ WHERE
 							<staticText>
 								<reportElement x="0" y="0" width="88" height="20" uuid="f63453b9-1bcc-4ee3-9445-118ac700ba8d"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica"/>
+									<font fontName="DejaVu Sans"/>
 								</textElement>
 								<text><![CDATA[6 = 4 x 5]]></text>
 							</staticText>
@@ -475,7 +475,7 @@ WHERE
 							<textField pattern="#0,000.###;(#0,000.###-)">
 								<reportElement x="0" y="0" width="88" height="30" uuid="1b1400d4-fb34-474c-98f1-c6fa33fca5c6"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Helvetica" size="11"/>
+									<font fontName="DejaVu Sans" size="11"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{giaTien}]]></textFieldExpression>
 							</textField>
@@ -490,42 +490,42 @@ WHERE
 			<textField>
 				<reportElement x="390" y="79" width="143" height="18" uuid="f2d1f1cf-f011-42b3-aebe-e7b5e46cc2c2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Helvetica" size="12"/>
+					<font fontName="DejaVu Sans" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,###.##").format(($V{tongTien} - $V{tongTien} *$F{giamGia}/100) + (($V{tongTien} - $V{tongTien} *$F{giamGia}/100)*10/100 )) + " VNĐ"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="390" y="32" width="143" height="18" uuid="6046caf8-3714-41ff-848c-6c8cdea3454c"/>
 				<textElement textAlignment="Right">
-					<font fontName="Helvetica" size="12"/>
+					<font fontName="DejaVu Sans" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,###.##").format(($V{tongTien} - $V{tongTien} *$F{giamGia}/100)*10/100 ) + " VNĐ"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="390" y="52" width="143" height="17" uuid="f0feb543-fd27-437f-a627-a61a850bbf4d"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Helvetica" size="12"/>
+					<font fontName="DejaVu Sans" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,###.##").format(($V{tongTien} - $V{tongTien} *$F{giamGia}/100) ) + " VNĐ"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="390" y="10" width="143" height="16" uuid="14f2f8f1-584f-4cde-9be4-2f9b8aae4009"/>
 				<textElement textAlignment="Right">
-					<font fontName="Helvetica" size="12"/>
+					<font fontName="DejaVu Sans" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{giamGia} + " %"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="130" y="24" width="31" height="20" uuid="878f1a7c-19fd-4813-a49e-d0e99c38eded"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Helvetica" size="12" isBold="true"/>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[10%]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="60" y="20" width="64" height="39" uuid="12057337-a0d7-40f0-9a9b-94a018db5a8b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Helvetica" size="12" isBold="true"/>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Thuế suất:
  (VAT rate)]]></text>
@@ -533,28 +533,28 @@ WHERE
 			<staticText>
 				<reportElement x="220" y="10" width="170" height="16" uuid="031422d0-a203-47eb-8590-8c59ed400e79"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Helvetica" size="12" isBold="true"/>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Chiết Khấu (Discount):]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="181" y="53" width="210" height="17" uuid="4e8517de-6240-4ee5-9aa1-38d3836f6312"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Helvetica" size="12" isBold="true"/>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tổng Tiền (Grand Total):]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="200" y="32" width="190" height="18" uuid="9c30ccf7-f542-4ca6-8ff4-867cc0497492"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Helvetica" size="12" isBold="true"/>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tiền Thuế (VAT Amount):]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="180" y="79" width="210" height="18" uuid="55403d2c-499e-4c4d-89f2-ec1dc455ebf2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Helvetica" size="12" isBold="true"/>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tổng Tiền Trả (Pay Amount):]]></text>
 			</staticText>
@@ -567,21 +567,21 @@ WHERE
 			<staticText>
 				<reportElement x="56" y="140" width="114" height="19" uuid="811b66b6-06fe-4245-92fb-1f05589784cf"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Helvetica" size="12" isBold="true"/>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Người mua hàng]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="404" y="140" width="114" height="19" uuid="1537b18b-b75f-483e-ae0b-1096e7f68b76"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Helvetica" size="12" isBold="true"/>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Người bán hàng]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="390" y="200" width="143" height="17" uuid="e736391b-b637-4aa7-9aa8-58e1522963d2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Helvetica" size="12"/>
+					<font fontName="DejaVu Sans" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{HoNV} + " " +$F{TenNV}]]></textFieldExpression>
 			</textField>

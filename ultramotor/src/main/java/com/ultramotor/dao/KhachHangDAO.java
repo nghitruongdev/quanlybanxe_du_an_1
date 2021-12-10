@@ -14,7 +14,7 @@ public class KhachHangDAO extends UltraDAO<KhachHang, String> {
     
     {
         TABLE_NAME = "KhachHang";
-        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "idKH");
+        SELECT_BY_ID_SQL = String.format("select * from %s where %s = ? ", TABLE_NAME, "idKH");
         SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
         
     }
@@ -34,9 +34,6 @@ public class KhachHangDAO extends UltraDAO<KhachHang, String> {
     
     @Override
     public int update(KhachHang e) {
-//        return XJdbcServer.update(UPDATE_SQL,
-//                e.getHoKH(), e.getTenKH(), e.getGioiTinh(), e.getNgaySinh(), e.getDiaChi(),
-//                e.getSdt(), e.getEmail(), e.getThanhVien(), e.getGhiChu(), e.getMaNV(), e.getIdKH());
         return insert(e);
     }
     
@@ -71,9 +68,9 @@ public class KhachHangDAO extends UltraDAO<KhachHang, String> {
         return list;
     }
     
-    public List<KhachHang> selectByKeyword(String keyWord) {
-        String sql = "SELECT * FROM KhachHang WHERE HoKH LIKE ? OR TenKH LIKE ? OR idKH like ? OR SDT like ? ";
-        return this.selectBySQL(sql, "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%");
-    }
-    
+//    public List<KhachHang> selectByKeyword(String keyWord) {
+//        String sql = "SELECT * FROM KhachHang WHERE HoKH LIKE ? OR TenKH LIKE ? OR idKH like ? OR SDT like ? ";
+//        return this.selectBySQL(sql, "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%");
+//    }
+//    
 }

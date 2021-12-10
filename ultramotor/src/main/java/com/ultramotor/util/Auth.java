@@ -1,6 +1,7 @@
 package com.ultramotor.util;
 
 import com.ultramotor.entity.NhanVien;
+import com.ultramotor.entity.TruongPhong;
 import java.awt.event.ActionEvent;
 import javax.swing.Timer;
 
@@ -25,7 +26,7 @@ public class Auth {
 
     //kiểm tra user login là trưởng phòng
     public static boolean isManager() {
-        return isLogin() && user.getVaiTro().equals("Trưởng phòng");
+        return isLogin() && Auth.user instanceof TruongPhong;
     }
 
     //get mã otp cho quên mật khẩu

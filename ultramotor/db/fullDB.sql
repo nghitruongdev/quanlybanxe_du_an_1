@@ -49,7 +49,7 @@ CREATE TABLE KhachHang(
     Email NVARCHAR(50),
     ThanhVien BIT DEFAULT 0,
     GhiChu NVARCHAR(255),
-    id_NV NVARCHAR(10),
+    id_NV NVARCHAR(10)
     CONSTRAINT fk_NhanVien_KhachHang FOREIGN KEY (id_NV) REFERENCES NhanVien(id_NV)
 )
 GO 
@@ -638,6 +638,14 @@ BEGIN
 END
 GO
 
+DROP TRIGGER IF EXISTS trg_delete_SanPham
+GO
+
+CREATE TRIGGER trg_delete_SanPham
+ON SanPham
+INSTEAD OF DELETE
+NOT FOR REPLICATION
+AS UPDATE SanPham set isDeleted = 1 WHERE SKU in (select SKU from deleted)
 ----------------------------------------------CREATE VIEW---------------------------------------------------------
 DROP VIEW IF EXISTS view_SanPhamTon
 GO
@@ -648,4 +656,4 @@ SELECT *, dbo.fn_soLuongTonSp(SKU) AS N'SoLuongTon' FROM SanPham WHERE isDeleted
 GO
 
 
-select * from HoaDon
+update NhanVien set VaiTro = N'Trưởng Phòng', Email  = 'nghitvps19009@fpt.edu.vn' WHERE id_NV = 'NV01'

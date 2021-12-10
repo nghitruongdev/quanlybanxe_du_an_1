@@ -642,7 +642,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
     }
 
     private KhachHang findKhachHang(String idKH) {
-        return listKH.stream().filter(kh -> idKH.trim().equalsIgnoreCase(kh.getIdKH())).findFirst().orElse(mapHD.get(currentHD));
+        return listKH.stream().filter(kh -> kh.getIdKH().equalsIgnoreCase(idKH)).findFirst().orElse(mapHD.get(currentHD));
     }
 
     private void initMapHD() {

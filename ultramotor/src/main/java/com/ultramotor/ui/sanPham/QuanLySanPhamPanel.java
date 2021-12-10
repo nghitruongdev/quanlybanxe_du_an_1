@@ -3,8 +3,10 @@ package com.ultramotor.ui.sanPham;
 import com.swingx.table.ModelAction;
 import com.swingx.table.ModelEvent;
 import com.swingx.table.Table;
+import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.dao.SanPhamDAO;
 import com.ultramotor.entity.Entity;
+import com.ultramotor.entity.NhanVien;
 import com.ultramotor.entity.SanPham;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDialog;
@@ -29,7 +31,7 @@ import javax.swing.table.TableRowSorter;
 public class QuanLySanPhamPanel extends javax.swing.JPanel {
 
     private SanPhamDAO daoSP;
-
+    private List<NhanVien> listNV;
     private ModelEvent modelEvent;
 
     public QuanLySanPhamPanel() {
@@ -39,10 +41,10 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
 
     void init() {
         daoSP = new SanPhamDAO();
+        listNV = new NhanVienDAO().selectAll();
         addListeners();
         initTable();
         fillTable(tblSP, daoSP.selectAll());
-
     }
 
     private void addListeners() {
@@ -56,14 +58,8 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
             public void delete(Object e) {
                 deleteRow((Entity) e);
             }
-
         };
-
         addBtnAddListener(btnAddSP, tblSP, new SanPham());
-
-        btnRefresh.addActionListener(event -> {
-//            refresh(true);
-        });
     }
 
     private void addBtnAddListener(JButton btn, Table table, SanPham e) {
@@ -74,47 +70,10 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
     }
 
     private void initTable() {
-        String[] colsSP = {"Mã SKU", "Tên Sản Phẩm", "Màu Sắc", "Phân Khối", "Thời Gian BH", "Địa chỉ SX", "Giá Tiền", "Đời Xe", "Hình", "id_DongSP", "id_NV", "Actions"};
-        initTable(colsSP, tblSP);
-        addRowSorter(tblSP, txtSearchSP);
-    }
-
-    private void initTable(String[] cols, Table table, Integer... columnEditable) {
-        DefaultTableModel model = new DefaultTableModel(cols, 0);
-        table.setModel(model);
-        table.setShowVerticalLines(true);
-        table.getColumnModel().getColumn(0).setMaxWidth(200);
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setMaxWidth(200);
-        JScrollPane pane = (JScrollPane) table.getParent().getParent();
-        table.fixTable(pane);
-
-        pane.setBorder(null);
-        table.addColumnEditable(columnEditable);
-        table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                CellEditor editor = table.getCellEditor();
-                if (editor != null) {
-                    table.getCellEditor().stopCellEditing();
-                }
-            }
-        });
-    }
-
-    private void addRowSorter(Table table, JTextField field) {
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
-        table.setRowSorter(sorter);
-        field.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                String text = field.getText().trim();
-                if (text.isEmpty()) {
-                    sorter.setRowFilter(null);
-                } else {
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-                }
-            }
-        });
+        String[] colsSP = {"Mã SKU", "Tên Sản Phẩm", "Màu Sắc", "Phân Khối", "Thời Gian BH", "Địa chỉ SX", "Giá Tiền", "Đời Xe", "Tồn Kho", "id_DongSP", "id_NV", "Actions"};
+        tblSP.initTable(colsSP);
+        tblSP.addRowSorter(txtSearchSP);
+        tblSP.getColumnModel().getColumn(tblSP.getColumnCount() - 1).setMaxWidth(100);
     }
 
     private void fillTable(Table table, List<? extends Entity> list) {
@@ -154,13 +113,12 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         if (confirm != 0) {
             return;
         }
-        switch (e.getClass().getSimpleName()) {
-            case "SanPham":
-                daoSP.delete(((SanPham) e).getSku());
-                deleteRow(tblSP);
-                break;
+        if (daoSP.delete(((SanPham) e).getSku()) > 0) {
+            deleteRow(tblSP);
+            MsgBox.inform("Xoá thành công");
+        } else {
+            MsgBox.error("Xoá thất bại");
         }
-        MsgBox.inform("Xoá thành công");
     }
 
     private void deleteRow(Table table) {
@@ -207,9 +165,9 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
                 sp.getDiaChiSX(),
                 format.format(sp.getGiaTien()),
                 sp.getDoiXe(),
-                sp.getHinh(),
+                sp.gettonKho(),
                 sp.getIdDongSP(),
-                sp.getIdNV(),
+                findNhanVien(sp.getIdNV()).getHoTenNV(),
                 new ModelAction(sp, modelEvent)
             };
         }
@@ -225,20 +183,21 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         return -1;
     }
 
+    private NhanVien findNhanVien(String idNV) {
+        return listNV.stream().filter(nv -> nv.getIdNV().equalsIgnoreCase(idNV.trim())).findFirst().orElse(new NhanVien());
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnRefresh = new com.swingx.Button();
         pnlMain = new javax.swing.JPanel();
         btnAddSP = new com.swingx.Button();
         txtSearchSP = new com.swingx.SearchTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblSP = new com.swingx.table.Table();
         jLabel1 = new javax.swing.JLabel();
-
-        btnRefresh.setBackground(new java.awt.Color(51, 204, 0));
-        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/refresh_25px.png"))); // NOI18N
+        btnExport = new com.swingx.Button();
 
         btnAddSP.setBackground(new java.awt.Color(0, 174, 114));
         btnAddSP.setForeground(new java.awt.Color(255, 255, 255));
@@ -264,6 +223,12 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ SẢN PHẨM");
 
+        btnExport.setBackground(new java.awt.Color(0, 174, 114));
+        btnExport.setForeground(new java.awt.Color(255, 255, 255));
+        btnExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/print_25px.png"))); // NOI18N
+        btnExport.setText("Export");
+        btnExport.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
         pnlMain.setLayout(pnlMainLayout);
         pnlMainLayout.setHorizontalGroup(
@@ -275,7 +240,9 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAddSP, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 382, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
                         .addComponent(txtSearchSP, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane4))
                 .addContainerGap())
@@ -288,7 +255,8 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtSearchSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAddSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAddSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
                 .addContainerGap())
@@ -313,7 +281,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnAddSP;
-    private com.swingx.Button btnRefresh;
+    private com.swingx.Button btnExport;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel pnlMain;

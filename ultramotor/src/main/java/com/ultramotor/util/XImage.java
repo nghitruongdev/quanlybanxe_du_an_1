@@ -50,7 +50,6 @@ public class XImage {
                 throw new Exception("Không load được hình ảnh");
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             if (defaultImage == null) {
                 return;
             }

@@ -13,7 +13,54 @@
     
     <dependencies>
         
-        <!--         https://mvnrepository.com/artifact/com.miglayout/miglayout-core 
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.1.0</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.14.1</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.1.0</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.mpobjects.jasperreports.font/jasperreports-fonts-liberation -->
+        <dependency>
+            <groupId>com.mpobjects.jasperreports.font</groupId>
+            <artifactId>jasperreports-fonts-liberation</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.miglayout/miglayout-core 
         <dependency>
             <groupId>com.miglayout</groupId>
             <artifactId>miglayout-core</artifactId>

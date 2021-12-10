@@ -15,6 +15,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
 import java.text.ParseException;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -84,17 +85,21 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
     }
 
     private void reset() {
-        for (Component c : pnlMain.getComponents()) {
-            if (c instanceof JTextField) {
-                ((JTextField) c).setText("");
-            }
-        }
+        reset(txtMaKH, txtHoKH, txtTenKH, txtNgaySinh, txtSDT, txtEmail, txtDiaChi);
+        txtGhiChu.setText("");
         rdoNam.setSelected(true);
         rdoChuaTV.setSelected(true);
         txtMaKH.setText(getAutoID());
         txtTenKH.requestFocus();
         if (kh != null) {
             setForm();
+        }
+    }
+    
+    private void reset(TextField...fields){
+        for (TextField field : fields) {
+            field.setText("");
+            field.reset();
         }
     }
 
@@ -109,6 +114,10 @@ public class KhachHangInfoPanel extends javax.swing.JPanel {
     }
 
     private void addListeners() {
+        this.addPropertyChangeListener("ancestor",(PropertyChangeEvent e)->{
+            reset();
+        });
+        
         btnReset.addActionListener((ActionEvent e) -> {
             reset();
         });
