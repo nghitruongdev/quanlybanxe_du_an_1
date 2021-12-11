@@ -18,10 +18,10 @@ public class XFile {
         File file = null;
         try {
             file = Files.createTempFile(prefix, suffix).toFile();
+            file.deleteOnExit();
         } catch (IOException ex) {
             Logger.getLogger(XFile.class.getName()).log(Level.SEVERE, null, ex);
         }
-        file.deleteOnExit();
         return file;
     }
     

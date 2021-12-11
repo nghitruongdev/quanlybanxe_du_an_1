@@ -291,20 +291,23 @@
 	</detail>
 	<pageFooter>
 		<band height="39" splitType="Stretch">
-			<textField evaluationTime="Page">
-				<reportElement x="410" y="11" width="40" height="19" uuid="c93098a4-a77b-4480-9d45-560fb5d52d8b"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Page: " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="451" y="10" width="63" height="21" uuid="2f95bf3b-d10e-4465-a93e-31d6b0178100"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" of  " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
+			<frame>
+				<reportElement x="410" y="10" width="104" height="21" uuid="e4ed4628-112f-4682-bc5c-e60d911ce1c2"/>
+				<textField evaluationTime="Page">
+					<reportElement x="0" y="1" width="40" height="19" uuid="c93098a4-a77b-4480-9d45-560fb5d52d8b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page: " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report">
+					<reportElement x="41" y="0" width="63" height="21" uuid="2f95bf3b-d10e-4465-a93e-31d6b0178100"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" of  " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+			</frame>
 		</band>
 	</pageFooter>
 </jasperReport>

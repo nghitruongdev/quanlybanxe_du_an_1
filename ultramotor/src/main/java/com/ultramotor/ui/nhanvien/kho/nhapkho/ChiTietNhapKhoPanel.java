@@ -53,9 +53,9 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
     }
 
     private void initComboMaSP() {
-        List<String> list = new ArrayList<>(spMap.keySet());
-        Collections.sort(list);
-        cboMaSP.setModel(new DefaultComboBoxModel(list.toArray()));
+        List<String> listMaSP = new ArrayList<>(spMap.keySet());
+        Collections.sort(listMaSP);
+        cboMaSP.setModel(new DefaultComboBoxModel(listMaSP.toArray()));
         AutoCompleteDecorator.decorate(cboMaSP);
         JTextComponent editor = (JTextComponent) cboMaSP.getEditor().getEditorComponent();
         cboMaSP.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {

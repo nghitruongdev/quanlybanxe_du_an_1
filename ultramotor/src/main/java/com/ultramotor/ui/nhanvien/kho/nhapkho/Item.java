@@ -26,15 +26,13 @@ import javax.swing.JFrame;
 public class Item extends javax.swing.JPanel {
 
     private File file;
-    private Map<String, String> map;
+    private static Map<String, String> map = new SanPhamDAO().getMaVaTenSP();
     public Item() {
         this(null);
     }
-
+    
     public Item(ActionListener deleteListener) {
         initComponents();
-        
-        map = new SanPhamDAO().getMaVaTenSP();
         file = XFile.getTempFile("bc", ".png");
         btnDelete.addActionListener(deleteListener);
         txtMaSKU.addFocusListener(new FocusAdapter() {
@@ -141,6 +139,9 @@ public class Item extends javax.swing.JPanel {
         return txtMaSKU.getText();
     }
 
+    public String getTenSP(String maSKU){
+        return map.getOrDefault(maSKU, maSKU);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

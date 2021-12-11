@@ -68,7 +68,7 @@ public class PasswordField extends JPasswordField {
         TimingTarget target = new TimingTargetAdapter() {
             @Override
             public void begin() {
-                animateHinText = getText().equals("");
+                animateHinText = getPassword().length == 0;
             }
 
             @Override
@@ -389,7 +389,7 @@ public class PasswordField extends JPasswordField {
     }
 
     public void reset() {
-        if (getPassword().length== 0) {
+        if (getPassword().length == 0) {
             validInput = true;
             repaint();
         }

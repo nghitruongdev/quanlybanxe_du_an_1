@@ -1,29 +1,30 @@
 package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
-import com.swingx.CloseButton;
 import com.swingx.MyScrollBar;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDialog;
-import java.awt.AlphaComposite;
+import com.ultramotor.util.XFile;
+import com.ultramotor.util.XPdf;
+import com.ultramotor.util.XReport;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import javax.swing.BorderFactory;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
+import net.sf.jasperreports.engine.JRException;
 
 public class BarcodePanel extends javax.swing.JPanel {
 
@@ -84,9 +85,12 @@ public class BarcodePanel extends javax.swing.JPanel {
             }
             MsgBox.inform("Đã xoá những mục đã chọn");
         });
+        
+        btnPrint.addActionListener(e-> export(true));
+        btnExportPDF.addActionListener(e-> export(false));
     }
 
-    private void export() {
+    private void export(boolean isPrint) {
         List<ItemBean> list = new ArrayList<>();
         for (Component comp : pnlMain.getComponents()) {
             if (comp instanceof Item) {
@@ -94,9 +98,32 @@ public class BarcodePanel extends javax.swing.JPanel {
                 if (item.getSoLuong() == 0 || item.getMaSKU().isEmpty()) {
                     return;
                 }
-                ItemBean bean = new ItemBean(item.getMaSKU(), item.getSoLuong());
+                ItemBean bean = new ItemBean(item.getMaSKU(),item.getTenSP(item.getMaSKU()), item.getSoLuong());
                 list.add(bean);
             }
+        }
+        
+        File file = XFile.getTempFile(null, ".pdf");
+        try {
+            XReport.createBarcodeReport(list, file);
+            if(isPrint){
+                XPdf.printPDF(file);
+            }else{
+                File dest = XPdf.showSaveDialog((JFrame) this.getTopLevelAncestor(), "BarcodeSP.pdf");
+                if(dest == null){
+                    return;
+                }
+                
+                Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                if(MsgBox.confirm("Xuất file thành công! Bạn có muốn mở file?", false)==0){
+                    Desktop.getDesktop().open(dest);
+                }
+            }
+        } catch (JRException | IOException ex) {
+            MsgBox.error("Không thể xuất barcode sản phẩm! Vui lòng kiểm tra lại hệ thống");
+        } 
+        catch (PrinterException ex) {
+            MsgBox.error("Không thể in file! Vui lòng kiểm tra lại hệ thống");
         }
     }
 
@@ -129,7 +156,7 @@ public class BarcodePanel extends javax.swing.JPanel {
             } catch (Exception ex) {
             }
         });
-        
+
         new Thread(() -> {
             XDialog.getDialog((JFrame) this.getTopLevelAncestor(), panel).setVisible(true);
         }).start();
@@ -144,8 +171,8 @@ public class BarcodePanel extends javax.swing.JPanel {
         chkAll = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
         btnDelete = new com.swingx.Button();
-        btnDeleteAll1 = new com.swingx.Button();
-        btnDeleteAll2 = new com.swingx.Button();
+        btnPrint = new com.swingx.Button();
+        btnExportPDF = new com.swingx.Button();
         scroll = new javax.swing.JScrollPane();
         pnlMain = new javax.swing.JPanel();
 
@@ -168,20 +195,20 @@ public class BarcodePanel extends javax.swing.JPanel {
         btnDelete.setText("Xoá");
         btnDelete.setRadius(10);
 
-        btnDeleteAll1.setBackground(new java.awt.Color(0, 174, 114));
-        btnDeleteAll1.setForeground(new java.awt.Color(255, 255, 255));
-        btnDeleteAll1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/print_25px.png"))); // NOI18N
-        btnDeleteAll1.setText("In Ấn");
-        btnDeleteAll1.setIconTextGap(10);
-        btnDeleteAll1.setRadius(10);
+        btnPrint.setBackground(new java.awt.Color(0, 174, 114));
+        btnPrint.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/print_25px.png"))); // NOI18N
+        btnPrint.setText("In Ấn");
+        btnPrint.setIconTextGap(10);
+        btnPrint.setRadius(10);
 
-        btnDeleteAll2.setBackground(new java.awt.Color(0, 174, 114));
-        btnDeleteAll2.setForeground(new java.awt.Color(255, 255, 255));
-        btnDeleteAll2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/pdf_25px.png"))); // NOI18N
-        btnDeleteAll2.setText("Xuất PDF");
-        btnDeleteAll2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnDeleteAll2.setIconTextGap(10);
-        btnDeleteAll2.setRadius(10);
+        btnExportPDF.setBackground(new java.awt.Color(0, 174, 114));
+        btnExportPDF.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/pdf_25px.png"))); // NOI18N
+        btnExportPDF.setText("Xuất PDF");
+        btnExportPDF.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnExportPDF.setIconTextGap(10);
+        btnExportPDF.setRadius(10);
 
         javax.swing.GroupLayout pnlFooterLayout = new javax.swing.GroupLayout(pnlFooter);
         pnlFooter.setLayout(pnlFooterLayout);
@@ -193,9 +220,9 @@ public class BarcodePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDeleteAll1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnDeleteAll2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnExportPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
@@ -217,8 +244,8 @@ public class BarcodePanel extends javax.swing.JPanel {
                         .addGroup(pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnDeleteAll1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnDeleteAll2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnExportPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(chkAll))
                         .addGap(0, 38, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -262,8 +289,8 @@ public class BarcodePanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnAdd;
     private com.swingx.Button btnDelete;
-    private com.swingx.Button btnDeleteAll1;
-    private com.swingx.Button btnDeleteAll2;
+    private com.swingx.Button btnExportPDF;
+    private com.swingx.Button btnPrint;
     private javax.swing.JCheckBox chkAll;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel pnlFooter;

@@ -3,20 +3,22 @@ package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 
 public class ItemBean {
     private String maSP;
-    private List<String> list;
-
-    public ItemBean(String maSP, int soLuong) {
+    private String tenSP;
+    private JRBeanCollectionDataSource source;
+    public ItemBean(String maSP, String tenSP, int soLuong) {
         this.maSP = maSP;
-        list = new ArrayList<>(soLuong);
+        this.tenSP = tenSP;
+        List<String> list = new ArrayList<>(soLuong);
         for (int i = 0; i < soLuong; i++) {
             list.add(maSP);
         }
+        source = new JRBeanCollectionDataSource(list);
     }
-
     
     public String getMaSP() {
         return maSP;
@@ -26,13 +28,20 @@ public class ItemBean {
         this.maSP = maSP;
     }
 
-    public List<String> getList() {
-        return list;
+     public String getTenSP() {
+        return tenSP;
     }
 
-    public void setList(List<String> list) {
-        this.list = list;
+    public void setTenSP(String tenSP) {
+        this.tenSP = tenSP;
     }
+
     
-    
+    public JRBeanCollectionDataSource getSource() {
+        return source;
+    }
+
+    public void setSource(JRBeanCollectionDataSource source) {
+        this.source = source;
+    }
 }
