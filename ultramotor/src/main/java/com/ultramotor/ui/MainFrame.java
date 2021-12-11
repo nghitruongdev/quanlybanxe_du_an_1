@@ -78,6 +78,14 @@ public class MainFrame extends javax.swing.JFrame {
     private ThongKePanel pnlThongKe;
     private DangNhapJFrame dangNhap;
     private HoaDonListPanel pnlListHoaDon;
+    ModelMenu mnuThongKe;
+    ModelMenu mnuNhanVien;
+    ModelMenu mnuHoaDon;
+    ModelMenu mnuListHoaDon;
+    ModelMenu mnuKhachHang;
+    ModelMenu mnuSanPham;
+    ModelMenu mnuNhapKho;
+    ModelMenu mnuBarcode;
 
     private MainFrame() {
         initComponents();
@@ -101,6 +109,14 @@ public class MainFrame extends javax.swing.JFrame {
         pnlThongKe = new ThongKePanel();
         dangNhap = DangNhapJFrame.getLoginFrame();
         pnlListHoaDon = new HoaDonListPanel();
+        mnuThongKe = new ModelMenu("Thống kê", createIcon("report.png"), getEvent(pnlThongKe));
+        mnuNhanVien = new ModelMenu("Quản lý nhân viên", createIcon("staff.png"), getEvent(pnlNhanVien));
+        mnuHoaDon = new ModelMenu("Tạo đơn hàng", createIcon("receipt_25px.png"), getEvent(pnlHoaDon));
+        mnuListHoaDon = new ModelMenu("Quản lý hoá đơn", createIcon("invoice.png"), getEvent(pnlListHoaDon));
+        mnuKhachHang = new ModelMenu("Quản lý khách hàng", createIcon("customer.png"), getEvent(pnlKhachHang));
+        mnuSanPham = new ModelMenu("Quản lý sản phẩm", createIcon("product.png"), getEvent(pnlSanPham));
+        mnuNhapKho = new ModelMenu("Quản lý kho", createIcon("kho.png"), getEvent(pnlNhapKho));
+        mnuBarcode = new ModelMenu("In barcode", createIcon("barcode.png"), getEvent(pnlBarcode));
         setLocationRelativeTo(null);
         addListener();
     }
@@ -125,20 +141,15 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void addMenus(NhanVien user) {
-        ModelMenu mnuThongKe = new ModelMenu("Thống kê", createIcon("refresh_25px.png"), getEvent(pnlThongKe));
-        ModelMenu mnuNhanVien = new ModelMenu("Quản lý nhân viên", createIcon("refresh_25px.png"), getEvent(pnlNhanVien));
-        ModelMenu mnuHoaDon = new ModelMenu("Tạo đơn hàng", createIcon("refresh_25px.png"), getEvent(pnlHoaDon));
-        ModelMenu mnuListHoaDon = new ModelMenu("Quản lý hoá đơn", createIcon("refresh_25px.png"), getEvent(pnlListHoaDon));
-        ModelMenu mnuKhachHang = new ModelMenu("Quản lý khách hàng", createIcon("refresh_25px.png"), getEvent(pnlKhachHang));
-        ModelMenu mnuSanPham = new ModelMenu("Quản lý sản phẩm", createIcon("refresh_25px.png"), getEvent(pnlSanPham));
-        ModelMenu mnuNhapKho = new ModelMenu("Quản lý kho", createIcon("refresh_25px.png"), getEvent(pnlNhapKho));
-        ModelMenu mnuBarcode = new ModelMenu("In barcode", createIcon("refresh_25px.png"), getEvent(pnlBarcode));
+
         ModelMenu[] models = null;
 
         if (user instanceof TruongPhong) {
             models = new ModelMenu[]{mnuNhanVien, mnuHoaDon, mnuListHoaDon, mnuKhachHang, mnuSanPham, mnuNhapKho, mnuBarcode, mnuThongKe};
+            showForm(pnlNhanVien);
         } else if (user instanceof NhanVien) {
             models = new ModelMenu[]{mnuHoaDon, mnuListHoaDon, mnuKhachHang, mnuSanPham, mnuNhapKho, mnuBarcode, mnuThongKe};
+            showForm(pnlHoaDon);
         }
         pnlMain.addMenu(models);
     }

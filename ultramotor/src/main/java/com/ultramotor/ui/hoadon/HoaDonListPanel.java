@@ -5,8 +5,6 @@
  */
 package com.ultramotor.ui.hoadon;
 
-import com.swingx.PictureBox;
-import com.swingx.PopupMenuItem;
 import com.ultramotor.dao.HoaDonDAO;
 import com.ultramotor.dao.KhachHangDAO;
 import com.ultramotor.dao.NhanVienDAO;
@@ -25,8 +23,6 @@ import com.ultramotor.util.XValidate;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.beans.PropertyChangeEvent;
@@ -44,15 +40,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.SwingUtilities;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 
@@ -62,6 +53,7 @@ public class HoaDonListPanel extends javax.swing.JPanel {
     private List<HoaDon> list;
     private List<NhanVien> listNV;
     private List<KhachHang> listKH;
+
     public HoaDonListPanel() {
         initComponents();
         init();
@@ -74,7 +66,7 @@ public class HoaDonListPanel extends javax.swing.JPanel {
         listKH = new KhachHangDAO().selectAll();
         dateFrom.setTextRefernce(txtTo);
         dateTo.setTextRefernce(txtFrom);
-        
+
         initTable();
         fillTable();
         addListener();
@@ -110,13 +102,15 @@ public class HoaDonListPanel extends javax.swing.JPanel {
     }
 
     private Object[] getInfo(HoaDon hd) {
+        KhachHang kh = findKhachHang(hd.getIdKH());
+        NhanVien nv = findNhanVien(hd.getIdNV());
         return new Object[]{
             hd,
-            findKhachHang(hd.getIdKH()).getHoTenKH(),
+            kh == null ? "" : kh.getHoTenKH(),
             hd.getGiamGia(),
             new DecimalFormat("#,###.## VNĐ").format(hd.getTongTien()),
             XDate.toString(hd.getThoiGian(), "dd/MM/yyyy"),
-            findNhanVien(hd.getIdNV()).getHoTenNV()
+            nv == null ? "" : nv.getHoTenNV()
         };
     }
 
@@ -156,11 +150,11 @@ public class HoaDonListPanel extends javax.swing.JPanel {
     }
 
     private NhanVien findNhanVien(String idNV) {
-        return listNV.stream().filter(nv -> nv.getIdNV().equalsIgnoreCase(idNV)).findFirst().orElse(new NhanVien());
+        return listNV.stream().filter(nv -> nv.getIdNV().equalsIgnoreCase(idNV)).findFirst().orElse(null);
     }
 
     private KhachHang findKhachHang(String idKH) {
-        return listKH.stream().filter(kh -> kh.getIdKH().equalsIgnoreCase(idKH)).findFirst().orElse(new KhachHang());
+        return listKH.stream().filter(kh -> kh.getIdKH().equalsIgnoreCase(idKH)).findFirst().orElse(null);
     }
 
     private String promptEmail() throws Exception {
@@ -243,7 +237,6 @@ public class HoaDonListPanel extends javax.swing.JPanel {
             MsgBox.error("Không thể xuất hoá đơn!");
         }
     }
- 
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

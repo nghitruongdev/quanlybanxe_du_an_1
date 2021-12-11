@@ -30,8 +30,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class XExcel {
 
-
-
     /**
      * Đọc dữ liệu từ file excel, chỉ đọc một sheet đầu tiên nếu file có nhiều
      * sheet
@@ -86,7 +84,7 @@ public class XExcel {
      * @param file excel nơi chứa dữ liệu
      * @param lists các list data cần lưu
      */
-    public static void saveMultipleSheet(String[] sheets, String[][] headers, File file, List<Object[]>... lists) {
+    public static void saveMultipleSheet(String[] sheets, String[][] headers, File file, List<?>... lists) {
         //nếu SL lists nhiều hơn sheets, báo lỗi
         if (lists.length > sheets.length) {
             throw new RuntimeException("Không đủ sheet");
@@ -107,7 +105,10 @@ public class XExcel {
 
                 for (int k = 0; k < lists[i].size(); k++) {
                     //lấy danh sách i, record ở dòng k, lưu vào sheet ở dòng k + 1 (k =0:header)
-                    createRow(lists[i].get(k), sheet.createRow(k + 1), wb.createCellStyle());
+                    if (lists[i].get(k) instanceof Object[]) {
+                        Object[] os = (Object[]) lists[i].get(k);
+                        createRow(os, sheet.createRow(k + 1), wb.createCellStyle());
+                    }
                 }
             }
 
@@ -224,7 +225,7 @@ public class XExcel {
         }
         return true;
     }
-    
+
     //Hiện hộp thoại lưu file excel
     public static File showSaveDialog(JFrame frame, String name) {
         File file = null;

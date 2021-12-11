@@ -296,7 +296,6 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         txtGiaNhap = new com.swingx.TextField();
         btnThem = new com.swingx.Button();
-        btnImport = new com.swingx.Button();
         jLabel2 = new javax.swing.JLabel();
         spnSoLuong = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
@@ -354,12 +353,6 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         btnThem.setText("Thêm");
         btnThem.setRadius(5);
 
-        btnImport.setBackground(new java.awt.Color(0, 174, 114));
-        btnImport.setForeground(new java.awt.Color(255, 255, 255));
-        btnImport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/print_25px.png"))); // NOI18N
-        btnImport.setText("Import ");
-        btnImport.setRadius(5);
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Tên Sản Phẩm");
         jLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
@@ -410,9 +403,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
                     .addComponent(txtGiaNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(104, 104, 104))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -428,7 +419,6 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtGiaNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(cboMaSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -479,7 +469,6 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.swingx.Button btnImport;
     private com.swingx.Button btnReset;
     private com.swingx.Button btnSave;
     private com.swingx.Button btnThem;

@@ -579,8 +579,30 @@ as begin
 end
 go
 
+-- tạo proc thống kê danh sách nhân viên tiêu biểu bán nhiều sản phẩm theo năm
+drop proc if exists sp_KhachHangTieuBieu
+go
 
+Create proc sp_KhachHangTieuBieu(@Year int)
+as begin
+	select 
+		kh.idKH MaKH,
+		(kh.hoKH + ' ' + kh.TenKH) TenKH,
+		kh.NgaySinh NgaySinh,
+		kh.GioiTinh GioiTinh,
+		kh.SDT SDT,
+		kh.Email Email,
+		count(distinct hd.idHD) SoLuong
+	from KhachHang kh 
+	join HoaDon hd on hd.idKH = kh.idKH
+	join ChiTietHoaDon cthd on cthd.idHD = cthd.idHD
+	where Year(hd.thoiGian) = @Year
+	group by kh.idKH ,kh.hoKH, kh.TenKH , NgaySinh, GioiTinh, kh.SDT, kh.Email
+	order by SoLuong desc
+end
+go
 
+exec sp_KhachHangTieuBieu 2021
 
 ----------------------------------------------CREATE TRIGGER---------------------------------------------------------
 
@@ -646,6 +668,5 @@ ON SanPham
 INSTEAD OF DELETE
 NOT FOR REPLICATION
 AS UPDATE SanPham set isDeleted = 1 WHERE SKU in (select SKU from deleted)
-
 
 update NhanVien set VaiTro = N'Trưởng Phòng', Email  = 'nghitvps19009@fpt.edu.vn' WHERE id_NV = 'NV01'

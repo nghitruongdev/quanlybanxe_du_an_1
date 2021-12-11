@@ -92,6 +92,10 @@ public class BarcodePanel extends javax.swing.JPanel {
 
     private void export(boolean isPrint) {
         List<ItemBean> list = new ArrayList<>();
+        if(pnlMain.getComponents().length==0){
+            MsgBox.warning("Vui lòng thêm sản phẩm!");
+            return;
+        }
         for (Component comp : pnlMain.getComponents()) {
             if (comp instanceof Item) {
                 Item item = (Item) comp;
@@ -136,15 +140,6 @@ public class BarcodePanel extends javax.swing.JPanel {
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         scroll.setBorder(new EmptyBorder(5, 10, 5, 10));
         scroll.setViewportView(pnlMain);
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new BarcodePanel());
-        frame.setSize(1000, 500);
-        frame.pack();
-        frame.setVisible(true);
     }
 
     private void openSearchDialog() {

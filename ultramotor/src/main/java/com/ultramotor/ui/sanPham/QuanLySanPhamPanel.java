@@ -63,7 +63,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
     }
 
     private void initTable() {
-        String[] colsSP = {"Mã SKU", "Tên Sản Phẩm", "Màu Sắc", "Phân Khối", "Thời Gian BH", "Địa chỉ SX", "Giá Tiền", "Đời Xe", "Tồn Kho", "id_DongSP", "id_NV", "Actions"};
+        String[] colsSP = {"Mã SKU", "Tên Sản Phẩm", "Màu Sắc", "Phân Khối", "Thời Gian BH", "Địa chỉ SX", "Giá Tiền", "Đời Xe", "Tồn Kho", "Dòng Sản Phẩm", "Nhân Viên", "Actions"};
         tblSP.initTable(colsSP);
         tblSP.addRowSorter(txtSearchSP);
         tblSP.getColumnModel().getColumn(tblSP.getColumnCount() - 1).setMaxWidth(100);
@@ -147,7 +147,6 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
 
     private Object[] getInfo(Entity e) {
         if (e instanceof SanPham) {
-
             SanPham sp = (SanPham) e;
             return new Object[]{
                 sp,

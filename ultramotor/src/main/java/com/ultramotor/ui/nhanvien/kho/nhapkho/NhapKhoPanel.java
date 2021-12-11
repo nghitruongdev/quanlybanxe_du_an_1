@@ -48,7 +48,8 @@ public class NhapKhoPanel extends javax.swing.JPanel {
             public void update(Object e) {
                 new Thread(() -> {
                     sleepThread();
-                    updatePhieuNhap((PhieuNhapKho) e);
+                    MsgBox.warning("Không thể sửa phiếu nhập kho!");
+//                    updatePhieuNhap((PhieuNhapKho) e);
                 }).start();
             }
 
@@ -380,14 +381,4 @@ public class NhapKhoPanel extends javax.swing.JPanel {
     private com.swingx.table.Table tblPhieuNhap;
     private com.swingx.TextField txtDate;
     // End of variables declaration//GEN-END:variables
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame fr = new JFrame();
-            fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            fr.getContentPane().add(new NhapKhoPanel());
-            fr.pack();
-            fr.setVisible(true);
-        });
-    }
 }
