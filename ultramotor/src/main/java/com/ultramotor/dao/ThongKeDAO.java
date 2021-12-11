@@ -70,9 +70,8 @@ public class ThongKeDAO {
     }
 
     public List<Object[]> getKhachHang(int nam) {
-//        String sql = "{CALL sp_KhachHangTieuBieu(?)}";
-//        String[] cols = {"MaKH", "TenKH", "NgaySinh", "GioiTinh", "SDT", "Email", "SoLuong"};
-//        return this.getListOfArray(sql, cols, nam);
-        return new ArrayList<>();
+        String sql = "{CALL sp_KhachHangTieuBieu(?)}";
+        String[] cols = {"MaKH", "TenKH", "NgaySinh", "GioiTinh", "SDT", "Email", "SoLuong"};
+        return this.getListOfArray(sql, cols, nam);
     }
 }

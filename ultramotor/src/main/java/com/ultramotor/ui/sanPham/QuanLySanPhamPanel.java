@@ -147,7 +147,6 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
 
     private Object[] getInfo(Entity e) {
         if (e instanceof SanPham) {
-
             SanPham sp = (SanPham) e;
             return new Object[]{
                 sp,

@@ -5,14 +5,27 @@
  */
 package com.ultramotor.ui.thongke;
 
+import com.swingx.Button;
+import com.swingx.PopupMenuItem;
 import com.ultramotor.dao.HoaDonDAO;
 import com.ultramotor.dao.NhapKhoDAO;
 import com.ultramotor.dao.ThongKeDAO;
 import com.ultramotor.entity.ChiTietHoaDon;
+import com.ultramotor.util.MsgBox;
+import com.ultramotor.util.UltraExporter;
+import com.ultramotor.util.XExcel;
+import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -119,6 +132,7 @@ public class ThongKePanel extends javax.swing.JPanel {
         btnSave.setBackground(new java.awt.Color(92, 167, 51));
         btnSave.setForeground(new java.awt.Color(255, 255, 255));
         btnSave.setText("Xuất danh sách");
+        btnSave.setActionCommand("DoanhThu");
         btnSave.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnSave.setRadius(10);
 
@@ -159,6 +173,7 @@ public class ThongKePanel extends javax.swing.JPanel {
         btnSave1.setBackground(new java.awt.Color(92, 167, 51));
         btnSave1.setForeground(new java.awt.Color(255, 255, 255));
         btnSave1.setText("Xuất danh sách");
+        btnSave1.setActionCommand("SanPham");
         btnSave1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnSave1.setRadius(10);
 
@@ -287,6 +302,7 @@ public class ThongKePanel extends javax.swing.JPanel {
         btnSave2.setBackground(new java.awt.Color(92, 167, 51));
         btnSave2.setForeground(new java.awt.Color(255, 255, 255));
         btnSave2.setText("Xuất danh sách");
+        btnSave2.setActionCommand("Kho");
         btnSave2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnSave2.setRadius(10);
         btnSave2.addActionListener(new java.awt.event.ActionListener() {
@@ -368,6 +384,7 @@ public class ThongKePanel extends javax.swing.JPanel {
         btnSave3.setBackground(new java.awt.Color(92, 167, 51));
         btnSave3.setForeground(new java.awt.Color(255, 255, 255));
         btnSave3.setText("Xuất danh sách");
+        btnSave3.setActionCommand("NhanVien");
         btnSave3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnSave3.setRadius(10);
 
@@ -415,7 +432,7 @@ public class ThongKePanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã nhân viên", "Tên nhân viên", "Ngày sinh", "Giới tính", "SDT", "Email", "Số lượng mua"
+                "Mã khách hàng", "Tên khách hàng", "Ngày sinh", "Giới tính", "SDT", "Email", "Số lượng mua"
             }
         ));
         jScrollPane10.setViewportView(tblKhachHang);
@@ -426,6 +443,7 @@ public class ThongKePanel extends javax.swing.JPanel {
         btnSave4.setBackground(new java.awt.Color(92, 167, 51));
         btnSave4.setForeground(new java.awt.Color(255, 255, 255));
         btnSave4.setText("Xuất danh sách");
+        btnSave4.setActionCommand("KhachHang");
         btnSave4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnSave4.setRadius(10);
 
@@ -565,7 +583,7 @@ public class ThongKePanel extends javax.swing.JPanel {
         fillTableSanPhamNhapKho();
         fillTableNhanVien();
         fillTableKhachHang();
-               
+
         addListeners();
     }
 
@@ -583,7 +601,7 @@ public class ThongKePanel extends javax.swing.JPanel {
             model4.addElement(year);
         }
     }
-    
+
     public void fillComboBoxNamNhapKho() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboNamNK.getModel();
         model.removeAllElements();
@@ -618,7 +636,7 @@ public class ThongKePanel extends javax.swing.JPanel {
             }
         }
     }
-    
+
     public void fillTableSanPhamBanCham() {
         DefaultTableModel model = (DefaultTableModel) tblSanPhamBanCham.getModel();
         model.setRowCount(0);
@@ -630,16 +648,16 @@ public class ThongKePanel extends javax.swing.JPanel {
             }
         }
     }
-    
-     public void fillTableSanPhamTonKho() {
+
+    public void fillTableSanPhamTonKho() {
         DefaultTableModel model = (DefaultTableModel) tblSanPhamTonKho.getModel();
         model.setRowCount(0);
-            List<Object[]> list = tkdao.getSanPhamTonKho();
-            for (Object[] row : list) {
-                model.addRow(row);           
+        List<Object[]> list = tkdao.getSanPhamTonKho();
+        for (Object[] row : list) {
+            model.addRow(row);
         }
     }
-     
+
     public void fillTableSanPhamNhapKho() {
         DefaultTableModel model = (DefaultTableModel) tblSanPhamNhapKho.getModel();
         model.setRowCount(0);
@@ -651,7 +669,7 @@ public class ThongKePanel extends javax.swing.JPanel {
             }
         }
     }
-    
+
     public void fillTableNhanVien() {
         DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
         model.setRowCount(0);
@@ -659,12 +677,12 @@ public class ThongKePanel extends javax.swing.JPanel {
             int nam = Integer.valueOf(cboNamNV.getSelectedItem().toString());
             List<Object[]> list = tkdao.getNhanVien(nam);
             for (Object[] row : list) {
-                row[3]= (Boolean)row[3]?"Nam" : "Nũ";
+                row[3] = (Boolean) row[3] ? "Nam" : "Nũ";
                 model.addRow(row);
             }
         }
     }
-    
+
     public void fillTableKhachHang() {
         DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
         model.setRowCount(0);
@@ -672,35 +690,113 @@ public class ThongKePanel extends javax.swing.JPanel {
             int nam = Integer.valueOf(cboNamKH.getSelectedItem().toString());
             List<Object[]> list = tkdao.getKhachHang(nam);
             for (Object[] row : list) {
-                row[3]= (Boolean)row[3]?"Nam" : "Nũ";
+                row[3] = (Boolean) row[3] ? "Nam" : "Nũ";
                 model.addRow(row);
             }
         }
     }
-    
-    
+
+    private void addExportListener(Button... btns) {
+        ActionListener ls = (e) -> {
+            switch (e.getActionCommand()) {
+                case "DoanhThu":
+                    export(e.getActionCommand());
+                    break;
+                case "SanPham":
+                    getPopupSanPhamBan().show((Component) e.getSource(), -35, -85);
+                    break;
+                case "Kho":
+                    getPopupKho().show((Component) e.getSource(), -35, -85);
+                    break;
+                case "NhanVien":
+                    export(e.getActionCommand());
+                    break;
+                case "KhachHang":
+                    export(e.getActionCommand());
+                    break;
+            }
+        };
+
+        for (Button btn : btns) {
+            btn.addActionListener(ls);
+        }
+    }
+
+    private void export(String name) {
+        File file = XExcel.showSaveDialog((JFrame) this.getTopLevelAncestor(), "ThongKe_Ultramotor.xlsx");
+        if (file == null) {
+            return;
+        }
+
+        switch (name) {
+            case "DoanhThu":
+                UltraExporter.exportDoanhThu(file, hddao.selectYears().stream().toArray(Integer[]::new));
+                break;
+            case "BanChay":
+                UltraExporter.exportSanPhamBan(file, true, hddao.selectYears().stream().toArray(Integer[]::new));
+                break;
+            case "BanCham":
+                UltraExporter.exportSanPhamBan(file, false, hddao.selectYears().stream().toArray(Integer[]::new));
+                break;
+            case "NhanVien":
+                UltraExporter.exportNhanVienBan(file, hddao.selectYears().stream().toArray(Integer[]::new));
+                break;
+            case "KhachHang":
+                UltraExporter.exportKhachHangMua(file, hddao.selectYears().stream().toArray(Integer[]::new));
+                break;
+            case "TonKho":
+                UltraExporter.exportTonKho(file, false, nkdao.selectYears().stream().toArray(Integer[]::new));
+                break;
+            case "NhapKho":
+                UltraExporter.exportTonKho(file, true, nkdao.selectYears().stream().toArray(Integer[]::new));
+                break;
+        }
+        if (MsgBox.confirm("Xuất danh sách thành công! Bạn có muốn mở file?", false) == 0) {
+            try {
+                Desktop.getDesktop().open(file);
+            } catch (IOException ex) {
+            }
+        }
+
+    }
+
+    private JPopupMenu getPopupSanPhamBan() {
+        JPopupMenu popup = new JPopupMenu();
+        popup.add(new PopupMenuItem("Sản Phẩm Bán Chạy", null, null, e -> export("BanChay")));
+        popup.add(new PopupMenuItem("Sản Phẩm Bán Chậm", null, null, e -> export("BanCham")));
+        return popup;
+    }
+
+    private JPopupMenu getPopupKho() {
+        JPopupMenu popup = new JPopupMenu();
+        popup.add(new PopupMenuItem("Sản Phẩm Tồn Kho", null, null, e -> export("TonKho")));
+        popup.add(new PopupMenuItem("Sản Phẩm Nhập Kho", null, null, e -> export("NhapKho")));
+        return popup;
+    }
 
     private void addListeners() {
         cboNamDT.addActionListener((e) -> {
             fillTableDoanhThu();
         });
-        
+
         cboNamSP.addActionListener((e) -> {
             fillTableSanPhamBanCham();
             fillTableSanPhamBanChay();
         });
-        
+
         cboNamNK.addActionListener((e) -> {
             fillTableSanPhamNhapKho();
         });
-        
+
         cboNamNV.addActionListener((e) -> {
             fillTableNhanVien();
         });
-        
+
         cboNamKH.addActionListener((e) -> {
             fillTableKhachHang();
         });
+
+        addExportListener(btnSave, btnSave1, btnSave2, btnSave3, btnSave4);
     }
 
 }

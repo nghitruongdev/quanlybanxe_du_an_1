@@ -175,7 +175,7 @@ public class KhachHangPanel extends javax.swing.JPanel {
 
     Object[] getInfo(KhachHang kh) {
         return new Object[]{
-            false, kh.getIdKH(), kh.getHoKH() + " " + kh.getTenKH(),
+            false, kh.getIdKH(), kh.getHoTenKH(),
             kh.getGioiTinh() ? "Nam" : "Nữ", XDate.toString(kh.getNgaySinh(), "dd/MM/yyyy"),
             kh.getDiaChi(),
             kh.getSdt(), kh.getEmail(), kh.getThanhVien() ? "Thành Viên" : "",
