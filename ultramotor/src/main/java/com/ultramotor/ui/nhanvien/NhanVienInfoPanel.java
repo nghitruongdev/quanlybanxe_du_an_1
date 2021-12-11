@@ -39,7 +39,6 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
 
     public NhanVienInfoPanel() {
         initComponents();
-
         fixTextPane(jScrollPane2);
         fixRadioPanel();
         setFieldName();
@@ -52,7 +51,6 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         btnGuiMail.setVisible(!isNew);
         btnCapNhat.setText(isNew ? "Thêm mới" : "Cập nhật");
         cboVaiTro.setEditable(manager);
-//        txtMaNV.setEditable(isNew);
     }
 
     void setForm() {
@@ -97,20 +95,25 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
             return null;
         }
         try {
-            NhanVien nv = new NhanVien();
-            nv.setIdNV(txtMaNV.getText());
-            nv.setHoNV(txtHoNV.getText());
-            nv.setTenNV(txtTenNV.getText());
-            nv.setNgaySinh(XDate.parse(txtNgaySinh.getText(), "dd-MM-yyyy"));
-            nv.setDiaChi(txtDiaChi.getText());
-            nv.setSdt(txtSDT.getText());
-            nv.setEmail(txtEmail.getText());
-            nv.setLuong(((Number) txtLuong.getValue()).doubleValue());
-            nv.setVaiTro((String) cboVaiTro.getSelectedItem());
-            nv.setHinh(lblHinh.getToolTipText());
-            nv.setGhiChu(txtGhiChu.getText());
-            nv.setGioiTinh(rdoNam.isSelected());
-            return nv;
+            NhanVien newNV = new NhanVien();
+            newNV.setIdNV(txtMaNV.getText());
+            newNV.setHoNV(txtHoNV.getText());
+            newNV.setTenNV(txtTenNV.getText());
+            newNV.setNgaySinh(XDate.parse(txtNgaySinh.getText(), "dd-MM-yyyy"));
+            newNV.setDiaChi(txtDiaChi.getText());
+            newNV.setSdt(txtSDT.getText());
+            newNV.setEmail(txtEmail.getText());
+            if(txtLuong.getValue() == null){
+                MsgBox.error("Lỗi lương nhân viên! Vui lòng kiểm tra lại.");
+                return null;
+            }
+            newNV.setLuong(((Number)txtLuong.getValue()).doubleValue());
+            newNV.setVaiTro((String) cboVaiTro.getSelectedItem());
+            newNV.setHinh(lblHinh.getToolTipText());
+            newNV.setGhiChu(txtGhiChu.getText());
+            newNV.setGioiTinh(rdoNam.isSelected());
+            newNV.setMatKhau(nv != null && nv.getMatKhau() != null ? nv.getMatKhau() : null);
+            return newNV;
         } catch (ParseException ex) {
             Logger.getLogger(NhanVienInfoPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -392,6 +395,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 250;
         pnlMain.add(txtEmail, gridBagConstraints);
 
+        txtLuong.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtLuong.setLabelText("Lương");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;

@@ -17,7 +17,6 @@ import com.ultramotor.util.XPdf;
 import com.ultramotor.util.XReport;
 import com.ultramotor.util.XValidate;
 import java.awt.Desktop;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -27,6 +26,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -57,6 +57,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private boolean hasEdit = false;
     private static int sizeNV;
     private ActionListener exportEvent;
+    private DecimalFormat numberFormat;
 
     public NhanVienPanel() {
         initComponents();
@@ -65,6 +66,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
     private void init() {
         initTable();
+        numberFormat = new DecimalFormat("#,##0.00");
         pnlInfo = new NhanVienInfoPanel();
         pnlSendMail = new SendMailPanel();
         event = new ModelEvent<NhanVien>() {
@@ -86,7 +88,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
         popup = new JPopupMenu();
         popup.add(new PopupMenuItem("Xuất PDF", createIcon("profile_25px.png"), createIcon("profile_white_25px.png"), exportEvent));
         popup.add(new PopupMenuItem("Xuất Excel", createIcon("change_25px.png"), createIcon("change_white_25px.png"), exportEvent));
-
     }
 
     private void initTable() {
@@ -195,7 +196,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
             false, nv, nv.getHoNV() + " " + nv.getTenNV(),
             XDate.toString(nv.getNgaySinh(), "dd-MM-yyyy"),
             nv.getGioiTinh() ? "Nam" : "Nữ", nv.getDiaChi(),
-            nv.getSdt(), nv.getEmail(), nv.getLuong(),
+            nv.getSdt(), nv.getEmail(), numberFormat.format(nv.getLuong()),
             nv.getHinh(), nv.getVaiTro(),
             new ModelAction(nv, event)
         };
@@ -270,11 +271,11 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 MsgBox.inform("Thêm mới nhân viên thành công");
                 index = tblNhanVien.getRowCount() - 1;
                 addNV();
+                ((JDialog) pnlInfo.getTopLevelAncestor()).dispose();
             } else {
                 model.removeRow(index);
                 model.insertRow(index, getInfo(nv));
                 MsgBox.inform("Cập nhật nhân viên thành công");
-                ((JDialog)pnlInfo.getTopLevelAncestor()).dispose();
             }
             tblNhanVien.setRowSelectionInterval(index, index); //đật hàng chọn trên bảng
             tblNhanVien.scrollRectToVisible(new java.awt.Rectangle(tblNhanVien.getCellRect(index, 0, true))); //di chuyển thanh lăn tới vị trí hàng chọn

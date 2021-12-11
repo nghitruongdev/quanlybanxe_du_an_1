@@ -81,19 +81,23 @@ public class MainForm extends javax.swing.JPanel {
         });
     }
 
-    public void setUser(NhanVien user){
+    public void setUser(NhanVien user) {
         header.setUser(user);
     }
-    
-    public void addMenu(ModelMenu...models){
+
+    public void addMenu(ModelMenu... models) {
+        menu.removeMenu();
         for (ModelMenu model : models) {
             menu.add(model);
         }
+        menu.revalidate();
+        menu.repaint();
     }
-    
-    public void showForm(Component comp){
+
+    public void showForm(Component comp) {
         pnlMain.showForm(comp);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -132,14 +136,15 @@ public class MainForm extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 }
 
-class MainPanel extends JPanel{
-     public MainPanel() {
+class MainPanel extends JPanel {
+
+    public MainPanel() {
         setOpaque(false);
-        setLayout(new BorderLayout()); 
-        setBorder(BorderFactory.createEmptyBorder(10,20,10,20));
+        setLayout(new BorderLayout());
+        setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
     }
-    
-    public void showForm(Component comp){
+
+    public void showForm(Component comp) {
         removeAll();
         add(comp);
         repaint();

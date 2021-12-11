@@ -18,10 +18,7 @@ import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.MyVerifier;
 import com.ultramotor.util.XImage;
 import com.ultramotor.util.XValidate;
-import java.awt.Component;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -277,7 +274,7 @@ public class SanPhamPanel extends JPanel {
         lblBaoHanh.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
 
         txtGiaTien.setToolTipText("");
-        txtGiaTien.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        txtGiaTien.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txtGiaTien.setLabelText("Giá Tiền");
 
         txtMauSac.setLabelText("Màu sắc");
@@ -461,11 +458,10 @@ public class SanPhamPanel extends JPanel {
             deleteItem(event.getActionCommand());
         };
 
-        
         addComboBtnListener(insertLs, btnAddNSX, btnAddLH, btnAddDongSP);
         addComboBtnListener(deleteLs, btnDeleteNSX, btnDeleteLH, btnDeleteDongSP);
         AutoCompleteDecorator.decorate(cboNSX);
-                AutoCompleteDecorator.decorate(cboLH);
+        AutoCompleteDecorator.decorate(cboLH);
         AutoCompleteDecorator.decorate(cboDongSP);
 
     }
@@ -630,13 +626,13 @@ public class SanPhamPanel extends JPanel {
     private String getAutoID(String name) {
         switch (name) {
             case "NSX":
-                return "NSX" + String.format("%02d", listNSX.size()+1);
+                return "NSX" + String.format("%02d", listNSX.size() + 1);
             case "LH":
-                return "LH" + String.format("%02d", listLH.size()+1);
+                return "LH" + String.format("%02d", listLH.size() + 1);
             case "DSP":
-                return "DSP" + String.format("%02d", listDongSP.size()+1);
+                return "DSP" + String.format("%02d", listDongSP.size() + 1);
             case "SP":
-                return "SP" + String.format("%04d", listSP.size()+1);
+                return "SP" + String.format("%04d", listSP.size() + 1);
         }
         return "";
     }
@@ -694,10 +690,11 @@ public class SanPhamPanel extends JPanel {
     }
 
     private void reset() {
-      JTextComponent[] fields = {txtMaSKU, txtTenSP, txtGiaTien, txtDoiXe, txtDiaChiSX, txtMauSac, txtMoTa};
-        for (JTextComponent  field: fields) {
+        JTextComponent[] fields = {txtMaSKU, txtTenSP, txtGiaTien, txtDoiXe, txtDiaChiSX, txtMauSac, txtMoTa};
+        for (JTextComponent field : fields) {
             field.setText("");
         }
+        txtGiaTien.setValue(null);
         txtMaSKU.setText(getAutoID("SP"));
         XImage.setIcon(null, lblHinh, defaultFile);
         if (sp != null) {
@@ -737,14 +734,18 @@ public class SanPhamPanel extends JPanel {
 
     public SanPham getForm() {
         if (validateForm()) {
-            SanPham sanpham=  new SanPham();
+            SanPham sanpham = new SanPham();
             sanpham.setSku(txtMaSKU.getText());
             sanpham.setTenSP(txtTenSP.getText());
             sanpham.setMauSac(txtMauSac.getText());
             sanpham.setPhanKhoi((String) cboPhanKhoi.getSelectedItem());
             sanpham.setThoiGianBH(Integer.parseInt(((String) cboBaoHanh.getSelectedItem()).replaceAll("[^0-9]", "")));
             sanpham.setDiaChiSX(txtDiaChiSX.getText());
-            sanpham.setGiaTien(((Number)txtGiaTien.getValue()).doubleValue());
+            if (txtGiaTien.getValue() == null) {
+                MsgBox.error("Giá tiền lỗi, vui lòng kiếm tra lại giá tiền");
+                return null;
+            }
+            sanpham.setGiaTien(((Number) txtGiaTien.getValue()).doubleValue());
             sanpham.setMoTa(txtMoTa.getText());
             sanpham.setDoiXe(Integer.parseInt(txtDoiXe.getText()));
             sanpham.setHinh(lblHinh.getToolTipText());

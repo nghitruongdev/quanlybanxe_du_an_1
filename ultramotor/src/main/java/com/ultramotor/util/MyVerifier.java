@@ -81,11 +81,11 @@ public abstract class MyVerifier extends InputVerifier {
         }
         if (!result) {
             field.setErrorText(error);
-            field.setToolTipText(error);
+//            field.setToolTipText(error);
             field.setValidInput(false);
         } else {
             field.setErrorText("");
-            field.setToolTipText("");
+//            field.setToolTipText("");
             field.setValidInput(true);
         }
         return result;
@@ -97,17 +97,17 @@ public abstract class MyVerifier extends InputVerifier {
         if (isEmpty(field)) {
             field.setValidInput(false);
             field.setErrorText(field.getName() + " không được để trống");
-            field.setToolTipText(field.getName() + " không được để trống");
+//            field.setToolTipText(field.getName() + " không được để trống");
             return false;
         }
         //kiểm tra định dạng password hợp lệ
         if (!XValidate.validatePassworđ(field)) {
             field.setErrorText(field.getName() + " 8 kí tự trở lên");
-            field.setToolTipText(field.getName() + " 8 kí tự trở lên");
+//            field.setToolTipText(field.getName() + " 8 kí tự trở lên");
             return false;
         }
         field.setErrorText("");
-        field.setToolTipText("");
+//        field.setToolTipText("");
         return true;
     }
 

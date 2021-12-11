@@ -646,14 +646,6 @@ ON SanPham
 INSTEAD OF DELETE
 NOT FOR REPLICATION
 AS UPDATE SanPham set isDeleted = 1 WHERE SKU in (select SKU from deleted)
-----------------------------------------------CREATE VIEW---------------------------------------------------------
-DROP VIEW IF EXISTS view_SanPhamTon
-GO
-
-CREATE VIEW view_SanPhamTon
-AS
-SELECT *, dbo.fn_soLuongTonSp(SKU) AS N'SoLuongTon' FROM SanPham WHERE isDeleted = 0
-GO
 
 
 update NhanVien set VaiTro = N'Trưởng Phòng', Email  = 'nghitvps19009@fpt.edu.vn' WHERE id_NV = 'NV01'

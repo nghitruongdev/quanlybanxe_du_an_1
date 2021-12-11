@@ -8,10 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.rowset.CachedRowSet;
@@ -20,14 +18,14 @@ public class SanPhamDAO extends UltraDAO<SanPham, String> {
     
     {
         TABLE_NAME = "SanPham";
-        SELECT_BY_ID_SQL = String.format("SELECT * FROM %s where %s = ?", "view_SanPhamTon", "SKU");
-        SELECT_ALL_SQL = String.format("SELECT * FROM %s", "view_SanPhamTon");
+        SELECT_BY_ID_SQL = String.format("SELECT *, dbo.fn_soLuongTonSp(SKU) AS N'SoLuongTon' FROM %s where %s = ?", TABLE_NAME, "SKU");
+        SELECT_ALL_SQL = String.format("SELECT *, dbo.fn_soLuongTonSp(SKU) AS N'SoLuongTon' FROM %s WHERE isDeleted = 0", TABLE_NAME);
     }
     
     final String INSERT_SQL = String.format("exec usp_insert_%s ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?", TABLE_NAME);
     final String DELETE_SQL = String.format("DELETE FROM %s WHERE %s = ?", TABLE_NAME, "SKU");
-    final String CHECK_HANG_TON_SQL = String.format("SELECT SKU, dbo.fn_soLuongTonSp(SKU) FROM SanPham");
-    final String SELECT_BY_MODEL = String.format("SELECT * FROM %s WHERE id_DongSP = ? AND DoiXe = ? AND PhanKhoi = ?", "view_SanPhamTon");
+    final String CHECK_HANG_TON_SQL = String.format("SELECT SKU, dbo.fn_soLuongTonSp(SKU) FROM %s", TABLE_NAME);
+    final String SELECT_BY_MODEL = String.format("SELECT *, dbo.fn_soLuongTonSp(SKU) AS N'SoLuongTon' FROM %s WHERE id_DongSP = ? AND DoiXe = ? AND PhanKhoi = ?", TABLE_NAME);
     
     @Override
     public int insert(SanPham e) {

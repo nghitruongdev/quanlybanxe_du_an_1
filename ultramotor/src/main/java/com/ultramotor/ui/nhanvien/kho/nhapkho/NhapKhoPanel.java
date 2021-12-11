@@ -9,7 +9,6 @@ import com.ultramotor.entity.PhieuNhapKho;
 import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDate;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;

@@ -533,7 +533,7 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format subtype="0" type="0"/>
+              <Format format="#,##0.00" subtype="-1" type="0"/>
             </Property>
             <Property name="labelText" type="java.lang.String" value="Gi&#xe1; Ti&#x1ec1;n"/>
           </Properties>

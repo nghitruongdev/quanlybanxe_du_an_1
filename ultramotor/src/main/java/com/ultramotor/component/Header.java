@@ -22,6 +22,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import com.swingx.PopupMenuItem;
+import com.ultramotor.dao.NhanVienDAO;
+import com.ultramotor.util.Auth;
+import java.awt.event.WindowAdapter;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
@@ -47,7 +51,7 @@ public class Header extends JPanel {
     private ActionListener logoutLs;
     private ActionListener viewProfileLs;
     private ActionListener changePwLs;
-
+    private ActionListener updateLs;
     private NhanVien user;
     private NhanVienInfoPanel pnlNhanVien;
 
@@ -92,6 +96,7 @@ public class Header extends JPanel {
         });
         pnlNhanVien = new NhanVienInfoPanel();
         pnlNhanVien.removeMailButton();
+        pnlNhanVien.setUpdateListener(updateLs);
     }
 
     private void initListeners() {
@@ -99,13 +104,29 @@ public class Header extends JPanel {
             if (MsgBox.confirm("Bạn có muốn đăng xuất khỏi ứng dụng?", false) == 0) {
                 ((JFrame) this.getTopLevelAncestor()).dispose();
 //                new DangNhapJFrame().setVisible(true);
-                    DangNhapJFrame.getLoginFrame().setVisible(true);
+                DangNhapJFrame.getLoginFrame().setVisible(true);
             }
         };
+
+        updateLs = (evt) -> {
+            NhanVien nv = pnlNhanVien.getForm();
+            if (nv != null) {
+                if (new NhanVienDAO().update(nv) > 0) {
+                    MsgBox.inform("Cập nhật thông tin thành công!");
+                    pnlNhanVien.setForm(nv);
+                    Auth.user = nv;
+                    setUser(nv);
+                } else {
+                    MsgBox.inform("Cập nhật thông tin thất bại!");
+                }
+            }
+        };
+
         viewProfileLs = (ActionEvent e) -> {
             if (user != null) {
                 pnlNhanVien.setForm(user);
-                XDialog.getDialog((JFrame) this.getTopLevelAncestor(), pnlNhanVien).setVisible(true);
+                JDialog dialog = XDialog.getDialog((JFrame) this.getTopLevelAncestor(), pnlNhanVien);
+                dialog.setVisible(true);
             }
         };
 //        changePwLs = (ActionEvent e) -> {
@@ -116,24 +137,18 @@ public class Header extends JPanel {
         cmdMenu.addActionListener(al);
     }
 
-    public void setUser(NhanVien user) {
-        if (user == null) {
+    public void setUser(NhanVien nv) {
+        if (nv == null) {
             return;
         }
-        this.user = user;
-        Icon icon = new ImageIcon(new File(Paths.get("logos", "nhanvien").toFile(), user.getHinh()).getPath());
+        this.user = nv;
+        Icon icon = new ImageIcon(new File(Paths.get("logos", "nhanvien").toFile(), nv.getHinh()).getPath());
         avatar.setIcon(icon);
-        lblUsername.setText(user.getHoTenNV());
-        lblVaiTro.setText(user.getVaiTro());
+        lblUsername.setText(nv.getHoTenNV());
+        lblVaiTro.setText(nv.getVaiTro());
     }
 
-//    private ImageIcon createIcon(String name) {
-//        File iconPath = Paths.get("src", "com", "ultramotor", "img", "icon").toFile();
-//        return new ImageIcon(new File(iconPath, name).getPath());
-//    }
     private ImageIcon createIcon(String name) {
         return new ImageIcon(getClass().getResource("/ultramotor/icon/" + name));
     }
 }
-
-

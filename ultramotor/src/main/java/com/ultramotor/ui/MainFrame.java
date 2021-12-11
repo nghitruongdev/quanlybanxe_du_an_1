@@ -1,10 +1,8 @@
 package com.ultramotor.ui;
 
 import com.swingx.model.ModelMenu;
-import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.entity.NhanVien;
-import com.ultramotor.entity.NhanVienBanHang;
-import com.ultramotor.entity.NhanVienKho;
+import com.ultramotor.entity.TruongPhong;
 import com.ultramotor.ui.hoadon.HoaDonListPanel;
 import com.ultramotor.ui.hoadon.HoaDonPanel;
 import com.ultramotor.ui.login.DangNhapJFrame;
@@ -80,6 +78,7 @@ public class MainFrame extends javax.swing.JFrame {
     private ThongKePanel pnlThongKe;
     private DangNhapJFrame dangNhap;
     private HoaDonListPanel pnlListHoaDon;
+
     private MainFrame() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/ultramotor/icon/logo_50px.png")).getImage());
@@ -126,13 +125,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void addMenus(NhanVien user) {
-        if (user instanceof NhanVienBanHang) {
-            return;
-        }
-        if (user instanceof NhanVienKho) {
-
-            return;
-        }
         ModelMenu mnuThongKe = new ModelMenu("Thống kê", createIcon("refresh_25px.png"), getEvent(pnlThongKe));
         ModelMenu mnuNhanVien = new ModelMenu("Quản lý nhân viên", createIcon("refresh_25px.png"), getEvent(pnlNhanVien));
         ModelMenu mnuHoaDon = new ModelMenu("Tạo đơn hàng", createIcon("refresh_25px.png"), getEvent(pnlHoaDon));
@@ -141,8 +133,14 @@ public class MainFrame extends javax.swing.JFrame {
         ModelMenu mnuSanPham = new ModelMenu("Quản lý sản phẩm", createIcon("refresh_25px.png"), getEvent(pnlSanPham));
         ModelMenu mnuNhapKho = new ModelMenu("Quản lý kho", createIcon("refresh_25px.png"), getEvent(pnlNhapKho));
         ModelMenu mnuBarcode = new ModelMenu("In barcode", createIcon("refresh_25px.png"), getEvent(pnlBarcode));
+        ModelMenu[] models = null;
 
-        pnlMain.addMenu(mnuNhanVien, mnuHoaDon, mnuListHoaDon,mnuKhachHang, mnuSanPham, mnuNhapKho, mnuBarcode, mnuThongKe);
+        if (user instanceof TruongPhong) {
+            models = new ModelMenu[]{mnuNhanVien, mnuHoaDon, mnuListHoaDon, mnuKhachHang, mnuSanPham, mnuNhapKho, mnuBarcode, mnuThongKe};
+        } else if (user instanceof NhanVien) {
+            models = new ModelMenu[]{mnuHoaDon, mnuListHoaDon, mnuKhachHang, mnuSanPham, mnuNhapKho, mnuBarcode, mnuThongKe};
+        }
+        pnlMain.addMenu(models);
     }
 
     private ActionListener getEvent(JPanel panel) {

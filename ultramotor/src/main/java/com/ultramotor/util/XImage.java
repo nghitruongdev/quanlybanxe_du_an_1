@@ -29,8 +29,9 @@ public class XImage {
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.addChoosableFileFilter(new FileNameExtensionFilter("Images", "jpeg", "jpg", "png", "gif", "bmp", "webmp"));
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        chooser.showOpenDialog(parent);
-        setIcon(chooser.getSelectedFile(), comp, defaultImage);
+        if (chooser.showOpenDialog(parent) == JFileChooser.APPROVE_OPTION) {
+            setIcon(chooser.getSelectedFile(), comp, defaultImage);
+        }
     }
 
     public static Icon resize(ImageIcon icon, int resizedWidth, int resizedHeight) {

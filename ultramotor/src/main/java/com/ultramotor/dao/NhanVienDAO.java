@@ -2,9 +2,6 @@ package com.ultramotor.dao;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
 import com.ultramotor.entity.NhanVien;
-import com.ultramotor.entity.NhanVienBanHang;
-import com.ultramotor.entity.NhanVienKho;
-import com.ultramotor.entity.NhanVienKyThuat;
 import com.ultramotor.entity.TruongPhong;
 import com.ultramotor.util.XJdbc;
 import com.ultramotor.util.XJdbcServer;
@@ -13,8 +10,6 @@ import javax.sql.rowset.CachedRowSet;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class NhanVienDAO extends UltraDAO<NhanVien, String> {
 

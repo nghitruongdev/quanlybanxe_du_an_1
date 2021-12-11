@@ -36,7 +36,10 @@ public class Menu extends javax.swing.JPanel {
     void add(ModelMenu model) {
         panel.add(new MenuItem(model, getEventMenu(), event, panel.getComponentCount()), "h 50!");
     }
-
+    
+    void removeMenu(){
+        panel.removeAll();
+    }
     private EventMenu getEventMenu() {
         return new EventMenu() {
             @Override

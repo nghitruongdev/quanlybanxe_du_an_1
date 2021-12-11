@@ -10,29 +10,21 @@ import com.ultramotor.entity.NhanVien;
 import com.ultramotor.entity.SanPham;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDialog;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.CellEditor;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 public class QuanLySanPhamPanel extends javax.swing.JPanel {
 
     private SanPhamDAO daoSP;
     private List<NhanVien> listNV;
     private ModelEvent modelEvent;
+    private DecimalFormat numberFormat;
 
     public QuanLySanPhamPanel() {
         initComponents();
@@ -42,6 +34,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
     void init() {
         daoSP = new SanPhamDAO();
         listNV = new NhanVienDAO().selectAll();
+        numberFormat = new DecimalFormat("#,##0.00");
         addListeners();
         initTable();
         fillTable(tblSP, daoSP.selectAll());
@@ -154,7 +147,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
 
     private Object[] getInfo(Entity e) {
         if (e instanceof SanPham) {
-            DecimalFormat format = new DecimalFormat("#,##0.00 VND");
+
             SanPham sp = (SanPham) e;
             return new Object[]{
                 sp,
@@ -163,7 +156,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
                 sp.getPhanKhoi(),
                 sp.getThoiGianBH() + " tháng",
                 sp.getDiaChiSX(),
-                format.format(sp.getGiaTien()),
+                numberFormat.format(sp.getGiaTien()),
                 sp.getDoiXe(),
                 sp.gettonKho(),
                 sp.getIdDongSP(),

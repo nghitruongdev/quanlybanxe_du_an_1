@@ -466,7 +466,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     NhanVienDAO dao = new NhanVienDAO();
     private static DangNhapJFrame loginFrame = new DangNhapJFrame();
-    private MainFrame main;
+    private MainFrame main = MainFrame.getFrame();;
     private DangNhapJFrame() {
         initComponents();
         init();
@@ -482,7 +482,6 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         addLabelListeners();
         addBtnListeners();
         setFieldName();
-        main = MainFrame.getFrame();
         this.addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosed(WindowEvent e) {
