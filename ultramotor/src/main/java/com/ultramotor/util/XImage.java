@@ -2,8 +2,11 @@ package com.ultramotor.util;
 
 import com.swingx.ImageAvatar;
 import com.swingx.PictureBox;
+import java.awt.Color;
 import java.awt.Container;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -83,5 +87,17 @@ public class XImage {
             }
         }
     }
-
+    
+    public static BufferedImage createImage(JPanel panel){
+        int width = panel.getPreferredSize().width;
+        int height = panel.getPreferredSize().height;
+        BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g =  bi.createGraphics();
+        g.setBackground(Color.white);
+        g.setColor(Color.white);
+        panel.paint(g);
+        g.dispose();
+        return bi;
+    }
+    
 }

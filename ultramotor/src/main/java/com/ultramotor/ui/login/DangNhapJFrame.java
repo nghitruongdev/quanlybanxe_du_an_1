@@ -504,7 +504,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
                         MsgBox.inform("Đăng nhập thành công!");
                         dispose();
 //                        MainFrame main = new MainFrame();
-                        main.setVisible(true);
+                        main.setVisible();
                     } else {
                         MsgBox.inform("Sai mật khẩu!");
                     }

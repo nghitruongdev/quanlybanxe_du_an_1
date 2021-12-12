@@ -244,6 +244,7 @@ public class NhapKhoPanel extends javax.swing.JPanel {
         dateChooser.setTextRefernce(txtDate);
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setOpaque(false);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 174, 114));
@@ -251,6 +252,7 @@ public class NhapKhoPanel extends javax.swing.JPanel {
         jLabel1.setText("DANH SÁCH PHIẾU NHẬP");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setOpaque(false);
 
         lblTime.setText("Ngày Nhập");
 
@@ -331,6 +333,8 @@ public class NhapKhoPanel extends javax.swing.JPanel {
                 .addComponent(scrollPhieuNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        pnlChiTiet.setOpaque(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

@@ -18,9 +18,7 @@ public class KhachHangDAO extends UltraDAO<KhachHang, String> {
         SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
         
     }
-//    String INSERT_SQL = "INSERT INTO KhachHang(idKH,HoKH,TenKH,GioiTinh,NgaySinh,DiaChi,SDT,EMAIL,ThanhVien,GHICHU,id_NV)VALUES(?,?,?,?,?,?,?,?,?,?,?)";
     String INSERT_SQL = "exec usp_insert_KhachHang ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
-//    String UPDATE_SQL = "UPDATE KhachHang SET HoKH=?,TenKH=?,GioiTinh=?,NgaySinh=?,DiaChi=?,SDT=?,EMAIL=?,ThanhVien=?,GHICHU=?,id_NV=? WHERE idKH=?";
     String DELETE_SQL = "DELETE FROM KhachHang WHERE idKH=?";
     String SQL_SELECT_BY_EMAIL = "SELECT * FROM KhachHang WHERE Email = ?";
     HoaDonDAO dao = new HoaDonDAO();
@@ -68,9 +66,4 @@ public class KhachHangDAO extends UltraDAO<KhachHang, String> {
         return list;
     }
     
-//    public List<KhachHang> selectByKeyword(String keyWord) {
-//        String sql = "SELECT * FROM KhachHang WHERE HoKH LIKE ? OR TenKH LIKE ? OR idKH like ? OR SDT like ? ";
-//        return this.selectBySQL(sql, "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%");
-//    }
-//    
 }

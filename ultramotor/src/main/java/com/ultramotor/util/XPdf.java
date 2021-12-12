@@ -23,9 +23,9 @@ public class XPdf {
         }
     }
 
-    public static BufferedImage saveAsImage(File file) throws IOException {
+    public static BufferedImage saveAsImage(File pdfFile) throws IOException {
         // open the document
-        try (PDDocument doc = PDDocument.load(file)) {
+        try (PDDocument doc = PDDocument.load(pdfFile)) {
             PDFRenderer ren = new PDFRenderer(doc);
             int count = doc.getNumberOfPages();
             if (count > 0) {

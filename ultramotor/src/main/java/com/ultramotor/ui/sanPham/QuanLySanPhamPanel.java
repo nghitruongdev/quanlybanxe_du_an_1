@@ -191,6 +191,11 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnExport = new com.swingx.Button();
 
+        setBackground(new java.awt.Color(250, 250, 250));
+        setOpaque(false);
+
+        pnlMain.setOpaque(false);
+
         btnAddSP.setBackground(new java.awt.Color(0, 174, 114));
         btnAddSP.setForeground(new java.awt.Color(255, 255, 255));
         btnAddSP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/icons8-save.png"))); // NOI18N
@@ -230,11 +235,11 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMainLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(20, 20, 20)
                         .addComponent(btnAddSP, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
                         .addComponent(txtSearchSP, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane4))
                 .addContainerGap())
@@ -281,13 +286,13 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
     private com.swingx.SearchTextField txtSearchSP;
     // End of variables declaration//GEN-END:variables
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame fr = new JFrame();
-            fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            fr.getContentPane().add(new QuanLySanPhamPanel());
-            fr.pack();
-            fr.setVisible(true);
-        });
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> {
+//            JFrame fr = new JFrame();
+//            fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            fr.getContentPane().add(new QuanLySanPhamPanel());
+//            fr.pack();
+//            fr.setVisible(true);
+//        });
+//    }
 }

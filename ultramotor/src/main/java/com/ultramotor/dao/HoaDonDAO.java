@@ -102,27 +102,11 @@ public class HoaDonDAO extends UltraDAO<HoaDon, String> {
 
 class ChiTietHoaDonDAO {
 
-//    String TABLE_NAME = "ChiTietHoaDon";
-//    String SELECT_BY_ID_SQL = String.format("select * from %s where %s = ?", TABLE_NAME, "id_CTHD");
-//    String SELECT_ALL_SQL = String.format("select * from %s", TABLE_NAME);
     String INSERT_SQL = "INSERT INTO ChiTietHoaDon(id_CTHD,SKU,idHD)VALUES(?,?,?,?,?)";
     String UPDATE_SQL = "UPDATE ChiTietHoaDon SET SKU=?,idHD=? WHERE id_CTHD=?";
     String DELETE_SQL = "DELETE FROM ChiTietHoaDon WHERE id_CTHD=?";
     String INSERT_MULTIPLE_CHITIET = "exec usp_insert_ChiTietHoaDon ?";
     String SELECT_BY_HOADON_SQL = "SELECT ct.id_CTHD, ct.idHD, ct.SKU,  sp.giaTien FROM ChiTietHoaDon ct JOIN SanPham sp ON ct.SKU = sp.SKU WHERE ct.idHD = ?";
-//    public int insert(ChiTietHoaDon e) {
-//        return XJdbcServer.update(INSERT_SQL,
-//                e.getIdHD(), e.getDonGia(), e.getSKU(), e.getIdHD());
-//    }
-//
-//    public int update(ChiTietHoaDon e) {
-//        return XJdbcServer.update(UPDATE_SQL,
-//                e.getDonGia(), e.getSKU(), e.getIdHD(), e.getIdCTHD());
-//    }
-//
-//    public int delete(Integer id) {
-//        return XJdbcServer.update(DELETE_SQL, id);
-//    }
 
     public List<ChiTietHoaDon> selectByHoaDon(String idHD) {
         return selectBySQL(SELECT_BY_HOADON_SQL, idHD);

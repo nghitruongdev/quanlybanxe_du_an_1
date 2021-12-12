@@ -42,7 +42,6 @@ public class Table extends JTable {
         header.setReorderingAllowed(false);
         ((javax.swing.table.DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(javax.swing.JLabel.CENTER);
         header.setFont(new Font("Segoe UI", 0, 14));
-//        this.setFont(MyConstants.DEFAULT_FONT);
         this.setSelectionBackground(new java.awt.Color(153, 153, 153));
         this.setGridColor(new java.awt.Color(204, 204, 204));
         this.setFillsViewportHeight(true);
@@ -102,8 +101,6 @@ public class Table extends JTable {
         DefaultTableModel model = new DefaultTableModel(cols, 0);
         setModel(model);
         setShowVerticalLines(true);
-//        getColumnModel().getColumn(0).setMaxWidth(200);
-//        getColumnModel().getColumn(getColumnCount() - 1).setMaxWidth(200);
         JScrollPane pane = (JScrollPane) getParent().getParent();
         fixTable(pane);
         pane.setBorder(null);

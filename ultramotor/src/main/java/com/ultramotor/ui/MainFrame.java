@@ -21,6 +21,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.nio.file.Paths;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class MainFrame extends javax.swing.JFrame {
@@ -34,8 +35,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        bg.setBackground(new java.awt.Color(245, 245, 245));
+        bg.setBackground(new java.awt.Color(255, 255, 255));
         bg.setOpaque(true);
+
+        pnlMain.setBackground(new java.awt.Color(255, 255, 255));
 
         bg.setLayer(pnlMain, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -93,7 +96,7 @@ public class MainFrame extends javax.swing.JFrame {
         init();
     }
 
-    private static MainFrame mainFrame = new MainFrame();
+    private static final MainFrame mainFrame = new MainFrame();
 
     public static MainFrame getFrame() {
         return mainFrame;
@@ -124,20 +127,23 @@ public class MainFrame extends javax.swing.JFrame {
     private void addListener() {
         this.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowActivated(WindowEvent e) {
-                NhanVien user = Auth.user;
+            public void windowOpened(WindowEvent e) {
+                MainFrame.this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            }
+        });
+    }
+    
+    public void setVisible(){
+        NhanVien user = Auth.user;
                 if (user == null) {
                     MsgBox.error("Vui lòng đăng nhập để sử dụng ứng dụng");
                     MainFrame.this.dispose();
                     dangNhap.setVisible(true);
                     return;
                 }
-
                 pnlMain.setUser(user);
                 addMenus(user);
-            }
-
-        });
+                setVisible(true);
     }
 
     private void addMenus(NhanVien user) {

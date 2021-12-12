@@ -129,8 +129,6 @@ public class Header extends JPanel {
                 dialog.setVisible(true);
             }
         };
-//        changePwLs = (ActionEvent e) -> {
-//        };
     }
 
     public void addMenuEvent(ActionListener al) {

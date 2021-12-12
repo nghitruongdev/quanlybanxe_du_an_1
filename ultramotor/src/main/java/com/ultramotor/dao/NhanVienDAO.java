@@ -6,7 +6,6 @@ import com.ultramotor.entity.TruongPhong;
 import com.ultramotor.util.XJdbc;
 import com.ultramotor.util.XJdbcServer;
 import java.util.List;
-import javax.sql.rowset.CachedRowSet;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
     final String UPDATE_SQL = "UPDATE NhanVien SET HONV=?,TENNV=?,NGAYSINH=?,GIOITINH=?,DIACHI=?,SDT=?,EMAIL=?,LUONG=?,HINH=?,VAITRO=?,MATKHAU=?,GHICHU=? WHERE id_NV=?";
     final String DELETE_SQL = "DELETE FROM NhanVien WHERE id_NV=?";
     final String MERGE_SQL = "exec usp_updateNhanVien ?";
-//    final String SELECT_BY_KEYWORD = "SELECT * FROM NhanVien WHERE HONV LIKE ? OR TENNV LIKE ? OR id_NV like ? OR SDT like ? ";
    
     @Override
     public int insert(NhanVien e) {
@@ -84,14 +82,6 @@ public class NhanVienDAO extends UltraDAO<NhanVien, String> {
             throw new RuntimeException(e);
         }
     }
-
-    public CachedRowSet getRowSet() throws SQLException {
-        return XJdbc.query(SELECT_ALL_SQL);
-    }
-
-//    public List<NhanVien> selectByKeyword(String keyWord) {
-//        return this.selectBySQL(SELECT_BY_KEYWORD, "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%");
-//    }
 
     public void mergeTable(SQLServerDataTable table) throws SQLException {
         XJdbcServer.update(MERGE_SQL, new String[]{"NhanVienType"}, table);

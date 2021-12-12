@@ -1,19 +1,14 @@
 package com.ultramotor.util;
 
 import com.ultramotor.ui.nhanvien.kho.nhapkho.ItemBean;
-import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -50,6 +45,12 @@ public class XReport {
         String barcode = new File(path, "barcode-export.jrxml").getPath();
         JRBeanCollectionDataSource src = new JRBeanCollectionDataSource(list);
         fillReport(getReport(barcode), new HashMap<>(), src, file);
+    }
+    
+    public static void createThanhVienCard(List<File> list, File file) throws JRException{
+        String card = new File(path, "card-membership.jrxml").getPath();
+        JRBeanCollectionDataSource src = new JRBeanCollectionDataSource(list);
+        fillReport(getReport(card), new HashMap<>(), src, file);
     }
 
     private static void fillReport(JasperReport report, Map paras, JRBeanCollectionDataSource src, File file) throws JRException {

@@ -7,6 +7,9 @@
     <Component class="com.swingx.datechooser.DateChooser" name="dateTo">
     </Component>
   </NonVisualComponents>
+  <Properties>
+    <Property name="opaque" type="boolean" value="false"/>
+  </Properties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -23,13 +26,12 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane5" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jScrollPane5" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="lblQLNV" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="txtFrom" linkSize="1" min="-2" pref="178" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="txtTo" linkSize="1" min="-2" max="-2" attributes="0"/>
@@ -43,7 +45,7 @@
                       <Component id="btnMail" min="-2" pref="74" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnExport" min="-2" pref="74" max="-2" attributes="0"/>
-                      <EmptySpace pref="16" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="txtSearch" min="-2" pref="195" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -54,19 +56,27 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="23" pref="23" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="txtTo" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtFrom" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="chkAll" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="23" pref="23" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="txtTo" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtFrom" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="chkAll" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                              <Component id="btnPrint" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="btnMail" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="btnExport" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="txtSearch" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnPreview" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
-                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                      <Component id="btnPrint" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="btnMail" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="btnExport" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="txtSearch" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnPreview" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblQLNV" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -126,6 +136,12 @@
     </Component>
     <Component class="com.swingx.Button" name="btnPrint">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="72" green="ae" red="0" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Print"/>
         <Property name="actionCommand" type="java.lang.String" value="print"/>
         <Property name="radius" type="int" value="10"/>
@@ -133,6 +149,12 @@
     </Component>
     <Component class="com.swingx.Button" name="btnMail">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="72" green="ae" red="0" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Mail"/>
         <Property name="actionCommand" type="java.lang.String" value="mail"/>
         <Property name="radius" type="int" value="10"/>
@@ -140,6 +162,12 @@
     </Component>
     <Component class="com.swingx.Button" name="btnExport">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="72" green="ae" red="0" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Export"/>
         <Property name="actionCommand" type="java.lang.String" value="export"/>
         <Property name="radius" type="int" value="10"/>
@@ -147,9 +175,26 @@
     </Component>
     <Component class="com.swingx.Button" name="btnPreview">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="72" green="ae" red="0" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Preview"/>
         <Property name="actionCommand" type="java.lang.String" value="preview"/>
         <Property name="radius" type="int" value="10"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblQLNV">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="24" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="72" green="ae" red="0" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="HO&#xc1; &#x110;&#x1a0;N"/>
       </Properties>
     </Component>
   </SubComponents>
