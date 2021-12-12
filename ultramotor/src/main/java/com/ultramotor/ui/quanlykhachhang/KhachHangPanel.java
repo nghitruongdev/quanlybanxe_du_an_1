@@ -10,8 +10,10 @@ import com.ultramotor.ui.hoadon.ThanhVienCard;
 import com.ultramotor.ui.nhanvien.SendMailPanel;
 import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
+import com.ultramotor.util.UltraExporter;
 import com.ultramotor.util.XDate;
 import com.ultramotor.util.XDialog;
+import com.ultramotor.util.XExcel;
 import com.ultramotor.util.XFile;
 import com.ultramotor.util.XImage;
 import com.ultramotor.util.XPdf;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.CellEditor;
 import javax.swing.JDialog;
@@ -237,6 +241,8 @@ public class KhachHangPanel extends javax.swing.JPanel {
             }
             ((JDialog) pnlInfo.getTopLevelAncestor()).dispose();
         });
+        
+        btnExport.addActionListener(e->export());
         btnExportTV.addActionListener(e -> exportTV());
     }
 
@@ -308,7 +314,7 @@ public class KhachHangPanel extends javax.swing.JPanel {
         try {
             XReport.createThanhVienCard(list, file);
             XPdf.printPDF(file);
-            if (MsgBox.confirm("Xuất file thành công! Bạn có muốn mở file?", false) == 0) {
+            if (MsgBox.confirm("Bạn có muốn mở file PDF?", false) == 0) {
                 Desktop.getDesktop().open(file);
             }
         } catch (JRException ex) {
@@ -321,6 +327,20 @@ public class KhachHangPanel extends javax.swing.JPanel {
 
     }
 
+    private void export(){
+        File excel = XExcel.showSaveDialog((JFrame) this.getTopLevelAncestor(), "DanhSachKH.xlsx");
+        if(excel==null){
+            return;
+        }
+        UltraExporter.exportKhachHang(excel);
+        if(MsgBox.confirm("Xuất danh sách thành công. Bạn có muốn mở file?", false)==0){
+            try {
+                Desktop.getDesktop().open(excel);
+            } catch (IOException ex) {
+            }
+        }
+        
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -22,50 +22,52 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 import net.sf.jasperreports.engine.JRException;
 
 public class BarcodePanel extends javax.swing.JPanel {
-
+    
     public BarcodePanel() {
         initComponents();
         init();
     }
     ActionListener deleteListener;
-
+    
     private void init() {
         addListeners();
         fixScroll();
         initPnlMain();
         pnlFooter.setBackground(new Color(255, 255, 255, 0));
     }
-
+    
     private void initPnlMain() {
         MigLayout layout = new MigLayout("insets 10 10 10 10, fillx, wrap 1", "[center, fill]");
         pnlMain.setLayout(layout);
     }
-
-    private void addItem(String sku) {
+    
+    private void addItem() {
         Item item = new Item(deleteListener);
-        item.setMaSKU(sku);
+//        item.setMaSKU(sku);
         pnlMain.add(item, "gapbottom 10");
         pnlMain.revalidate();
+//        scroll.scrollRectToVisible(item.getVisibleRect());
     }
-
+    
     private void removeItem(Container con) {
         pnlMain.remove(con);
         pnlMain.revalidate();
         pnlMain.repaint();
     }
-
+    
     private void addListeners() {
         deleteListener = (ActionEvent e) -> {
             removeItem(((Container) e.getSource()).getParent());
         };
-
+        
         btnAdd.addActionListener((ActionEvent e) -> {
-            openSearchDialog();
+            addItem();
         });
         chkAll.addActionListener((ActionEvent e) -> {
             boolean boo = chkAll.isSelected();
@@ -76,7 +78,7 @@ public class BarcodePanel extends javax.swing.JPanel {
             }
             chkAll.setText(boo ? "Bỏ chọn tất cả" : "Chọn tất cả");
         });
-
+        
         btnDelete.addActionListener(event -> {
             for (Component comp : pnlMain.getComponents()) {
                 if (comp instanceof Item && ((Item) comp).isSelected()) {
@@ -86,13 +88,13 @@ public class BarcodePanel extends javax.swing.JPanel {
             MsgBox.inform("Đã xoá những mục đã chọn");
         });
         
-        btnPrint.addActionListener(e-> export(true));
-        btnExportPDF.addActionListener(e-> export(false));
+        btnPrint.addActionListener(e -> export(true));
+        btnExportPDF.addActionListener(e -> export(false));
     }
-
+    
     private void export(boolean isPrint) {
         List<ItemBean> list = new ArrayList<>();
-        if(pnlMain.getComponents().length==0){
+        if (pnlMain.getComponents().length == 0) {
             MsgBox.warning("Vui lòng thêm sản phẩm!");
             return;
         }
@@ -100,9 +102,10 @@ public class BarcodePanel extends javax.swing.JPanel {
             if (comp instanceof Item) {
                 Item item = (Item) comp;
                 if (item.getSoLuong() == 0 || item.getMaSKU().isEmpty()) {
-                    return;
+                    item.deleteItem();
+                    continue;
                 }
-                ItemBean bean = new ItemBean(item.getMaSKU(),item.getTenSP(item.getMaSKU()), item.getSoLuong());
+                ItemBean bean = new ItemBean(item.getMaSKU(), item.getTenSP(item.getMaSKU()), item.getSoLuong());
                 list.add(bean);
             }
         }
@@ -110,27 +113,26 @@ public class BarcodePanel extends javax.swing.JPanel {
         File file = XFile.getTempFile(null, ".pdf");
         try {
             XReport.createBarcodeReport(list, file);
-            if(isPrint){
+            if (isPrint) {
                 XPdf.printPDF(file);
-            }else{
+            } else {
                 File dest = XPdf.showSaveDialog((JFrame) this.getTopLevelAncestor(), "BarcodeSP.pdf");
-                if(dest == null){
+                if (dest == null) {
                     return;
                 }
                 
                 Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                if(MsgBox.confirm("Xuất file thành công! Bạn có muốn mở file?", false)==0){
+                if (MsgBox.confirm("Xuất file thành công! Bạn có muốn mở file?", false) == 0) {
                     Desktop.getDesktop().open(dest);
                 }
             }
         } catch (JRException | IOException ex) {
             MsgBox.error("Không thể xuất barcode sản phẩm! Vui lòng kiểm tra lại hệ thống");
-        } 
-        catch (PrinterException ex) {
+        } catch (PrinterException ex) {
             MsgBox.error("Không thể in file! Vui lòng kiểm tra lại hệ thống");
         }
     }
-
+    
     private void fixScroll() {
         scroll.getViewport().setBackground(Color.WHITE);
         scroll.setVerticalScrollBar(new MyScrollBar());
@@ -140,23 +142,20 @@ public class BarcodePanel extends javax.swing.JPanel {
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         scroll.setBorder(new EmptyBorder(5, 10, 5, 10));
         scroll.setViewportView(pnlMain);
+        scroll.setWheelScrollingEnabled(true);
+        scroll.setAutoscrolls(true);
     }
-
-    private void openSearchDialog() {
-        TimSPPanel panel = new TimSPPanel();
-        panel.setDoneListener((ActionEvent e) -> {
-            try {
-                addItem(panel.getMaSP());
-                panel.reset();
-            } catch (Exception ex) {
-            }
+    
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame fr = new JFrame();
+            fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            fr.getContentPane().add(new BarcodePanel());
+            fr.pack();
+            fr.setVisible(true);
         });
-
-        new Thread(() -> {
-            XDialog.getDialog((JFrame) this.getTopLevelAncestor(), panel).setVisible(true);
-        }).start();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

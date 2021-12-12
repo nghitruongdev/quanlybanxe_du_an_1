@@ -1,85 +1,74 @@
 package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
 import com.ultramotor.dao.SanPhamDAO;
+import com.ultramotor.entity.SanPham;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XCodeHelper;
-import com.ultramotor.util.XDialog;
 import com.ultramotor.util.XFile;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class Item extends javax.swing.JPanel {
 
     private File file;
     private static Map<String, String> map = new SanPhamDAO().getMaVaTenSP();
-    public Item() {
-        this(null);
-    }
-    
+
     public Item(ActionListener deleteListener) {
         initComponents();
         file = XFile.getTempFile("bc", ".png");
         btnDelete.addActionListener(deleteListener);
-        txtMaSKU.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                String ma = txtMaSKU.getText();
-                if(!map.containsKey(ma)){
-                    MsgBox.error("Không tìm thấy mã sản phẩm");
-                    reset();
-                }else{
-                    setMaSKU(ma);
-                }
+        cboMaSKU.addActionListener(e -> {
+            Object item = cboMaSKU.getSelectedItem();
+            if (item != null) {
+                txtTenSP.setText(getTenSP("".equals(item) ? "" : getTenSP(String.valueOf(item))));
+                new Thread(()->{
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException ex) {
+                    }
+                    createBarcode();
+                }).start();
             }
         });
-
-        btnTim.addActionListener((ActionEvent e) -> {
-            openSearchDialog();
-        });
+        List<String> list = new ArrayList<>(map.keySet());
+        Collections.sort(list);
+        cboMaSKU.setModel(new DefaultComboBoxModel(list.toArray()));
+        if(list.size()>0){
+            cboMaSKU.setSelectedIndex(0);
+        }
+        AutoCompleteDecorator.decorate(cboMaSKU);
         
     }
 
-    private void reset(){
-        txtTenSP.setText("");
-        lblBarcode.setIcon(null);
-        spnSoLuong.setValue(0);
-        txtMaSKU.setText("");
-        txtMaSKU.requestFocus();
-    }
-    
-    private void openSearchDialog() {
-        TimSPPanel panel = new TimSPPanel();
-        panel.setDoneListener((ActionEvent e) -> {
-            try {
-                setMaSKU(panel.getMaSP());
-            } catch (Exception ex) {
-                return;
-            }
-            ((JDialog) ((JComponent) e.getSource()).getTopLevelAncestor()).dispose();
-        });
-
-        new Thread(() -> {
-            XDialog.getDialog((JFrame) this.getTopLevelAncestor(),panel).setVisible(true);
-        }).start();
-    }
-
+//    private void reset(){
+//        txtTenSP.setText("");
+//        lblBarcode.setIcon(null);
+//        spnSoLuong.setValue(0);
+////        cboMaSKU.setText("");
+//    }
     public void createBarcode() {
-        String text = txtMaSKU.getText();
+        if (cboMaSKU.getSelectedItem() == null) {
+            return;
+        }
+        String text = String.valueOf(cboMaSKU.getSelectedItem());
         XCodeHelper.create39Barcode(file, text);
         try {
             lblBarcode.setIcon(new ImageIcon(ImageIO.read(file).getScaledInstance(lblBarcode.getWidth(), lblBarcode.getHeight(), Image.SCALE_SMOOTH)));
@@ -102,11 +91,11 @@ public class Item extends javax.swing.JPanel {
     public boolean isSelected() {
         return chk.isSelected();
     }
-    
-    public void deleteItem(){
+
+    public void deleteItem() {
         btnDelete.doClick();
     }
-    
+
     @Override
     protected void paintComponent(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
@@ -119,43 +108,42 @@ public class Item extends javax.swing.JPanel {
         super.paintComponent(grphcs);
     }
 
-    public void setMaSKU(String ma) {
-        txtMaSKU.setText(ma.toUpperCase());
-        txtTenSP.setText(map.getOrDefault(ma, ""));
-        new Thread(() -> {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException ex) {
-            }
-            createBarcode();
-        }).start();
-    }
-    
-    public int getSoLuong(){
+//    public void setMaSKU(String ma) {
+//        txtMaSKU.setText(ma.toUpperCase());
+//        txtTenSP.setText(map.getOrDefault(ma, ""));
+//        new Thread(() -> {
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException ex) {
+//            }
+//            createBarcode();
+//        }).start();
+//    }
+    public int getSoLuong() {
         return (int) spnSoLuong.getValue();
     }
-    
-    public String getMaSKU(){
-        return txtMaSKU.getText();
+
+    public String getMaSKU() {
+        return (String) cboMaSKU.getSelectedItem();
     }
 
-    public String getTenSP(String maSKU){
+    public String getTenSP(String maSKU) {
         return map.getOrDefault(maSKU, maSKU);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         btnDelete = new com.swingx.Button();
         lblBarcode = new javax.swing.JLabel();
-        txtMaSKU = new javax.swing.JTextField();
         spnSoLuong = new javax.swing.JSpinner();
         chk = new javax.swing.JCheckBox();
         lblTenSP = new javax.swing.JLabel();
         txtTenSP = new javax.swing.JTextField();
         lblMaSKu = new javax.swing.JLabel();
         lblSoLuong = new javax.swing.JLabel();
-        btnTim = new com.swingx.Button();
+        cboMaSKU = new com.swingx.ComboBoxSuggestion();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
@@ -179,11 +167,6 @@ public class Item extends javax.swing.JPanel {
         lblSoLuong.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         lblSoLuong.setText("Số Lượng");
 
-        btnTim.setBackground(new java.awt.Color(255, 102, 102));
-        btnTim.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        btnTim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/menu.png"))); // NOI18N
-        btnTim.setTransparent(true);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,15 +176,15 @@ public class Item extends javax.swing.JPanel {
                 .addComponent(chk, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtMaSKU, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMaSKu))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTenSP)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtTenSP, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblMaSKu)
+                        .addGap(112, 112, 112))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(cboMaSKU, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtTenSP, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                    .addComponent(lblTenSP))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblSoLuong)
@@ -231,9 +214,8 @@ public class Item extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(chk, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtMaSKU)
-                                .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cboMaSKU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -241,21 +223,20 @@ public class Item extends javax.swing.JPanel {
                 .addGap(33, 33, 33))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtMaSKU, txtTenSP});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cboMaSKU, txtTenSP});
 
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.swingx.Button btnDelete;
-    private com.swingx.Button btnTim;
+    private com.swingx.ComboBoxSuggestion cboMaSKU;
     private javax.swing.JCheckBox chk;
     private javax.swing.JLabel lblBarcode;
     private javax.swing.JLabel lblMaSKu;
     private javax.swing.JLabel lblSoLuong;
     private javax.swing.JLabel lblTenSP;
     private javax.swing.JSpinner spnSoLuong;
-    private javax.swing.JTextField txtMaSKU;
     private javax.swing.JTextField txtTenSP;
     // End of variables declaration//GEN-END:variables
 

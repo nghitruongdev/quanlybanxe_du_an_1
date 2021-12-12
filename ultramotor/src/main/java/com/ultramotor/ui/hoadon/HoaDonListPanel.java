@@ -199,6 +199,7 @@ public class HoaDonListPanel extends javax.swing.JPanel {
             case "mail":
                 try {
                 XMail.sendMail(promptEmail(), "", "Hoá Đơn " + idHD, file);
+                MsgBox.inform("Gửi mail thành công");
             } catch (Exception ex) {
             }
             break;
