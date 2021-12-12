@@ -1,6 +1,7 @@
 package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
 import com.swingx.MyScrollBar;
+import com.swingx.scrollbar.ScrollBarCustom;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDialog;
 import com.ultramotor.util.XFile;
@@ -19,8 +20,11 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
@@ -28,44 +32,52 @@ import net.miginfocom.swing.MigLayout;
 import net.sf.jasperreports.engine.JRException;
 
 public class BarcodePanel extends javax.swing.JPanel {
-    
+
     public BarcodePanel() {
         initComponents();
         init();
     }
     ActionListener deleteListener;
-    
+
     private void init() {
         addListeners();
         fixScroll();
         initPnlMain();
         pnlFooter.setBackground(new Color(255, 255, 255, 0));
     }
-    
+
     private void initPnlMain() {
         MigLayout layout = new MigLayout("insets 10 10 10 10, fillx, wrap 1", "[center, fill]");
         pnlMain.setLayout(layout);
     }
-    
+
     private void addItem() {
         Item item = new Item(deleteListener);
 //        item.setMaSKU(sku);
         pnlMain.add(item, "gapbottom 10");
         pnlMain.revalidate();
-//        scroll.scrollRectToVisible(item.getVisibleRect());
+        new Thread(() -> {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+            }
+            JScrollBar sb = scroll.getVerticalScrollBar();
+            sb.setValue(sb.getMaximum());
+        }).start();
+
     }
-    
+
     private void removeItem(Container con) {
         pnlMain.remove(con);
         pnlMain.revalidate();
         pnlMain.repaint();
     }
-    
+
     private void addListeners() {
         deleteListener = (ActionEvent e) -> {
             removeItem(((Container) e.getSource()).getParent());
         };
-        
+
         btnAdd.addActionListener((ActionEvent e) -> {
             addItem();
         });
@@ -78,20 +90,30 @@ public class BarcodePanel extends javax.swing.JPanel {
             }
             chkAll.setText(boo ? "Bỏ chọn tất cả" : "Chọn tất cả");
         });
-        
+
         btnDelete.addActionListener(event -> {
+            if(pnlMain.getComponents().length==0){
+                MsgBox.warning("Không có mục cần xoá");
+                return;
+            }
+            List<Item> list = new ArrayList<>();
             for (Component comp : pnlMain.getComponents()) {
                 if (comp instanceof Item && ((Item) comp).isSelected()) {
-                    ((Item) comp).deleteItem();
+                    list.add((Item) comp);
                 }
             }
+            if(list.isEmpty()){
+                MsgBox.warning("Vui lòng chọn mục cần xoá");
+                return;
+            }
+            list.forEach(item-> item.deleteItem());
             MsgBox.inform("Đã xoá những mục đã chọn");
         });
-        
+
         btnPrint.addActionListener(e -> export(true));
         btnExportPDF.addActionListener(e -> export(false));
     }
-    
+
     private void export(boolean isPrint) {
         List<ItemBean> list = new ArrayList<>();
         if (pnlMain.getComponents().length == 0) {
@@ -109,7 +131,7 @@ public class BarcodePanel extends javax.swing.JPanel {
                 list.add(bean);
             }
         }
-        
+
         File file = XFile.getTempFile(null, ".pdf");
         try {
             XReport.createBarcodeReport(list, file);
@@ -120,7 +142,7 @@ public class BarcodePanel extends javax.swing.JPanel {
                 if (dest == null) {
                     return;
                 }
-                
+
                 Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 if (MsgBox.confirm("Xuất file thành công! Bạn có muốn mở file?", false) == 0) {
                     Desktop.getDesktop().open(dest);
@@ -132,10 +154,11 @@ public class BarcodePanel extends javax.swing.JPanel {
             MsgBox.error("Không thể in file! Vui lòng kiểm tra lại hệ thống");
         }
     }
-    
+
     private void fixScroll() {
         scroll.getViewport().setBackground(Color.WHITE);
-        scroll.setVerticalScrollBar(new MyScrollBar());
+        ScrollBarCustom sb = new ScrollBarCustom();
+        scroll.setVerticalScrollBar(sb);
         scroll.setBackground(Color.WHITE);
         JPanel p = new JPanel();
         p.setBackground(Color.WHITE);
@@ -145,7 +168,7 @@ public class BarcodePanel extends javax.swing.JPanel {
         scroll.setWheelScrollingEnabled(true);
         scroll.setAutoscrolls(true);
     }
-    
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame fr = new JFrame();
@@ -155,7 +178,7 @@ public class BarcodePanel extends javax.swing.JPanel {
             fr.setVisible(true);
         });
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
