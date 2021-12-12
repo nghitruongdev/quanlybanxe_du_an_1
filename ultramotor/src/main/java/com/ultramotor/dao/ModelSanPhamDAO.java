@@ -13,10 +13,6 @@ public class ModelSanPhamDAO {
 
     private final SanPhamDAO daoSP = new SanPhamDAO();
 
-    public ModelSanPhamDAO() {
-//        initRowSet();
-    }
-
     public List<ModelSanPham> selectAll() {
         return selectBySQL("exec usp_select_modelSP ?", "%%");
     }

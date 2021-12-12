@@ -21,17 +21,7 @@ import com.ultramotor.entity.KhachHang;
 import com.ultramotor.entity.NhanVien;
 import com.ultramotor.entity.SanPham;
 import com.ultramotor.ui.hoadon.ThanhVienCard.Membership;
-import com.ultramotor.util.Auth;
-import com.ultramotor.util.MsgBox;
-import com.ultramotor.util.MyVerifier;
-import com.ultramotor.util.XCodeHelper;
-import com.ultramotor.util.XDate;
-import com.ultramotor.util.XDialog;
-import com.ultramotor.util.XFile;
-import com.ultramotor.util.XImage;
-import com.ultramotor.util.XJdbc;
-import com.ultramotor.util.XPdf;
-import com.ultramotor.util.XReport;
+import com.ultramotor.util.*;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
@@ -52,7 +42,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -451,7 +440,6 @@ public class HoaDonPanel extends javax.swing.JPanel {
         }
         currentHD.setTrangThai(txtTrangThai.getText());
         currentHD.setIdKH(kh.getIdKH());
-
         if (thanhToan) {
             try {
                 insertDB(currentHD);
@@ -751,6 +739,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         btnResetSP.setText("Xoá Form");
 
         setBackground(new java.awt.Color(245, 245, 245));
+        setOpaque(false);
 
         pnlHoaDon.setBackground(new java.awt.Color(245, 245, 245));
         pnlHoaDon.setOpaque(false);

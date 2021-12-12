@@ -18,6 +18,9 @@
       </Layout>
     </Container>
   </NonVisualComponents>
+  <Properties>
+    <Property name="opaque" type="boolean" value="false"/>
+  </Properties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -65,9 +68,9 @@
           <Font name="Segoe UI" size="24" style="1"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="99" red="0" type="rgb"/>
+          <Color blue="72" green="ae" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="UltraMotor - Th&#x1ed1;ng k&#xea;"/>
+        <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; TH&#x1ed0;NG K&#xca;"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JTabbedPane" name="tpnlThongKe">
@@ -82,6 +85,9 @@
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="pnlDoanhThu">
+          <Properties>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="DOANH THU">
@@ -198,7 +204,7 @@
             <Component class="com.swingx.Button" name="btnSave">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="33" green="a7" red="5c" type="rgb"/>
+                  <Color blue="72" green="ae" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -214,6 +220,9 @@
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlSanPham">
+          <Properties>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="S&#x1ea2;N PH&#x1ea8;M">
@@ -268,7 +277,7 @@
             <Component class="com.swingx.Button" name="btnSave1">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="33" green="a7" red="5c" type="rgb"/>
+                  <Color blue="72" green="ae" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -292,6 +301,9 @@
             <Component class="com.swingx.ComboBoxSuggestion" name="cboNamSP">
             </Component>
             <Container class="javax.swing.JPanel" name="jPanel1">
+              <Properties>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -370,6 +382,9 @@
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel2">
+              <Properties>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -454,6 +469,9 @@
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlKho">
+          <Properties>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="KHO">
@@ -535,7 +553,7 @@
             <Component class="com.swingx.Button" name="btnSave2">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="33" green="a7" red="5c" type="rgb"/>
+                  <Color blue="72" green="ae" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -610,6 +628,9 @@
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlNhanVien">
+          <Properties>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="NH&#xc2;N VI&#xca;N">
@@ -727,7 +748,7 @@
             <Component class="com.swingx.Button" name="btnSave3">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="33" green="a7" red="5c" type="rgb"/>
+                  <Color blue="72" green="ae" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -751,6 +772,9 @@
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlKhachHang">
+          <Properties>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="KH&#xc1;CH H&#xc0;NG">
@@ -877,7 +901,7 @@
             <Component class="com.swingx.Button" name="btnSave4">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="33" green="a7" red="5c" type="rgb"/>
+                  <Color blue="72" green="ae" red="0" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>

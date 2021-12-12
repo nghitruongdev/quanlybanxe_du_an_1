@@ -12,7 +12,6 @@ import com.ultramotor.dao.ThongKeDAO;
 import com.ultramotor.entity.KhachHang;
 import com.ultramotor.entity.NhanVien;
 import com.ultramotor.entity.SanPham;
-import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,12 +23,6 @@ import java.util.List;
  * @author nghipc
  */
 public class UltraExporter {
-
-    public static void main(String[] args) throws IOException {
-        File file = new File("test.xlsx");
-        exportDoanhThu(file, 2021);
-        Desktop.getDesktop().open(file);
-    }
 
     public static void exportNhanVien(File file) throws IOException {
         List<Object[]> list = new ArrayList<>();

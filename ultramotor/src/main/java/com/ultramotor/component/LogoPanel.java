@@ -4,10 +4,6 @@ package com.ultramotor.component;
 import com.ultramotor.util.XImage;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author nghipc
- */
 public class LogoPanel extends javax.swing.JPanel {
 
     public LogoPanel() {

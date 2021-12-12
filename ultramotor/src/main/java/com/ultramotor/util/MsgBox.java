@@ -39,15 +39,15 @@ public class MsgBox {
     }
 
     private static void info(Component comp, String message, int type) {
-        showMessageDialog(comp, message, "Hệ thống quản lý đào tạo", type);
+        showMessageDialog(comp, message, "Ultramotor", type);
     }
 
     private static int confirm(Component comp, String message, int option, int type) {
-        int k = showConfirmDialog(comp, message, "Hệ thống quản lý đào tạo", option, type);
+        int k = showConfirmDialog(comp, message, "Ultramotor", option, type);
         return k;
     }
 
     private static String input(Component comp, String message, int type) {
-        return showInputDialog(comp, message, "Hệ thống quản lý đào tạo", type);
+        return showInputDialog(comp, message, "Ultramotor", type);
     }
 }

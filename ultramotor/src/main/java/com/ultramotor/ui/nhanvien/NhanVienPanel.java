@@ -501,13 +501,13 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private com.swingx.SearchTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame fr = new JFrame();
-            fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            fr.getContentPane().add(new NhanVienPanel());
-            fr.pack();
-            fr.setVisible(true);
-        });
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> {
+//            JFrame fr = new JFrame();
+//            fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            fr.getContentPane().add(new NhanVienPanel());
+//            fr.pack();
+//            fr.setVisible(true);
+//        });
+//    }
 }

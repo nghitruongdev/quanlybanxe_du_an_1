@@ -66,7 +66,6 @@ public class HoaDonListPanel extends javax.swing.JPanel {
         listKH = new KhachHangDAO().selectAll();
         dateFrom.setTextRefernce(txtTo);
         dateTo.setTextRefernce(txtFrom);
-
         initTable();
         fillTable();
         addListener();
@@ -254,6 +253,9 @@ public class HoaDonListPanel extends javax.swing.JPanel {
         btnMail = new com.swingx.Button();
         btnExport = new com.swingx.Button();
         btnPreview = new com.swingx.Button();
+        lblQLNV = new javax.swing.JLabel();
+
+        setOpaque(false);
 
         tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -277,33 +279,45 @@ public class HoaDonListPanel extends javax.swing.JPanel {
         chkAll.setText("Tất Cả");
         chkAll.setOpaque(false);
 
+        btnPrint.setBackground(new java.awt.Color(0, 174, 114));
+        btnPrint.setForeground(new java.awt.Color(255, 255, 255));
         btnPrint.setText("Print");
         btnPrint.setActionCommand("print");
         btnPrint.setRadius(10);
 
+        btnMail.setBackground(new java.awt.Color(0, 174, 114));
+        btnMail.setForeground(new java.awt.Color(255, 255, 255));
         btnMail.setText("Mail");
         btnMail.setActionCommand("mail");
         btnMail.setRadius(10);
 
+        btnExport.setBackground(new java.awt.Color(0, 174, 114));
+        btnExport.setForeground(new java.awt.Color(255, 255, 255));
         btnExport.setText("Export");
         btnExport.setActionCommand("export");
         btnExport.setRadius(10);
 
+        btnPreview.setBackground(new java.awt.Color(0, 174, 114));
+        btnPreview.setForeground(new java.awt.Color(255, 255, 255));
         btnPreview.setText("Preview");
         btnPreview.setActionCommand("preview");
         btnPreview.setRadius(10);
+
+        lblQLNV.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblQLNV.setForeground(new java.awt.Color(0, 174, 114));
+        lblQLNV.setText("HOÁ ĐƠN");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane5))
+                    .addComponent(jScrollPane5)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
+                        .addComponent(lblQLNV)
+                        .addGap(20, 20, 20)
                         .addComponent(txtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -317,7 +331,7 @@ public class HoaDonListPanel extends javax.swing.JPanel {
                         .addComponent(btnMail, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -327,18 +341,23 @@ public class HoaDonListPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(chkAll))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnMail, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(chkAll))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnMail, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblQLNV, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
                 .addGap(20, 20, 20))
@@ -358,6 +377,7 @@ public class HoaDonListPanel extends javax.swing.JPanel {
     private com.swingx.datechooser.DateChooser dateFrom;
     private com.swingx.datechooser.DateChooser dateTo;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JLabel lblQLNV;
     private com.swingx.table.Table tblHoaDon;
     private com.swingx.TextField txtFrom;
     private com.swingx.SearchTextField txtSearch;

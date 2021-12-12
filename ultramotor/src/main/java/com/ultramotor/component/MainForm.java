@@ -93,7 +93,7 @@ public class MainForm extends javax.swing.JPanel {
         menu.revalidate();
         menu.repaint();
     }
-
+    
     public void showForm(Component comp) {
         pnlMain.showForm(comp);
     }
