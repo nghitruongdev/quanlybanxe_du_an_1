@@ -9,14 +9,20 @@ import com.ultramotor.entity.Entity;
 import com.ultramotor.entity.NhanVien;
 import com.ultramotor.entity.SanPham;
 import com.ultramotor.util.MsgBox;
+import com.ultramotor.util.UltraExporter;
 import com.ultramotor.util.XDialog;
+import com.ultramotor.util.XExcel;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.CellEditor;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.table.DefaultTableModel;
 
 public class QuanLySanPhamPanel extends javax.swing.JPanel {
@@ -37,7 +43,6 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         numberFormat = new DecimalFormat("#,##0.00");
         addListeners();
         initTable();
-        fillTable(tblSP, daoSP.selectAll());
     }
 
     private void addListeners() {
@@ -52,7 +57,24 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
                 deleteRow((Entity) e);
             }
         };
+        btnExport.addActionListener(e->export());
         addBtnAddListener(btnAddSP, tblSP, new SanPham());
+        this.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                listNV = new NhanVienDAO().selectAll();
+                 fillTable(tblSP, daoSP.selectAll());
+                 
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+            }
+        });
     }
 
     private void addBtnAddListener(JButton btn, Table table, SanPham e) {
@@ -179,6 +201,22 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         return listNV.stream().filter(nv -> nv.getIdNV().equalsIgnoreCase(idNV.trim())).findFirst().orElse(new NhanVien());
     }
 
+    private void export(){
+        File excel = XExcel.showSaveDialog((JFrame) this.getTopLevelAncestor(), "DanhSachSanPhamTonKho.xlsx");
+        if(excel==null){
+            return;
+        }
+        UltraExporter.exportSanPham(excel);
+        if(MsgBox.confirm("Xuất danh sách thành công. Bạn có muốn mở file?", false)==0){
+            try {
+                Desktop.getDesktop().open(excel);
+            } catch (IOException ex) {
+            }
+        }
+        
+    }
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

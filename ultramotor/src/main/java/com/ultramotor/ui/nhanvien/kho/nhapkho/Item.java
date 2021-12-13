@@ -29,7 +29,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 public class Item extends javax.swing.JPanel {
 
     private File file;
-    private static Map<String, String> map = new SanPhamDAO().getMaVaTenSP();
+    static Map<String, String> map = new SanPhamDAO().getMaVaTenSP();
 
     public Item(ActionListener deleteListener) {
         initComponents();

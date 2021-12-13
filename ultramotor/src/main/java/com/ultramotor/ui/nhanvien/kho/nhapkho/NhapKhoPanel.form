@@ -9,6 +9,34 @@
         </Property>
       </Properties>
     </Component>
+    <Component class="com.swingx.Button" name="btnInDanhSach">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="72" green="ae" red="0" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/ultramotor/icon/print_25px.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="In danh s&#xe1;ch"/>
+      </Properties>
+    </Component>
+    <Component class="com.swingx.Button" name="btnGuiEmail">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="72" green="ae" red="0" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/ultramotor/icon/icons8-sent.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="G&#x1eed;i Mail"/>
+      </Properties>
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -96,10 +124,6 @@
                           <Component id="txtDate" min="-2" pref="150" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="chkAll" min="-2" pref="76" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnGuiEmail" min="-2" pref="96" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnInDanhSach" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Component id="scrollPhieuNhap" alignment="0" pref="965" max="32767" attributes="0"/>
@@ -112,14 +136,12 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnGuiEmail" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnInDanhSach" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtDate" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblTime" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="chkAll" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="scrollPhieuNhap" pref="193" max="32767" attributes="0"/>
+                  <Component id="scrollPhieuNhap" pref="194" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -163,34 +185,6 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="com.swingx.Button" name="btnGuiEmail">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="72" green="ae" red="0" type="rgb"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ultramotor/icon/icons8-sent.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="G&#x1eed;i Mail"/>
-          </Properties>
-        </Component>
-        <Component class="com.swingx.Button" name="btnInDanhSach">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="72" green="ae" red="0" type="rgb"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ultramotor/icon/print_25px.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="In danh s&#xe1;ch"/>
-          </Properties>
-        </Component>
         <Component class="com.swingx.TextField" name="txtDate">
           <Properties>
             <Property name="animateLabel" type="boolean" value="false"/>

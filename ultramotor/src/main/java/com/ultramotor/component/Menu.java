@@ -8,7 +8,6 @@ import com.swingx.model.ModelMenu;
 import com.swingx.scrollbar.ScrollBarCustom;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -44,27 +43,26 @@ public class Menu extends javax.swing.JPanel {
         return new EventMenu() {
             @Override
             public boolean menuPressed(Component comp, boolean open) {
-                if (enableMenu) {
-                    if (showMenu) {
-                        new MenuAnimation(layout, comp).openMenu(open);
-                        return true;
-                    } else {
-//                        System.out.println("Show pop up menu: menu closed");
-                    }
-                }
+//                if (enableMenu) {
+//                    if (showMenu) {
+//                        new MenuAnimation(layout, comp).openMenu(open);
+//                        return true;
+//                    } else {
+//                    }
+//                }
                 return true;
             }
         };
     }
 
     public void hideAllMenu() {
-        for (Component comp : panel.getComponents()) {
-            MenuItem item = (MenuItem) comp;
-            if (item.isOpen()) {
-                new MenuAnimation(layout, comp).openMenu(false);
-                item.setOpen(false);
-            }
-        }
+//        for (Component comp : panel.getComponents()) {
+//            MenuItem item = (MenuItem) comp;
+//            if (item.isOpen()) {
+//                new MenuAnimation(layout, comp).openMenu(false);
+//                item.setOpen(false);
+//            }
+//        }
     }
 
     @SuppressWarnings("unchecked")
@@ -118,8 +116,6 @@ public class Menu extends javax.swing.JPanel {
     protected void paintComponent(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//        GradientPaint gra = new GradientPaint(0, 0, new Color(69, 184, 133), getWidth(), 0, new Color(69, 220, 133));
-//        GradientPaint gra = new GradientPaint(0, 0,new Color(69, 220, 133) , getWidth(), 0,new Color(69, 184, 133) );
         Color color = new Color(87, 96, 113);
         g2.setPaint(color);
         g2.fillRect(0, 0, getWidth(), getHeight());

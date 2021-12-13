@@ -669,4 +669,4 @@ INSTEAD OF DELETE
 NOT FOR REPLICATION
 AS UPDATE SanPham set isDeleted = 1 WHERE SKU in (select SKU from deleted)
 
-update NhanVien set VaiTro = N'Trưởng Phòng', Email  = 'nghitvps19009@fpt.edu.vn' WHERE id_NV = 'NV01'
+

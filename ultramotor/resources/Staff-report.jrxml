@@ -12,6 +12,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="logo" class="java.io.File"/>
 	<queryString>
 		<![CDATA[select * from NhanVien WHERE isDeleted = 0]]>
 	</queryString>
@@ -76,7 +77,7 @@
 				<reportElement mode="Opaque" x="0" y="0" width="550" height="90" backcolor="#208BE3" uuid="b7c49d6d-3130-47c6-b2d9-265c1bbd547e"/>
 				<image onErrorType="Icon">
 					<reportElement x="10" y="5" width="160" height="80" uuid="562d52e3-8a51-4fe3-a237-2fe1271042b5"/>
-					<imageExpression><![CDATA["C:/Users/nghipc/qlbx/ultramotor/resources/img/logo.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement x="180" y="65" width="90" height="20" forecolor="#FFFFFF" uuid="a14b61e7-43c3-40d0-9b3d-0c920c8b9b6e"/>

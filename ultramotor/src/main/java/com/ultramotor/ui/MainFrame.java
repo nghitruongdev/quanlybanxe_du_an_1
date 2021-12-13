@@ -18,8 +18,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.nio.file.Paths;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -112,6 +110,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnlThongKe = new ThongKePanel();
         dangNhap = DangNhapJFrame.getLoginFrame();
         pnlListHoaDon = new HoaDonListPanel();
+
         mnuThongKe = new ModelMenu("Thống kê", createIcon("report.png"), getEvent(pnlThongKe));
         mnuNhanVien = new ModelMenu("Quản lý nhân viên", createIcon("staff.png"), getEvent(pnlNhanVien));
         mnuHoaDon = new ModelMenu("Tạo đơn hàng", createIcon("receipt_25px.png"), getEvent(pnlHoaDon));
@@ -121,6 +120,7 @@ public class MainFrame extends javax.swing.JFrame {
         mnuNhapKho = new ModelMenu("Quản lý kho", createIcon("kho.png"), getEvent(pnlNhapKho));
         mnuBarcode = new ModelMenu("In barcode", createIcon("barcode.png"), getEvent(pnlBarcode));
         setLocationRelativeTo(null);
+        setTitle("Hệ Thống Quản Lý Bán Xe Ultramotor");
         addListener();
     }
 
@@ -132,18 +132,18 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
-    
-    public void setVisible(){
+
+    public void setVisible() {
         NhanVien user = Auth.user;
-                if (user == null) {
-                    MsgBox.error("Vui lòng đăng nhập để sử dụng ứng dụng");
-                    MainFrame.this.dispose();
-                    dangNhap.setVisible(true);
-                    return;
-                }
-                pnlMain.setUser(user);
-                addMenus(user);
-                setVisible(true);
+        if (user == null) {
+            MsgBox.error("Vui lòng đăng nhập để sử dụng ứng dụng");
+            MainFrame.this.dispose();
+            dangNhap.setVisible(true);
+            return;
+        }
+        pnlMain.setUser(user);
+        addMenus(user);
+        setVisible(true);
     }
 
     private void addMenus(NhanVien user) {
@@ -171,7 +171,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private ImageIcon createIcon(String name) {
-        File iconPath = Paths.get("src", "main", "resources", "ultramotor", "icon").toFile();
-        return new ImageIcon(new File(iconPath, name).getPath());
+        return new ImageIcon(getClass().getResource("ultramotor/icon/"+name));
     }
 }

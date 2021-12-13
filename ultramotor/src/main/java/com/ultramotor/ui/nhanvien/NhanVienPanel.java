@@ -40,6 +40,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -294,6 +296,20 @@ public class NhanVienPanel extends javax.swing.JPanel {
         exportEvent = (event) -> {
             export(event.getActionCommand());
         };
+        this.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                fillTable(dao.selectAll());
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+            }
+        });
     }
 
     private void export(String name) {

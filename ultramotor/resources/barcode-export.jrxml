@@ -11,6 +11,7 @@
 		</queryString>
 		<field name="_THIS" class="java.lang.String"/>
 	</subDataset>
+	<parameter name="logo" class="java.io.File"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -29,7 +30,7 @@
 				<reportElement mode="Opaque" x="0" y="0" width="565" height="90" backcolor="#208BE3" uuid="0d2bdf3c-87a7-4fa4-bec4-3fe5facf3b54"/>
 				<image onErrorType="Icon">
 					<reportElement x="10" y="5" width="160" height="80" uuid="cc27887f-b86f-46e1-83d3-1bc1c3ef55fe"/>
-					<imageExpression><![CDATA["C:/Users/nghipc/qlbx/ultramotor/resources/img/logo.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement x="180" y="65" width="90" height="20" forecolor="#FFFFFF" uuid="f539e9ed-b4ae-4d82-a42a-80067e569c3d"/>

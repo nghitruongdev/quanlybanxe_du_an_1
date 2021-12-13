@@ -324,3 +324,5 @@ insert into ChiTietNhapKho (id_CTNK, soLuong, giaNhap, SKU, id_PN) values
 (1, '100', '2000000000','SK19', 'PN19'),
 (1, '100', '2000000000','SK20', 'PN20')
 GO
+
+update NhanVien set VaiTro = N'Trưởng Phòng', Email  = 'nghitvps19009@fpt.edu.vn' WHERE id_NV = 'NV01'
