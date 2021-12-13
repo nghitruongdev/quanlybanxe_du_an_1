@@ -140,6 +140,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
             }
             resetCTHD();
             btnResetKH.doClick();
+            resetSP();
             txtMaHD.setText(getAutoMaHD());
         });
 
@@ -1445,7 +1446,6 @@ public class HoaDonPanel extends javax.swing.JPanel {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     int row = table.getSelectedRow();
-                    System.out.println(row);
                     if (row >= 0) {
                         setFormKH((KhachHang) table.getValueAt(row, 0));
                         ((JDialog) panel.getTopLevelAncestor()).dispose();
@@ -1474,7 +1474,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         txtEmail.setText(kh.getEmail());
         chkThanhVien.setSelected(kh.getThanhVien());
         chkThanhVien.setEnabled(!kh.getThanhVien());
-        if (kh.getThanhVien()) {
+        if (kh.getThanhVien()&& kh.getTongTien()>0) {
             pnlMembership.setThanhvien(kh);
             setGiamGia(pnlMembership.getRank());
         }

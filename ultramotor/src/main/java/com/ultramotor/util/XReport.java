@@ -22,12 +22,13 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 public class XReport {
 
     static File path = Paths.get("resources").toFile();
- 
+
     public static void createHoaDonReport(String idHD, File file) throws JRException, FileNotFoundException {
         String invoice = new File(path, "invoice.jrxml").getPath();
         try (Connection con = XJdbc.getCon()) {
             Map<String, Object> paras = new HashMap<>();
             paras.put("idHD", idHD);
+            paras.put("logo", new File(path, "img/logo.png"));
             fillReport(getReport(invoice), paras, con, file);
         } catch (SQLException ex) {
         }
@@ -36,7 +37,9 @@ public class XReport {
     public static void createNhanVienReport(File file) throws JRException {
         String jrFile = new File(path, "Staff-report.jrxml").getPath();
         try (Connection con = XJdbc.getCon()) {
-            fillReport(getReport(jrFile), new HashMap<>(), con, file);
+            Map<Object, Object> map = new HashMap<>();
+            map.put("logo", new File(path, "img/logo.png"));
+            fillReport(getReport(jrFile), map, con, file);
         } catch (SQLException ex) {
         }
     }
@@ -44,13 +47,17 @@ public class XReport {
     public static void createBarcodeReport(List<ItemBean> list, File file) throws JRException {
         String barcode = new File(path, "barcode-export.jrxml").getPath();
         JRBeanCollectionDataSource src = new JRBeanCollectionDataSource(list);
-        fillReport(getReport(barcode), new HashMap<>(), src, file);
+        Map<Object, Object> map = new HashMap<>();
+        map.put("logo", new File(path, "img/logo.png"));
+        fillReport(getReport(barcode), map, src, file);
     }
-    
-    public static void createThanhVienCard(List<File> list, File file) throws JRException{
+
+    public static void createThanhVienCard(List<File> list, File file) throws JRException {
         String card = new File(path, "card-membership.jrxml").getPath();
         JRBeanCollectionDataSource src = new JRBeanCollectionDataSource(list);
-        fillReport(getReport(card), new HashMap<>(), src, file);
+        Map<Object, Object> map = new HashMap<>();
+        map.put("logo", new File(path, "img/logo.png"));
+        fillReport(getReport(card), map, src, file);
     }
 
     private static void fillReport(JasperReport report, Map paras, JRBeanCollectionDataSource src, File file) throws JRException {
@@ -66,7 +73,6 @@ public class XReport {
     private static JasperReport getReport(String jrFile) throws JRException {
         JasperDesign design = JRXmlLoader.load(jrFile);
         return JasperCompileManager.compileReport(design);
-
     }
 
     private static void exportReport(JasperPrint print, File file) throws JRException {

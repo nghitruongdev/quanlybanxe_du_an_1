@@ -112,6 +112,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnlThongKe = new ThongKePanel();
         dangNhap = DangNhapJFrame.getLoginFrame();
         pnlListHoaDon = new HoaDonListPanel();
+        
         mnuThongKe = new ModelMenu("Thống kê", createIcon("report.png"), getEvent(pnlThongKe));
         mnuNhanVien = new ModelMenu("Quản lý nhân viên", createIcon("staff.png"), getEvent(pnlNhanVien));
         mnuHoaDon = new ModelMenu("Tạo đơn hàng", createIcon("receipt_25px.png"), getEvent(pnlHoaDon));
@@ -132,18 +133,18 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
-    
-    public void setVisible(){
+
+    public void setVisible() {
         NhanVien user = Auth.user;
-                if (user == null) {
-                    MsgBox.error("Vui lòng đăng nhập để sử dụng ứng dụng");
-                    MainFrame.this.dispose();
-                    dangNhap.setVisible(true);
-                    return;
-                }
-                pnlMain.setUser(user);
-                addMenus(user);
-                setVisible(true);
+        if (user == null) {
+            MsgBox.error("Vui lòng đăng nhập để sử dụng ứng dụng");
+            MainFrame.this.dispose();
+            dangNhap.setVisible(true);
+            return;
+        }
+        pnlMain.setUser(user);
+        addMenus(user);
+        setVisible(true);
     }
 
     private void addMenus(NhanVien user) {

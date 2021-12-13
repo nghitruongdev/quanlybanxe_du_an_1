@@ -16,6 +16,9 @@ import com.ultramotor.util.XExcel;
 import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -23,7 +26,8 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
-import javax.swing.SwingUtilities;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -568,17 +572,12 @@ public class ThongKePanel extends javax.swing.JPanel {
     HoaDonDAO hddao = new HoaDonDAO();
     NhapKhoDAO nkdao = new NhapKhoDAO();
 
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            JFrame fr = new JFrame();
-//            fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            fr.getContentPane().add(new ThongKePanel());
-//            fr.pack();
-//            fr.setVisible(true);
-//        });
-//    }
-
     private void init() {
+        addListeners();
+        refresh();
+    }
+
+    private void refresh(){
         fillComboBoxNam();
         fillComboBoxNamNhapKho();
         fillTableDoanhThu();
@@ -588,10 +587,7 @@ public class ThongKePanel extends javax.swing.JPanel {
         fillTableSanPhamNhapKho();
         fillTableNhanVien();
         fillTableKhachHang();
-
-        addListeners();
     }
-
     public void fillComboBoxNam() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboNamDT.getModel();
         DefaultComboBoxModel model2 = (DefaultComboBoxModel) cboNamSP.getModel();
@@ -681,10 +677,12 @@ public class ThongKePanel extends javax.swing.JPanel {
         if (cboNamNV.getSelectedItem() != null) {
             int nam = Integer.valueOf(cboNamNV.getSelectedItem().toString());
             List<Object[]> list = tkdao.getNhanVien(nam);
-            for (Object[] row : list) {
+            list.stream().map(row -> {
                 row[3] = (Boolean) row[3] ? "Nam" : "Nũ";
+                return row;
+            }).forEachOrdered(row -> {
                 model.addRow(row);
-            }
+            });
         }
     }
 
@@ -778,7 +776,7 @@ public class ThongKePanel extends javax.swing.JPanel {
         popup.add(new PopupMenuItem("Sản Phẩm Nhập Kho", null, null, e -> export("NhapKho")));
         return popup;
     }
-
+    int count = 0;
     private void addListeners() {
         cboNamDT.addActionListener((e) -> {
             fillTableDoanhThu();
@@ -802,6 +800,34 @@ public class ThongKePanel extends javax.swing.JPanel {
         });
 
         addExportListener(btnSave, btnSave1, btnSave2, btnSave3, btnSave4);
+
+        this.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                refresh();
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+            }
+        });
+//        this.getParent().addContainerListener(new ContainerListener() {
+//            @Override
+//            public void componentAdded(ContainerEvent e) {
+//                System.out.println("Added");
+//            }
+//
+//            @Override
+//            public void componentRemoved(ContainerEvent e) {
+//                System.out.println("Removed");
+//            }
+//
+//        });
+
     }
 
 }

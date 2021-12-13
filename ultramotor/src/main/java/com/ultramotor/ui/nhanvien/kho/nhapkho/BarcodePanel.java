@@ -1,9 +1,8 @@
 package com.ultramotor.ui.nhanvien.kho.nhapkho;
 
-import com.swingx.MyScrollBar;
 import com.swingx.scrollbar.ScrollBarCustom;
+import com.ultramotor.dao.SanPhamDAO;
 import com.ultramotor.util.MsgBox;
-import com.ultramotor.util.XDialog;
 import com.ultramotor.util.XFile;
 import com.ultramotor.util.XPdf;
 import com.ultramotor.util.XReport;
@@ -20,14 +19,13 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import net.miginfocom.swing.MigLayout;
 import net.sf.jasperreports.engine.JRException;
 
@@ -112,6 +110,21 @@ public class BarcodePanel extends javax.swing.JPanel {
 
         btnPrint.addActionListener(e -> export(true));
         btnExportPDF.addActionListener(e -> export(false));
+        
+          this.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                Item.map = new SanPhamDAO().getMaVaTenSP();
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+            }
+        });
     }
 
     private void export(boolean isPrint) {
@@ -169,15 +182,15 @@ public class BarcodePanel extends javax.swing.JPanel {
         scroll.setAutoscrolls(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame fr = new JFrame();
-            fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            fr.getContentPane().add(new BarcodePanel());
-            fr.pack();
-            fr.setVisible(true);
-        });
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> {
+//            JFrame fr = new JFrame();
+//            fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            fr.getContentPane().add(new BarcodePanel());
+//            fr.pack();
+//            fr.setVisible(true);
+//        });
+//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

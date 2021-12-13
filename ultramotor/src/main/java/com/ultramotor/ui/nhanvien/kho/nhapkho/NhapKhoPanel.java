@@ -23,6 +23,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.table.DefaultTableModel;
 
 public class NhapKhoPanel extends javax.swing.JPanel {
@@ -205,6 +207,20 @@ public class NhapKhoPanel extends javax.swing.JPanel {
         chkAll.addActionListener(event -> {
             fillTablePhieuNhap();
         });
+        
+         this.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+            }
+        });
     }
 
     private int findIndexPhieuNhap(PhieuNhapKho pnk) {
@@ -229,19 +245,29 @@ public class NhapKhoPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         dateChooser = new com.swingx.datechooser.DateChooser();
+        btnInDanhSach = new com.swingx.Button();
+        btnGuiEmail = new com.swingx.Button();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblTime = new javax.swing.JLabel();
         scrollPhieuNhap = new javax.swing.JScrollPane();
         tblPhieuNhap = new com.swingx.table.Table();
-        btnGuiEmail = new com.swingx.Button();
-        btnInDanhSach = new com.swingx.Button();
         txtDate = new com.swingx.TextField();
         chkAll = new javax.swing.JCheckBox();
         pnlChiTiet = new com.ultramotor.ui.nhanvien.kho.nhapkho.ChiTietNhapKhoPanel();
         jSeparator1 = new javax.swing.JSeparator();
 
         dateChooser.setTextRefernce(txtDate);
+
+        btnInDanhSach.setBackground(new java.awt.Color(0, 174, 114));
+        btnInDanhSach.setForeground(new java.awt.Color(255, 255, 255));
+        btnInDanhSach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/print_25px.png"))); // NOI18N
+        btnInDanhSach.setText("In danh sách");
+
+        btnGuiEmail.setBackground(new java.awt.Color(0, 174, 114));
+        btnGuiEmail.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuiEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/icons8-sent.png"))); // NOI18N
+        btnGuiEmail.setText("Gửi Mail");
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
@@ -273,16 +299,6 @@ public class NhapKhoPanel extends javax.swing.JPanel {
         tblPhieuNhap.setOpaque(false);
         scrollPhieuNhap.setViewportView(tblPhieuNhap);
 
-        btnGuiEmail.setBackground(new java.awt.Color(0, 174, 114));
-        btnGuiEmail.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuiEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/icons8-sent.png"))); // NOI18N
-        btnGuiEmail.setText("Gửi Mail");
-
-        btnInDanhSach.setBackground(new java.awt.Color(0, 174, 114));
-        btnInDanhSach.setForeground(new java.awt.Color(255, 255, 255));
-        btnInDanhSach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ultramotor/icon/print_25px.png"))); // NOI18N
-        btnInDanhSach.setText("In danh sách");
-
         txtDate.setAnimateLabel(false);
         txtDate.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtDate.setEnabled(false);
@@ -312,10 +328,6 @@ public class NhapKhoPanel extends javax.swing.JPanel {
                         .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(chkAll, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGuiEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnInDanhSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(scrollPhieuNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE))
                 .addContainerGap())
@@ -324,13 +336,11 @@ public class NhapKhoPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuiEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInDanhSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTime)
                     .addComponent(chkAll))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(scrollPhieuNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                .addComponent(scrollPhieuNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

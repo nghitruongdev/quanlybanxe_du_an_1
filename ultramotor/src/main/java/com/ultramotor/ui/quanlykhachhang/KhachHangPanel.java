@@ -5,6 +5,7 @@ import com.swingx.table.ModelEvent;
 import com.swingx.table.Table;
 import com.ultramotor.dao.HoaDonDAO;
 import com.ultramotor.dao.KhachHangDAO;
+import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.entity.KhachHang;
 import com.ultramotor.ui.hoadon.ThanhVienCard;
 import com.ultramotor.ui.nhanvien.SendMailPanel;
@@ -28,14 +29,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.CellEditor;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 
@@ -241,9 +241,23 @@ public class KhachHangPanel extends javax.swing.JPanel {
             }
             ((JDialog) pnlInfo.getTopLevelAncestor()).dispose();
         });
-        
-        btnExport.addActionListener(e->export());
+
+        btnExport.addActionListener(e -> export());
         btnExportTV.addActionListener(e -> exportTV());
+        this.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                fillTable(tblKhachHang, dao.selectAll());
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+            }
+        });
     }
 
     private int findIndexKhachHang(KhachHang kh) {
@@ -327,20 +341,21 @@ public class KhachHangPanel extends javax.swing.JPanel {
 
     }
 
-    private void export(){
+    private void export() {
         File excel = XExcel.showSaveDialog((JFrame) this.getTopLevelAncestor(), "DanhSachKH.xlsx");
-        if(excel==null){
+        if (excel == null) {
             return;
         }
         UltraExporter.exportKhachHang(excel);
-        if(MsgBox.confirm("Xuất danh sách thành công. Bạn có muốn mở file?", false)==0){
+        if (MsgBox.confirm("Xuất danh sách thành công. Bạn có muốn mở file?", false) == 0) {
             try {
                 Desktop.getDesktop().open(excel);
             } catch (IOException ex) {
             }
         }
-        
+
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

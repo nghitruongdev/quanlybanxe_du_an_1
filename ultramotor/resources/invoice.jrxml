@@ -78,6 +78,7 @@ WHERE
 	<parameter name="idHD" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["HD01"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="logo" class="java.io.File" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT dbo."HoaDon"."idHD",
 	dbo."HoaDon"."thoiGian",
@@ -153,7 +154,7 @@ WHERE
 				<reportElement mode="Opaque" x="0" y="0" width="565" height="90" backcolor="#208BE3" uuid="01f153af-7c88-4301-bd9d-c6f24a30c58c"/>
 				<image onErrorType="Icon">
 					<reportElement x="10" y="5" width="160" height="80" uuid="930bd78e-d577-4962-b40c-cd5663e109c1"/>
-					<imageExpression><![CDATA["C:/Users/nghipc/qlbx/ultramotor/resources/img/logo.png"]]></imageExpression>
+					<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement x="180" y="65" width="90" height="20" forecolor="#FFFFFF" uuid="c0d96a3e-e2ae-4d54-869f-af9ca46a1274"/>
@@ -279,7 +280,7 @@ WHERE
 	<detail>
 		<band height="130" splitType="Stretch">
 			<componentElement>
-				<reportElement positionType="Float" x="39" y="0" width="495" height="100" uuid="6d946655-ff9f-4d9f-9e58-df0c38353bd3">
+				<reportElement positionType="Float" x="19" y="0" width="526" height="100" uuid="6d946655-ff9f-4d9f-9e58-df0c38353bd3">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -294,11 +295,11 @@ WHERE
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						<returnValue fromVariable="tongTien" toVariable="tongTien"/>
 					</datasetRun>
-					<jr:column width="71" uuid="4339f6b3-bb40-4f74-afa4-88cdb284c3b6">
+					<jr:column width="88" uuid="4339f6b3-bb40-4f74-afa4-88cdb284c3b6">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
 						<jr:tableHeader style="Table_TH" height="40" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="71" height="40" uuid="abd5d4ab-bb5e-4e03-ac9b-1c3d0a510b25"/>
+								<reportElement x="0" y="0" width="88" height="40" uuid="abd5d4ab-bb5e-4e03-ac9b-1c3d0a510b25"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans" size="10" isBold="true"/>
 								</textElement>
@@ -308,7 +309,7 @@ WHERE
 						</jr:tableHeader>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="71" height="20" uuid="d551f29f-a915-4b40-a3ef-79b9012b1547"/>
+								<reportElement x="0" y="0" width="88" height="20" uuid="d551f29f-a915-4b40-a3ef-79b9012b1547"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans"/>
 								</textElement>
@@ -317,7 +318,7 @@ WHERE
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="71" height="30" uuid="9af07ec6-60a1-4c05-9f55-05f3e969236c"/>
+								<reportElement x="0" y="0" width="88" height="30" uuid="9af07ec6-60a1-4c05-9f55-05f3e969236c"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans" size="11"/>
 								</textElement>
@@ -325,11 +326,11 @@ WHERE
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="128" uuid="ed9abfad-73e9-42ca-a83c-a0eee61c9aa6">
+					<jr:column width="92" uuid="ed9abfad-73e9-42ca-a83c-a0eee61c9aa6">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
 						<jr:tableHeader style="Table_TH" height="40" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="128" height="40" uuid="515f3b3f-a98c-48a5-947b-5cfde85f3a74"/>
+								<reportElement x="0" y="0" width="92" height="40" uuid="515f3b3f-a98c-48a5-947b-5cfde85f3a74"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans" size="10" isBold="true"/>
 								</textElement>
@@ -339,7 +340,7 @@ WHERE
 						</jr:tableHeader>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="128" height="20" uuid="85e31999-7872-4c20-8cfd-a1fa82aa20af"/>
+								<reportElement x="0" y="0" width="92" height="20" uuid="85e31999-7872-4c20-8cfd-a1fa82aa20af"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans"/>
 								</textElement>
@@ -348,7 +349,7 @@ WHERE
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="128" height="30" uuid="ae0e98bd-344d-4c55-9935-03f13e7826f3"/>
+								<reportElement x="0" y="0" width="92" height="30" uuid="ae0e98bd-344d-4c55-9935-03f13e7826f3"/>
 								<box padding="5"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="DejaVu Sans" size="11"/>
@@ -357,11 +358,11 @@ WHERE
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="63" uuid="fc573fcd-f312-4085-8a2e-81c48404d346">
+					<jr:column width="72" uuid="fc573fcd-f312-4085-8a2e-81c48404d346">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
 						<jr:tableHeader style="Table_TH" height="40" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="63" height="40" uuid="2268167a-1b49-4063-aae4-a36763e3cadf"/>
+								<reportElement x="0" y="0" width="72" height="40" uuid="2268167a-1b49-4063-aae4-a36763e3cadf"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans" size="10" isBold="true"/>
 								</textElement>
@@ -371,7 +372,7 @@ WHERE
 						</jr:tableHeader>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="63" height="20" uuid="5db2f9e3-7f1f-41e2-a275-58ed9ab70a6a"/>
+								<reportElement x="0" y="0" width="72" height="20" uuid="5db2f9e3-7f1f-41e2-a275-58ed9ab70a6a"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans"/>
 								</textElement>
@@ -380,7 +381,7 @@ WHERE
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<staticText>
-								<reportElement x="0" y="0" width="63" height="30" uuid="affbe6b8-4009-4f2e-852d-7090504b5570"/>
+								<reportElement x="0" y="0" width="72" height="30" uuid="affbe6b8-4009-4f2e-852d-7090504b5570"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans" size="11"/>
 								</textElement>
@@ -388,11 +389,11 @@ WHERE
 							</staticText>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="65" uuid="5500db7e-35ff-40dc-84f2-b5ca78262d0c">
+					<jr:column width="83" uuid="5500db7e-35ff-40dc-84f2-b5ca78262d0c">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
 						<jr:tableHeader style="Table_TH" height="40" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="65" height="40" uuid="40fd46c9-b097-44b2-a4eb-8d7396515663"/>
+								<reportElement x="0" y="0" width="83" height="40" uuid="40fd46c9-b097-44b2-a4eb-8d7396515663"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans" size="10" isBold="true"/>
 								</textElement>
@@ -402,7 +403,7 @@ WHERE
 						</jr:tableHeader>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="65" height="20" uuid="d9a4ceee-0d77-4ddf-8e53-7f41d50d5848"/>
+								<reportElement x="0" y="0" width="83" height="20" uuid="d9a4ceee-0d77-4ddf-8e53-7f41d50d5848"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans"/>
 								</textElement>
@@ -411,7 +412,7 @@ WHERE
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<staticText>
-								<reportElement x="0" y="0" width="65" height="30" uuid="38c6cea3-6e3d-4116-a943-458c06e7cf8c"/>
+								<reportElement x="0" y="0" width="83" height="30" uuid="38c6cea3-6e3d-4116-a943-458c06e7cf8c"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans" size="11"/>
 								</textElement>
@@ -419,11 +420,11 @@ WHERE
 							</staticText>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="80" uuid="c3886a37-cbf1-4b92-96ff-35b54cc7b87b">
+					<jr:column width="92" uuid="c3886a37-cbf1-4b92-96ff-35b54cc7b87b">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
 						<jr:tableHeader style="Table_TH" height="40" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="80" height="40" uuid="ce37abca-aca6-42df-941a-49e8a6b109ab"/>
+								<reportElement x="0" y="0" width="92" height="40" uuid="ce37abca-aca6-42df-941a-49e8a6b109ab"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans" size="10" isBold="true"/>
 								</textElement>
@@ -433,7 +434,7 @@ WHERE
 						</jr:tableHeader>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="80" height="20" uuid="3c27e91d-8d84-48d5-9e79-4ca9c9647cab"/>
+								<reportElement x="0" y="0" width="92" height="20" uuid="3c27e91d-8d84-48d5-9e79-4ca9c9647cab"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans"/>
 								</textElement>
@@ -442,7 +443,7 @@ WHERE
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField pattern="#0,000.###;(#0,000.###-)">
-								<reportElement x="0" y="0" width="80" height="30" uuid="31ebb22a-c906-4adb-8177-44bc8c027593"/>
+								<reportElement x="0" y="0" width="92" height="30" uuid="31ebb22a-c906-4adb-8177-44bc8c027593"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans" size="11"/>
 								</textElement>
@@ -450,11 +451,11 @@ WHERE
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="88" uuid="e4e635e9-b0f4-40ce-aebf-248d30e0a690">
+					<jr:column width="99" uuid="e4e635e9-b0f4-40ce-aebf-248d30e0a690">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
 						<jr:tableHeader style="Table_TH" height="40" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="88" height="40" uuid="ca2cf3ba-f2f1-4b1d-a44c-95c46872f424"/>
+								<reportElement x="0" y="0" width="99" height="40" uuid="ca2cf3ba-f2f1-4b1d-a44c-95c46872f424"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans" size="10" isBold="true"/>
 								</textElement>
@@ -464,7 +465,7 @@ WHERE
 						</jr:tableHeader>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="88" height="20" uuid="f63453b9-1bcc-4ee3-9445-118ac700ba8d"/>
+								<reportElement x="0" y="0" width="99" height="20" uuid="f63453b9-1bcc-4ee3-9445-118ac700ba8d"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans"/>
 								</textElement>
@@ -473,7 +474,7 @@ WHERE
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField pattern="#0,000.###;(#0,000.###-)">
-								<reportElement x="0" y="0" width="88" height="30" uuid="1b1400d4-fb34-474c-98f1-c6fa33fca5c6"/>
+								<reportElement x="0" y="0" width="99" height="30" uuid="1b1400d4-fb34-474c-98f1-c6fa33fca5c6"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="DejaVu Sans" size="11"/>
 								</textElement>
