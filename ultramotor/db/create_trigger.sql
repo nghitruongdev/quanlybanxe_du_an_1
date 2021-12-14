@@ -1,3 +1,0 @@
---tạo trigger xoá hoá đơn 
---tạo trigger xoá khách hàng
---tạo trigger xoá 
