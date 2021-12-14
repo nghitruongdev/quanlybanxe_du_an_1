@@ -577,7 +577,7 @@ public class ThongKePanel extends javax.swing.JPanel {
         refresh();
     }
 
-    private void refresh(){
+    private void refresh() {
         fillComboBoxNam();
         fillComboBoxNamNhapKho();
         fillTableDoanhThu();
@@ -588,6 +588,7 @@ public class ThongKePanel extends javax.swing.JPanel {
         fillTableNhanVien();
         fillTableKhachHang();
     }
+
     public void fillComboBoxNam() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboNamDT.getModel();
         DefaultComboBoxModel model2 = (DefaultComboBoxModel) cboNamSP.getModel();
@@ -701,23 +702,25 @@ public class ThongKePanel extends javax.swing.JPanel {
 
     private void addExportListener(Button... btns) {
         ActionListener ls = (e) -> {
-            switch (e.getActionCommand()) {
-                case "DoanhThu":
-                    export(e.getActionCommand());
-                    break;
-                case "SanPham":
-                    getPopupSanPhamBan().show((Component) e.getSource(), -35, -85);
-                    break;
-                case "Kho":
-                    getPopupKho().show((Component) e.getSource(), -35, -85);
-                    break;
-                case "NhanVien":
-                    export(e.getActionCommand());
-                    break;
-                case "KhachHang":
-                    export(e.getActionCommand());
-                    break;
-            }
+            new Thread(() -> {
+                switch (e.getActionCommand()) {
+                    case "DoanhThu":
+                        export(e.getActionCommand());
+                        break;
+                    case "SanPham":
+                        getPopupSanPhamBan().show((Component) e.getSource(), -35, -85);
+                        break;
+                    case "Kho":
+                        getPopupKho().show((Component) e.getSource(), -35, -85);
+                        break;
+                    case "NhanVien":
+                        export(e.getActionCommand());
+                        break;
+                    case "KhachHang":
+                        export(e.getActionCommand());
+                        break;
+                }
+            }).start();
         };
 
         for (Button btn : btns) {
@@ -776,7 +779,7 @@ public class ThongKePanel extends javax.swing.JPanel {
         popup.add(new PopupMenuItem("Sản Phẩm Nhập Kho", null, null, e -> export("NhapKho")));
         return popup;
     }
-    int count = 0;
+
     private void addListeners() {
         cboNamDT.addActionListener((e) -> {
             fillTableDoanhThu();
@@ -804,7 +807,7 @@ public class ThongKePanel extends javax.swing.JPanel {
         this.addAncestorListener(new AncestorListener() {
             @Override
             public void ancestorAdded(AncestorEvent event) {
-                refresh();
+                new Thread(() -> refresh()).start();
             }
 
             @Override

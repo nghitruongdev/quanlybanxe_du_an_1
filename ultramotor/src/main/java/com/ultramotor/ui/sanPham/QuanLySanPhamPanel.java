@@ -57,14 +57,16 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
                 deleteRow((Entity) e);
             }
         };
-        btnExport.addActionListener(e->export());
+        btnExport.addActionListener(e -> export());
         addBtnAddListener(btnAddSP, tblSP, new SanPham());
         this.addAncestorListener(new AncestorListener() {
             @Override
             public void ancestorAdded(AncestorEvent event) {
-                listNV = new NhanVienDAO().selectAll();
-                 fillTable(tblSP, daoSP.selectAll());
-                 
+                new Thread(() -> {
+                    listNV = new NhanVienDAO().selectAll();
+                    fillTable(tblSP, daoSP.selectAll());
+                }).start();
+
             }
 
             @Override
@@ -201,22 +203,21 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
         return listNV.stream().filter(nv -> nv.getIdNV().equalsIgnoreCase(idNV.trim())).findFirst().orElse(new NhanVien());
     }
 
-    private void export(){
+    private void export() {
         File excel = XExcel.showSaveDialog((JFrame) this.getTopLevelAncestor(), "DanhSachSanPhamTonKho.xlsx");
-        if(excel==null){
+        if (excel == null) {
             return;
         }
         UltraExporter.exportSanPham(excel);
-        if(MsgBox.confirm("Xuất danh sách thành công. Bạn có muốn mở file?", false)==0){
+        if (MsgBox.confirm("Xuất danh sách thành công. Bạn có muốn mở file?", false) == 0) {
             try {
                 Desktop.getDesktop().open(excel);
             } catch (IOException ex) {
             }
         }
-        
+
     }
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

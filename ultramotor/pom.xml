@@ -238,7 +238,7 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>2.3</version>
                 <executions>
-                    <!-- Run shade goal on package phase -->
+                    <!--Run shade goal on package phase--> 
                     <execution>
                         <phase>package</phase>
                         <goals>
@@ -247,7 +247,10 @@
                         <configuration>
                             
                             <transformers>
-                                <!-- add Main-Class to manifest file -->
+                                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>jasperreports_extension.properties</resource>
+                                </transformer>
+                                <!--add Main-Class to manifest file--> 
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>com.ultramotor.ui.main</mainClass>
                                 </transformer>
@@ -263,6 +266,7 @@
                                     </excludes>
                                 </filter>
                             </filters>
+                            
                         </configuration>
                     </execution>
                 </executions>

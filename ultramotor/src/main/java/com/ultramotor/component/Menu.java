@@ -1,6 +1,5 @@
 package com.ultramotor.component;
 
-import com.swingx.MenuAnimation;
 import com.swingx.MenuItem;
 import com.swingx.event.EventMenu;
 import com.swingx.event.EventMenuSelected;

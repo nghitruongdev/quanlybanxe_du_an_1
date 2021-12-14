@@ -7,8 +7,9 @@ package com.ultramotor.component;
 
 import com.swingx.model.ModelMenu;
 import com.ultramotor.entity.NhanVien;
-import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
@@ -93,9 +94,13 @@ public class MainForm extends javax.swing.JPanel {
         menu.revalidate();
         menu.repaint();
     }
-    
+
     public void showForm(Component comp) {
         pnlMain.showForm(comp);
+    }
+
+    public void addForm(Map<Component, String> map) {
+        pnlMain.addForm(map);
     }
 
     @SuppressWarnings("unchecked")
@@ -138,16 +143,24 @@ public class MainForm extends javax.swing.JPanel {
 
 class MainPanel extends JPanel {
 
+    private CardLayout layout;
+    private Map<Component, String> map;
+
     public MainPanel() {
         setOpaque(false);
-        setLayout(new BorderLayout());
+        layout = new CardLayout();
+        setLayout(layout);
         setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
     }
 
-    public void showForm(Component comp) {
-        removeAll();
-        add(comp);
-        repaint();
-        revalidate();
+    void showForm(Component comp) {
+     layout.show(this, map.get(comp));
+    }
+
+    void addForm(Map<Component, String> map) {
+        this.map = map;
+        map.keySet().forEach(component -> {
+            this.add(component, map.get(component));
+        });
     }
 }

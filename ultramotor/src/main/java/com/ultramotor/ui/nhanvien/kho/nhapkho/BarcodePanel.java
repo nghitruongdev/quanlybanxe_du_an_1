@@ -90,31 +90,18 @@ public class BarcodePanel extends javax.swing.JPanel {
         });
 
         btnDelete.addActionListener(event -> {
-            if(pnlMain.getComponents().length==0){
-                MsgBox.warning("Không có mục cần xoá");
-                return;
-            }
-            List<Item> list = new ArrayList<>();
-            for (Component comp : pnlMain.getComponents()) {
-                if (comp instanceof Item && ((Item) comp).isSelected()) {
-                    list.add((Item) comp);
-                }
-            }
-            if(list.isEmpty()){
-                MsgBox.warning("Vui lòng chọn mục cần xoá");
-                return;
-            }
-            list.forEach(item-> item.deleteItem());
-            MsgBox.inform("Đã xoá những mục đã chọn");
+            new Thread(() -> delete()).start();
         });
 
-        btnPrint.addActionListener(e -> export(true));
-        btnExportPDF.addActionListener(e -> export(false));
-        
-          this.addAncestorListener(new AncestorListener() {
+        btnPrint.addActionListener(e -> new Thread(()-> export(true)).start());
+        btnExportPDF.addActionListener(e -> new Thread(()-> export(false)).start());
+
+        this.addAncestorListener(new AncestorListener() {
             @Override
             public void ancestorAdded(AncestorEvent event) {
-                Item.map = new SanPhamDAO().getMaVaTenSP();
+                new Thread(() -> {
+                    Item.map = new SanPhamDAO().getMaVaTenSP();
+                }).start();
             }
 
             @Override
@@ -125,6 +112,25 @@ public class BarcodePanel extends javax.swing.JPanel {
             public void ancestorMoved(AncestorEvent event) {
             }
         });
+    }
+
+    private void delete() {
+        if (pnlMain.getComponents().length == 0) {
+            MsgBox.warning("Không có mục cần xoá");
+            return;
+        }
+        List<Item> list = new ArrayList<>();
+        for (Component comp : pnlMain.getComponents()) {
+            if (comp instanceof Item && ((Item) comp).isSelected()) {
+                list.add((Item) comp);
+            }
+        }
+        if (list.isEmpty()) {
+            MsgBox.warning("Vui lòng chọn mục cần xoá");
+            return;
+        }
+        list.forEach(item -> item.deleteItem());
+        MsgBox.inform("Đã xoá những mục đã chọn");
     }
 
     private void export(boolean isPrint) {
@@ -191,7 +197,6 @@ public class BarcodePanel extends javax.swing.JPanel {
 //            fr.setVisible(true);
 //        });
 //    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

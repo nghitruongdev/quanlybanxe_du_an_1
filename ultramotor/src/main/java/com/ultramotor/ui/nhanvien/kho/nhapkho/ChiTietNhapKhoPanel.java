@@ -34,7 +34,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
     private ModelEvent event;
     private DefaultTableModel model;
     private KeyAdapter numberKeyAdapter;
-    public List<PhieuNhapKho> list = new ArrayList<>();
+//    public List<PhieuNhapKho> list = new ArrayList<>();
     private boolean viewOnly = false;
     private DecimalFormat numberFormat;
 
@@ -266,7 +266,7 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
     }
 
     private String getAutoID() {
-        return String.format("PNK%06d", list.size() + 1);
+        return String.format("PNK%06d", NhapKhoPanel.nhapKhoList.size() + 1);
     }
 
     private void sleepThread(int milisec) {
@@ -280,9 +280,9 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
         return spMap.getOrDefault(sku.toUpperCase().trim(), "");
     }
 
-    public void setList(List<PhieuNhapKho> list) {
-        this.list = list;
-    }
+//    public void setList(List<PhieuNhapKho> list) {
+//        this.list = list;
+//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

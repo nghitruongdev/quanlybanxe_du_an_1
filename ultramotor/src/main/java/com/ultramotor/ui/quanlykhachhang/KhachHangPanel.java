@@ -5,7 +5,6 @@ import com.swingx.table.ModelEvent;
 import com.swingx.table.Table;
 import com.ultramotor.dao.HoaDonDAO;
 import com.ultramotor.dao.KhachHangDAO;
-import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.entity.KhachHang;
 import com.ultramotor.ui.hoadon.ThanhVienCard;
 import com.ultramotor.ui.nhanvien.SendMailPanel;
@@ -29,6 +28,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.CellEditor;
 import javax.swing.JDialog;
@@ -242,12 +243,12 @@ public class KhachHangPanel extends javax.swing.JPanel {
             ((JDialog) pnlInfo.getTopLevelAncestor()).dispose();
         });
 
-        btnExport.addActionListener(e -> export());
-        btnExportTV.addActionListener(e -> exportTV());
+        btnExport.addActionListener(e -> new Thread(()->export()).start());
+        btnExportTV.addActionListener(e -> new Thread(()->exportTV()).start());
         this.addAncestorListener(new AncestorListener() {
             @Override
             public void ancestorAdded(AncestorEvent event) {
-                fillTable(tblKhachHang, dao.selectAll());
+                new Thread(()->fillTable(tblKhachHang, dao.selectAll())).start();
             }
 
             @Override
@@ -315,6 +316,10 @@ public class KhachHangPanel extends javax.swing.JPanel {
         File file = XFile.getTempFile(null, ".pdf");
         ThanhVienCard card = new ThanhVienCard();
         XDialog.getDialog((JFrame) this.getTopLevelAncestor(), card);
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException ex) {
+        }
         List<File> list = new ArrayList<>();
         for (KhachHang kh : arrKH) {
             card.setThanhvien(kh);

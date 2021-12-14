@@ -85,7 +85,7 @@ public class MenuButton extends JButton {
         g2.setComposite(AlphaComposite.SrcOver);
         super.paintComponent(grphcs);
     }
-    
+
     public int getIndex() {
         return index;
     }

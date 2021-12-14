@@ -9,10 +9,10 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="30" splitType="Stretch"/>
 	</title>
 	<detail>
-		<band height="148" splitType="Stretch">
+		<band height="140" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<image scaleImage="FillFrame" isLazy="true" onErrorType="Blank">
 				<reportElement x="20" y="12" width="210" height="125" uuid="50b6ea2b-ac24-465c-8836-e2950ba2b26c"/>
@@ -20,7 +20,4 @@
 			</image>
 		</band>
 	</detail>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

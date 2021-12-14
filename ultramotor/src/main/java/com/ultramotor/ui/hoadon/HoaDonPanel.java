@@ -58,6 +58,8 @@ import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -244,6 +246,26 @@ public class HoaDonPanel extends javax.swing.JPanel {
 
         btnHuyHD.addActionListener(e -> {
             huyHD();
+        });
+
+        this.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                new Thread(() -> {
+                    listKH = khDAO.selectAll();
+                    listSP = spDAO.selectAll();
+                    listNV = nvDAO.selectAll();
+                    initMapDongSP();
+                }).start();
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+            }
         });
     }
 
@@ -1474,7 +1496,7 @@ public class HoaDonPanel extends javax.swing.JPanel {
         txtEmail.setText(kh.getEmail());
         chkThanhVien.setSelected(kh.getThanhVien());
         chkThanhVien.setEnabled(!kh.getThanhVien());
-        if (kh.getThanhVien()&& kh.getTongTien()>0) {
+        if (kh.getThanhVien() && kh.getTongTien() > 0) {
             pnlMembership.setThanhvien(kh);
             setGiamGia(pnlMembership.getRank());
         }

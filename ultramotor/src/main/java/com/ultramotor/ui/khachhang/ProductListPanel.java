@@ -1,6 +1,7 @@
 package com.ultramotor.ui.khachhang;
 
 import com.swingx.MyScrollBar;
+import com.swingx.scrollbar.ScrollBarCustom;
 import com.ultramotor.entity.ModelSanPham;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -44,7 +45,7 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
         cardList = new ArrayList<>();
         MigLayout layout = new MigLayout("insets 20, fillx, wrap 4", "[center][center][center][center]", "[]30[]");
         pnlList.setLayout(layout);
-        jScrollPane1.setVerticalScrollBar(new MyScrollBar());
+        jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
         jScrollPane1.setViewportView(pnlBackground);
         initComparator();
 
@@ -74,13 +75,11 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
     private void sortByGiaTien() {
         Collections.sort(cardList, compGiaTien);
         fillPanel();
-        System.out.println("Sorted by Giá Tiền");
     }
 
     private void sortBySoLuongBan() {
         Collections.sort(cardList, compSoLuongBan);
         fillPanel();
-        System.out.println("Sorted By Số Lượng Bán");
     }
 
     private void addShowDetailsListeners(JButton button, ModelSanPham model) {

@@ -32,11 +32,11 @@ public class MenuItem extends javax.swing.JPanel {
         firstItem.setFont(myfont);
         firstItem.addActionListener(model.getEvent());
         firstItem.addActionListener(e -> {
-            if (model.getSubMenu().length > 0) {
-                if (event.menuPressed(MenuItem.this, !open)) {
-                    open = !open;
-                }
-            }
+//            if (model.getSubMenu().length > 0) {
+//                if (event.menuPressed(MenuItem.this, !open)) {
+//                    open = !open;
+//                }
+//            }
             eventSelected.menuSelected(index, -1);
         });
         add(firstItem);

@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
@@ -31,7 +30,7 @@ public class NhapKhoPanel extends javax.swing.JPanel {
 
     private static NhapKhoDAO dao;
     private DefaultTableModel modelNhapKho;
-    List<PhieuNhapKho> nhapKhoList = new ArrayList<>();
+    static List<PhieuNhapKho> nhapKhoList = new ArrayList<>();
     private DecimalFormat numberFormat;
     private Date currentDate = new Date();
     private ModelEvent nhapKhoEvent;
@@ -75,7 +74,7 @@ public class NhapKhoPanel extends javax.swing.JPanel {
             return;
         }
         pnlChiTiet.setPhieuNhapKho(pnk);
-        pnlChiTiet.setList(nhapKhoList);
+//        pnlChiTiet.setList(nhapKhoList);
     }
 
     private void deletePhieuNhap(PhieuNhapKho pnk) {
@@ -152,6 +151,7 @@ public class NhapKhoPanel extends javax.swing.JPanel {
             return;
         }
         if (nhapKhoList.contains(pnk)) {
+            System.out.println("Không thể thêm! Đã tồn tại mã phiếu nhập");
             return;
         }
         pnk.setNgayNhap(new Date());
@@ -195,7 +195,6 @@ public class NhapKhoPanel extends javax.swing.JPanel {
                     int index = tblPhieuNhap.getSelectedRow();
                     PhieuNhapKho pnk = (PhieuNhapKho) tblPhieuNhap.getValueAt(index, 1);
                     pnlChiTiet.setPhieuNhapKho(pnk);
-                    pnlChiTiet.setList(nhapKhoList);
                 }
             }
         });

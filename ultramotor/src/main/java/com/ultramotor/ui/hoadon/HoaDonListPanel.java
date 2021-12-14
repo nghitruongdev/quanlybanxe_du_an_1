@@ -127,7 +127,6 @@ public class HoaDonListPanel extends javax.swing.JPanel {
 
         ActionListener exportEvent = (event) -> {
             new Thread(() -> export(event.getActionCommand())).start();
-
         };
         btnPreview.addActionListener(exportEvent);
         btnPrint.addActionListener(exportEvent);
@@ -136,10 +135,12 @@ public class HoaDonListPanel extends javax.swing.JPanel {
         this.addAncestorListener(new AncestorListener() {
             @Override
             public void ancestorAdded(AncestorEvent event) {
-                list = dao.selectAll();
-                listNV = new NhanVienDAO().selectAll();
-                listKH = new KhachHangDAO().selectAll();
-                fillTable();
+                new Thread(() -> {
+                    list = dao.selectAll();
+                    listNV = new NhanVienDAO().selectAll();
+                    listKH = new KhachHangDAO().selectAll();
+                    fillTable();
+                }).start();
             }
 
             @Override
@@ -152,14 +153,14 @@ public class HoaDonListPanel extends javax.swing.JPanel {
         });
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new HoaDonListPanel());
-        frame.setSize(1000, 500);
-        frame.pack();
-        frame.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        JFrame frame = new JFrame();
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.getContentPane().add(new HoaDonListPanel());
+//        frame.setSize(1000, 500);
+//        frame.pack();
+//        frame.setVisible(true);
+//    }
 
     private String getSelectedHD() {
         int index = tblHoaDon.getSelectedRow();
@@ -193,6 +194,9 @@ public class HoaDonListPanel extends javax.swing.JPanel {
         try {
             XReport.createHoaDonReport(idHD, file);
         } catch (JRException | FileNotFoundException ex) {
+            MsgBox.error(ex.getMessage());
+        } catch (IOException ex) {
+            MsgBox.error(ex.getMessage());
         }
         return file;
     }
@@ -234,7 +238,7 @@ public class HoaDonListPanel extends javax.swing.JPanel {
                     panel.add(box);
                     XDialog.getDialog((JFrame) this.getTopLevelAncestor(), panel).setVisible(true);
                 } catch (IOException ex) {
-                    Logger.getLogger(HoaDonListPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    MsgBox.error(ex.getMessage());
                 }
             }
             break;

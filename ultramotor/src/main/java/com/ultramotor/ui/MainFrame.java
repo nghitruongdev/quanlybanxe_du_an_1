@@ -14,13 +14,18 @@ import com.ultramotor.ui.sanPham.QuanLySanPhamPanel;
 import com.ultramotor.ui.thongke.ThongKePanel;
 import com.ultramotor.util.Auth;
 import com.ultramotor.util.MsgBox;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -111,6 +116,7 @@ public class MainFrame extends javax.swing.JFrame {
         dangNhap = DangNhapJFrame.getLoginFrame();
         pnlListHoaDon = new HoaDonListPanel();
 
+        addForm();
         mnuThongKe = new ModelMenu("Thống kê", createIcon("report.png"), getEvent(pnlThongKe));
         mnuNhanVien = new ModelMenu("Quản lý nhân viên", createIcon("staff.png"), getEvent(pnlNhanVien));
         mnuHoaDon = new ModelMenu("Tạo đơn hàng", createIcon("receipt_25px.png"), getEvent(pnlHoaDon));
@@ -119,6 +125,7 @@ public class MainFrame extends javax.swing.JFrame {
         mnuSanPham = new ModelMenu("Quản lý sản phẩm", createIcon("product.png"), getEvent(pnlSanPham));
         mnuNhapKho = new ModelMenu("Quản lý kho", createIcon("kho.png"), getEvent(pnlNhapKho));
         mnuBarcode = new ModelMenu("In barcode", createIcon("barcode.png"), getEvent(pnlBarcode));
+
         setLocationRelativeTo(null);
         setTitle("Hệ Thống Quản Lý Bán Xe Ultramotor");
         addListener();
@@ -170,7 +177,20 @@ public class MainFrame extends javax.swing.JFrame {
         pnlMain.showForm(panel);
     }
 
+    private void addForm() {
+        Map<Component, String> map = new HashMap<>();
+        map.put(pnlNhanVien, "NhanVien");
+        map.put(pnlKhachHang, "KhachHang");
+        map.put(pnlSanPham, "SanPham");
+        map.put(pnlNhapKho, "NhapKho");
+        map.put(pnlBarcode, "Barcode");
+        map.put(pnlHoaDon, "HoaDon");
+        map.put(pnlThongKe, "ThongKe");
+        map.put(pnlListHoaDon, "ListHoaDon");
+        pnlMain.addForm(map);
+    }
+
     private ImageIcon createIcon(String name) {
-        return new ImageIcon(getClass().getResource("ultramotor/icon/"+name));
+        return new ImageIcon(getClass().getResource("/ultramotor/icon/" + name));
     }
 }

@@ -14,8 +14,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.nio.file.Paths;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
@@ -42,6 +40,8 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
         ctrl = new KhachHangController();
         btnBack.setVisible(false);
         btnNext.setVisible(false);
+        setTitle("Hệ Thống Quản Lý Bán Xe Ultramotor");
+        setIconImage(new ImageIcon(getClass().getResource("/ultramotor/icon/logo_50px.png")).getImage());
         addListeners();
     }
     
@@ -110,8 +110,7 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
     }
     
     private ImageIcon createIcon(String name) {
-        File path = Paths.get("src", "main", "resources", "ultramotor", "slide").toFile();
-        return new ImageIcon(new File(path, name).getPath());
+        return new ImageIcon(getClass().getResource("/ultramotor/slide/" + name));
     }
     
     private void animate() {
@@ -145,7 +144,7 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
         animator.setAcceleration(0.5f);
         animator.setDeceleration(0.5f);
         
-        timer = new Timer(30*1000, (ActionEvent e) -> {
+        timer = new Timer(20 * 1000, (ActionEvent e) -> {
             System.out.println("Timer is starting");
             showing = false;
             pnl.setBounds(bg.getBounds());
@@ -165,7 +164,7 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
             pnlDetails.reset();
         }
     }
-
+    
     private void restartTimer() {
         timer.restart();
     }
