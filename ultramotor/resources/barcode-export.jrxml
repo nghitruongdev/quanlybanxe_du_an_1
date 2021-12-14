@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="barcode-export" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="f9cc47d2-9493-424c-9e79-6b0300793258">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NO_DATA_ADAPTER"/>
+	<subDataset name="Dataset1" whenResourceMissingType="Empty" uuid="df5e6f3c-e342-41b2-910e-e795c40481c8">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="0"/>
+		<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="1000"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="_THIS" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="logo" class="java.io.File"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="source" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource">
+		<fieldDescription><![CDATA[source]]></fieldDescription>
+	</field>
+	<field name="tenSP" class="java.lang.String">
+		<fieldDescription><![CDATA[tenSP]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="565" height="90" backcolor="#208BE3" uuid="0d2bdf3c-87a7-4fa4-bec4-3fe5facf3b54"/>
+				<image onErrorType="Icon">
+					<reportElement x="10" y="5" width="160" height="80" uuid="cc27887f-b86f-46e1-83d3-1bc1c3ef55fe"/>
+					<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="180" y="65" width="90" height="20" forecolor="#FFFFFF" uuid="f539e9ed-b4ae-4d82-a42a-80067e569c3d"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Số Điện Thoại:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="180" y="45" width="50" height="20" forecolor="#FFFFFF" uuid="2d8c6ce9-a948-42ef-9aea-e03f1e8d8415"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Địa chỉ: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="180" y="10" width="352" height="30" forecolor="#FFFFFF" uuid="5a8729fa-1b71-4d4a-9e7c-032a600ec58e"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CỬA HÀNG BÁN XE ULTRAMOTOR
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="230" y="45" width="334" height="20" forecolor="#FFFFFF" uuid="12470b3b-c739-4790-9c6c-78eca5e8e9d8"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" isBold="false"/>
+					</textElement>
+					<text><![CDATA[772 Kha Vạn Cân, phường Linh Đông, TP. Thủ Đức, TP. HCM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="270" y="65" width="294" height="20" forecolor="#FFFFFF" uuid="5769768b-90d6-4a41-b07b-8793ac5fa94c"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" isBold="false"/>
+					</textElement>
+					<text><![CDATA[058965874520]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="90" splitType="Stretch">
+			<componentElement>
+				<reportElement x="0" y="40" width="563" height="50" uuid="b533c171-82dd-40cc-8435-f5e45702c728">
+					<property name="com.jaspersoft.studio.unit.CONTENTS.width" value="px"/>
+				</reportElement>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Horizontal" ignoreWidth="false">
+					<datasetRun subDataset="Dataset1" uuid="f4e90943-f8e0-4288-801a-c6b7745c0ebc">
+						<dataSourceExpression><![CDATA[$F{source}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="45" width="110">
+						<componentElement>
+							<reportElement x="10" y="5" width="100" height="40" uuid="91f7b204-09dd-4ea6-aa72-26f9a92271a0"/>
+							<jr:Code39>
+								<jr:codeExpression><![CDATA[$F{_THIS}]]></jr:codeExpression>
+							</jr:Code39>
+						</componentElement>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="6" width="564" height="30" backcolor="#828282" uuid="53b91fdc-317a-4b20-be74-fc56cd10f46f"/>
+				<textField>
+					<reportElement x="100" y="0" width="450" height="30" forecolor="#FFFFFF" uuid="e621adca-0a3e-4a4d-bda1-941078c183a9">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6485fcca-0c7f-4f3c-880d-9e5ae9970e9c"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tenSP}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="10" y="0" width="80" height="30" forecolor="#FFFFFF" uuid="79871252-38da-4594-abb2-32f6072e5d22">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6485fcca-0c7f-4f3c-880d-9e5ae9970e9c"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SẢN PHẨM]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<frame>
+				<reportElement x="459" y="4" width="104" height="21" uuid="195c71d9-395f-40f3-8db3-2da256b6cb96"/>
+				<textField evaluationTime="Page">
+					<reportElement x="0" y="1" width="40" height="19" uuid="106dad4f-b145-4156-bec6-9b1262d85ba8"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page: " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report">
+					<reportElement x="40" y="0" width="45" height="21" uuid="80a63d9a-8cbd-414d-9028-0f9cdcb70d70"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" of  " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+</jasperReport>

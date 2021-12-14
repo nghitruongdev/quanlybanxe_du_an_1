@@ -1,7 +1,8 @@
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,netbeans
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,netbeans
-
+#Mac
+*.DS_Store
 ### Java ###
 # Compiled class file
 *.class
