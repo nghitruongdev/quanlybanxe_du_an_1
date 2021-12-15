@@ -32,7 +32,7 @@ public class XMail {
         return Session.getInstance(p, new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("leavethisemailalone99@gmail.com", "believeinyourself");
+                return new PasswordAuthentication("ultramotorsystem@gmail.com", "Ultramotor123");
             }
         });
     }

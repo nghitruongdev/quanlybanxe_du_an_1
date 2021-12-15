@@ -1,18 +1,11 @@
 package com.ultramotor.ui.khachhang;
 
-import com.swingx.MyScrollBar;
 import com.swingx.scrollbar.ScrollBarCustom;
 import com.ultramotor.entity.ModelSanPham;
 import java.awt.CardLayout;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ContainerEvent;
-import java.awt.event.ContainerListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -53,7 +46,6 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
         btnDesc.setVisible(false);
 
         timer = new Timer(500, (ActionEvent e) -> {
-            System.out.println("Timer Thread: " + Thread.currentThread().getName());
             fillPanel();
             timer.stop();
         });
@@ -115,6 +107,8 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
         cardList.forEach(card -> {
             pnlList.add(card, "w " + width + ", h " + (width * 3 / 2));
         });
+        pnlList.revalidate();
+        pnlList.repaint();
     }
 
     private void showPanel(String name) {
@@ -139,13 +133,13 @@ public class ProductListPanel extends javax.swing.JPanel implements Multilang {
     void initComparator() {
         compGiaTien = (ProductCard o1, ProductCard o2) -> {
             double num = o2.getModel().getGiaTien() - o1.getModel().getGiaTien();
-            num = num != 0 ? num : o2.getModel().getSoLuongBan() - o1.getModel().getSoLuongBan();
+//            num = num != 0 ? num : o2.getModel().getSoLuongBan() - o1.getModel().getSoLuongBan();
             return (int) num;
         };
 
         compSoLuongBan = (ProductCard o1, ProductCard o2) -> {
             double num = o2.getModel().getSoLuongBan() - o1.getModel().getSoLuongBan();
-            num = num != 0 ? num : o2.getModel().getGiaTien() - o1.getModel().getGiaTien();
+//            num = num != 0 ? num : o2.getModel().getGiaTien() - o1.getModel().getGiaTien();
             return (int) num;
         };
     }

@@ -39,6 +39,12 @@ public class ThongKeDAO {
         return this.getListOfArray(sql, cols, nam);
     }
 
+    public List<Object[]> getDoanhThuHang(int nam) {
+        String sql = "{CALL sp_DoanhThuHang(?)}";
+        String[] cols = {"NhaSanXuat", "SoLuong", "TongTien"};
+        return this.getListOfArray(sql, cols, nam);
+    }
+
     public List<Object[]> getSanPhamBanChay(int nam) {
         String sql = "{CALL sp_SanPhamBanChay(?)}";
         String[] cols = {"SanPham", "MauSac", "PhanKhoi", "SoLuong"};

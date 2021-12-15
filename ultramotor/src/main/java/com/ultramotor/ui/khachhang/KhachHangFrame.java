@@ -10,6 +10,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
@@ -23,18 +24,18 @@ import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
-    
+
     private SlideShowPanel pnl;
     private boolean showing = true;
     private Timer timer;
     private KhachHangController ctrl;
     private Lang lang = Lang.VN;
-    
+
     public KhachHangFrame() {
         initComponents();
         init();
     }
-    
+
     private void init() {
         iniSlideshow();
         ctrl = new KhachHangController();
@@ -44,57 +45,56 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
         setIconImage(new ImageIcon(getClass().getResource("/ultramotor/icon/logo_50px.png")).getImage());
         addListeners();
     }
-    
+
     private void updateStatus() {
         btnBack.setVisible(!pnlWelcome.isShowing());
         reset(pnlWelcome.isShowing());
     }
-    
+
     private void addListeners() {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
                 KhachHangFrame.this.setExtendedState(JFrame.MAXIMIZED_BOTH);
             }
-            
+
         });
         btnBack.addActionListener((ActionEvent e) -> {
-            ctrl.navigateCard(pnlMain, false);
             updateStatus();
+            ctrl.navigateCard(pnlMain, false);
         });
-        
+      
         btnNext.addActionListener((ActionEvent e) -> {
             ctrl.navigateCard(pnlMain, true);
             updateStatus();
         });
-        
+
         for (Component comp : pnlMain.getComponents()) {
             comp.addComponentListener(new ComponentAdapter() {
                 @Override
                 public void componentShown(ComponentEvent ce) {
                     updateStatus();
                 }
-                
+
                 @Override
                 public void componentHidden(ComponentEvent ce) {
                     updateStatus();
                 }
-                
             });
         }
     }
-    
+
     public Lang getLang() {
         return lang;
     }
-    
+
     public void setLang(Lang lang) {
         this.lang = lang;
         pnlSearch.setLang(lang);
         pnlProductList.setLang(lang);
         pnlDetails.setLang(lang);
     }
-    
+
     private void iniSlideshow() {
         pnl = new SlideShowPanel();
         pnl.setBackground(Color.white);
@@ -108,11 +108,11 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
         bg.add(pnl, JLayeredPane.POPUP_LAYER);
         animate();
     }
-    
+
     private ImageIcon createIcon(String name) {
         return new ImageIcon(getClass().getResource("/ultramotor/slide/" + name));
     }
-    
+
     private void animate() {
         TimingTarget target = new TimingTargetAdapter() {
             @Override
@@ -122,18 +122,18 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
                 }
                 super.end();
             }
-            
+
             @Override
             public void timingEvent(float fraction) {
                 double height = pnl.getHeight();
-                
+
                 if (showing) {
                     pnl.setLocation(0, (0 - (int) (height * (fraction))));
                 } else {
                     pnl.setLocation(0, (int) (height * (fraction - 1f)));
                 }
             }
-            
+
             @Override
             public void begin() {
                 pnl.stopAuto();
@@ -143,9 +143,8 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
         animator.setDeceleration(0.5f);
-        
-        timer = new Timer(20 * 1000, (ActionEvent e) -> {
-            System.out.println("Timer is starting");
+
+        timer = new Timer(10 * 1000, (ActionEvent e) -> {
             showing = false;
             pnl.setBounds(bg.getBounds());
             animator.start();
@@ -155,7 +154,7 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
         timer.setCoalesce(true);
         addMouseMotionComponent(this, animator);
     }
-    
+
     private void reset(boolean isFirst) {
         if (isFirst) {
             pnlWelcome.reset();
@@ -164,18 +163,18 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
             pnlDetails.reset();
         }
     }
-    
+
     private void restartTimer() {
         timer.restart();
     }
-    
+
     private void addMouseMotionComponent(Container con, Animator animator) {
         MouseMotionListener ls = new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 restartTimer();
             }
-            
+
             @Override
             public void mouseMoved(MouseEvent e) {
                 if (pnl.getY() == 0 && !animator.isRunning()) {
@@ -185,7 +184,7 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
                 restartTimer();
             }
         };
-        
+
         for (Component comp : con.getComponents()) {
             if (comp instanceof Container) {
                 addMouseMotionComponent((Container) comp, animator);
@@ -193,7 +192,7 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
                 comp.addMouseMotionListener(ls);
             }
         }
-        
+
         if (con instanceof SearchTextField) {
             con.addKeyListener(new KeyAdapter() {
                 @Override
@@ -203,9 +202,9 @@ public class KhachHangFrame extends javax.swing.JFrame implements Multilang {
             });
         }
         con.addMouseMotionListener(ls);
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

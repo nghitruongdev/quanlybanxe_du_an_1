@@ -472,13 +472,32 @@ as begin
 		sp.tenSP SanPham,
 		sp.mauSac MauSac,
 		sp.phanKhoi PhanKhoi,
-		count(cthd.id_CTHD) SoLuong,
+		count(cthd.SKU) SoLuong,
 		Sum(sp.giaTien) DoanhThu
+	
 	from SanPham sp
 		join ChiTietHoaDon cthd on sp.SKU = cthd.SKU
 		join HoaDon hd on hd.idHD = cthd.idHD
 	where Year(hd.thoiGian) = @Year
 	group by sp.tenSP,sp.mauSac,sp.phanKhoi
+end
+go
+
+DROP PROC IF EXISTS sp_DoanhThuHang
+GO
+
+Create PROC sp_DoanhThuHang(@Year int)
+as begin
+select nsx.TenNSX NhaSanXuat,
+		count(cthd.SKU) SoLuong,
+		sum(sp.giaTien) TongTien
+from SanPham sp
+		join ChiTietHoaDon cthd on sp.SKU = cthd.SKU
+		join HoaDon hd on hd.idHD = cthd.idHD
+		join DongSanPham dsp on dsp.id_DongSP = sp.id_DongSP
+		join NhaSanXuat nsx on nsx.id_NSX = dsp.id_NSX
+	where Year(hd.thoiGian) = @Year
+	group by nsx.TenNSX
 end
 go
 
@@ -488,7 +507,7 @@ GO
 
 Create PROC sp_SanPhamBanChay(@Year int)
 as begin
-	select top(5)
+	select top(10)
 		tenSP SanPham,
 		sp.mauSac MauSac,
 		sp.phanKhoi PhanKhoi,
@@ -508,19 +527,22 @@ GO
 
 Create PROC sp_SanPhamBanCham(@Year int)
 as begin
-	select top(5)
-		tenSP SanPham,
+	select  top(10)
+			sp.tenSP SanPham,
 		sp.mauSac MauSac,
 		sp.phanKhoi PhanKhoi,
 		count(cthd.SKU) SoLuong
-	from SanPham sp
-		join ChiTietHoaDon cthd on sp.SKU = cthd.SKU
-		join HoaDon hd on hd.idHD = cthd.idHD
-	where Year(hd.thoiGian) = @Year
-	group by tenSP , cthd.SKU , sp.mauSac,sp.phanKhoi
-	order by SoLuong desc
+	from ChiTietHoaDon cthd 
+		join HoaDon hd on cthd.idHD = hd.idHD
+		right join SanPham sp on cthd.SKU = sp.SKU 
+	where sp.isDeleted = 0 and (YEAR(thoiGian) IS NULL OR  YEAR(THOIGIAN) = @Year)
+	group by sp.tenSP, sp.mauSac, sp.phanKhoi
+	order by SoLuong asc
 end
 go
+
+
+
 
 -- tạo Proc thống kê sản phẩm tồn kho
 DROP PROC IF EXISTS sp_SanPhamTonKho
@@ -603,7 +625,7 @@ as begin
 end
 go
 
-exec sp_KhachHangTieuBieu 2021
+
 
 ----------------------------------------------CREATE TRIGGER---------------------------------------------------------
 

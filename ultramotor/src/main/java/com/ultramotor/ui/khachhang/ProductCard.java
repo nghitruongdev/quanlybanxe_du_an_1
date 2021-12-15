@@ -5,10 +5,14 @@ import com.ultramotor.entity.ModelSanPham;
 import com.ultramotor.entity.SanPham;
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -45,7 +49,13 @@ public class ProductCard extends Card {
         Map<String, Icon> map = new HashMap<>();
         File path = Paths.get("logos", "sp").toFile();
         list.forEach(sp -> {
-            map.put(sp.getMauSac(), new ImageIcon(new File(path, sp.getHinh()).getPath()));
+            try {
+                //            map.put(sp.getMauSac(), new ImageIcon(new File(path, sp.getHinh()).getPath()));
+                map.put(sp.getMauSac(), new ImageIcon(ImageIO.read(new File(path, sp.getHinh()))));
+            } catch (IOException ex) {
+                map.put(sp.getMauSac(), new ImageIcon(new File(path, "default.png").getPath()));
+            }
+
         });
         return map;
     }

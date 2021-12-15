@@ -33,7 +33,6 @@ public class WebcamReader extends JPanel implements Runnable, ThreadFactory {
         Dimension size = WebcamResolution.QVGA.getSize();
 
         webcam = Webcam.getWebcams().get(0);
-        System.out.println(webcam.close());
         webcam.setViewSize(size);
 
         panel = new WebcamPanel(webcam);

@@ -32,6 +32,5 @@ public class main {
                 new KhachHangFrame().setVisible(true);
             });
         }
-
     }
 }

@@ -39,10 +39,14 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
 
     void init() {
         daoSP = new SanPhamDAO();
-        listNV = new NhanVienDAO().selectAll();
         numberFormat = new DecimalFormat("#,##0.00");
         addListeners();
         initTable();
+    }
+
+    private void refresh() {
+        listNV = new NhanVienDAO().selectAll();
+        fillTable(tblSP, daoSP.selectAll());
     }
 
     private void addListeners() {
@@ -63,8 +67,7 @@ public class QuanLySanPhamPanel extends javax.swing.JPanel {
             @Override
             public void ancestorAdded(AncestorEvent event) {
                 new Thread(() -> {
-                    listNV = new NhanVienDAO().selectAll();
-                    fillTable(tblSP, daoSP.selectAll());
+                    refresh();
                 }).start();
 
             }

@@ -63,14 +63,17 @@ public class HoaDonListPanel extends javax.swing.JPanel {
 
     private void init() {
         dao = new HoaDonDAO();
-        list = dao.selectAll();
-        listNV = new NhanVienDAO().selectAll();
-        listKH = new KhachHangDAO().selectAll();
         dateFrom.setTextRefernce(txtTo);
         dateTo.setTextRefernce(txtFrom);
         initTable();
-        fillTable();
         addListener();
+    }
+
+    private void refresh() {
+        list = dao.selectAll();
+        listNV = new NhanVienDAO().selectAll();
+        listKH = new KhachHangDAO().selectAll();
+        fillTable();
     }
 
     private void initTable() {
@@ -136,10 +139,7 @@ public class HoaDonListPanel extends javax.swing.JPanel {
             @Override
             public void ancestorAdded(AncestorEvent event) {
                 new Thread(() -> {
-                    list = dao.selectAll();
-                    listNV = new NhanVienDAO().selectAll();
-                    listKH = new KhachHangDAO().selectAll();
-                    fillTable();
+                    refresh();
                 }).start();
             }
 
@@ -161,7 +161,6 @@ public class HoaDonListPanel extends javax.swing.JPanel {
 //        frame.pack();
 //        frame.setVisible(true);
 //    }
-
     private String getSelectedHD() {
         int index = tblHoaDon.getSelectedRow();
         if (index >= 0) {
@@ -175,6 +174,9 @@ public class HoaDonListPanel extends javax.swing.JPanel {
     }
 
     private KhachHang findKhachHang(String idKH) {
+        if (listKH == null) {
+            listKH = new KhachHangDAO().selectAll();
+        }
         return listKH.stream().filter(kh -> kh.getIdKH().equalsIgnoreCase(idKH)).findFirst().orElse(null);
     }
 
@@ -223,7 +225,7 @@ public class HoaDonListPanel extends javax.swing.JPanel {
             break;
             case "mail":
                 try {
-                XMail.sendMail(promptEmail(), "", "Hoá Đơn " + idHD, file);
+                XMail.sendMail(promptEmail(), "", "HOA DON " + idHD, file);
                 MsgBox.inform("Gửi mail thành công");
             } catch (Exception ex) {
             }

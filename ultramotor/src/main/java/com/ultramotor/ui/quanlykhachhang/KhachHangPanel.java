@@ -71,7 +71,7 @@ public class KhachHangPanel extends javax.swing.JPanel {
                 }
             }
         };
-        this.fillTable(tblKhachHang, dao.selectAll());
+        
         addListeners();
     }
 

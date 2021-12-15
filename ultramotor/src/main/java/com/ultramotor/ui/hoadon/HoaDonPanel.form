@@ -81,20 +81,18 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="pnlTBLHoaDon" alignment="1" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="pnlTBLHoaDon" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                          <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
                           <Component id="pnlKhachHang" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                           <Component id="pnlInfoSanPham" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                           <Component id="pnlChiTietHD" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -130,91 +128,73 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="cboGioiTinh" alignment="0" pref="141" max="32767" attributes="0"/>
-                                  <Component id="txtHoTenKH" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblHoTen" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtNgaySinh" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblNgaySinh" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblGioiTinh" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblMaKH" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblDiaChi" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtDiaChi" max="32767" attributes="0"/>
-                                  <Component id="txtMaKH" alignment="0" max="32767" attributes="0"/>
-                              </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="cboGioiTinh" linkSize="6" alignment="0" min="-2" pref="141" max="-2" attributes="0"/>
+                              <Component id="txtHoTenKH" linkSize="6" alignment="0" max="-2" attributes="0"/>
+                              <Component id="lblHoTen" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtNgaySinh" linkSize="6" alignment="0" max="-2" attributes="0"/>
+                              <Component id="lblNgaySinh" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblGioiTinh" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblMaKH" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblDiaChi" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtMaKH" linkSize="6" alignment="0" max="-2" attributes="0"/>
+                              <Component id="txtDiaChi" linkSize="6" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="53" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
                               <Component id="btnSearchKH" linkSize="4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnQrCode" linkSize="4" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtEmail" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                               <Component id="btnResetKH" min="-2" max="-2" attributes="0"/>
-                              <Component id="chkThanhVien" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="chkThanhVien" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtEmail" linkSize="6" alignment="0" max="-2" attributes="0"/>
                           <Component id="lblEmail" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtSDT" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                          <Component id="txtSDT" linkSize="6" alignment="0" max="-2" attributes="0"/>
                           <Component id="lblSoDT" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="pnlMembership" min="-2" pref="160" max="-2" attributes="0"/>
+                          <Component id="pnlMembership" min="-2" pref="152" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="btnQrCode" linkSize="5" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                      <Component id="lblMaKH" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="btnSearchKH" linkSize="5" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtMaKH" min="-2" pref="35" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="pnlMembership" pref="105" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblHoTen" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblSoDT" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                              <Component id="txtHoTenKH" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="txtSDT" linkSize="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblNgaySinh" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblEmail" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtNgaySinh" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="txtEmail" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="btnQrCode" linkSize="5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnSearchKH" linkSize="5" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <Component id="lblMaKH" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtMaKH" min="-2" pref="35" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                              <Component id="lblHoTen" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="pnlMembership" min="-2" pref="105" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="txtHoTenKH" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblNgaySinh" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtNgaySinh" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblGioiTinh" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="cboGioiTinh" linkSize="3" min="-2" pref="31" max="-2" attributes="0"/>
@@ -222,6 +202,22 @@
                               <Component id="lblDiaChi" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="lblSoDT" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="36" pref="36" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="txtSDT" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="txtEmail" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="chkThanhVien" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnResetKH" min="-2" max="-2" attributes="0"/>
@@ -229,7 +225,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtDiaChi" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -536,17 +532,15 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane6" pref="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="jScrollPane6" pref="500" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="jPanel2" max="32767" attributes="0"/>
-                              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel2" min="-2" pref="227" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

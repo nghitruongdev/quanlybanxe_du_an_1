@@ -84,8 +84,8 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 deleteNV(e.getIdNV());
             }
         };
-        fillTable(dao.selectAll());
-        sizeNV = model.getRowCount();
+//        fillTable(dao.selectAll());
+//        sizeNV = model.getRowCount();
         addListeners();
         popup = new JPopupMenu();
         popup.add(new PopupMenuItem("Xuất PDF", createIcon("profile_25px.png"), createIcon("profile_white_25px.png"), exportEvent));
@@ -299,7 +299,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         this.addAncestorListener(new AncestorListener() {
             @Override
             public void ancestorAdded(AncestorEvent event) {
-                fillTable(dao.selectAll());
+                new Thread(NhanVienPanel.this::refresh).start();
             }
 
             @Override
@@ -312,6 +312,10 @@ public class NhanVienPanel extends javax.swing.JPanel {
         });
     }
 
+    private void refresh(){
+        fillTable(dao.selectAll());
+        sizeNV = model.getRowCount();
+    }
     private void export(String name) {
         if (sizeNV == 0) {
             MsgBox.error("Danh sách nhân viên trống");
@@ -377,7 +381,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
             }
             sb.append((char) random);
         }
-        XMail.sendMail(nv.getEmail(), "Mật khẩu đăng nhập ứng dụng Ultramotor của bạn là: " + sb.toString() + ". Vui lòng đổi mật khẩu sau khi đăng nhập.", "MẬT KHẨU ĐĂNG NHẬP ỨNG DỤNG");
+        XMail.sendMail(nv.getEmail(), "Mật khẩu đăng nhập ứng dụng Ultramotor của bạn là: " + sb.toString() + ". Vui lòng đổi mật khẩu sau khi đăng nhập.", "MAT KHAU DANG NHAP UNG DUNG");
         return sb.toString();
     }
 
