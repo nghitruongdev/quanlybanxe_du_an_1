@@ -49,7 +49,7 @@ CREATE TABLE KhachHang(
     Email NVARCHAR(50),
     ThanhVien BIT DEFAULT 0,
     GhiChu NVARCHAR(255),
-    id_NV NVARCHAR(10)
+    id_NV NVARCHAR(10),
     CONSTRAINT fk_NhanVien_KhachHang FOREIGN KEY (id_NV) REFERENCES NhanVien(id_NV)
 )
 GO 
@@ -226,7 +226,7 @@ BEGIN
 	IF(@count is null)
 		SELECT @count = 0;
 	RETURN @count
-END;
+END
 GO
 
 DROP FUNCTION IF EXISTS fn_soLuongTonSp
@@ -238,7 +238,7 @@ RETURNS INT
 AS
 BEGIN
 	DECLARE @count INT;
-	SELECT @count = (sum(soLuong)- (dbo.fn_soLuongBanSp(SKU))) FROM ChiTietNhapKho  WHERE SKU = @sku GROUP BY SKU;
+	SELECT @count = (sum(soLuong)- ([dbo].fn_soLuongBanSp(SKU))) FROM ChiTietNhapKho  WHERE SKU = @sku GROUP BY SKU;
 	IF(@count is null)
 		SELECT @count = 0;
 	RETURN @count;
@@ -452,7 +452,7 @@ CREATE PROC usp_select_modelSP
 (@id_DongSP VARCHAR(20))
 AS
 BEGIN
-	SELECT DISTINCT dsp.id_DongSP, TenLoaiHang, TenNSX, DiaChiSX, TenDongSP, doiXe, phanKhoi, thoiGianBH, giaTien, sum(dbo.fn_soLuongBanSp(SKU)) as N'SoLuongBan'
+	SELECT DISTINCT dsp.id_DongSP, TenLoaiHang, TenNSX, DiaChiSX, TenDongSP, doiXe, phanKhoi, thoiGianBH, giaTien, sum([dbo].fn_soLuongBanSp(SKU)) as N'SoLuongBan'
     FROM SanPham sp
         join DongSanPham dsp on sp.id_DongSP = dsp.id_DongSP
         join NhaSanXuat nsx on dsp.id_NSX = nsx.id_NSX
@@ -691,5 +691,5 @@ ON SanPham
 INSTEAD OF DELETE
 NOT FOR REPLICATION
 AS UPDATE SanPham set isDeleted = 1 WHERE SKU in (select SKU from deleted)
-
+GO
 

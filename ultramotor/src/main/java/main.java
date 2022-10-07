@@ -1,7 +1,9 @@
-package com.ultramotor.ui;
-
 import com.ultramotor.ui.khachhang.KhachHangFrame;
 import com.ultramotor.ui.login.DangNhapJFrame;
+import com.ultramotor.util.XImage;
+import com.ultramotor.util.XProp;
+
+import java.nio.file.Path;
 
 public class main {
 
@@ -13,24 +15,21 @@ public class main {
                     break;
                 }
             }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DangNhapJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
-        boolean isNhanVien = true;
-        for (int i = 0; i < args.length; i++) {
-            if (args[i].equals("user") && args[i + 1].equals("customer")) {
-                isNhanVien = false;
-            }
-        }
-        if (isNhanVien) {
-            java.awt.EventQueue.invokeLater(() -> {
-                DangNhapJFrame.getLoginFrame().setVisible(true);
-            });
-        } else {
+
+        boolean isCustomer = "customer".equalsIgnoreCase(XProp.getProperty("user"));
+        if (isCustomer) {
             java.awt.EventQueue.invokeLater(() -> {
                 new KhachHangFrame().setVisible(true);
             });
+        } else {
+            java.awt.EventQueue.invokeLater(() -> {
+                DangNhapJFrame.getLoginFrame().setVisible(true);
+            });
         }
     }
+
 }

@@ -2,6 +2,7 @@ package com.ultramotor.util;
 
 import com.swingx.ImageAvatar;
 import com.swingx.PictureBox;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics2D;
@@ -10,6 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,12 +26,15 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- *
  * @author nghipc
  */
 public class XImage {
 
+    private static final Path LOGO_PATH = Paths.get(System.getProperty("user.dir"), "ultramotor", "logos");
+    public static final Path STAFF_PATH = LOGO_PATH.resolve("nhanvien");
+    public static final Path PRODUCT_PATH = LOGO_PATH.resolve("sp");
     public static void uploadIcon(Container parent, JComponent comp, File defaultImage) {
+
         JFileChooser chooser = new JFileChooser();
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.addChoosableFileFilter(new FileNameExtensionFilter("Images", "jpeg", "jpg", "png", "gif", "bmp", "webmp"));
@@ -87,17 +93,17 @@ public class XImage {
             }
         }
     }
-    
-    public static BufferedImage createImage(JPanel panel){
+
+    public static BufferedImage createImage(JPanel panel) {
         int width = panel.getPreferredSize().width;
         int height = panel.getPreferredSize().height;
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g =  bi.createGraphics();
+        Graphics2D g = bi.createGraphics();
         g.setBackground(Color.white);
         g.setColor(Color.white);
         panel.paint(g);
         g.dispose();
         return bi;
     }
-    
+
 }

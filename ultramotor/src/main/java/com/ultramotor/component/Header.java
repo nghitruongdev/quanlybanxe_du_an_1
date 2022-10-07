@@ -7,6 +7,7 @@ import com.ultramotor.ui.login.DangNhapJFrame;
 import com.ultramotor.ui.nhanvien.NhanVienInfoPanel;
 import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.XDialog;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -19,15 +20,19 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 import com.swingx.PopupMenuItem;
 import com.ultramotor.dao.NhanVienDAO;
 import com.ultramotor.util.Auth;
+
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+
+import com.ultramotor.util.XImage;
 import net.miginfocom.swing.MigLayout;
 
 public class Header extends JPanel {
@@ -37,6 +42,7 @@ public class Header extends JPanel {
         setBackground(Color.white);
         init();
     }
+
     private Button cmdMenu;
     private ImageAvatar avatar;
     private MigLayout layout;
@@ -137,7 +143,9 @@ public class Header extends JPanel {
             return;
         }
         this.user = nv;
-        Icon icon = new ImageIcon(new File(Paths.get("logos", "nhanvien").toFile(), nv.getHinh()).getPath());
+        Icon icon = new ImageIcon(
+                XImage.STAFF_PATH.resolve(nv.getHinh()).toString()
+        );
         avatar.setIcon(icon);
         lblUsername.setText(nv.getHoTenNV());
         lblVaiTro.setText(nv.getVaiTro());

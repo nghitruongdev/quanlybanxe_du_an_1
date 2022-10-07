@@ -9,6 +9,7 @@ import com.ultramotor.util.MsgBox;
 import com.ultramotor.util.MyVerifier;
 import com.ultramotor.util.XDate;
 import com.ultramotor.util.XImage;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -34,7 +35,7 @@ import javax.swing.text.JTextComponent;
 public class NhanVienInfoPanel extends javax.swing.JPanel {
 
     private NhanVien nv;
-    private final File path = Paths.get("logos", "nhanvien").toFile();
+    private final File path = XImage.STAFF_PATH.toFile();
     private final File defaultFile = new File(path, "default.png");
 
     public NhanVienInfoPanel() {
@@ -103,11 +104,11 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
             newNV.setDiaChi(txtDiaChi.getText());
             newNV.setSdt(txtSDT.getText());
             newNV.setEmail(txtEmail.getText());
-            if(txtLuong.getValue() == null){
+            if (txtLuong.getValue() == null) {
                 MsgBox.error("Lỗi lương nhân viên! Vui lòng kiểm tra lại.");
                 return null;
             }
-            newNV.setLuong(((Number)txtLuong.getValue()).doubleValue());
+            newNV.setLuong(((Number) txtLuong.getValue()).doubleValue());
             newNV.setVaiTro((String) cboVaiTro.getSelectedItem());
             newNV.setHinh(lblHinh.getToolTipText());
             newNV.setGhiChu(txtGhiChu.getText());
@@ -278,8 +279,8 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
 
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
         java.awt.GridBagLayout pnlMainLayout = new java.awt.GridBagLayout();
-        pnlMainLayout.columnWidths = new int[] {0, 25, 0, 25, 0};
-        pnlMainLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        pnlMainLayout.columnWidths = new int[]{0, 25, 0, 25, 0};
+        pnlMainLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         pnlMain.setLayout(pnlMainLayout);
 
         pnlGioiTinh.setBackground(new java.awt.Color(255, 255, 255));
@@ -413,12 +414,12 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         javax.swing.GroupLayout lblHinhLayout = new javax.swing.GroupLayout(lblHinh);
         lblHinh.setLayout(lblHinhLayout);
         lblHinhLayout.setHorizontalGroup(
-            lblHinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+                lblHinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 150, Short.MAX_VALUE)
         );
         lblHinhLayout.setVerticalGroup(
-            lblHinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+                lblHinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 150, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -431,7 +432,7 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 15, 0);
         pnlMain.add(lblHinh, gridBagConstraints);
 
-        cboVaiTro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nhân Viên", "Trưởng Phòng" }));
+        cboVaiTro.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Nhân Viên", "Trưởng Phòng"}));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 16;
@@ -496,12 +497,12 @@ public class NhanVienInfoPanel extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(pnlMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(pnlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -14,13 +14,15 @@ import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 
 /**
- *
  * @author nghipc
  */
 public class XJdbc {
-
     private static RowSetFactory factory;
-    private static final String URL = "jdbc:sqlserver://localhost;databaseName=HONDA;username=sa;password=songlong";
+    private static final String URL = String.format(
+            "%s;username=%s;password=%s",
+            XProp.getProperty("db_url"),
+            XProp.getProperty("db_username"),
+            XProp.getProperty("db_password"));
 
     static {
         try {

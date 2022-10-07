@@ -1,6 +1,7 @@
 ﻿
 
-USE HONDA;
+USE HONDA
+GO
 
 -- NHÂN VIÊN
 insert into NhanVien (id_NV, HoNV, TenNV, NgaySinh, GioiTinh, DiaChi, SDT, Email, Luong, Hinh, VaiTro, matKhau, GhiChu) values
@@ -43,8 +44,8 @@ insert into NhanVien (id_NV, HoNV, TenNV, NgaySinh, GioiTinh, DiaChi, SDT, Email
 ('NV37', N'Phạm', N'Minh Bảo', '1999-09-18',1, 'TPHCM', '0902439855', 'minhbao@gmail.com', 8000000, '37.jpg', 'Nhanvien', '12345678', N'Không có gì'),
 ('NV38', N'Nguyễn', N'Hoàng Nam', '1999-12-22',1, 'TPHCM', '0902120944', 'hoangnam@gmail.com', 9000000, '38.jpg', 'Nhanvien', '12345678', N'Không có gì'),
 ('NV39', N'Nguyễn', N'Minh Chiến', '1999-01-13',1, 'TPHCM', '0902430904', 'minhchien@gmail.com', 7000000, '39.jpg', 'Nhanvien', '12345678', N'Không có gì'),
-('NV40', N'Phạm', N'Quốc Chính', '1999-02-07',1, 'TPHCM', '0902321211', 'quocchinh@gmail.com', 6000000, '40.jpg', 'Nhanvien', '12345678', N'Không có gì');
-
+('NV40', N'Phạm', N'Quốc Chính', '1999-02-07',1, 'TPHCM', '0902321211', 'quocchinh@gmail.com', 6000000, '40.jpg', 'Nhanvien', '12345678', N'Không có gì')
+GO
 
 
 
@@ -90,15 +91,16 @@ insert into KhachHang values
 ('KH37', N'Lê', N'Minh Quyết', 1, '1998-05-10', N'TPHCM', '0903890811', 'minhquyet439@gmail.com', 1, N'Không có gì', 'NV37'),
 ('KH38', N'Bùi', N'Duy An', 1, '1999-07-02', N'TPHCM', '0903875123', 'duyan378@gmail.com', 1, N'Không có gì', 'NV38'),
 ('KH39', N'Trần', N'Hoàng Lợi', 1, '1998-12-05', N'TPHCM', '0903843211', 'hoangloi43229@gmail.com', 1, N'Không có gì', 'NV39'),
-('KH40', N'Nguyễn', N'Nhật Đức', 1, '1991-09-10', N'TPHCM', '0903436781', 'nhatduc312@gmail.com', 1, N'Không có gì', 'NV40');
-
+('KH40', N'Nguyễn', N'Nhật Đức', 1, '1991-09-10', N'TPHCM', '0903436781', 'nhatduc312@gmail.com', 1, N'Không có gì', 'NV40')
+GO
 
 
 -- LOẠI HÀNG
 insert into LoaiHang values
 ('LH01', N'Xe ga'),
 ('LH02', N'Xe côn'),
-('LH03', N'Xe số');
+('LH03', N'Xe số')
+GO
 
 
 -- NHÀ SẢN XUẤT
@@ -107,7 +109,8 @@ insert into NhaSanXuat values
 ('NSX02', 'Yamaha'),
 ('NSX03', 'Suzuki'),
 ('NSX04', 'SYM'),
-('NSX05', 'Piaggio');
+('NSX05', 'Piaggio')
+GO
 
 
 -- DÒNG SẢN PHẨM
@@ -141,7 +144,8 @@ insert into DongSanPham values
 ('DSP23', 'Angela', 'LH03', 'NSX04'),
 -- PIAGGIO
 ('DSP24', 'Liberty', 'LH01', 'NSX05'),
-('DSP25', 'Vespa', 'LH01', 'NSX05');
+('DSP25', 'Vespa', 'LH01', 'NSX05')
+GO
 
 
 
@@ -218,7 +222,8 @@ insert into SanPham (SKU, tenSP, hinh, mauSac, phanKhoi, doiXe , thoiGianBH, Dia
 ('SK63', 'Piaggio Liberty 2021', 'liden.jpg', N'Đen', '125cc', '2021', '36', 'TPHCM', '60000000', N'Piaggio Liberty S nổi bật với những điểm nhấn chi tiết ', 'DSP24', 'NV24'),
 ('SK64', 'Paggio Liberty 2021', 'litrang.jpg', N'Trắng', '125cc', '2021', '36', 'TPHCM', '60000000', N'Piaggio Liberty S nổi bật với những điểm nhấn chi tiết ', 'DSP24', 'NV24'),
 ('SK65', 'Piaggio Vespa 2021', 'vesdo.jpg', N'Đỏ', '125cc', '2021', '36', 'TPHCM', '80000000', N'Vespa là thương hiệu của dòng sản phẩm xe gắn máy yên thấp bánh nhỏ của hãng Piaggio', 'DSP25', 'NV25'),
-('SK66', 'Piaggio Vespa 2021', 'vestrang.jpg', N'Trắng', '125cc', '2021', '36', 'TPHCM', '80000000', N'Vespa là thương hiệu của dòng sản phẩm xe gắn máy yên thấp bánh nhỏ của hãng Piaggio', 'DSP25', 'NV25');
+('SK66', 'Piaggio Vespa 2021', 'vestrang.jpg', N'Trắng', '125cc', '2021', '36', 'TPHCM', '80000000', N'Vespa là thương hiệu của dòng sản phẩm xe gắn máy yên thấp bánh nhỏ của hãng Piaggio', 'DSP25', 'NV25')
+GO
 
 /**
 -- HÓA ĐƠN
@@ -297,7 +302,8 @@ insert into PhieuNhapKho values
 ('PN17','2021-01-01', 'NV17'),
 ('PN18','2021-01-01', 'NV18'),
 ('PN19','2021-01-01', 'NV19'),
-('PN20','2021-01-01', 'NV20');
+('PN20','2021-01-01', 'NV20')
+GO
 
 
 
@@ -326,3 +332,4 @@ insert into ChiTietNhapKho (id_CTNK, soLuong, giaNhap, SKU, id_PN) values
 GO
 
 update NhanVien set VaiTro = N'Trưởng Phòng', Email  = 'nghitvps19009@fpt.edu.vn' WHERE id_NV = 'NV01'
+GO

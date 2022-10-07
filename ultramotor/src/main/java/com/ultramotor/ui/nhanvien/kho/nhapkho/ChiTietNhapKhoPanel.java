@@ -44,12 +44,14 @@ public class ChiTietNhapKhoPanel extends javax.swing.JPanel {
     }
 
     private void init() {
-        spMap = new SanPhamDAO().getMaVaTenSP();
-        numberFormat = new DecimalFormat("#,###.##");
-        initListeners();
-        initComboMaSP();
-        initTableChiTiet();
-        reset();
+        new Thread(()->{
+            spMap = new SanPhamDAO().getMaVaTenSP();
+            numberFormat = new DecimalFormat("#,###.##");
+            initListeners();
+            initComboMaSP();
+            initTableChiTiet();
+            reset();
+        }).start();
     }
 
     private void initComboMaSP() {
